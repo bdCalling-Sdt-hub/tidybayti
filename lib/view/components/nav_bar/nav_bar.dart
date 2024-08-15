@@ -4,14 +4,11 @@ import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/view/screens/category_screen/category_screen.dart';
-import 'package:tidybayte/view/screens/home_screen/home_screen.dart';
-import 'package:tidybayte/view/screens/message_screen/message_screen.dart';
-import 'package:tidybayte/view/screens/post_screen/post_screen.dart';
-import 'package:tidybayte/view/screens/profile_screen/profile_screen.dart';
-
-
-
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/menu_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/schedule_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/wallet_screen.dart';
 
 class NavBar extends StatefulWidget {
   final int currentIndex;
@@ -33,8 +30,6 @@ class _UserNavBarState extends State<NavBar> {
     AppIcons.notificationUnselected,
   ];
 
-
-
   final List<String> userNavText = [
     'Home',
     'Chat',
@@ -55,7 +50,6 @@ class _UserNavBarState extends State<NavBar> {
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       color: Colors.white,
       height: 95.h,
-
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(
@@ -67,7 +61,6 @@ class _UserNavBarState extends State<NavBar> {
             onTap: () => onTap(index),
             child: Container(
               padding: EdgeInsets.symmetric(
-
                 horizontal: 15.w,
               ),
               // decoration: BoxDecoration(
@@ -91,9 +84,8 @@ class _UserNavBarState extends State<NavBar> {
                   SizedBox(height: 4.h),
                   CustomText(
                     text: userNavText[index],
-                    color: index == bottomNavIndex
-                        ? AppColors.blue
-                        : Colors.black,
+                    color:
+                        index == bottomNavIndex ? AppColors.blue : Colors.black,
                   ),
                 ],
               ),
@@ -111,19 +103,17 @@ class _UserNavBarState extends State<NavBar> {
           Get.offAll(() => const HomeScreen());
           break;
         case 1:
-          Get.to(() =>  const MessageScreen());
+          Get.to(() => const ScheduleScreen());
           break;
         case 2:
-          Get.to(() => const CategoryScreen());
+          Get.to(() => const WalletScreen());
           break;
         case 3:
-          Get.to(() => const PostScreen());
+          Get.to(() => const RecipeScreen());
           break;
         case 4:
-          Get.to(() => const ProfileScreen());
+          Get.to(() => const MenuScreen());
       }
     }
   }
 }
-
-
