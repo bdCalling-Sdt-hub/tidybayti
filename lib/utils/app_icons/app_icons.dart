@@ -7,10 +7,16 @@ class AppIcons {
   ///=========================Nab bar Icon ======================
 
   static const String homeUnselected = "$basePath/home_unselected.svg";
-  static const String notificationUnselected = "$basePath/notification_unselected.svg";
-  static const String inboxUnselected = "$basePath/inbox_unselected.svg";
-  static const String voteUnselected = "$basePath/vote_unselected.svg";
-  static const String resourceUnselected = "$basePath/resource_unselected.svg";
+  static const String homeSelected = "$basePath/home_selected.svg";
+  static const String scheduleUnselected = "$basePath/schedul_Unselected.svg";
+  static const String scheduleSelected = "$basePath/schedule_selected.svg";
+  static const String walletUnselected = "$basePath/wallet_unselected.svg";
+  static const String walletSelected = "$basePath/wallet_selected.svg";
+  static const String recipeUnselected = "$basePath/recipe_unselected.svg";
+  static const String recipeSelected = "$basePath/recipe_selected.svg";
+  static const String menuUnselected = "$basePath/menu_unselected.svg";
+  static const String menuSelected = "$basePath/menu_selected.svg";
+
 
 
 }

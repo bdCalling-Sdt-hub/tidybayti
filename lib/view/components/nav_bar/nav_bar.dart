@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/menu_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/recipe_screen.dart';
@@ -24,19 +24,19 @@ class _UserNavBarState extends State<NavBar> {
 
   final List<String> unselectedIcon = [
     AppIcons.homeUnselected,
-    AppIcons.resourceUnselected,
-    AppIcons.voteUnselected,
-    AppIcons.inboxUnselected,
-    AppIcons.notificationUnselected,
+    AppIcons.scheduleUnselected,
+    AppIcons.walletUnselected,
+    AppIcons.recipeUnselected,
+    AppIcons.menuUnselected,
+  ]; final List<String> selectedIcon = [
+    AppIcons.homeSelected,
+    AppIcons.scheduleSelected,
+    AppIcons.walletSelected,
+    AppIcons.recipeSelected,
+    AppIcons.menuSelected,
   ];
 
-  final List<String> userNavText = [
-    'Home',
-    'Chat',
-    'Category',
-    'Post',
-    'Profile',
-  ];
+
 
   @override
   void initState() {
@@ -71,22 +71,22 @@ class _UserNavBarState extends State<NavBar> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // SvgPicture.asset(
-                  //   index == bottomNavIndex
-                  //       ? selectedIcon[index]
-                  //       : unselectedIcon[index],
-                  //   height: 24.h,
-                  //   width: 24.w,
-                  //   color: index == bottomNavIndex?
-                  //   AppColors.blue:
-                  //   Colors.black,
-                  // ),
-                  SizedBox(height: 4.h),
-                  CustomText(
-                    text: userNavText[index],
-                    color:
-                        index == bottomNavIndex ? AppColors.blue : Colors.black,
+                  SvgPicture.asset(
+                    index == bottomNavIndex
+                        ? selectedIcon[index]
+                        : unselectedIcon[index],
+                    height: 24.h,
+                    width: 24.w,
+                    color: index == bottomNavIndex?
+                    AppColors.blue:
+                    Colors.black,
                   ),
+                  // SizedBox(height: 4.h),
+                  // CustomText(
+                  //   text: userNavText[index],
+                  //   color:
+                  //       index == bottomNavIndex ? AppColors.blue : Colors.black,
+                  // ),
                 ],
               ),
             ),
