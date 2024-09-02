@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/menu_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/recipe_screen.dart';
@@ -63,31 +64,12 @@ class _UserNavBarState extends State<NavBar> {
               padding: EdgeInsets.symmetric(
                 horizontal: 15.w,
               ),
-              // decoration: BoxDecoration(
-              //   color: index == bottomNavIndex
-              //       ? Colors.amber
-              //       : null,
-              // ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    index == bottomNavIndex
-                        ? selectedIcon[index]
-                        : unselectedIcon[index],
-                    height: 24.h,
-                    width: 24.w,
-                    color: index == bottomNavIndex?
-                    AppColors.blue:
-                    Colors.black,
-                  ),
-                  // SizedBox(height: 4.h),
-                  // CustomText(
-                  //   text: userNavText[index],
-                  //   color:
-                  //       index == bottomNavIndex ? AppColors.blue : Colors.black,
-                  // ),
-                ],
+              child: CustomImage(
+                imageSrc: bottomNavIndex == index
+                    ? selectedIcon[index]
+                    : unselectedIcon[index],
+                imageType: ImageType.svg,
+                size: 24.r,
               ),
             ),
           ),

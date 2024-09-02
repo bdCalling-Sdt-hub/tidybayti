@@ -13,4 +13,11 @@ class AppStrings {
   static const String enterValidEamil = "Please Enter Your Email Address";
 
 
+
+  ///=========================Start Page===================
+  static const String welcome = "Welcome";
+
+
+
+
 }
