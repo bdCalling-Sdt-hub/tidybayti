@@ -14,7 +14,7 @@ class AppIcons {
   static const String walletSelected = "$basePath/wallet_selected.svg";
   static const String recipeUnselected = "$basePath/recipe_unselected.svg";
   static const String recipeSelected = "$basePath/recipe_selected.svg";
-  static const String menuUnselected = "$basePath/menu_unselected.svg";
+  static const String menuUnselected = "$basePath/menu_Unselected.svg";
   static const String menuSelected = "$basePath/menu_selected.svg";
 
 

@@ -48,8 +48,8 @@ class _UserNavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
-      color: Colors.white,
-      height: 95.h,
+      color: AppColors.blue300,
+      height: 64.h,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       child: Row(

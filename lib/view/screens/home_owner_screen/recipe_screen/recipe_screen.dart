@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
 class RecipeScreen extends StatelessWidget {
   const RecipeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      bottomNavigationBar: NavBar(currentIndex: 3),
+      appBar: AppBar(title: Text("Recipe"),),
+
+
+    );
   }
 }
