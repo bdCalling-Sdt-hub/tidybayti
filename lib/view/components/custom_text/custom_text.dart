@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomText extends StatelessWidget {
   const CustomText(
@@ -43,13 +44,14 @@ class CustomText extends StatelessWidget {
         text,
         maxLines: maxLines,
         overflow: overflow,
-        style: TextStyle(
+        style: GoogleFonts.jost(
           fontSize: fontSize.w,
           fontWeight: fontWeight,
           color: color,
           decoration: decoration,
-          decorationColor: Colors.black,
+          decorationColor:Colors.black,
           decorationThickness:2,
+
 
         ),
       ),

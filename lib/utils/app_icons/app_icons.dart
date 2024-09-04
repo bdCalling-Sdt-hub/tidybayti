@@ -1,4 +1,5 @@
 class AppIcons {
+  AppIcons._();
   static const String basePath = "assets/icons";
 
   static const String eye = "$basePath/eye.svg";

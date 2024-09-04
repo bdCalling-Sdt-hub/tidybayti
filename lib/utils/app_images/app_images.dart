@@ -1,4 +1,5 @@
 class AppImages {
+  AppImages._();
   static const String basePath = "assets/images";
 
   ///====================== onboard =========================

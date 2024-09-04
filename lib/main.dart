@@ -15,7 +15,6 @@ void main() {
   DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
-  // Get.put(NetworkController());
 
   runApp(
     // DevicePreview(

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
 
 import '../custom_text/custom_text.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    this.height = 48,
+    this.height = 64,
     this.width = double.maxFinite,
     required this.onTap,
     this.title = '',
     this.marginVertical = 0,
     this.marginHorizontal = 0,
     this.fillColor,
-    this.textColor = Colors.white,
+    this.textColor =AppColors.dark400,
     this.isBorder = false,
   });
 
@@ -42,8 +43,8 @@ class CustomButton extends StatelessWidget {
           color: fillColor,
         ),
         child: CustomText(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontSize: 24,
+          fontWeight: FontWeight.w400,
           color: textColor,
           textAlign: TextAlign.center,
           text: title,
