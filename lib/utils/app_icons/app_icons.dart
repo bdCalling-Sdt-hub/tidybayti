@@ -17,6 +17,14 @@ class AppIcons {
   static const String menuUnselected = "$basePath/menu_Unselected.svg";
   static const String menuSelected = "$basePath/menu_selected.svg";
 
+  ///=====================Chose House Type==========================
+  static const String appartMent = "$basePath/appartment.svg";
+  static const String bungalow = "$basePath/bunglaw.svg";
+  static const String custom = "$basePath/custom.svg";
+  static const String house = "$basePath/house.svg";
+  static const String mansion = "$basePath/mansion.svg";
+  static const String villa = "$basePath/villa.svg";
+
 
 
 }
