@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 
@@ -34,6 +35,10 @@ class PersonalInfoScreen extends StatelessWidget {
               children: [
                 ///=============================== Personal Information ========================
                 CustomMenuAppbar(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.editProfileScreen);
+                  },
+                  isEdit: true,
                   title: AppStrings.personalInformation,
                   onBack: () {
                     Get.back();

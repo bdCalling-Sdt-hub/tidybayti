@@ -10,12 +10,14 @@ class CustomMenuAppbar extends StatelessWidget {
   final String title;
   final String? backIcon;
   final VoidCallback? onBack;
+  final bool? isEdit;
+  final VoidCallback? onTap;
 
   const CustomMenuAppbar({
     super.key,
     required this.title,
     this.backIcon = AppIcons.back, // Default back icon
-    this.onBack, // Optional onBack callback
+    this.onBack, this.isEdit, this.onTap, // Optional onBack callback
   });
 
   @override
@@ -38,7 +40,11 @@ class CustomMenuAppbar extends StatelessWidget {
               color: AppColors.dark500,
             ),
           ),
-          SizedBox(width: 16.w), // Add space for alignment purposes (right side)
+          isEdit==true?
+          GestureDetector(
+              onTap: onTap,
+              child: const CustomImage(imageSrc: AppIcons.edit)):
+          SizedBox(width: 5.w), // Add space for alignment purposes (right side)
         ],
       ),
     );
