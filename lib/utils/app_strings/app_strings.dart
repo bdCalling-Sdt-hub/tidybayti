@@ -17,6 +17,11 @@ class AppStrings {
 
   ///=========================Start Page===================
   static const String welcome = "Welcome";
+  static const String alreadyHaveAnYAccount = "Already have any account?";
+  static const String emailForVerification = "email for verification.";
+  static const String enterSIxDegit = "Enter 6 digit verification code";
+  static const String verifyCode = "Verify Code";
+  static const String updatePassword = "Update password";
   static const String owner = "Owner";
   static const String gettingStarted = "Getting Started";
   static const String employee = "Employee";

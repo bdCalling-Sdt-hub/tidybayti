@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
 
 class CustomText extends StatelessWidget {
   const CustomText(
@@ -49,7 +50,7 @@ class CustomText extends StatelessWidget {
           fontWeight: fontWeight,
           color: color,
           decoration: decoration,
-          decorationColor:Colors.black,
+          decorationColor:AppColors.dark300,
           decorationThickness:2,
 
 

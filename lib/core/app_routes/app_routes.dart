@@ -1,7 +1,13 @@
 
 
 import 'package:get/get.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/reset_password_screen/reset_password_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_in_screen/sign_in_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/my_plan_screen/my_plan_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/personal_info_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/personal_info_screen/personal_info_screen.dart';
@@ -15,6 +21,14 @@ import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/upgrade_pac
 
 class AppRoutes {
   static const String signInScreen = "/SignInScreen";
+  static const String signUpScreen = "/SignUpScreen";
+  static const String signUpOtp = "/SignUpOtp";
+  static const String forgotPasswordScreen = "/ForgotPasswordScreen";
+  static const String forgotPasswordOtp = "/ForgotPasswordOtp";
+  static const String resetPasswordScreen = "/ResetPasswordScreen";
+
+  ///=================================Home Section=================
+  static const String homeScreen = "/HomeScreen";
 
   ///================================Menu Screen =====================
   static const String personalInfoScreen = "/PersonalInfoScreen";
@@ -30,6 +44,14 @@ class AppRoutes {
 
   static List<GetPage> routes = [
     GetPage(name: signInScreen, page: () => const SignInScreen()),
+    GetPage(name: signUpScreen, page: () => const SignUpScreen()),
+    GetPage(name: signUpOtp, page: () => const SignUpOtp()),
+    GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
+    GetPage(name: forgotPasswordOtp, page: () => const ForgotPasswordOtp()),
+    GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
+
+    ///===========================Home Section=======================
+    GetPage(name: homeScreen, page: () => const HomeScreen()),
 
 
     ///================================Menu Screen =====================
