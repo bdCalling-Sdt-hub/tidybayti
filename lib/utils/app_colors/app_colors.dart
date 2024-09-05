@@ -9,6 +9,7 @@ class AppColors {
 
   ///==========================Light Color Code =============
   static const Color light50 = Color(0xffFDFDFD);
+  static const Color light200 = Color(0xffF4F4F5);
 
   ///======================Dark Color Code====================
   static const Color dark300 = Color(0xff626870);

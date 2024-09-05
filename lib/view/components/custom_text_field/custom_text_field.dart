@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -21,11 +22,11 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.hintText,
     this.hintStyle,
-    this.fillColor = Colors.red,
+    this.fillColor = AppColors.employeeCardColor,
     this.suffixIcon,
     this.suffixIconColor,
-    this.fieldBorderRadius = 8,
-    this.fieldBorderColor = const Color(0xffB5D8EE),
+    this.fieldBorderRadius = 0,
+    this.fieldBorderColor = AppColors.employeeCardColor,
     this.isPassword = false,
     this.isPrefixIcon = true,
     this.readOnly = false,

@@ -44,7 +44,6 @@ class AppIcons {
   static const String help = "$basePath/help.svg";
   static const String lock = "$basePath/lock.svg";
   static const String logOut = "$basePath/logout.svg";
-  static const String myPlan = "$basePath/my_plan.svg";
   static const String myRecipe = "$basePath/my_recipe.svg";
   static const String notification = "$basePath/notification.svg";
   static const String ongoing = "$basePath/ongoing.svg";
@@ -58,9 +57,10 @@ class AppIcons {
   static const String setting = "$basePath/settings.svg";
   static const String tags = "$basePath/tags.svg";
   static const String terms = "$basePath/terms.svg";
-  static const String user = "$basePath/user.png";
   static const String watch = "$basePath/watch.svg";
   static const String x = "$basePath/x.svg";
+  static const String person = "$basePath/person.svg";
+  static const String back = "$basePath/back.svg";
 
 
 

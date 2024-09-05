@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_appbar/custom_appbar.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_menu_item/custom_menu_item.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
-class MenuScreen extends StatelessWidget {
-  const MenuScreen({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -33,67 +35,61 @@ class MenuScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///=============================== Menu Title ========================
-             const Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
-               children: [
-                 CustomText(
-                   top: 20,
-                   textAlign: TextAlign.center,
-                   text: AppStrings.menu,
-                   fontWeight: FontWeight.w500,
-                   fontSize: 24,
-                   color: AppColors.dark500,
-                 ),
-               ],
-             ),
+              CustomMenuAppbar(
+                title: AppStrings.settings,
+                onBack: () {
+                  Get.back();
+                },
+              ),
 
-              ///=============================== Menu Items ========================
+              ///=============================== Settings Items ========================
               Expanded(
                 child: ListView(
-
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   children: [
-                    ///================================Personal Information=================
+                    ///================================changePassword=================
                     CustomMenuItem(
-                      image:AppIcons.person,
-                      text: AppStrings.personalInformation,
+                      image: AppIcons.lock,
+                      text: AppStrings.changePassword,
                       onTap: () {
-                        Get.toNamed(AppRoutes.personalInfoScreen);
+                        Get.toNamed(AppRoutes.changePasswordScreen);
                       },
                     ),
-                    ///===============================upgradePackages=================
-                    CustomMenuItem(
-                      image:AppIcons.pacages,
-                      text: AppStrings.upgradePackages,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.upgradePackages);
 
+                    ///===============================termsOfService=================
+                    CustomMenuItem(
+                      image: AppIcons.terms,
+                      text: AppStrings.termsOfService,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.termsAndServiceScreen);
                       },
                     ),
-                    ///================================myPlan=================
-                    CustomMenuItem(
-                      image:AppIcons.pacages,
-                      text: AppStrings.myPlan,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.myPlanScreen);
 
+                    ///================================privacyPolicy=================
+                    CustomMenuItem(
+                      image: AppIcons.privacy,
+                      text: AppStrings.privacyPolicy,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.privacyPolicyScreen);
                       },
                     ),
-                    ///================================Settings=================
-                    CustomMenuItem(
-                      image:AppIcons.setting,
-                      text: AppStrings.settings,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.settingScreen);
 
+                    ///================================aboutUs=================
+                    CustomMenuItem(
+                      image: AppIcons.about,
+                      text: AppStrings.aboutUs,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.aboutUsScreen);
                       },
                     ),
-                    ///================================logOut=================
+
+                    ///================================helpWhere=================
                     CustomMenuItem(
-                      image: AppIcons.logOut,
-                      text:AppStrings.logOut,
+                      image: AppIcons.help,
+                      text: AppStrings.helpWhere,
                       onTap: () {
-                        // Handle Logout
+                        Get.toNamed(AppRoutes.helpWhereScreen);
+
                       },
                     ),
                   ],
@@ -106,9 +102,3 @@ class MenuScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
