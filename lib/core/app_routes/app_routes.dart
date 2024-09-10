@@ -1,6 +1,10 @@
 
 
 import 'package:get/get.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_edit_profile/employee_edit_profile.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/free_service_screen/free_service_screen.dart';
@@ -19,8 +23,13 @@ import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_scr
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_screen/setting_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_screen/terms_and_service_screen/terms_and_service_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/upgrade_packages/upgrade_packages.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/add_recipe_screen/add_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
 
 class AppRoutes {
+
   static const String signInScreen = "/SignInScreen";
   static const String signUpScreen = "/SignUpScreen";
   static const String signUpOtp = "/SignUpOtp";
@@ -31,6 +40,15 @@ class AppRoutes {
 
   ///=================================Home Section=================
   static const String homeScreen = "/HomeScreen";
+
+  ///===================Wallet Section===================
+  static const String createBudgetScreen = "/CreateBudgetScreen";
+  static const String budgetDetailsScreen = "/BudgetDetailsScreen";
+  static const String addExpenseScreen = "/AddExpenseScreen";
+
+
+  ///====================Recipe section===================
+  static const String addRecipeScreen = "/AddRecipeScreen";
 
   ///================================Menu Screen =====================
   static const String personalInfoScreen = "/PersonalInfoScreen";
@@ -43,6 +61,12 @@ class AppRoutes {
   static const String aboutUsScreen = "/AboutUsScreen";
   static const String helpWhereScreen = "/HelpWhereScreen";
   static const String editProfileScreen = "/EditProfileScreen";
+
+  ///====================Employee section===================
+  static const String employeeEditProfile = "/EmployeeEditProfile";
+  static const String employeeProfileScreen = "/EmployeeProfileScreen";
+  static const String employeeHomeScreen = "/EmployeeHomeScreen";
+  static const String employeeAdditionalScreen = "/EmployeeAdditionalScreen";
 
   static List<GetPage> routes = [
     GetPage(name: signInScreen, page: () => const SignInScreen()),
@@ -57,6 +81,16 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen()),
 
 
+    ///=========================Wallet section==============
+    GetPage(name: createBudgetScreen, page: () => const CreateBudgetScreen()),
+    GetPage(name: budgetDetailsScreen, page: () => const BudgetDetailsScreen()),
+    GetPage(name: addExpenseScreen, page: () => const AddExpenseScreen()),
+
+
+    ///======================Recipe Section====================
+    GetPage(name: addRecipeScreen, page: () => const AddRecipeScreen()),
+
+
     ///================================Menu Screen =====================
     GetPage(name: personalInfoScreen, page: () => const PersonalInfoScreen()),
     GetPage(name: upgradePackages, page: () => const UpgradePackages()),
@@ -68,5 +102,11 @@ class AppRoutes {
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () => const EditProfileScreen()),
+
+    ///======================Employee section=========================
+    GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
+    GetPage(name: employeeProfileScreen, page: () => const EmployeeProfileScreen()),
+    GetPage(name: employeeHomeScreen, page: () => const EmployeeHomeScreen()),
+    GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
   ];
 }
