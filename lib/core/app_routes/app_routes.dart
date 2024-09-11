@@ -29,7 +29,7 @@ import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/add_expen
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
 import 'package:tidybayte/view/screens/onboard_screen/chose_onboard_screen/chose_onboard_screen.dart';
-import 'package:tidybayte/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose.dart';
+import 'package:tidybayte/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose_auth.dart';
 import 'package:tidybayte/view/screens/onboard_screen/onBoard_screen/onboard_screen.dart';
 
 class AppRoutes {
@@ -37,7 +37,7 @@ class AppRoutes {
   static const String signInScreen = "/SignInScreen";
   static const String onboardScreen = "/OnboardScreen";
   static const String choseOnBoardingScreen = "/ChoseOnBoardingScreen";
-  static const String homeOwnerChose = "/HomeOwnerChose";
+  static const String homeOwnerChoseAuth = "/HomeOwnerChoseAuth";
   static const String signUpScreen = "/SignUpScreen";
   static const String signUpOtp = "/SignUpOtp";
   static const String forgotPasswordScreen = "/ForgotPasswordScreen";
@@ -79,8 +79,8 @@ class AppRoutes {
   static List<GetPage> routes = [
     GetPage(name: signInScreen, page: () => const SignInScreen()),
     GetPage(name: onboardScreen, page: () => const OnboardScreen()),
-    GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnBoardingScreen()),
-    GetPage(name: homeOwnerChose, page: () => const HomeOwnerChose()),
+    GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
+    GetPage(name: homeOwnerChoseAuth, page: () => const HomeOwnerChoseAuth()),
     GetPage(name: signUpScreen, page: () => const SignUpScreen()),
     GetPage(name: signUpOtp, page: () => const SignUpOtp()),
     GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
