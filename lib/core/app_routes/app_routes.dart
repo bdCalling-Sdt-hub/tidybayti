@@ -5,6 +5,7 @@ import 'package:tidybayte/view/screens/employee_screen/employee_additional_task_
 import 'package:tidybayte/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_edit_profile/employee_edit_profile.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_sign_in_screen/employee_sign_in_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/free_service_screen/free_service_screen.dart';
@@ -27,10 +28,16 @@ import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/add_recip
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
+import 'package:tidybayte/view/screens/onboard_screen/chose_onboard_screen/chose_onboard_screen.dart';
+import 'package:tidybayte/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose.dart';
+import 'package:tidybayte/view/screens/onboard_screen/onBoard_screen/onboard_screen.dart';
 
 class AppRoutes {
 
   static const String signInScreen = "/SignInScreen";
+  static const String onboardScreen = "/OnboardScreen";
+  static const String choseOnBoardingScreen = "/ChoseOnBoardingScreen";
+  static const String homeOwnerChose = "/HomeOwnerChose";
   static const String signUpScreen = "/SignUpScreen";
   static const String signUpOtp = "/SignUpOtp";
   static const String forgotPasswordScreen = "/ForgotPasswordScreen";
@@ -63,6 +70,7 @@ class AppRoutes {
   static const String editProfileScreen = "/EditProfileScreen";
 
   ///====================Employee section===================
+  static const String employeeSignInScreen = "/EmployeeSignInScreen";
   static const String employeeEditProfile = "/EmployeeEditProfile";
   static const String employeeProfileScreen = "/EmployeeProfileScreen";
   static const String employeeHomeScreen = "/EmployeeHomeScreen";
@@ -70,6 +78,9 @@ class AppRoutes {
 
   static List<GetPage> routes = [
     GetPage(name: signInScreen, page: () => const SignInScreen()),
+    GetPage(name: onboardScreen, page: () => const OnboardScreen()),
+    GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnBoardingScreen()),
+    GetPage(name: homeOwnerChose, page: () => const HomeOwnerChose()),
     GetPage(name: signUpScreen, page: () => const SignUpScreen()),
     GetPage(name: signUpOtp, page: () => const SignUpOtp()),
     GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
@@ -103,8 +114,25 @@ class AppRoutes {
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () => const EditProfileScreen()),
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///======================Employee section=========================
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
+    GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () => const EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () => const EmployeeHomeScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),

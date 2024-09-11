@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_appbar/custom_appbar.dart';
+import 'package:tidybayte/view/components/employee_nav_bar/employee_navbar.dart';
 
 class EmployeeProfileScreen extends StatelessWidget {
   const EmployeeProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  const Scaffold(
+      bottomNavigationBar: EmployeeNavbar(currentIndex: 2),
+      appBar: CustomAppBar(appBarContent: AppStrings.profile ,),
+    );;
   }
 }
