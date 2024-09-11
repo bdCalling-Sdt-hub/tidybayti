@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/authentication/free_service_screen/free_service_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/reset_password_screen/reset_password_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_in_screen/sign_in_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
@@ -26,6 +27,7 @@ class AppRoutes {
   static const String forgotPasswordScreen = "/ForgotPasswordScreen";
   static const String forgotPasswordOtp = "/ForgotPasswordOtp";
   static const String resetPasswordScreen = "/ResetPasswordScreen";
+  static const String freeServiceScreen = "/FreeServiceScreen";
 
   ///=================================Home Section=================
   static const String homeScreen = "/HomeScreen";
@@ -49,6 +51,7 @@ class AppRoutes {
     GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
     GetPage(name: forgotPasswordOtp, page: () => const ForgotPasswordOtp()),
     GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
+    GetPage(name: freeServiceScreen, page: () => const FreeServiceScreen()),
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),

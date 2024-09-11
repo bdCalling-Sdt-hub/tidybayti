@@ -49,6 +49,8 @@ class AppStrings {
   static const String sendVerificationCode = "Send Verification Code";
   static const String resendConfirmationCode = "Resend Confirmation Code";
   static const String confirm = "Confirm";
+  static const String youHaveFiveDays = "You have  5 days free service.";
+  static const String ourSubscriptionPackages = "Our Subscription packages";
 
   ///=====================================Premium Pacage===============
   static const String congratulationsYOuAreGiven = "Congratulations, You are given 7 days free trail. During this trail period, you are getting this facilities !";
@@ -61,6 +63,7 @@ class AppStrings {
   static const String bhd3 = 'BHD 3.99/Month';
   static const String bhd4 = 'BHD 4.99/Month';
   static const String continues  = 'Continue';
+  static const String congratulations  = 'Congratulations, You are given 7 days free trail. During this trail period, you are gettingthis facilities !';
 
   ///===============================Home Section=======================
   static const String chooseYourHouseType  = 'Choose your house type';
