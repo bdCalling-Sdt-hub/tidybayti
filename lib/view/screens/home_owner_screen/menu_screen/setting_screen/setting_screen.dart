@@ -18,7 +18,6 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

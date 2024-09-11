@@ -43,7 +43,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                           CustomButton(
                             width: MediaQuery.of(context).size.width / 1.7,
                             onTap: () {
-                              Get.toNamed(AppRoutes.homeOwnerChoseAuth);
+                              Get.toNamed(AppRoutes.signInScreen);
                             },
                             fillColor: AppColors.employeeCardColor,
                             title: AppStrings.signIn,
@@ -56,7 +56,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                           CustomButton(
                             width: MediaQuery.of(context).size.width / 1.7,
                             onTap: () {
-                              Get.toNamed(AppRoutes.employeeSignInScreen);
+                              Get.toNamed(AppRoutes.signUpScreen);
                             },
                             fillColor: AppColors.employeeCardColor,
                             title: AppStrings.signUp,

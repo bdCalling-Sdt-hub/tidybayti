@@ -17,7 +17,13 @@ class AppStrings {
 
   ///=========================Start Page===================
   static const String welcome = "Welcome";
+  static const String bhd120 = "BHD 120/12 Monthome";
+  static const String sixMonth = "6 Months package";
   static const String profile = "Profile";
+  static const String bhdSix = "BHD 60/6 Month";
+  static const String autoRenewal = "Auto-renewal";
+  static const String reNewPlan = "Re-new plan";
+  static const String buyNewPackages = "Buy new package";
   static const String alreadyHaveAnYAccount = "Already have any account?";
   static const String emailForVerification = "email for verification.";
   static const String enterSIxDegit = "Enter 6 digit verification code";
@@ -56,6 +62,9 @@ class AppStrings {
   ///=====================================Premium Pacage===============
   static const String congratulationsYOuAreGiven = "Congratulations, You are given 7 days free trail. During this trail period, you are getting this facilities !";
   static const String inviteUnlimited = 'Invite unlimited home members ';
+  static const String assignTasksTo = 'Assign tasks to multiple people';
+  static const String masterYourCleaningSchedule = 'Master your cleaning schedule';
+  static const String manageMultiplePlaces = 'Manage multiple places';
   static const String outSubscriptionPackages = 'Our Subscription packages';
   static const String premium = 'Premium';
   static const String premiumPro = 'Premium-Pro';
@@ -187,6 +196,7 @@ class AppStrings {
   static const String menu      ='Menu';
   static const String personalInformation      ='Personal Information';
   static const String upgradePackages      ='Upgrade Packages';
+  static const String byeNow      ='Bye now';
   static const String myPlan      ='My plan';
   static const String settings      ='Settings';
   static const String logOut      ='Log out';

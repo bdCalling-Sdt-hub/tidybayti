@@ -7,7 +7,6 @@ import 'package:tidybayte/view/components/custom_button/custom_button.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -15,7 +14,6 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(

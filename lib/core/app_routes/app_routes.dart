@@ -86,7 +86,7 @@ class AppRoutes {
     GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
     GetPage(name: forgotPasswordOtp, page: () => const ForgotPasswordOtp()),
     GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
-    GetPage(name: freeServiceScreen, page: () => const FreeServiceScreen()),
+    GetPage(name: freeServiceScreen, page: () =>  FreeServiceScreen()),
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
@@ -104,8 +104,8 @@ class AppRoutes {
 
     ///================================Menu Screen =====================
     GetPage(name: personalInfoScreen, page: () => const PersonalInfoScreen()),
-    GetPage(name: upgradePackages, page: () => const UpgradePackages()),
-    GetPage(name: myPlanScreen, page: () => const MyPlanScreen()),
+    GetPage(name: upgradePackages, page: () =>  UpgradePackages()),
+    GetPage(name: myPlanScreen, page: () =>  MyPlanScreen()),
     GetPage(name: settingScreen, page: () => const SettingScreen()),
     GetPage(name: changePasswordScreen, page: () => const ChangePasswordScreen()),
     GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),

@@ -13,7 +13,6 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(

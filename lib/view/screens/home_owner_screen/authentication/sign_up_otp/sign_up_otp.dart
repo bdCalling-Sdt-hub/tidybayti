@@ -48,7 +48,7 @@ class SignUpOtp extends StatelessWidget {
 
                       ///============================Verify Code=============
                       CustomButton(onTap: (){
-                        Get.toNamed(AppRoutes.homeScreen);
+                        Get.toNamed(AppRoutes.freeServiceScreen);
                       },
                         fillColor: AppColors.employeeCardColor,
                         title:AppStrings.verifyCode,

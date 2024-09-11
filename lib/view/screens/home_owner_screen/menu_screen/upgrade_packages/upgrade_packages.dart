@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
-
+import 'package:tidybayte/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
+import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
 class UpgradePackages extends StatelessWidget {
-  const UpgradePackages({super.key});
+  UpgradePackages({super.key});
+
+  final List<String> listPackages = [
+    AppStrings.inviteUnlimited,
+    AppStrings.assignTasksTo,
+    AppStrings.masterYourCleaningSchedule,
+    AppStrings.manageMultiplePlaces
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
@@ -27,7 +37,6 @@ class UpgradePackages extends StatelessWidget {
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ///=============================== Upgrade Packages ========================
                 CustomMenuAppbar(
@@ -36,14 +45,117 @@ class UpgradePackages extends StatelessWidget {
                     Get.back();
                   },
                 ),
+                SizedBox(height: 20.h),
 
-                ///=============================== aboutUs ========================
+                ///=============================== Premium ========================
+                _buildPackageCard(
+                  context: context,
+                  packageTitle: AppStrings.premium,
+                  price: AppStrings.bhdSix,
+                  listPackages: listPackages,
+                  onTap: () {},
+                ),
+                SizedBox(height: 20.h),
 
+                ///=============================== Premium Pro ========================
+                _buildPackageCard(
+                  context: context,
+                  packageTitle: AppStrings.premiumPro,
+                  price: AppStrings.bhd120,
+                  listPackages: listPackages,
+                  onTap: () {},
+                ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /// Reusable method to build a package card
+  Widget _buildPackageCard({
+    required BuildContext context,
+    required String packageTitle,
+    required String price,
+    required List<String> listPackages,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 21),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        color: AppColors.blue100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: packageTitle,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: AppColors.red,
+            ),
+            CustomText(
+              top: 8,
+              text: price,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: AppColors.bhdColor,
+              bottom: 16,
+            ),
+            _buildPackageList(listPackages),
+            SizedBox(height: 16.h),
+            CustomButton(
+              onTap: onTap,
+              fillColor: AppColors.light50,
+              title: AppStrings.byeNow,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Reusable method to build a list of package features
+  Widget _buildPackageList(List<String> listPackages) {
+    return Column(
+      children: List.generate(listPackages.length, (index) {
+        return Column(
+          children: [
+            Row(
+              children: [
+                const CustomImage(imageSrc: AppIcons.premium),
+                SizedBox(width: 5.w),
+                CustomText(
+                  text: listPackages[index],
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: AppColors.dark300,
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+          ],
+        );
+      }),
     );
   }
 }

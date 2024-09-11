@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
 class FreeServiceScreen extends StatelessWidget {
-  const FreeServiceScreen({super.key});
+  FreeServiceScreen({super.key});
+
+  final List<String> listPackages = [
+    AppStrings.inviteUnlimited,
+    AppStrings.assignTasksTo,
+    AppStrings.masterYourCleaningSchedule,
+    AppStrings.manageMultiplePlaces
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +63,124 @@ class FreeServiceScreen extends StatelessWidget {
                       fontSize: 16.sp,
                       color: AppColors.dark300,
                     ),
-                    SizedBox(height: 24.h),
+                    SizedBox(height: 16.h),
+                    Column(
+                      children: List.generate(listPackages.length, (index) {
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                const CustomImage(imageSrc: AppIcons.premium),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                CustomText(
+                                  text: listPackages[index],
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: AppColors.dark300,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            )
+                          ],
+                        );
+                      }),
+                    ),
                     CustomText(
+                      top: 24,
+                      bottom: 24,
                       text: AppStrings.ourSubscriptionPackages,
                       textAlign: TextAlign.start,
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp,
                       color: AppColors.blue900,
                     ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        color:AppColors.light200 ,
+                        child: const Column(
+                          children: [
+                            CustomText(
+                              text: AppStrings.premium,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              color: AppColors.red,
+                            ),
+
+                            CustomText(
+                              top: 5,
+                              text: AppStrings.twelveMonthPackage,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              color: AppColors.freeServiceColor,
+                            ),
+                            CustomText(
+                              top: 17,
+                              text: AppStrings.bhd3,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: AppColors.bhdColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )  ,
+
+                    SizedBox(
+                      width: 10.w,
+                    ),Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        color:AppColors.light200 ,
+                        child: const Column(
+                          children: [
+                            CustomText(
+                              text: AppStrings.premiumPro,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              color: AppColors.red,
+                            ),
+
+                            CustomText(
+                              top: 5,
+                              text: AppStrings.oneMonthsPackage,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              color: AppColors.freeServiceColor,
+                            ),
+                            CustomText(
+                              top: 17,
+                              text: AppStrings.bhd4,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: AppColors.bhdColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
                   ],
                 ),
               ),
             ),
           ),
 
-          // Button
+          ///======================================Continue Button===================
           Positioned(
             bottom: 20.h, // Add space from the bottom
             left: 20.w,
             right: 20.w,
             child: CustomButton(
               onTap: () {
-                // Get.toNamed();
+                Get.toNamed(AppRoutes.homeScreen);
               },
               fillColor: AppColors.employeeCardColor,
               title: AppStrings.continues,

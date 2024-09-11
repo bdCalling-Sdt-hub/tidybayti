@@ -93,7 +93,7 @@ class MenuScreen extends StatelessWidget {
                       image: AppIcons.logOut,
                       text:AppStrings.logOut,
                       onTap: () {
-                        // Handle Logout
+                       Get.toNamed(AppRoutes.choseOnBoardingScreen);
                       },
                     ),
                   ],

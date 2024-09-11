@@ -5,7 +5,6 @@ import 'package:tidybayte/utils/app_strings/app_strings.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
 class TermsAndServiceScreen extends StatelessWidget {
   const TermsAndServiceScreen({super.key});
@@ -13,7 +12,6 @@ class TermsAndServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
