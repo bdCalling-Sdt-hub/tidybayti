@@ -25,6 +25,10 @@ import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_scr
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_screen/terms_and_service_screen/terms_and_service_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/upgrade_packages/upgrade_packages.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/add_recipe_screen/add_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/favorite_recipes_screen/favorites_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/search_recipe_screen/search_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
@@ -56,6 +60,10 @@ class AppRoutes {
 
   ///====================Recipe section===================
   static const String addRecipeScreen = "/AddRecipeScreen";
+  static const String myRecipeScreen = "/MyRecipeScreen";
+  static const String searchRecipeScreen = "/SearchRecipeScreen";
+  static const String favoritesRecipeScreen = "/FavoritesRecipeScreen";
+  static const String tagsScreen = "/TagsScreen";
 
   ///================================Menu Screen =====================
   static const String personalInfoScreen = "/PersonalInfoScreen";
@@ -100,6 +108,10 @@ class AppRoutes {
 
     ///======================Recipe Section====================
     GetPage(name: addRecipeScreen, page: () => const AddRecipeScreen()),
+    GetPage(name: myRecipeScreen, page: () => const MyRecipeScreen()),
+    GetPage(name: searchRecipeScreen, page: () => const SearchRecipeScreen()),
+    GetPage(name: favoritesRecipeScreen, page: () => const FavoritesRecipeScreen()),
+    GetPage(name: tagsScreen, page: () => const TagsScreen()),
 
 
     ///================================Menu Screen =====================
