@@ -17,12 +17,14 @@ class AppStrings {
 
   ///=========================Start Page===================
   static const String welcome = "Welcome";
+  static const String id = "Id:";
   static const String bhd120 = "BHD 120/12 Monthome";
   static const String sixMonth = "6 Months package";
   static const String profile = "Profile";
   static const String bhdSix = "BHD 60/6 Month";
   static const String autoRenewal = "Auto-renewal";
   static const String reNewPlan = "Re-new plan";
+  static const String joiningDate = "Joining date:";
   static const String buyNewPackages = "Buy new package";
   static const String alreadyHaveAnYAccount = "Already have any account?";
   static const String emailForVerification = "email for verification.";

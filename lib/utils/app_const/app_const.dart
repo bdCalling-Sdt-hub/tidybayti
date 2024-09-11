@@ -13,8 +13,7 @@ class AppConstants {
   static var chatId = "chatID";
   static String isRememberMe = "isRememberMe";
   static String userNtr = 'https://www.india.com/wp-content/uploads/2022/03/Jr-NTR-On-RRR-Massive-Success.jpg';
-  static String map = 'https://i.sstatic.net/HILmr.png';
-  static String truck = 'https://t4.ftcdn.net/jpg/00/26/80/01/360_F_26800115_YlmErNLIVZeNZXPzUc3z4GAD1gGkVABu.jpg';
+  static String employee = 'https://as2.ftcdn.net/jpg/03/64/21/11/220_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg';
 
 
 
