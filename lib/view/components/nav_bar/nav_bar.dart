@@ -88,7 +88,7 @@ class _UserNavBarState extends State<NavBar> {
           Get.to(() => const ScheduleScreen());
           break;
         case 2:
-          Get.to(() => const WalletScreen());
+          Get.to(() =>  WalletScreen());
           break;
         case 3:
           Get.to(() => const RecipeScreen());
