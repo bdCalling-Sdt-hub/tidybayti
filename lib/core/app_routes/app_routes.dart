@@ -31,6 +31,7 @@ import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/search_re
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/all_task_screen/all_task_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/create_task/create_task.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/ongoing_task/ongoing_task.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/pending_task/pending_task.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
@@ -93,6 +94,7 @@ class AppRoutes {
   static const String employeeProfileScreen = "/EmployeeProfileScreen";
   static const String employeeHomeScreen = "/EmployeeHomeScreen";
   static const String employeeAdditionalScreen = "/EmployeeAdditionalScreen";
+  static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
     GetPage(name: signInScreen, page: () => const SignInScreen()),
@@ -111,7 +113,7 @@ class AppRoutes {
 
 
     ///=========================Wallet section==============
-    GetPage(name: createBudgetScreen, page: () =>  CreateBudgetScreen()),
+    GetPage(name: createBudgetScreen, page: () =>  const CreateBudgetScreen()),
     GetPage(name: budgetDetailsScreen, page: () => const BudgetDetailsScreen()),
     GetPage(name: addExpenseScreen, page: () => const AddExpenseScreen()),
 
@@ -142,6 +144,7 @@ class AppRoutes {
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () => const EditProfileScreen()),
+    GetPage(name: createTask, page: () => const CreateTask()),
 
 
 
