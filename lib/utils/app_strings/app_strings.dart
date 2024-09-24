@@ -31,6 +31,7 @@ class AppStrings {
   static const String enterSIxDegit = "Enter 6 digit verification code";
   static const String verifyCode = "Verify Code";
   static const String updatePassword = "Update password";
+  static const String upDate = "Update";
   static const String owner = "Owner";
   static const String gettingStarted = "Getting Started";
   static const String employee = "Employee";

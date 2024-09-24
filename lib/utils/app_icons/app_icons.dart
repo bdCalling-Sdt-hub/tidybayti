@@ -61,7 +61,7 @@ class AppIcons {
   static const String x = "$basePath/x.svg";
   static const String person = "$basePath/person.svg";
   static const String back = "$basePath/back.svg";
-  static const String personSelected = "$basePath/person_selected.svg";
+  static const String personSelected = "$basePath/personSelected.svg";
 
 
 

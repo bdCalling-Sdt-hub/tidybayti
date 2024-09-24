@@ -4,12 +4,16 @@ import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
+import 'package:tidybayte/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/employee_nav_bar/employee_navbar.dart';
 
 class EmployeeProfileScreen extends StatelessWidget {
@@ -64,27 +68,31 @@ class EmployeeProfileScreen extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    child:  Column(
+                    child: Column(
                       children: [
                         CustomNetworkImage(
                             boxShape: BoxShape.circle,
-                            imageUrl: AppConstants.employee, height: 128, width: 128),
+                            imageUrl: AppConstants.employee,
+                            height: 128,
+                            width: 128),
                         const CustomText(
                           top: 10,
                           text: 'Habib',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
-                        ),  const CustomText(
+                        ),
+                        const CustomText(
                           text: 'assistant',
                           color: AppColors.dark300,
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           bottom: 24,
                         ),
+
                         ///============================First Name=====================
                         const CustomProfileItem(
-                          title:'${ AppStrings.designation}:',
+                          title: '${AppStrings.designation}:',
                           subTitle: 'Assistant ',
                         ),
 
@@ -117,6 +125,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                           title: '${AppStrings.cPR}:',
                           subTitle: ' S2054RDSAD',
                         ),
+
                         ///================================Passport:  ========================
                         const CustomProfileItem(
                           title: '${AppStrings.passport}:',
@@ -145,19 +154,26 @@ class EmployeeProfileScreen extends StatelessWidget {
                         const CustomProfileItem(
                           title: 'Duty Time',
                           subTitle: '10 am - 08:00pm',
-                        ), ///================================drivingLicense  ========================
+                        ),
+
+                        ///================================drivingLicense  ========================
                         const CustomProfileItem(
                           title: 'Working Day',
                           subTitle: 'Sat,Mon',
                         ),
 
-                       SizedBox(height: 20.h,),
-                       CustomButton(onTap: (){
+                        SizedBox(
+                          height: 20.h,
+                        ),
 
-                       },
-                       fillColor: AppColors.blue50,
-                         title: AppStrings.changePassword,
-                       )
+                        ///==============================Change Password=============
+                        CustomButton(
+                          onTap: () {
+                            showMyDialog(context);
+                          },
+                          fillColor: AppColors.blue50,
+                          title: AppStrings.changePassword,
+                        )
                       ],
                     ),
                   ),
@@ -171,49 +187,68 @@ class EmployeeProfileScreen extends StatelessWidget {
   }
 }
 
-
-
-
-
-class CustomProfileItem extends StatelessWidget {
-  final String title;
-  final String subTitle;
-
-  const CustomProfileItem({
-    super.key,
-    required this.title,
-    required this.subTitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: CustomText(
-            textAlign: TextAlign.start,
-            color: AppColors.dark300,
-            text: title,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-            bottom: 10,
+Future<void> showMyDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    // The dialog can't be dismissed by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+          title: Row(
+            children: [
+              const CustomText(
+                text: AppStrings.changePassword,
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+              const Spacer(),
+              GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: const CustomImage(imageSrc: AppIcons.x))
+            ],
           ),
-        ),  Expanded(
-          flex: 6,
-          child: CustomText(
-            textAlign: TextAlign.start,
-            color: AppColors.dark300,
-            text: subTitle,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-            bottom: 10,
-          ),
-        ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ///===================================Present Password=============
+              CustomTextField(
+                fillColor: Color(0xFFB5D8EE),
+                hintText: AppStrings.presentPassword,
+                textEditingController: TextEditingController(),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
 
-        SizedBox(height: 8.h),
-      ],
-    );
-  }
+              ///===================================New Password=============
+              CustomTextField(
+                fillColor: Color(0xFFB5D8EE),
+                hintText: AppStrings.newPassword,
+                textEditingController: TextEditingController(),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+
+              ///===================================New Confirm Password=============
+              CustomTextField(
+                fillColor: Color(0xFFB5D8EE),
+                hintText: AppStrings.confirmPassword,
+                textEditingController: TextEditingController(),
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              CustomButton(
+                onTap: () {},
+                fillColor: Color(0xFFB5D8EE),
+                title: AppStrings.upDate,
+              )
+            ],
+          ));
+    },
+  );
 }
