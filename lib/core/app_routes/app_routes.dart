@@ -3,6 +3,7 @@
 import 'package:get/get.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
+import 'package:tidybayte/view/screens/employee_screen/employee_notification_screen/employee_notification_screen.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_edit_profile/employee_edit_profile.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
 import 'package:tidybayte/view/screens/employee_screen/employee_sign_in_screen/employee_sign_in_screen.dart';
@@ -44,6 +45,7 @@ import 'package:tidybayte/view/screens/onboard_screen/onBoard_screen/onboard_scr
 class AppRoutes {
 
   static const String signInScreen = "/SignInScreen";
+  static const String employeeNotificationScreen = "/EmployeeNotificationScreen";
   static const String onboardScreen = "/OnboardScreen";
   static const String choseOnBoardingScreen = "/ChoseOnBoardingScreen";
   static const String homeOwnerChoseAuth = "/HomeOwnerChoseAuth";
@@ -167,6 +169,7 @@ class AppRoutes {
     GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () => const EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
+    GetPage(name: employeeNotificationScreen, page: () =>  const EmployeeNotificationScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
   ];
 }
