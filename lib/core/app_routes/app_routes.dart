@@ -166,7 +166,7 @@ class AppRoutes {
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
     GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () => const EmployeeProfileScreen()),
-    GetPage(name: employeeHomeScreen, page: () => const EmployeeHomeScreen()),
+    GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
   ];
 }

@@ -173,6 +173,14 @@ class EmployeeProfileScreen extends StatelessWidget {
                           },
                           fillColor: AppColors.blue50,
                           title: AppStrings.changePassword,
+                        )   ,
+                           SizedBox(height: 20.h,),
+                        CustomButton(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.onboardScreen);
+                          },
+                          fillColor: AppColors.blue50,
+                          title: AppStrings.logOut,
                         )
                       ],
                     ),
@@ -243,7 +251,9 @@ Future<void> showMyDialog(BuildContext context) async {
                 height: 25.h,
               ),
               CustomButton(
-                onTap: () {},
+                onTap: () {
+                  Get.back();
+                },
                 fillColor: Color(0xFFB5D8EE),
                 title: AppStrings.upDate,
               )

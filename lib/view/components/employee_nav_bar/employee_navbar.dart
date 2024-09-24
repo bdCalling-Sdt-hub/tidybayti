@@ -76,7 +76,7 @@ class _UserNavBarState extends State<EmployeeNavbar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-          Get.offAll(() => const EmployeeHomeScreen( ));
+          Get.offAll(() =>  EmployeeHomeScreen( ));
           break;
         case 1:
           Get.to(() => const EmployeeAdditionalScreen());
