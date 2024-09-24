@@ -6,6 +6,7 @@ class AppColors {
   static const Color blue300 = Color(0xffCDE5F4);
   static const Color blue = Color(0xff3475F1);
   static const Color blue900 = Color(0xff4C5B64);
+  static const Color blue800 = Color(0xff647783);
 
   ///==========================Light Color Code =============
   static const Color light50 = Color(0xffFDFDFD);
@@ -19,6 +20,7 @@ class AppColors {
 
   ///======================Red Color Code====================
   static const Color red = Color(0xffFF1B1E);
+  static const Color green = Color(0xff039F00);
 
 
 ///===========================Other Color Code ================

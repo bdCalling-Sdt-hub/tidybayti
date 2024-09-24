@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^6.2.1
   syncfusion_flutter_charts: ^26.2.14
   calendar_date_picker2: ^1.1.7
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
@@ -97,6 +99,18 @@ class _WalletScreenState extends State<WalletScreen> {
               ],
             ),
           ),
+
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomButton(
+          width: MediaQuery.of(context).size.width/1.2,
+          onTap: (){
+            Get.toNamed(AppRoutes.createBudgetScreen);
+          },
+        fillColor: Colors.white,
+          title: AppStrings.createBudgets,
         ),
       ),
     );
