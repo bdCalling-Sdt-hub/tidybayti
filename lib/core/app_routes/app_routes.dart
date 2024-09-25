@@ -25,8 +25,10 @@ import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_scr
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_screen/setting_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/setting_screen/terms_and_service_screen/terms_and_service_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/upgrade_packages/upgrade_packages.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/add_recipe_screen/add_new_recipe/add_new_recipe.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/add_recipe_screen/add_recipe_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/favorite_recipes_screen/favorites_recipe_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_details/my_recipe_details.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/search_recipe_screen/search_recipe_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
@@ -71,6 +73,8 @@ class AppRoutes {
   static const String searchRecipeScreen = "/SearchRecipeScreen";
   static const String favoritesRecipeScreen = "/FavoritesRecipeScreen";
   static const String tagsScreen = "/TagsScreen";
+  static const String addNewRecipe = "/AddNewRecipe";
+  static const String myRecipeDetails = "/MyRecipeDetails";
 
   ///===================Schedule Screen====================
   static const String allTaskScreen = "/AllTaskScreen";
@@ -125,7 +129,9 @@ class AppRoutes {
     GetPage(name: myRecipeScreen, page: () => const MyRecipeScreen()),
     GetPage(name: searchRecipeScreen, page: () => const SearchRecipeScreen()),
     GetPage(name: favoritesRecipeScreen, page: () => const FavoritesRecipeScreen()),
-    GetPage(name: tagsScreen, page: () => const TagsScreen()),
+    GetPage(name: tagsScreen, page: () =>  TagsScreen()),
+    GetPage(name: addNewRecipe, page: () =>  AddNewRecipe()),
+    GetPage(name: myRecipeDetails, page: () =>  MyRecipeDetails()),
 
 
     ///===========================Schedule Screen=====================

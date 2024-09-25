@@ -88,6 +88,7 @@ class MenuScreen extends StatelessWidget {
 
                       },
                     ),
+
                     ///================================logOut=================
                     CustomMenuItem(
                       image: AppIcons.logOut,
