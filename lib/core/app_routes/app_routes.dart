@@ -14,7 +14,9 @@ import 'package:tidybayte/view/screens/home_owner_screen/authentication/reset_pa
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_in_screen/sign_in_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/add_employee_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/all_employee_show/all_employee_show.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/employee_details/employee_details.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/house_information_screen/house_information_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/house_type_screen/house_type_screen.dart';
@@ -66,6 +68,8 @@ class AppRoutes {
   static const String houseTypeScreen = "/HouseTypeScreen";
   static const String houseInformationScreen = "/HouseInformationScreen";
   static const String allEmployeeShow = "/AllEmployeeShow";
+  static const String employeeDetails = "/EmployeeDetails";
+  static const String addEmployeeScreen = "/AddEmployeeScreen";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
@@ -125,6 +129,8 @@ class AppRoutes {
     GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
     GetPage(name: houseInformationScreen, page: () => const HouseInformationScreen()),
     GetPage(name: allEmployeeShow, page: () => const AllEmployeeShow()),
+    GetPage(name: employeeDetails, page: () => const EmployeeDetails()),
+    GetPage(name: addEmployeeScreen, page: () => const AddEmployeeScreen()),
 
 
     ///=========================Wallet section==============
