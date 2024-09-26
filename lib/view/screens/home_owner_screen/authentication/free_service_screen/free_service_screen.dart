@@ -180,7 +180,7 @@ class FreeServiceScreen extends StatelessWidget {
             right: 20.w,
             child: CustomButton(
               onTap: () {
-                Get.toNamed(AppRoutes.homeScreen);
+                Get.toNamed(AppRoutes.houseTypeScreen);
               },
               fillColor: AppColors.employeeCardColor,
               title: AppStrings.continues,

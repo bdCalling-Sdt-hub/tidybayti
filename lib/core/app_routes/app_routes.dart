@@ -14,7 +14,10 @@ import 'package:tidybayte/view/screens/home_owner_screen/authentication/reset_pa
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_in_screen/sign_in_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/all_employee_show/all_employee_show.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/house_information_screen/house_information_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/house_type_screen/house_type_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/my_plan_screen/my_plan_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/personal_info_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/menu_screen/personal_info_screen/personal_info_screen.dart';
@@ -60,6 +63,9 @@ class AppRoutes {
 
   ///=================================Home Section=================
   static const String homeScreen = "/HomeScreen";
+  static const String houseTypeScreen = "/HouseTypeScreen";
+  static const String houseInformationScreen = "/HouseInformationScreen";
+  static const String allEmployeeShow = "/AllEmployeeShow";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
@@ -116,6 +122,9 @@ class AppRoutes {
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
+    GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
+    GetPage(name: houseInformationScreen, page: () => const HouseInformationScreen()),
+    GetPage(name: allEmployeeShow, page: () => const AllEmployeeShow()),
 
 
     ///=========================Wallet section==============
