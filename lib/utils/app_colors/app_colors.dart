@@ -29,6 +29,7 @@ class AppColors {
   static const Color profileCard = Color(0xffF8FBFD9);
   static const Color freeServiceColor = Color(0xff131E29);
   static const Color employeeCardColor = Color(0xffF8FBFD);
+  static const Color addedColor = Color(0xffB5D8EE);
 
 
 

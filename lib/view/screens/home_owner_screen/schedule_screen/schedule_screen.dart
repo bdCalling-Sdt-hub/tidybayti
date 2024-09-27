@@ -21,7 +21,7 @@ class ScheduleScreen extends StatefulWidget {
 class _WalletScreenState extends State<ScheduleScreen> {
   int selectedTabIndex = 0;
 
-  final List<Widget> screens = [const WorkSchedule(), const TaskSchedule()];
+  final List<Widget> screens = [ WorkSchedule(), const TaskSchedule()];
 
   final List<String> schedule = ["Work Schedule", "Task Schedule"];
 

@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
@@ -18,21 +20,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HouseTypeScreenState extends State<HomeScreen> {
   final List<String> categoryType = [
-    '',
+    'Add',
     'Bungalow',
     'Villa',
     'In. Home',
     'Apartment',
     'Mansion'
-  ];
-
-  final List<Color> houseTextColor = [
-    AppColors.dark500,
-    AppColors.dark500,
-    AppColors.dark500,
-    AppColors.red,
-    AppColors.freeServiceColor,
-    AppColors.dark300,
   ];
 
   final List<String> houseImages = [
@@ -71,65 +64,98 @@ class _HouseTypeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(vertical: 64.h, horizontal: 20.w),
             child: Column(
               children: [
+                Row(
+                  children: [
+                    const CustomText(
+                      text: 'Asad House',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: AppColors.dark400,
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.black,
+                        )),
+                    Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.employeeNotificationScreen);
+                        },
+                        icon: Icon(
+                          Icons.notification_add,
+                          color: Colors.white,
+                        )),
+                  ],
+                ),
                 SizedBox(height: 50.h),
 
                 // Grid of house categories
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 24,
-                    mainAxisSpacing: 18,
-                    mainAxisExtent: 120, // Increased height for better visuals
+                SizedBox(
+                  height: 350.h, // Fixed height for the horizontal GridView
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal, // Horizontal scrolling
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Single row with multiple columns
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 14,
+                      mainAxisExtent: 120, // Adjust item width if needed
+                    ),
+                    itemCount: categoryType.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (index == 0) {
+                            Get.toNamed(AppRoutes.houseInformationScreen); // Add your own route here
+                          } else {
+                            Get.toNamed(AppRoutes.roomDetailsScreen);
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x14000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 16.h, horizontal: 12.w),
+                          // Adjusted padding
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            // Center content vertically
+                            children: [
+                              CustomImage(
+                                imageSrc: houseImages[index],
+                                imageType: ImageType.png,
+                                // Fixed height for images
+                              ),
+                              SizedBox(height: 8.h),
+                              // Space between image and text
+                              CustomText(
+                                text: categoryType[index],
+                                color: AppColors.dark400,
+                                // Use corresponding color
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.sp,
+                                textAlign: TextAlign.center,
+                                // Centered text for better alignment
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  itemCount: categoryType.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.houseInformationScreen);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x14000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                              spreadRadius: 0,
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.h, horizontal: 12.w),
-                        // Adjusted padding
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          // Center content vertically
-                          children: [
-                            CustomImage(
-                              imageSrc: houseImages[index],
-                              imageType: ImageType.png,
-                              // Fixed height for images
-                            ),
-                            SizedBox(height: 8.h),
-                            // Space between image and text
-                            CustomText(
-                              text: categoryType[index],
-                              color: houseTextColor[index],
-                              // Use corresponding color
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16.sp,
-                              textAlign: TextAlign
-                                  .center, // Centered text for better alignment
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
                 ),
                 SizedBox(
                   height: 20.h,
@@ -142,10 +168,9 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w400,
                       color: AppColors.blue900,
                     ),
-
                     Spacer(),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(AppRoutes.allEmployeeShow);
                       },
                       child: CustomText(
@@ -156,6 +181,38 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+
+                ///===========================Employee Photo====================
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(4, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              CustomNetworkImage(
+                                  imageUrl: AppConstants.userNtr,
+                                  height: 181,
+                                  width: 152),
+                              const CustomText(
+                                text: 'sadhu',
+                                color: AppColors.dark400,
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
                 )
               ],
             ),
