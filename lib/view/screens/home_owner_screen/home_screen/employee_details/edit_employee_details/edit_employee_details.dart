@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
@@ -15,14 +14,14 @@ import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
-class AddEmployeeScreen extends StatefulWidget {
-  const AddEmployeeScreen({super.key});
+class EditEmployeeDetails extends StatefulWidget {
+  const EditEmployeeDetails({super.key});
 
   @override
-  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
+  State<EditEmployeeDetails> createState() => _AddEmployeeScreenState();
 }
 
-class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
   // Days of the week
   final List<String> daysOfWeek = [
     'Saturday',
@@ -75,7 +74,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
             children: [
               ///=============================== Menu Title ========================
               CustomMenuAppbar(
-                title: AppStrings.addEmployee,
+                title: AppStrings.editEmployeeDetails,
                 onBack: () {
                   Get.back();
                 },
@@ -87,7 +86,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                   padding: const EdgeInsets.all(16.0),
                   children: [
                     CustomNetworkImage(
-                      boxShape: BoxShape.circle,
+                        boxShape: BoxShape.circle,
                         imageUrl: AppConstants.userNtr,
                         height: 117,
                         width: 117),
@@ -150,29 +149,39 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       hintText: AppStrings.address,
                       fillColor: AppColors.employeeCardColor,
                     ),
-  SizedBox(
-                      height: 8,
+
+                    ///============================
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 16.0, top: 16),
+                      child: Text(
+                        'Select working days',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    CustomTextField(
-                      hintText: AppStrings.email,
-                      fillColor: AppColors.employeeCardColor,
+                    _buildDaySelectionGrid(selectedWorkingDays, true),
+
+                    const SizedBox(height: 24.0), // Spacing between sections
+
+                    const Text(
+                      'Select off days',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextField(
-                      hintText: AppStrings.password,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
+                    _buildDaySelectionGrid(selectedOffDays, false),
+
                     SizedBox(
                       height: 15,
                     ),
                     CustomButton(
                       onTap: () {
-                        showDialoge(context);
                       },
                       fillColor: Colors.white,
-                      title: AppStrings.addNewEmployee,
+                      title: AppStrings.upgradeProfile,
                     )
                   ],
                 ),
@@ -184,89 +193,40 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     );
   }
 
-
-}
-
-void showDialoge(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false, // Prevent dismissing by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: AppColors.addedColor,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
+  Widget _buildDaySelectionGrid(List<bool> selectedDays, bool isWorkingDay) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: daysOfWeek.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 5, // Adjust this to control checkbox size
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 8,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        return Row(
           children: [
-            Container(
-              height: 96,
-              width: 96,
-              decoration: BoxDecoration(
-                color:AppColors.blue900,
-                shape: BoxShape.circle,
-              ),
-              child: Center(child: CustomImage(imageSrc: AppIcons.rightUp,)),
-            ),
-            CustomText(
-              top: 24,
-              bottom: 40,
-              maxLines: 2,
-              text: 'Employee Added Successfully',
-              fontWeight: FontWeight.w400,
-              fontSize: 24,
-              color: AppColors.dark400,
-            ),
-            CustomText(
-              maxLines: 5,
-              text: 'Employees accounts details is sending to employee email :',
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: AppColors.dark400,
-            ),
-            CustomText(
-              maxLines: 2,
-              bottom: 20,
-              text: ' diannerussell@gmail.com',
-              fontWeight: FontWeight.w900,
-              fontSize: 16,
-              color: AppColors.dark400,
-            ),
-            Row(
-              children: [
-                CustomText(
-                  maxLines: 2,
-                  text: ' Temporary Password:',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: AppColors.dark400,
-                ),
-                CustomText(
-                  maxLines: 2,
-                  text: ' Masum017@@@',
-                  fontWeight: FontWeight.w900,
-                  fontSize: 12,
-                  color: AppColors.dark400,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-
-            ///==============================Send Email==================
-
-            CustomButton(
-              title: 'Send email',
-              onTap: () {
-               Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
+            Checkbox(
+              value: selectedDays[index],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  if (isWorkingDay) {
+                    selectedWorkingDays[index] = newValue ?? false;
+                  } else {
+                    selectedOffDays[index] = newValue ?? false;
+                  }
+                });
               },
-              fillColor: Colors.white,
             ),
-            SizedBox(
-              height: 15.h,
+            Text(
+              daysOfWeek[index],
+              style: const TextStyle(fontSize: 16),
             ),
           ],
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
+

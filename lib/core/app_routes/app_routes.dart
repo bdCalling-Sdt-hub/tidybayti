@@ -15,7 +15,12 @@ import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_in_
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/add_employee_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_task_successfully_screen/assign_task_successfully_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_schedule_screen/assign_work_schedule_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_screen/assign_work_screen.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/add_employee_screen/mail_sent_successfully_screen/main_sent_successfully_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/all_employee_show/all_employee_show.dart';
+import 'package:tidybayte/view/screens/home_owner_screen/home_screen/employee_details/edit_employee_details/edit_employee_details.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/employee_details/employee_details.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/home_screen.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/home_screen/house_information_screen/house_information_screen.dart';
@@ -72,6 +77,11 @@ class AppRoutes {
   static const String employeeDetails = "/EmployeeDetails";
   static const String addEmployeeScreen = "/AddEmployeeScreen";
   static const String roomDetailsScreen = "/RoomDetailsScreen";
+  static const String editEmployeeDetails = "/EditEmployeeDetails";
+  static const String mainSentSuccessfullyScreen = "/MainSentSuccessfullyScreen";
+  static const String assignWorkScheduleScreen = "/AssignWorkScheduleScreen";
+  static const String assignWorkScreen = "/AssignWorkScreen";
+  static const String assignTaskSuccessfullyScreen = "/AssignTaskSuccessfullyScreen";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
@@ -134,6 +144,10 @@ class AppRoutes {
     GetPage(name: employeeDetails, page: () => const EmployeeDetails()),
     GetPage(name: addEmployeeScreen, page: () => const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () => const RoomDetailsScreen()),
+    GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
+    GetPage(name: assignWorkScheduleScreen, page: () => const AssignWorkScheduleScreen()),
+    GetPage(name: assignWorkScreen, page: () => const AssignWorkScreen()),
+    GetPage(name: assignTaskSuccessfullyScreen, page: () => const AssignTaskSuccessfullyScreen()),
 
 
     ///=========================Wallet section==============
@@ -195,5 +209,6 @@ class AppRoutes {
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
     GetPage(name: employeeNotificationScreen, page: () =>  const EmployeeNotificationScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
+    GetPage(name: editEmployeeDetails, page: () => const EditEmployeeDetails()),
   ];
 }

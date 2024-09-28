@@ -41,7 +41,7 @@ class EmployeeDetails extends StatelessWidget {
                 ///=============================== profile Appbar ========================
                 CustomMenuAppbar(
                   onTap: () {
-                    // Get.toNamed(AppRoutes.employeeEditProfile);
+                    Get.toNamed(AppRoutes.editEmployeeDetails);
                   },
                   isEdit: true,
                   title: AppStrings.employeeDetails,
