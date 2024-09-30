@@ -115,7 +115,7 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                             ],
                           ),
                           padding: EdgeInsets.symmetric(
-                              vertical: 24.h, horizontal: 12.w),
+                              vertical: 20.h, horizontal: 12.w),
                           child: Column(
                             children: [
                               CustomImage(
@@ -126,7 +126,7 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                                 text: categoryType[index],
                                 color: AppColors.dark500,
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.w,
+                                fontSize: 16,
                               ),
                             ],
                           ),

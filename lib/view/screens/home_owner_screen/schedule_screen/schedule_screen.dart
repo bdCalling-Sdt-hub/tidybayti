@@ -8,8 +8,6 @@ import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/task_schedule/task_schedule.dart';
 import 'package:tidybayte/view/screens/home_owner_screen/schedule_screen/work_schedule/work_schedule.dart';
-import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/wallet_budget_screen.dart';
-import 'package:tidybayte/view/screens/home_owner_screen/wallet_screen/wallet_overView_screen.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -21,7 +19,7 @@ class ScheduleScreen extends StatefulWidget {
 class _WalletScreenState extends State<ScheduleScreen> {
   int selectedTabIndex = 0;
 
-  final List<Widget> screens = [ WorkSchedule(), const TaskSchedule()];
+  final List<Widget> screens = [ const WorkSchedule(), const TaskSchedule()];
 
   final List<String> schedule = ["Work Schedule", "Task Schedule"];
 
@@ -51,6 +49,7 @@ class _WalletScreenState extends State<ScheduleScreen> {
                   onBack: () {
                     Get.back();
                   },
+                 download: true,
                 ),
                 SizedBox(height: 20.h),
 
