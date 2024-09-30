@@ -240,7 +240,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             color: Colors.white,
                             child: Row(
                               children: [
@@ -252,7 +252,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.dark500,
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 GestureDetector(
                                   onTap: () {
                                     showDialoge(context, currentRoom: room, index: index); // Pass room and index to edit
