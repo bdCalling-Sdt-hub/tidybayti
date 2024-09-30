@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 
 class MyRecipeDetails extends StatelessWidget {
@@ -25,7 +29,20 @@ class MyRecipeDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children:  [
+              CustomMenuAppbar(
+                title: 'Recipe Details',
+                onBack: () {
+                  Get.back();
+                },
+                isEdit: true,
+                onTap: (){
+                  Get.toNamed(AppRoutes.addNewRecipe);
+                },
+              ),
+              SizedBox(height: 25,),
               CustomNetworkImage(imageUrl: AppConstants.fruits, height: 191, width: 375),
+              SizedBox(height: 25,),
+
               RecipeTitle(title: 'Idlis Steamed Rice Cake'),
               SizedBox(height: 8),
               RecipeInfoRow(label: 'Cooking time:', value: '30 min'),
