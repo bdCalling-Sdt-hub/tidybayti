@@ -8,7 +8,7 @@ import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 
 import '../../room_details_screen/room_details_screen.dart';
 
@@ -20,46 +20,8 @@ class AssignWorkScreen extends StatefulWidget {
 }
 
 class _AssignWorkScheduleScreenState extends State<AssignWorkScreen> {
-  // Days of the week
-  final List<String> days = [
-    'Saturday',
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-  ];
 
-  // Tracking working and off days selections
-  List<String> selectedWorkingDays = [];
-  String? selectedOffDay;
 
-  // Maximum limits
-  final int maxWorkingDays = 6;
-  final int maxOffDays = 1;
-
-  // Method to update working days
-  void toggleWorkingDay(String day) {
-    setState(() {
-      if (selectedWorkingDays.contains(day)) {
-        selectedWorkingDays.remove(day); // Unselect if already selected
-      } else if (selectedWorkingDays.length < maxWorkingDays) {
-        selectedWorkingDays.add(day); // Add if not at max limit
-      }
-    });
-  }
-
-  // Method to update off day
-  void toggleOffDay(String day) {
-    setState(() {
-      if (selectedOffDay == day) {
-        selectedOffDay = null; // Unselect if already selected
-      } else {
-        selectedOffDay = day; // Set as off day
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +65,9 @@ class _AssignWorkScheduleScreenState extends State<AssignWorkScreen> {
                         Expanded(
                           flex: 5,
                           child: CustomButton(
-                            onTap: () {},
+                            onTap: () {
+                              usePresets(context);
+                            },
                             fillColor: Colors.white,
                             title: AppStrings.addNewTask,
                           ),
@@ -114,7 +78,9 @@ class _AssignWorkScheduleScreenState extends State<AssignWorkScreen> {
                         Expanded(
                           flex: 5,
                           child: CustomButton(
-                            onTap: () {},
+                            onTap: () {
+                              showBreakTime(context);
+                            },
                             fillColor: Colors.white,
                             title: AppStrings.addBreakTime,
                           ),
@@ -185,4 +151,130 @@ class _AssignWorkScheduleScreenState extends State<AssignWorkScreen> {
       ),
     );
   }
+}
+
+
+void showBreakTime(BuildContext context) {
+  showDialog(
+    context: context, // Required to pass the context
+    barrierDismissible: false, // Prevent dismissing by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Center(child: Text('Add break Time')),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(width: 10.h),
+
+              Row(children: [
+              const Expanded(
+                flex: 5,
+                child: CustomTextField(
+                  readOnly: true,
+                  fillColor: AppColors.blue100,
+                  hintText: 'Start Time',
+                  suffixIcon: Icon(Icons.watch_later_outlined),
+                ),
+              ),
+              SizedBox(width: 10.h),
+              const Expanded(
+                flex: 5,
+                child: CustomTextField(
+                  readOnly: true,
+                  suffixIcon: Icon(Icons.watch_later_outlined),
+                  fillColor: AppColors.blue100,
+                  hintText: 'End Time',
+                ),
+              ),
+            ],),
+              SizedBox(height: 25.h),
+              CustomButton(onTap: (){
+                Get.back();
+              },
+
+              fillColor: AppColors.blue300,
+                title: AppStrings.addBreak,
+              )
+
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void usePresets(BuildContext context) {
+  showDialog(
+    context: context, // Required to pass the context
+    barrierDismissible: false, // Prevent dismissing by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Center(child: Text('Add New Work')),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              CustomTextField(
+                readOnly: true,
+                fillColor: AppColors.blue100,
+                hintText: 'Select room',
+                suffixIcon: Icon(Icons.keyboard_arrow_down_outlined),
+              ),
+
+              SizedBox(height: 15.h),
+
+              CustomTextField(
+                readOnly: true,
+                fillColor: AppColors.blue100,
+                hintText: 'Use Presets',
+                suffixIcon: Icon(Icons.card_giftcard),
+              ),
+              SizedBox(height: 15.h),
+
+              Row(children: [
+              const Expanded(
+                flex: 5,
+                child: CustomTextField(
+                  readOnly: true,
+                  fillColor: AppColors.blue100,
+                  hintText: 'Start Time',
+                  suffixIcon: Icon(Icons.watch_later_outlined),
+                ),
+              ),
+              SizedBox(width: 10.h),
+              const Expanded(
+                flex: 5,
+                child: CustomTextField(
+                  readOnly: true,
+                  suffixIcon: Icon(Icons.watch_later_outlined),
+                  fillColor: AppColors.blue100,
+                  hintText: 'End Time',
+                ),
+              ),
+            ],),
+              SizedBox(height: 15.h),
+
+              const CustomTextField(
+                readOnly: true,
+                fillColor: AppColors.blue100,
+                hintText: 'Details',
+                maxLines: 5,
+              ),
+              SizedBox(height: 25.h),
+              CustomButton(onTap: (){
+                Get.back();
+              },
+
+              fillColor: AppColors.blue300,
+                title: AppStrings.addTask,
+              )
+
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
