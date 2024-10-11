@@ -66,26 +66,29 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                           ),
 
                           ///=========================== Center the RichText correctly ============================
-                          RichText (
-                            textAlign: TextAlign.center, // Center the text in the widget
+                          RichText(
+                            textAlign: TextAlign.center,
+                            // Center the text in the widget
                             text: TextSpan(
                               children: <TextSpan>[
                                 const TextSpan(
                                   text: AppStrings.bySigningUp,
                                   style: TextStyle(
                                     color: AppColors.dark300,
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w300,
                                     fontSize: 16,
                                   ),
                                 ),
 
                                 ///==========================Terms of use=======================
                                 TextSpan(
-                                  text: "${AppStrings.termsOfUse}  ",
+                                  text:
+                                      "                               ${AppStrings.termsOfUse}  ",
                                   style: const TextStyle(
                                     color: AppColors.dark400,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
+                                    decoration: TextDecoration.underline
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
@@ -108,11 +111,14 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                                   style: const TextStyle(
                                     color: AppColors.dark400,
                                     fontSize: 16,
+                                    decoration: TextDecoration.underline
+,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Get.toNamed(AppRoutes.privacyPolicyScreen);
+                                      Get.toNamed(
+                                          AppRoutes.privacyPolicyScreen);
                                     },
                                 ),
                               ],
@@ -142,7 +148,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                               ),
                               const CircleAvatar(
                                 radius: 6,
-                                backgroundColor: AppColors.red ,
+                                backgroundColor: AppColors.red,
                               ),
                             ],
                           ),

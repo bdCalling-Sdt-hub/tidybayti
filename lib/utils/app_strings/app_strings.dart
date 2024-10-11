@@ -207,7 +207,7 @@ class AppStrings {
   static const String editProfile      ='Edit Profile';
   static const String saveAndChange      ='Save & Change';
   static const String changePassword      ='Change password';
-  static const String termsOfService      ='Terms of services';
+  static const String termsOfService      ='Terms of use';
   static const String aboutUs      ='About US';
   static const String helpWhere      ='Help where';
   static const String presentPassword      ='Present Password';
