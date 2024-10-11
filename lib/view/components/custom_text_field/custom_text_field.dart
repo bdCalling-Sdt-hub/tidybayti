@@ -21,7 +21,8 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1,
     this.validator,
     this.hintText,
-    this.hintStyle,
+    this.hintStyle = const TextStyle(
+        color: AppColors.dark300, fontSize: 24, fontWeight: FontWeight.w300),
     this.fillColor = AppColors.employeeCardColor,
     this.suffixIcon,
     this.suffixIconColor,
@@ -99,16 +100,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? GestureDetector(
-          onTap: toggle,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: SvgPicture.asset(
-              obscureText ? AppIcons.eyeOff : AppIcons.eye,
-              height: 22,
-              width: 22,
-            ),
-          ),
-        )
+                onTap: toggle,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: SvgPicture.asset(
+                    obscureText ? AppIcons.eyeOff : AppIcons.eye,
+                    height: 22,
+                    width: 22,
+                  ),
+                ),
+              )
             : widget.suffixIcon,
         suffixIconColor: widget.suffixIconColor,
         border: OutlineInputBorder(

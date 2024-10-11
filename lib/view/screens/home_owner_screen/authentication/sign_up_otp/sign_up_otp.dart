@@ -6,6 +6,8 @@ import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 
 class SignUpOtp extends StatelessWidget {
@@ -13,54 +15,72 @@ class SignUpOtp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            // Background Image
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                AppImages.signInBackground,
-                fit: BoxFit.cover,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              // Background Image
+              SizedBox(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height,
+                child: Image.asset(
+                  AppImages.signInBackground,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
 
-            Positioned(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 334.h,
-                      ),
+              Positioned(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const CustomMenuAppbar(title: ''),
+                        SizedBox(
+                          height: 300.h,
+                        ),
 
-                      ///=============================Enter 6 Degit code====================
-                      const CustomTextField(
-                        hintText: AppStrings.enterSIxDegit,
-                      ),
-
-
-                      SizedBox(
-                        height: 24.h,
-                      ),
-
-                      ///============================Verify Code=============
-                      CustomButton(onTap: (){
-                        Get.toNamed(AppRoutes.freeServiceScreen);
-                      },
-                        fillColor: AppColors.employeeCardColor,
-                        title:AppStrings.verifyCode,
-                      ),
+                        ///=============================Enter 6 Degit code====================
+                        const CustomTextField(
+                          hintText: AppStrings.enterSIxDegit,
+                        ),
 
 
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(onPressed: () {},
+                              child: const CustomText(text: 'Resend',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.dark300,)),
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        ///============================Verify Code=============
+                        CustomButton(onTap: () {
+                          Get.toNamed(AppRoutes.freeServiceScreen);
+                        },
+                          fillColor: AppColors.employeeCardColor,
+                          title: AppStrings.verifyCode,
+                        ),
 
-                    ],
-                  ),
-                )),
 
-          ],
+                      ],
+                    ),
+                  )),
+
+            ],
+          ),
         ),
       ),
     );

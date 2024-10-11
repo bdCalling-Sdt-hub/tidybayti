@@ -40,6 +40,7 @@ class SignUpScreen extends StatelessWidget {
                       ///=============================First Name=====================
                       const CustomTextField(
                         hintText: AppStrings.firstName,
+                        fillColor: AppColors.employeeCardColor,
                       ),
                       SizedBox(
                         height: 10.h,
@@ -110,7 +111,7 @@ class SignUpScreen extends StatelessWidget {
                               ),
 
                               TextSpan(
-                                text: AppStrings.signIn,
+                                text: "  ${AppStrings.signIn}",
                                 style: const TextStyle(
                                   color: AppColors.dark400,
                                   fontSize: 16,

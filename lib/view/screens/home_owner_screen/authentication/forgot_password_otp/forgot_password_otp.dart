@@ -33,7 +33,7 @@ class ForgotPasswordOtp extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 334.h,
+                        height: 325.h,
                       ),
 
                       ///=============================Enter 6 Degit code====================
@@ -42,9 +42,9 @@ class ForgotPasswordOtp extends StatelessWidget {
                       ),
 
 
-                      SizedBox(
-                        height: 24.h,
-                      ),
+                           SizedBox(
+                             height: 48.h,
+                           ),
 
                       ///============================Verify Code=============
                       CustomButton(onTap: (){

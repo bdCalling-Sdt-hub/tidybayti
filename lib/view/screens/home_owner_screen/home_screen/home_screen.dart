@@ -50,7 +50,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xCCE8F3FA), // First color (with opacity)
+                 AppColors.light50, // First color (with opacity)
                   Color(0xFFB5D8EE),
                 ],
                 begin: Alignment.topLeft,
@@ -64,6 +64,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(vertical: 64.h, horizontal: 20.w),
             child: Column(
               children: [
+                ///==============================Add House===================
                 Row(
                   children: [
                     const CustomText(
@@ -74,26 +75,27 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                     ),
                     IconButton(
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.keyboard_arrow_down,
                           color: Colors.black,
                         )),
-                    Spacer(),
+                    const Spacer(),
+                    ///===============================Notification===============
                     IconButton(
                         onPressed: () {
                           Get.toNamed(AppRoutes.employeeNotificationScreen);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.notification_add,
-                          color: Colors.white,
+                          color: Colors.black12,
                         )),
                   ],
                 ),
                 SizedBox(height: 50.h),
 
-                // Grid of house categories
+                ///================================Grid====================
                 SizedBox(
-                  height: 350.h, // Fixed height for the horizontal GridView
+                  height: MediaQuery.of(context).size.height/3, // Fixed height for the horizontal GridView
                   child: GridView.builder(
                     scrollDirection: Axis.horizontal, // Horizontal scrolling
                     shrinkWrap: true,
@@ -115,8 +117,9 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                           }
                         },
                         child: Container(
+
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.employeeCardColor,
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: const [
                               BoxShadow(
@@ -146,7 +149,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                 color: AppColors.dark400,
                                 // Use corresponding color
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                                 textAlign: TextAlign.center,
                                 // Centered text for better alignment
                               ),
@@ -160,24 +163,26 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
+                ///=======================See all===========
                 Row(
                   children: [
-                    CustomText(
+                    const CustomText(
                       text: AppStrings.employees,
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
                       color: AppColors.blue900,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () {
                         Get.toNamed(AppRoutes.allEmployeeShow);
                       },
-                      child: CustomText(
+                      child: const CustomText(
                         text: AppStrings.seeAll,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.blue900,
+                        color: AppColors.dark300,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ],
