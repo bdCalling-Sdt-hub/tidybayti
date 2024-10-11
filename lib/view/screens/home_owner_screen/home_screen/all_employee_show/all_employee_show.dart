@@ -83,7 +83,7 @@ class AllEmployeeShow extends StatelessWidget {
         borderRadius: BorderRadius.circular(12), // Rounded corners
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10), // Padding inside card
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10), // Padding inside card
         child: Row(
           children: [
             // Employee Image
