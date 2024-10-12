@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tidybayte/main.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
@@ -54,18 +58,18 @@ class CustomRecipeCard extends StatelessWidget {
                         // Handle favorite button pressed
                       },
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        // Handle delete button pressed
-                      },
+                    const CustomImage(
+                      imageSrc:AppIcons.delete,
+                      imageType: ImageType.svg,
+                      imageColor: AppColors.dark400,
                     ),
+                    SizedBox(width: 10.w,)
                   ],
                 ),
                 CustomText(
                   textAlign: TextAlign.start,
                   text: '$cuisine \nCooking time: $cookTime',
-                  color: AppColors.dark400,
+                  color: AppColors.dark300,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                 ),

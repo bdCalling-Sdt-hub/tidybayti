@@ -79,6 +79,9 @@ void importDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+        ),
         title: Row(
           children: [
             const CustomText(
@@ -88,6 +91,7 @@ void importDialog(BuildContext context) {
               fontSize: 20,
               right: 10,
             ),
+            const Spacer(),
             GestureDetector(
                 onTap: () {
                   Get.back();
@@ -108,6 +112,7 @@ void importDialog(BuildContext context) {
             const CustomTextField(
               fillColor: AppColors.blue300,
               hintText: AppStrings.addPhoto,
+              suffixIcon: Icon(Icons.photo_camera_back),
             ),
             SizedBox(
               height: 15.h,
@@ -138,6 +143,9 @@ void uploadFileDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+        ),
         title: Row(
           children: [
            SizedBox(width: 35.w,),
@@ -168,6 +176,7 @@ void uploadFileDialog(BuildContext context) {
             const CustomTextField(
               fillColor: AppColors.blue300,
               hintText: AppStrings.addPhoto,
+              suffixIcon: Icon(Icons.photo_camera_back),
             ),
             SizedBox(
               height: 15.h,

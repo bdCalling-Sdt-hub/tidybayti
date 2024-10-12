@@ -38,8 +38,8 @@ class CustomMenuAppbar extends StatelessWidget {
               textAlign: TextAlign.center,
               text: title,
               fontWeight: FontWeight.w500,
-              fontSize: 24.sp,
-              color: AppColors.dark500,
+              fontSize: 20,
+              color: AppColors.blue900,
             ),
           ),
           isEdit==true?

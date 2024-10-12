@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
@@ -81,9 +82,14 @@ class TagsScreen extends StatelessWidget {
                         ),
                         itemCount: categories.length,
                         itemBuilder: (context, index) {
-                          return CategoryCard(
-                            title: categories[index]['title']!,
-                            imageUrl: categories[index]['imageUrl']!,
+                          return GestureDetector(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.myRecipeScreen);
+                            },
+                            child: CategoryCard(
+                              title: categories[index]['title']!,
+                              imageUrl: categories[index]['imageUrl']!,
+                            ),
                           );
                         },
                       ),

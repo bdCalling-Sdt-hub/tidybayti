@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
@@ -50,7 +51,11 @@ class MyRecipeScreen extends StatelessWidget {
                           hintText: 'Search',
                         ),
                         SizedBox(
-                          height: 32.h,
+                          height: 16.h,
+                        ),
+                        const Divider(color: AppColors.blue500,),
+                        SizedBox(
+                          height: 16.h,
                         ),
                         GestureDetector(
                           onTap: (){
