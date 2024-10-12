@@ -92,7 +92,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
 
                           CustomTextField(
                             hintText: AppStrings.addPhoto,
-                            suffixIcon: const Icon(Icons.photo),
+                            suffixIcon: const Icon(Icons.photo,color: Colors.grey,),
                           ),
                           const SizedBox(height: 16),
 
@@ -123,6 +123,14 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                               Expanded(
                                 flex: 1,
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white, backgroundColor: AppColors.employeeCardColor, // Text color
+                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                    textStyle: const TextStyle(fontSize: 18),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(1), // Rounded corners
+                                    ),
+                                  ),
                                   onPressed: () {
                                     if (ingredientsController.text.isNotEmpty) {
                                       setState(() {
@@ -131,7 +139,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                       });
                                     }
                                   },
-                                  child: const Icon(Icons.add),
+                                  child: const Icon(Icons.add,color: AppColors.blue900,),
                                 ),
                               ),
                             ],
@@ -148,9 +156,10 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 10),
                                       child: Container(
+                                        height: 64,
                                         padding: const EdgeInsets.all(12),
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[200],
+                                          color: AppColors.employeeCardColor,
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: Text(
@@ -169,12 +178,20 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                   Expanded(
                                     flex: 1,
                                     child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white, backgroundColor: AppColors.employeeCardColor, // Text color
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                        textStyle: const TextStyle(fontSize: 18),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(1), // Rounded corners
+                                        ),
+                                      ),
                                       onPressed: () {
                                         setState(() {
                                           ingredientsList.remove(ingredient);
                                         });
                                       },
-                                      child: const Icon(Icons.remove),
+                                      child: const Icon(Icons.remove,color: AppColors.blue900,),
                                     ),
                                   ),
                                 ],
@@ -200,6 +217,14 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                               Expanded(
                                 flex: 1,
                                 child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white, backgroundColor: AppColors.employeeCardColor, // Text color
+                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                    textStyle: const TextStyle(fontSize: 18),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(1), // Rounded corners
+                                    ),
+                                  ),
                                   onPressed: () {
                                     if (describeStepsController.text.isNotEmpty) {
                                       setState(() {
@@ -208,7 +233,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                       });
                                     }
                                   },
-                                  child: const Icon(Icons.add),
+                                  child: const Icon(Icons.add,color: AppColors.blue900,),
                                 ),
                               ),
                             ],
@@ -223,10 +248,11 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                   Expanded(
                                     flex: 3,
                                     child: Container(
+                                      height: 64,
                                       padding: const EdgeInsets.all(12),
                                       margin: const EdgeInsets.symmetric(vertical: 5),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[200],
+                                        color: AppColors.employeeCardColor,
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Text(
@@ -244,12 +270,20 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                   Expanded(
                                     flex: 1,
                                     child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white, backgroundColor: AppColors.employeeCardColor, // Text color
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                                        textStyle: const TextStyle(fontSize: 18),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(1), // Rounded corners
+                                        ),
+                                      ),
                                       onPressed: () {
                                         setState(() {
                                           stepsList.remove(step);
                                         });
                                       },
-                                      child: const Icon(Icons.remove),
+                                      child: const Icon(Icons.remove,color: AppColors.blue900,),
                                     ),
                                   ),
                                 ],
@@ -262,7 +296,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                           ///=============================== Category Selection ========================
                           const Text(
                             'Select Tags',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300,color: AppColors.dark300),
                           ),
                           const SizedBox(height: 10),
 
@@ -288,16 +322,15 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                 child: Container(
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: selectedCategories[index] ? Colors.blueGrey : Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(8),
+                                    color: selectedCategories[index] ? AppColors.blue900 : AppColors.employeeCardColor,
                                     border: Border.all(color: Colors.black12),
                                   ),
                                   child: Text(
                                     categories[index],
                                     style: TextStyle(
-                                      color: selectedCategories[index] ? Colors.white : Colors.black,
+                                      color: selectedCategories[index] ? AppColors.light200 : AppColors.dark300,
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ),
