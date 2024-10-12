@@ -73,11 +73,15 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
           child: Column(
             children: [
               ///=============================== Menu Title ========================
-              CustomMenuAppbar(
-                title: AppStrings.editEmployeeDetails,
-                onBack: () {
-                  Get.back();
-                },
+              Column(
+                children: [
+                  CustomMenuAppbar(
+                    title: AppStrings.editEmployeeDetails,
+                    onBack: () {
+                      Get.back();
+                    },
+                  ),
+                ],
               ),
 
               ///=============================== Employee List ========================
@@ -165,21 +169,21 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
 
                     const SizedBox(height: 24.0), // Spacing between sections
 
-                    const Text(
-                      'Select off days',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    const CustomText(
+                      textAlign: TextAlign.start,
+                      bottom: 24,
+                      text: 'Select off days',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.dark400,
                     ),
                     _buildDaySelectionGrid(selectedOffDays, false),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     CustomButton(
-                      onTap: () {
-                      },
+                      onTap: () {},
                       fillColor: Colors.white,
                       title: AppStrings.upgradeProfile,
                     )
@@ -196,7 +200,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
   Widget _buildDaySelectionGrid(List<bool> selectedDays, bool isWorkingDay) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: daysOfWeek.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -208,6 +212,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
         return Row(
           children: [
             Checkbox(
+              activeColor: AppColors.blue900,
+              checkColor: AppColors.light200,
               value: selectedDays[index],
               onChanged: (bool? newValue) {
                 setState(() {
@@ -229,4 +235,3 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
     );
   }
 }
-

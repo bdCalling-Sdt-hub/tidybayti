@@ -59,8 +59,8 @@ class EmployeeDetails extends StatelessWidget {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AppColors.blue100, // First color (with opacity)
-                          AppColors.blue100, // First color (with opacity)
+                          Color(0xCCE8F3FA), // First color (with opacity)
+                          Color(0xCCE8F3FA), // First color (with opacity)
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
