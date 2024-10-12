@@ -40,7 +40,8 @@ class RoomDetailsScreen extends StatelessWidget {
                   Get.back();
                 },
                 onTap: () {
-                  showEditRoomDialog(context); // Call to show the Edit Room Dialog
+                  showEditRoomDialog(
+                      context); // Call to show the Edit Room Dialog
                 },
               ),
 
@@ -58,13 +59,15 @@ class RoomDetailsScreen extends StatelessWidget {
                           onInfoPressed: () {
                             TaskInfoDialog.showTask(
                               context: context,
-                              content: 'Are you sure you want to delete this task?',
+                              content:
+                                  'Are you sure you want to delete this task?',
                               onConfirm: () {
                                 // Handle confirm action (e.g., delete task)
                                 Navigator.of(context).pop(); // Close the dialog
                               },
                               onCancel: () {
-                                Navigator.of(context).pop(); // Close the dialog without any action
+                                Navigator.of(context)
+                                    .pop(); // Close the dialog without any action
                               },
                             );
                           },
@@ -72,13 +75,15 @@ class RoomDetailsScreen extends StatelessWidget {
                             TaskAlertDialog.showTaskDialog(
                               context: context,
                               title: 'Delete Task',
-                              content: 'Are you sure you want to delete this task?',
+                              content:
+                                  'Are you sure you want to delete this task?',
                               onConfirm: () {
                                 // Handle confirm action (e.g., delete task)
                                 Navigator.of(context).pop(); // Close the dialog
                               },
                               onCancel: () {
-                                Navigator.of(context).pop(); // Close the dialog without any action
+                                Navigator.of(context)
+                                    .pop(); // Close the dialog without any action
                               },
                             );
                           },
@@ -153,19 +158,23 @@ class TaskInfoDialog {
       barrierDismissible: false, // Prevent dismissing by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+          ),
           title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Task'),
-              Spacer(),
+
               IconButton(
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(Icons.backspace_outlined),
+                icon: const Icon(Icons.backspace_outlined),
               ),
             ],
           ),
-          content: Column(
+          content: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -175,48 +184,50 @@ class TaskInfoDialog {
                   CustomText(
                     text: 'Room:',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                   CustomText(
                     text: 'Bedroom',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                 ],
               ),
+              SizedBox(height: 16,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
                     text: 'Task title:',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                   CustomText(
                     text: 'Clean',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                 ],
               ),
+              SizedBox(height: 16,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
                     text: 'Time',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                   CustomText(
                     text: '05:00 pm -06:00pm',
                     fontWeight: FontWeight.w400,
-                    color: AppColors.dark400,
-                    fontSize: 20,
+                    color: AppColors.dark300,
+                    fontSize: 16,
                   ),
                 ],
               ),
@@ -224,15 +235,16 @@ class TaskInfoDialog {
                 top: 25,
                 text: 'Details',
                 fontWeight: FontWeight.w400,
-                color: AppColors.dark400,
-                fontSize: 20,
+                color: AppColors.dark300,
+                fontSize: 16,
               ),
               CustomText(
                 textAlign: TextAlign.start,
-                text: 'Diam elit, odio elit, sollicitudin, urna, goasfgg, this is good for me.',
+                text:
+                    'Diam elit, odio elit, sollicitudin, urna, goasfgg, this is good for me.',
                 fontWeight: FontWeight.w400,
-                color: AppColors.dark400,
-                fontSize: 14,
+                color: AppColors.dark300,
+                fontSize: 12,
                 maxLines: 5,
               ),
             ],
@@ -250,22 +262,31 @@ void showEditRoomDialog(BuildContext context) {
     barrierDismissible: false, // Prevent dismissing by tapping outside
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Edit New Room'),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+        ),
+        title: const CustomText(
+          text: 'Edit New Room',
+          color: AppColors.dark500,
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+        ),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CustomTextField(
-                fillColor: AppColors.blue50,
+              SizedBox(height: 40.h,),
+              const CustomTextField(
+                fillColor: AppColors.blue100,
                 hintText: 'Room Name',
               ),
               SizedBox(height: 10.h),
               const CustomTextField(
                 suffixIcon: Icon(Icons.keyboard_arrow_down_outlined),
-                fillColor: AppColors.blue50,
+                fillColor: AppColors.blue100,
                 hintText: 'Add Icon',
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 40.h),
               Row(
                 children: [
                   GestureDetector(
@@ -274,7 +295,7 @@ void showEditRoomDialog(BuildContext context) {
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
-                      color: AppColors.light200,
+                      color: AppColors.light300,
                       child: const CustomText(
                         text: 'Cancel',
                         fontSize: 24,
@@ -283,13 +304,11 @@ void showEditRoomDialog(BuildContext context) {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 32),
                   GestureDetector(
                     onTap: () {
-
-                        Get.back();
-                      },
-
+                      Get.back();
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       color: AppColors.blue300,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tidybayte/main.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
 class CustomRoomCard extends StatelessWidget {
@@ -39,18 +41,21 @@ class CustomRoomCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: onInfoPressed,
-                    icon: const Icon(
-                      Icons.info,
-                      color: Colors.grey,
+                  GestureDetector(
+                    onTap: onInfoPressed,
+                    child: const CustomImage(
+                      imageSrc:AppIcons.details,
+                      imageType: ImageType.svg,
+                      imageColor: AppColors.dark400,
                     ),
                   ),
-                  IconButton(
-                    onPressed: onDeletePressed,
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.grey,
+                  SizedBox(width: 16.w,),
+                  GestureDetector(
+                    onTap: onDeletePressed,
+                    child: const CustomImage(
+                      imageSrc:AppIcons.delete,
+                      imageType: ImageType.svg,
+                      imageColor: AppColors.dark400,
                     ),
                   ),
                 ],
@@ -65,9 +70,10 @@ class CustomRoomCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const Icon(
-                    Icons.watch_later,
-                    color: Colors.black12,
+                  const CustomImage(
+                    imageSrc:AppIcons.watch,
+                    imageType: ImageType.svg,
+                    imageColor: AppColors.dark400,
                   ),
                   CustomText(
                     left: 5,
@@ -79,10 +85,11 @@ class CustomRoomCard extends StatelessWidget {
                 ],
               )
             ],
-
           ),
         ),
-        SizedBox(height: 10.h,)
+        SizedBox(
+          height: 10.h,
+        )
       ],
     );
   }

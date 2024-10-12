@@ -198,7 +198,9 @@ void showDialoge(BuildContext context) {
     barrierDismissible: false, // Prevent dismissing by tapping outside
     builder: (BuildContext context) {
       return AlertDialog(
-
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+        ),
         backgroundColor: AppColors.addedColor,
         content: Column(
           mainAxisSize: MainAxisSize.min,

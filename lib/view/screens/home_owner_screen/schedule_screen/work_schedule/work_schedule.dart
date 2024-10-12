@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
@@ -128,7 +130,7 @@ class _WorkScheduleState extends State<WorkSchedule> {
                                     CustomText(
                                       textAlign: TextAlign.start,
                                       text: 'Assistant',
-                                      color: AppColors.dark300,
+                                      color: AppColors.dark200,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14,
                                     ),
@@ -145,7 +147,7 @@ class _WorkScheduleState extends State<WorkSchedule> {
                                               borderRadius:
                                                   BorderRadius.circular(6),
                                             ),
-                                            child: Column(
+                                            child: const Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
@@ -156,7 +158,7 @@ class _WorkScheduleState extends State<WorkSchedule> {
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 14,
                                                 ),
-                                                const SizedBox(height: 5),
+                                                SizedBox(height: 5),
                                                 CustomText(
                                                   textAlign: TextAlign.start,
                                                   text: 'Arrange Appointment',
@@ -166,10 +168,10 @@ class _WorkScheduleState extends State<WorkSchedule> {
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Icon(
-                                                      Icons
-                                                          .watch_later_outlined,
-                                                      color: Colors.black12,
+                                                    CustomImage(
+                                                      imageSrc:AppIcons.watch,
+                                                      imageType: ImageType.svg,
+                                                      imageColor: AppColors.dark400,
                                                     ),
                                                     CustomText(
                                                       left: 5,

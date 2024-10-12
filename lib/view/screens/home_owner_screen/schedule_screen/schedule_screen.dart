@@ -82,7 +82,7 @@ class _WalletScreenState extends State<ScheduleScreen> {
                               )),
                           child: CustomText(
                             text: schedule[index],
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
                             fontSize: 18.h,
                             color: AppColors.blue900,
                           ),

@@ -11,9 +11,11 @@ class AppColors {
   ///==========================Light Color Code =============
   static const Color light50 = Color(0xffFDFDFD);
   static const Color light200 = Color(0xffF4F4F5);
+  static const Color light300 = Color(0xffF0F0F1);
 
   ///======================Dark Color Code====================
   static const Color dark300 = Color(0xff626870);
+  static const Color dark200 = Color(0xff93979D);
   static const Color dark400 = Color(0xff444A54);
   static const Color blue100 = Color(0xffE8F3FA);
   static const Color dark500 = Color(0xff151D29);
