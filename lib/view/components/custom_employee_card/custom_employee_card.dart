@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
@@ -26,7 +28,7 @@ class CustomEmployeeCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20), // For spacing between cards
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:AppColors.employeeCardColor,
+        color:const Color(0xCCE8F3FA),
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(
@@ -53,6 +55,7 @@ class CustomEmployeeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       name,
@@ -62,14 +65,15 @@ class CustomEmployeeCard extends StatelessWidget {
                         color: Colors.black87,
                       ),
                     ),
-                  const Spacer(),
-                    IconButton(
-                      onPressed: onInfo,
-                      icon: Icon(
-                        Icons.info_outline,
-                        color: Colors.grey[600],
+                    GestureDetector(
+                      onTap: onInfo,
+                      child: const CustomImage(
+                        imageSrc:AppIcons.details,
+                        imageType: ImageType.svg,
+                        imageColor: AppColors.dark400,
                       ),
                     ),
+
                   ],
                 ),
                 const SizedBox(height: 4),

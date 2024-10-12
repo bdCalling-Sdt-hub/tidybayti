@@ -36,7 +36,7 @@ class BudgetCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           height: 75.h,
-          color: Colors.white,
+          color: AppColors.employeeCardColor,
           width: MediaQuery.of(context).size.width,
           child: Row(
             children: [
@@ -54,9 +54,9 @@ class BudgetCard extends StatelessWidget {
                         SizedBox(width: 8.w),
                         CustomText(
                           text: title,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18.sp,
-                          color: AppColors.dark400,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: AppColors.blue800,
                         ),
                         const Spacer(),
                         CustomText(
@@ -82,7 +82,10 @@ class BudgetCard extends StatelessWidget {
               GestureDetector(
                 onTap: onTap,
                 child: Container(
-                  color: AppColors.blue900,
+                 decoration: BoxDecoration(
+                   color: AppColors.blue900,
+                   shape: BoxShape.circle
+                 ),
                   child: Icon(
                     Icons.chevron_right,
                     color: Colors.white,

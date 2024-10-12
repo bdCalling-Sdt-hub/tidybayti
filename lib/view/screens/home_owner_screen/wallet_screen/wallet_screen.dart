@@ -51,6 +51,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   onBack: () {
                     Get.back();
                   },
+                  download: true,
                 ),
                 SizedBox(height: 20.h),
 
@@ -102,7 +103,8 @@ class _WalletScreenState extends State<WalletScreen> {
 
         ),
       ),
-      floatingActionButton: Padding(
+
+      floatingActionButton: selectedTabIndex==0?Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomButton(
           width: MediaQuery.of(context).size.width/1.2,
@@ -110,9 +112,9 @@ class _WalletScreenState extends State<WalletScreen> {
             Get.toNamed(AppRoutes.createBudgetScreen);
           },
         fillColor: Colors.white,
-          title: AppStrings.createBudgets,
+          title: 'Create Budget',
         ),
-      ),
+      ):const SizedBox()
     );
   }
 }

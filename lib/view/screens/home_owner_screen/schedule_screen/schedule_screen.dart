@@ -49,7 +49,7 @@ class _WalletScreenState extends State<ScheduleScreen> {
                   onBack: () {
                     Get.back();
                   },
-                 download: true,
+                     download:selectedTabIndex == 0,
                 ),
                 SizedBox(height: 20.h),
 

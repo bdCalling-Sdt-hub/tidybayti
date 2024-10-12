@@ -36,14 +36,14 @@ class RecipeScreen extends StatelessWidget {
                   children: [
                     /// Menu Title
                     const CustomText(
-                      text: AppStrings.scheduleOverview,
+                      text: 'Recipe',
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w500,
                       fontSize: 24,
                       color: AppColors.dark500,
                     ),
 
-                    const SizedBox(height: 20), // Space between title and menu items
+                    const SizedBox(height: 100), // Space between title and menu items
 
                     /// Menu Items
                     Expanded(

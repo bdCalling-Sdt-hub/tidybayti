@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tidybayte/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
@@ -88,7 +87,7 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
                                     ? Icons.keyboard_arrow_up
                                     : Icons.keyboard_arrow_down_rounded,
                                 size: 28,
-                                color: AppColors.blue,
+                                color: AppColors.blue900,
                               ),
                               onTap: () {
                                 setState(() {
@@ -160,7 +159,7 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
                                     const CustomImage(
                                       imageSrc: AppIcons.calendar,
                                       size: 24,
-                                      imageColor: AppColors.blue,
+                                      imageColor: AppColors.blue900,
                                     ),
                                   ],
                                 ),
@@ -216,7 +215,7 @@ class _CreateBudgetScreenState extends State<CreateBudgetScreen> {
                               onTap: () {
                                 Get.back();
                               },
-                              title: AppStrings.createBudgets,
+                              title: "Create Budget",
                               fillColor: AppColors.blue50,
                             ),
                           ],

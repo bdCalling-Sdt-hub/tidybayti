@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
@@ -94,12 +95,23 @@ class _AllTaskScreenState extends State<AllTaskScreen> {
                     ),
                     const SizedBox(height: 20),
                     selectedDayIndex != null
-                        ? CustomRoomCard(
-                            taskName: 'Clean Car',
-                            assignedTo: 'Annette Black',
-                            time: '10 Aug,2024',
-                            onInfoPressed: () {},
-                            onDeletePressed: () {})
+                        ? Column(
+                          children: [
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            const Divider(color: AppColors.blue500,),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            CustomRoomCard(
+                                taskName: 'Clean Car',
+                                assignedTo: 'Annette Black',
+                                time: '10 Aug,2024',
+                                onInfoPressed: () {},
+                                onDeletePressed: () {}),
+                          ],
+                        )
                         : const SizedBox()
                   ],
                 ),

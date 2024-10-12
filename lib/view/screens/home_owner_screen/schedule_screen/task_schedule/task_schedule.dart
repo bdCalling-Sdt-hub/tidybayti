@@ -80,7 +80,7 @@ class TaskSchedule extends StatelessWidget {
         ///==============================Grocery====================
         CustomMenuItem(
             image: AppIcons.grocery,
-            text: AppStrings.grocery,
+            text: 'Grocery list',
             onTap: () {
               Get.toNamed(AppRoutes.groceryTask);
 
