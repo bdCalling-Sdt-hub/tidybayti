@@ -48,6 +48,7 @@ class AllEmployeeShow extends StatelessWidget {
                   children: [
                     /// Add Employee Text Field
                     CustomTextField(
+                      fillColor: AppColors.blue50,
                       readOnly: true,
                       onTap: () {
                         Get.toNamed(AppRoutes.addEmployeeScreen);
@@ -77,7 +78,7 @@ class AllEmployeeShow extends StatelessWidget {
 
   Widget _buildEmployeeCard(BuildContext context) {
     return Card(
-      color:AppColors.blue50,
+      color:AppColors.normal,
       elevation: 2, // Added elevation for better visibility
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12), // Rounded corners
@@ -102,15 +103,17 @@ class AllEmployeeShow extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between name and icon
                     children: [
-                      CustomText(
+                      const CustomText(
                         text: 'Sadhu',
                         fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
+                        fontSize: 14,
                         color: AppColors.dark400,
                       ),
 
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.employeeDetails);
+                        },
                         icon: const Icon(Icons.info_outline),
                       ),
                     ],
@@ -123,6 +126,13 @@ class AllEmployeeShow extends StatelessWidget {
                   ),
                   CustomText(
                     text: 'Id: 123456789',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.sp,
+                    color: AppColors.dark400,
+                  ),
+
+                  CustomText(
+                    text: 'Email: masumrna927@gmail.com',
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
                     color: AppColors.dark400,
