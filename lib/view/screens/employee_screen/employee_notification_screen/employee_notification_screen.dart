@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 
 class EmployeeNotificationScreen extends StatelessWidget {
   const EmployeeNotificationScreen({super.key});
@@ -9,51 +11,58 @@ class EmployeeNotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFE3F2FD), // Light blue background
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-           Get.back();
-          },
+
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xCCE8F3FA), // First color (with opacity)
+              Color(0xFFB5D8EE),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
-        title: const Text(
-          'Notification',
-          style: TextStyle(color: Colors.black, fontSize: 20),
+        child:     Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            children: [
+              CustomMenuAppbar(
+                title: AppStrings.notification,
+                onBack: () {
+                  Get.back();
+                },
+              ),
+              const NotificationCard(
+                icon: Icons.notifications_none_outlined,
+                title: 'Welcome to Tidy bayti app.',
+                timeAgo: '1 day ago',
+              ),
+              SizedBox(height: 16.h),
+              NotificationCard(
+                icon: Icons.notifications_none_outlined,
+                title: 'You are assigned to a new task',
+                timeAgo: '1 day ago',
+              ),
+              SizedBox(height: 16.h),
+              NotificationCard(
+                icon: Icons.notifications_none_outlined,
+                title: 'Your task has been re-scheduled.',
+                timeAgo: '1 day ago',
+              ),
+              SizedBox(height: 16.h),
+              NotificationCard(
+                icon: Icons.notifications_none_outlined,
+                title: 'You have completed your task.',
+                timeAgo: '1 day ago',
+              ),
+            ],
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          children: [
-            NotificationCard(
-              icon: Icons.notifications_none_outlined,
-              title: 'Welcome to Tidy bayti app.',
-              timeAgo: '1 day ago',
-            ),
-            SizedBox(height: 16.h),
-            NotificationCard(
-              icon: Icons.notifications_none_outlined,
-              title: 'You are assigned to a new task',
-              timeAgo: '1 day ago',
-            ),
-            SizedBox(height: 16.h),
-            NotificationCard(
-              icon: Icons.notifications_none_outlined,
-              title: 'Your task has been re-scheduled.',
-              timeAgo: '1 day ago',
-            ),
-            SizedBox(height: 16.h),
-            NotificationCard(
-              icon: Icons.notifications_none_outlined,
-              title: 'You have completed your task.',
-              timeAgo: '1 day ago',
-            ),
-          ],
-        ),
-      ),
+      )
+
+
     );
   }
 }
@@ -64,11 +73,11 @@ class NotificationCard extends StatelessWidget {
   final String timeAgo;
 
   const NotificationCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.timeAgo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
