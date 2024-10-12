@@ -209,7 +209,7 @@ class AppStrings {
   static const String changePassword      ='Change password';
   static const String termsOfService      ='Terms of use';
   static const String aboutUs      ='About US';
-  static const String helpWhere      ='Help where';
+  static const String helpWhere      ='Help';
   static const String presentPassword      ='Present Password';
   static const String newPassword      ='New Password';
 

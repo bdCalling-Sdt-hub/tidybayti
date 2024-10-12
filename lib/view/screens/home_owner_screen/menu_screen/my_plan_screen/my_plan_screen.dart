@@ -61,7 +61,7 @@ class MyPlanScreen extends StatelessWidget {
                   },
                   onBuyNewPackagesTap: () {
                     // Handle buying new packages logic
-                  },
+                  }, bhd: 'BHD 60/Month', expireDate: 'Expiry date :22 Feb 2024',
                 ),
               ],
             ),
@@ -76,6 +76,8 @@ class MyPlanScreen extends StatelessWidget {
     required BuildContext context,
     required String packageTitle,
     required String price,
+    required String expireDate,
+    required String bhd,
     required List<String> listPackages,
     required VoidCallback onAutoRenewTap,
     required VoidCallback onRenewPlanTap,
@@ -105,8 +107,24 @@ class MyPlanScreen extends StatelessWidget {
               fontSize: 20,
               color: AppColors.bhdColor,
               bottom: 16,
+            ),   CustomText(
+              top: 8,
+              text: bhd,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+              color: AppColors.bhdColor,
+              bottom: 16,
             ),
             _buildPackageList(listPackages),
+
+            CustomText(
+              top: 8,
+              text: expireDate,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              color: AppColors.red,
+              bottom: 16,
+            ),
             SizedBox(height: 16.h),
 
             ///=========================== Auto-Renewal Button ============================

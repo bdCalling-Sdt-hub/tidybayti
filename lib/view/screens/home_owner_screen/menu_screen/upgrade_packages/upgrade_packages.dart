@@ -126,7 +126,7 @@ class UpgradePackages extends StatelessWidget {
             CustomButton(
               onTap: onTap,
               fillColor: AppColors.light50,
-              title: AppStrings.byeNow,
+              title: 'Buy now',
             ),
           ],
         ),
