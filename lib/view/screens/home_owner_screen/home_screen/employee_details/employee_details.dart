@@ -15,6 +15,8 @@ import 'package:tidybayte/view/components/custom_profile_item/custom_profile_ite
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 
+import '../../../../../utils/app_images/app_images.dart';
+
 class EmployeeDetails extends StatelessWidget {
   const EmployeeDetails({super.key});
 
@@ -69,12 +71,24 @@ class EmployeeDetails extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: CustomNetworkImage(
-                              boxShape: BoxShape.circle,
-                              imageUrl: AppConstants.employee,
-                              height: 128,
-                              width: 128),
+                        // Center(
+                        //   child: CustomNetworkImage(
+                        //       boxShape: BoxShape.circle,
+                        //       imageUrl: AppConstants.employee,
+                        //       height: 128,
+                        //       width: 128),
+                        // ),
+                        const Center(
+                          child: ClipOval(
+                            child: SizedBox(
+                              width: 128.0, // specify width
+                              height: 128.0, // specify height
+                              child: CustomImage(
+                                imageSrc: AppImages.avatar,
+                                imageType: ImageType.png,
+                              ),
+                            ),
+                          ),
                         ),
 
                        SizedBox(

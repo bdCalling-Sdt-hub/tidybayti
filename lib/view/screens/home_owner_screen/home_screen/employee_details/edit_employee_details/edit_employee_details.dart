@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/utils/app_images/app_images.dart';
 
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
@@ -89,11 +90,23 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                 child: ListView(
                   padding: const EdgeInsets.all(16.0),
                   children: [
-                    CustomNetworkImage(
-                        boxShape: BoxShape.circle,
-                        imageUrl: AppConstants.userNtr,
-                        height: 117,
-                        width: 117),
+                    // CustomNetworkImage(
+                    //     boxShape: BoxShape.circle,
+                    //     imageUrl: AppConstants.userNtr,
+                    //     height: 117,
+                    //     width: 117),
+                    const Center(
+                      child: ClipOval(
+                        child: SizedBox(
+                          width: 117.0, // specify width
+                          height: 117.0, // specify height
+                          child: CustomImage(
+                            imageSrc: AppImages.avatar,
+                            imageType: ImageType.png,
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20.h,
                     ),

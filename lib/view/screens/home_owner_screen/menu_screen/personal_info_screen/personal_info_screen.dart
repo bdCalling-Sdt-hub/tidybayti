@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -61,50 +63,64 @@ class PersonalInfoScreen extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    child:  Column(
+                    child: const Column(
                       children: [
-                         CustomNetworkImage(
-                             boxShape: BoxShape.circle,
-                             imageUrl: AppConstants.userNtr, height: 128, width: 128),
-                         const CustomText(
-                           top: 10,
+                        ClipOval(
+                          child: SizedBox(
+                            width: 128.0, // specify width
+                            height: 128.0, // specify height
+                            child: CustomImage(
+                              imageSrc: AppImages.avatar,
+                              imageType: ImageType.png,
+                            ),
+                          ),
+                        )
+
+                        ,
+                        // CustomNetworkImage(
+                        //     boxShape: BoxShape.circle,
+                        //     imageUrl: AppConstants.userNtr, height: 128, width: 128),
+                        CustomText(
+                          top: 10,
                           text: 'Masum raj',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
-                        ),  const CustomText(
+                        ),
+                        CustomText(
                           text: 'Free User',
                           color: AppColors.dark300,
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           bottom: 24,
                         ),
+
                         ///============================First Name=====================
-                        const CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.firstName,
                           subTitle: 'Masum ',
                         ),
 
                         ///================================last Name========================
-                        const CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.lastName,
                           subTitle: 'Raj',
                         ),
 
                         ///================================Email========================
-                        const CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.email,
                           subTitle: 'masumrna927@gmail.com',
                         ),
 
                         ///================================Contact No========================
-                        const CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.contactNumber,
                           subTitle: '0172228692',
                         ),
 
                         ///================================Address========================
-                        const CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.address,
                           subTitle: 'Dhaka',
                         ),

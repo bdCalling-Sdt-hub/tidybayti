@@ -63,6 +63,7 @@ class _CustomImageState extends State<CustomImage> {
     }
 
     return Container(
+
         margin: EdgeInsets.symmetric(
             horizontal: widget.horizontal, vertical: widget.vertical),
         width: widget.sizeWidth,

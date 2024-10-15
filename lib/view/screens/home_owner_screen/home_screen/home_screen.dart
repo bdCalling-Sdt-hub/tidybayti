@@ -200,13 +200,22 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Container(
                           color: Colors.white,
-                          child: Column(
+                          child: const Column(
                             children: [
-                              CustomNetworkImage(
-                                  imageUrl: AppConstants.userNtr,
-                                  height: 181,
-                                  width: 152),
-                              const CustomText(
+                              SizedBox(
+                                width: 181.0, // specify width
+                                height: 152.0, // specify height
+                                child: CustomImage(
+                                  imageSrc: AppImages.avatar,
+                                  imageType: ImageType.png,
+                                ),
+                              ),
+
+                              // CustomNetworkImage(
+                              //     imageUrl: AppConstants.userNtr,
+                              //     height: 181,
+                              //     width: 152),
+                              CustomText(
                                 text: 'sadhu',
                                 color: AppColors.dark400,
                                 fontSize: 19,

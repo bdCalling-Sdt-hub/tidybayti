@@ -16,6 +16,8 @@ import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/employee_nav_bar/employee_navbar.dart';
 
+import '../../../../utils/app_images/app_images.dart';
+
 class EmployeeProfileScreen extends StatelessWidget {
   const EmployeeProfileScreen({super.key});
 
@@ -70,11 +72,22 @@ class EmployeeProfileScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        CustomNetworkImage(
-                            boxShape: BoxShape.circle,
-                            imageUrl: AppConstants.employee,
-                            height: 128,
-                            width: 128),
+                        // CustomNetworkImage(
+                        //     boxShape: BoxShape.circle,
+                        //     imageUrl: AppConstants.employee,
+                        //     height: 128,
+                        //     width: 128),
+                        const ClipOval(
+                          child: SizedBox(
+                            width: 128.0, // specify width
+                            height: 128.0, // specify height
+                            child: CustomImage(
+                              imageSrc: AppImages.avatar,
+                              imageType: ImageType.png,
+                            ),
+                          ),
+                        ),
+
                         const CustomText(
                           top: 10,
                           text: 'Habib',

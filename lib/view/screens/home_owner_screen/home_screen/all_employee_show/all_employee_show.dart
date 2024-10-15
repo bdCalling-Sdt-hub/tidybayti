@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
@@ -88,12 +90,23 @@ class AllEmployeeShow extends StatelessWidget {
         child: Row(
           children: [
             // Employee Image
-            CustomNetworkImage(
-              imageUrl: AppConstants.userNtr,
-              height: 53.h,
-              width: 53.w,
-              boxShape: BoxShape.circle,
+            // CustomNetworkImage(
+            //   imageUrl: AppConstants.userNtr,
+            //   height: 53.h,
+            //   width: 53.w,
+            //   boxShape: BoxShape.circle,
+            // ),
+            const ClipOval(
+              child: SizedBox(
+                width: 53.0, // specify width
+                height: 53.0, // specify height
+                child: CustomImage(
+                  imageSrc: AppImages.avatar,
+                  imageType: ImageType.png,
+                ),
+              ),
             ),
+
             SizedBox(width: 10.w),
             // Employee Info
             Expanded(

@@ -9,6 +9,8 @@ import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
+import '../../../../../utils/app_images/app_images.dart';
+
 class EmployeeHomeAppBar extends StatelessWidget {
   const EmployeeHomeAppBar({
     super.key,
@@ -37,11 +39,22 @@ class EmployeeHomeAppBar extends StatelessWidget {
               Row(
                 children: [
                   ///==================== Profile image =====================
-                  CustomNetworkImage(
-                      boxShape: BoxShape.circle,
-                      imageUrl:AppConstants.userNtr,
-                      height: 60,
-                      width: 60),
+                  // CustomNetworkImage(
+                  //     boxShape: BoxShape.circle,
+                  //     imageUrl:AppConstants.userNtr,
+                  //     height: 60,
+                  //     width: 60),
+                  const ClipOval(
+                    child: SizedBox(
+                      width: 60.0, // specify width
+                      height: 60.0, // specify height
+                      child: CustomImage(
+                        imageSrc: AppImages.avatar,
+                        imageType: ImageType.png,
+                      ),
+                    ),
+                  ),
+
 
                   SizedBox(
                     width: 16.w,
