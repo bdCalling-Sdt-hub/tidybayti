@@ -82,7 +82,7 @@ class PersonalInfoScreen extends StatelessWidget {
                         //     imageUrl: AppConstants.userNtr, height: 128, width: 128),
                         CustomText(
                           top: 10,
-                          text: 'Masum raj',
+                          text: 'Name:',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -98,31 +98,31 @@ class PersonalInfoScreen extends StatelessWidget {
                         ///============================First Name=====================
                         CustomProfileItem(
                           title: AppStrings.firstName,
-                          subTitle: 'Masum ',
+                          subTitle: 'First Name ',
                         ),
 
                         ///================================last Name========================
                         CustomProfileItem(
                           title: AppStrings.lastName,
-                          subTitle: 'Raj',
+                          subTitle: 'Last Name',
                         ),
 
                         ///================================Email========================
                         CustomProfileItem(
                           title: AppStrings.email,
-                          subTitle: 'masumrna927@gmail.com',
+                          subTitle: 'Email',
                         ),
 
                         ///================================Contact No========================
                         CustomProfileItem(
                           title: AppStrings.contactNumber,
-                          subTitle: '0172228692',
+                          subTitle: 'Contact Number',
                         ),
 
                         ///================================Address========================
                         CustomProfileItem(
                           title: AppStrings.address,
-                          subTitle: 'Dhaka',
+                          subTitle: 'Address',
                         ),
                       ],
                     ),

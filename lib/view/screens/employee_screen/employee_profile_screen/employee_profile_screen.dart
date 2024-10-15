@@ -90,7 +90,7 @@ class EmployeeProfileScreen extends StatelessWidget {
 
                         const CustomText(
                           top: 10,
-                          text: 'Habib',
+                          text: 'Name:',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -106,73 +106,73 @@ class EmployeeProfileScreen extends StatelessWidget {
                         ///============================First Name=====================
                         const CustomProfileItem(
                           title: '${AppStrings.designation}:',
-                          subTitle: 'Assistant ',
+                          subTitle: ' ',
                         ),
 
                         ///================================last Name========================
                         const CustomProfileItem(
                           title: AppStrings.id,
-                          subTitle: 'Raj',
+                          subTitle: '',
                         ),
 
                         ///================================Email========================
                         const CustomProfileItem(
                           title: '${AppStrings.email}:',
-                          subTitle: 'masumrna927@gmail.com',
+                          subTitle: '',
                         ),
 
                         ///================================Contact No========================
                         const CustomProfileItem(
                           title: "${AppStrings.contactNumber}:",
-                          subTitle: '0172228692',
+                          subTitle: '',
                         ),
 
                         ///================================Address========================
                         const CustomProfileItem(
                           title: '${AppStrings.address}:',
-                          subTitle: 'Dhaka',
+                          subTitle: '',
                         ),
 
                         ///================================CPR========================
                         const CustomProfileItem(
                           title: '${AppStrings.cPR}:',
-                          subTitle: ' S2054RDSAD',
+                          subTitle: ' ',
                         ),
 
                         ///================================Passport:  ========================
                         const CustomProfileItem(
                           title: '${AppStrings.passport}:',
-                          subTitle: ' 3216516549655',
+                          subTitle: '',
                         ),
 
                         ///================================drivingLicense  ========================
                         const CustomProfileItem(
                           title: '${AppStrings.drivingLicense}:',
-                          subTitle: ' 12335548949',
+                          subTitle: '',
                         ),
 
                         ///================================jobType  ========================
                         const CustomProfileItem(
                           title: '${AppStrings.jobType}:',
-                          subTitle: ' Full Time',
+                          subTitle: '',
                         ),
 
                         ///================================joiningDate  ========================
                         const CustomProfileItem(
                           title: AppStrings.joiningDate,
-                          subTitle: '  1/1/2024',
+                          subTitle: '',
                         ),
 
                         ///================================drivingLicense  ========================
                         const CustomProfileItem(
                           title: 'Duty Time',
-                          subTitle: '10 am - 08:00pm',
+                          subTitle: '',
                         ),
 
                         ///================================drivingLicense  ========================
                         const CustomProfileItem(
                           title: 'Working Day',
-                          subTitle: 'Sat,Mon',
+                          subTitle: '',
                         ),
 
                         SizedBox(

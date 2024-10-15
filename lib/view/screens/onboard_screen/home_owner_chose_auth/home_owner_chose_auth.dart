@@ -83,7 +83,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                                 ///==========================Terms of use=======================
                                 TextSpan(
                                   text:
-                                      "                               ${AppStrings.termsOfUse}  ",
+                                      " ${AppStrings.termsOfUse}  ",
                                   style: const TextStyle(
                                     color: AppColors.dark400,
                                     fontSize: 16,
