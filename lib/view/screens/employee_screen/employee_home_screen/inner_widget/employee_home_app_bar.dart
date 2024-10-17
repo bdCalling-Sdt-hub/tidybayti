@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
 import '../../../../../utils/app_images/app_images.dart';
@@ -64,7 +62,7 @@ class EmployeeHomeAppBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: 'Sadhu',
+                        text: 'Name',
                         fontWeight: FontWeight.w600,
                         color: AppColors.dark400,
                         fontSize: 16,
