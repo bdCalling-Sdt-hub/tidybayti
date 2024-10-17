@@ -48,7 +48,7 @@ class _AllTaskScreenState extends State<EmployeeList> {
                       children: List.generate(4, (index) {
                         return CustomEmployeeCard(
                           imageUrl: AppConstants.userNtr, // Replace with your image URL
-                          name: 'Sadhu', // Replace with dynamic employee name
+                          name: 'Name:', // Replace with dynamic employee name
                           designation: 'Assistant', // Replace with dynamic designation
                           onSelect: () {
                             // Pass the selected employee's name back to the previous screen

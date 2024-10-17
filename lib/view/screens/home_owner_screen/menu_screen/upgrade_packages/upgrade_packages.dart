@@ -13,6 +13,15 @@ class UpgradePackages extends StatelessWidget {
   UpgradePackages({super.key});
 
   final List<String> listPackages = [
+    '5 days free',
+    AppStrings.inviteUnlimited,
+    AppStrings.assignTasksTo,
+    AppStrings.masterYourCleaningSchedule,
+    AppStrings.manageMultiplePlaces
+  ];
+
+  final List<String> monthly = [
+    '3 days free',
     AppStrings.inviteUnlimited,
     AppStrings.assignTasksTo,
     AppStrings.masterYourCleaningSchedule,
@@ -47,12 +56,12 @@ class UpgradePackages extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
 
-                ///=============================== Premium ========================
+                ///=============================== Monthly ========================
                 _buildPackageCard(
                   context: context,
-                  packageTitle: AppStrings.premium,
+                  packageTitle: AppStrings.monthly,
                   price: AppStrings.bhdSix,
-                  listPackages: listPackages,
+                  listPackages: monthly,
                   onTap: () {},
                 ),
                 SizedBox(height: 20.h),
@@ -60,7 +69,7 @@ class UpgradePackages extends StatelessWidget {
                 ///=============================== Premium Pro ========================
                 _buildPackageCard(
                   context: context,
-                  packageTitle: AppStrings.premiumPro,
+                  packageTitle: 'yearly',
                   price: AppStrings.bhd120,
                   listPackages: listPackages,
                   onTap: () {},

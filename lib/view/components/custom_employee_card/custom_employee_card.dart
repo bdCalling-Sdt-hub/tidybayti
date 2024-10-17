@@ -6,6 +6,8 @@ import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
+import '../../../utils/app_images/app_images.dart';
+
 class CustomEmployeeCard extends StatelessWidget {
   final String imageUrl;
   final String name;
@@ -42,11 +44,21 @@ class CustomEmployeeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Employee Image
-          CustomNetworkImage(
-            imageUrl: imageUrl,
-            height: 53,
-            width: 53,
-            boxShape: BoxShape.circle,
+          // CustomNetworkImage(
+          //   imageUrl: imageUrl,
+          //   height: 53,
+          //   width: 53,
+          //   boxShape: BoxShape.circle,
+          // ),
+          const ClipOval(
+            child: SizedBox(
+              width: 53.0, // specify width
+              height: 53.0, // specify height
+              child: CustomImage(
+                imageSrc: AppImages.avatar,
+                imageType: ImageType.png,
+              ),
+            ),
           ),
           const SizedBox(width: 16),
           // Employee Details (Name & Designation)

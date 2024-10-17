@@ -97,7 +97,7 @@ class EmployeeDetails extends StatelessWidget {
                          const CustomText(
                           textAlign: TextAlign.start,
                           top: 10,
-                          text: 'Habib',
+                          text: 'Name:',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,

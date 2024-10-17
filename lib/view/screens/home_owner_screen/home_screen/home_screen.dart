@@ -68,7 +68,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     const CustomText(
-                      text: 'Asad House',
+                      text: 'Add house',
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
                       color: AppColors.dark400,
@@ -201,6 +201,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                         child: Container(
                           color: Colors.white,
                           child: const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
                                 width: 181.0, // specify width
@@ -216,7 +217,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                               //     height: 181,
                               //     width: 152),
                               CustomText(
-                                text: 'sadhu',
+                               left: 10,
+                                text: 'Name:',
                                 color: AppColors.dark400,
                                 fontSize: 19,
                                 fontWeight: FontWeight.w500,

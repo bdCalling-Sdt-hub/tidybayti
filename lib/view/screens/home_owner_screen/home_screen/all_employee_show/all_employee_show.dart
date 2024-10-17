@@ -117,7 +117,7 @@ class AllEmployeeShow extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between name and icon
                     children: [
                       const CustomText(
-                        text: 'Sadhu',
+                        text: 'Name:',
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                         color: AppColors.dark400,
@@ -145,7 +145,7 @@ class AllEmployeeShow extends StatelessWidget {
                   ),
 
                   CustomText(
-                    text: 'Email: masumrna927@gmail.com',
+                    text: 'Email:',
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
                     color: AppColors.dark400,
