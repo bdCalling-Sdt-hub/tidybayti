@@ -3,12 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
@@ -114,7 +113,6 @@ class AllEmployeeShow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between name and icon
                     children: [
                       const CustomText(
                         text: 'Name:',
@@ -122,12 +120,26 @@ class AllEmployeeShow extends StatelessWidget {
                         fontSize: 14,
                         color: AppColors.dark400,
                       ),
+Spacer(),
 
-                      IconButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: (){
                           Get.toNamed(AppRoutes.employeeDetails);
                         },
-                        icon: const Icon(Icons.info_outline),
+                        child: const CustomImage(
+                          imageSrc:AppIcons.details,
+                          imageType: ImageType.svg,
+                          imageColor: AppColors.dark400,
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: (){},
+                        child: const CustomImage(
+                          imageSrc:AppIcons.delete,
+                          imageType: ImageType.svg,
+                          imageColor: AppColors.dark400,
+                        ),
                       ),
                     ],
                   ),

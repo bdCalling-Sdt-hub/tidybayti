@@ -65,10 +65,10 @@ class EditProfileScreen extends StatelessWidget {
                         height: 10.h,
                       ),
 
-                      ///==========================Address====================
-                      const CustomTextField(
-                        hintText: AppStrings.address,
-                      ),
+                      // ///==========================Address====================
+                      // const CustomTextField(
+                      //   hintText: AppStrings.address,
+                      // ),
                        SizedBox(
                         height: 247.h,
                       ),

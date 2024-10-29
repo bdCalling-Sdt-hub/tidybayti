@@ -3,13 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 
 class PersonalInfoScreen extends StatelessWidget {
@@ -119,11 +117,11 @@ class PersonalInfoScreen extends StatelessWidget {
                           subTitle: 'Contact Number',
                         ),
 
-                        ///================================Address========================
-                        CustomProfileItem(
-                          title: AppStrings.address,
-                          subTitle: 'Address',
-                        ),
+                        // ///================================Address========================
+                        // CustomProfileItem(
+                        //   title: AppStrings.address,
+                        //   subTitle: 'Address',
+                        // ),
                       ],
                     ),
                   ),

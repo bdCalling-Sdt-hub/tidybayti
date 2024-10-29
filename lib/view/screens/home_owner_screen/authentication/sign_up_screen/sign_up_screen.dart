@@ -70,6 +70,7 @@ class SignUpScreen extends StatelessWidget {
                       ///===========================Password======================
                       const CustomTextField(
                         hintText: AppStrings.password,
+                        isPassword: true,
                       ),
                       SizedBox(
                         height: 10.h,
@@ -77,6 +78,7 @@ class SignUpScreen extends StatelessWidget {
                       ///===========================Confirm Password======================
                       const CustomTextField(
                         hintText: AppStrings.confirmPassword,
+                        isPassword: true,
                       ),
 
                       SizedBox(

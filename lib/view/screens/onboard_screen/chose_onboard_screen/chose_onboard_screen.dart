@@ -32,7 +32,7 @@ class ChoseOnboardScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 290.h,
+                    height: 350.h,
                   ),
 
                   ///============================Owner Button=============
@@ -60,33 +60,33 @@ class ChoseOnboardScreen extends StatelessWidget {
                           fillColor: AppColors.employeeCardColor,
                           title: AppStrings.employee,
                         ),
-                        SizedBox(
-                          height: 255.h,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const CircleAvatar(
-                              radius: 5,
-                              backgroundColor: AppColors.customRedColor,
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            const CircleAvatar(
-                              radius: 6,
-                              backgroundColor: AppColors.red,
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            const CircleAvatar(
-                              radius: 5,
-                              backgroundColor: AppColors.customRedColor,
-                            ),
-                          ],
-                        ),
+                        // SizedBox(
+                        //   height: 255.h,
+                        // ),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     const CircleAvatar(
+                        //       radius: 5,
+                        //       backgroundColor: AppColors.customRedColor,
+                        //     ),
+                        //     SizedBox(
+                        //       width: 10.w,
+                        //     ),
+                        //     const CircleAvatar(
+                        //       radius: 6,
+                        //       backgroundColor: AppColors.red,
+                        //     ),
+                        //     SizedBox(
+                        //       width: 10.w,
+                        //     ),
+                        //     const CircleAvatar(
+                        //       radius: 5,
+                        //       backgroundColor: AppColors.customRedColor,
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   )

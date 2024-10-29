@@ -15,6 +15,8 @@ import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
 
+import '../../../../../utils/app_images/app_images.dart';
+
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
 
@@ -89,25 +91,35 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomNetworkImage(
-                          boxShape: BoxShape.circle,
-                            imageUrl: AppConstants.userNtr,
-                            height: 117,
-                            width: 117),
+                        // CustomNetworkImage(
+                        //   boxShape: BoxShape.circle,
+                        //     imageUrl: AppConstants.userNtr,
+                        //     height: 117,
+                        //     width: 117),
+                        const ClipOval(
+                          child: SizedBox(
+                            width: 117, // specify width
+                            height: 117, // specify height
+                            child: CustomImage(
+                              imageSrc: AppImages.avatar,
+                              imageType: ImageType.png,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: 20.h,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.employeeName,
+                      hintText: "First Name",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.designation,
+                      hintText: "Last Name ",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
@@ -138,7 +150,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       height: 8,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.drivingLicense,
+                      hintText: "Note",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
@@ -151,10 +163,10 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     SizedBox(
                       height: 8,
                     ),
-                    CustomTextField(
-                      hintText: AppStrings.address,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
+                    // CustomTextField(
+                    //   hintText: AppStrings.address,
+                    //   fillColor: AppColors.employeeCardColor,
+                    // ),
   SizedBox(
                       height: 8,
                     ),
@@ -166,8 +178,9 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       height: 8,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.password,
+                      hintText:"Temporary Password",
                       fillColor: AppColors.employeeCardColor,
+                      isPassword: true,
                     ),
                     SizedBox(
                       height: 15,

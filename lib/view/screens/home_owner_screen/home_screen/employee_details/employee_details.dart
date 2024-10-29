@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/core/app_routes/app_routes.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/utils/app_const/app_const.dart';
 import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
@@ -97,7 +95,7 @@ class EmployeeDetails extends StatelessWidget {
                          const CustomText(
                           textAlign: TextAlign.start,
                           top: 10,
-                          text: 'Name:',
+                          text: 'First Name:',
                           color: AppColors.dark400,
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -105,7 +103,7 @@ class EmployeeDetails extends StatelessWidget {
 
                         ///============================First Name=====================
                         const CustomProfileItem(
-                          title: '${AppStrings.designation}:',
+                          title: 'Last Name:',
                           subTitle: ' ',
                         ),
 
@@ -127,11 +125,11 @@ class EmployeeDetails extends StatelessWidget {
                           subTitle: '',
                         ),
 
-                        ///================================Address========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.address}:',
-                          subTitle: '',
-                        ),
+                        // ///================================Address========================
+                        // const CustomProfileItem(
+                        //   title: '${AppStrings.address}:',
+                        //   subTitle: '',
+                        // ),
 
                         ///================================CPR========================
                         const CustomProfileItem(
@@ -147,7 +145,7 @@ class EmployeeDetails extends StatelessWidget {
 
                         ///================================drivingLicense  ========================
                         const CustomProfileItem(
-                          title: '${AppStrings.drivingLicense}:',
+                          title: 'Note:',
                           subTitle: '',
                         ),
 

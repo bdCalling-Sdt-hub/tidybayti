@@ -39,7 +39,7 @@ class MenuScreen extends StatelessWidget {
                  CustomText(
                    top: 20,
                    textAlign: TextAlign.center,
-                   text: AppStrings.menu,
+                   text: "Account",
                    fontWeight: FontWeight.w500,
                    fontSize: 24,
                    color: AppColors.dark500,

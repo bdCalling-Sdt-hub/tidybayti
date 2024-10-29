@@ -39,6 +39,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       ///=============================Enter Password====================
                       const CustomTextField(
                         hintText: AppStrings.enterPassword,
+                        isPassword: true,
                       ),
 
 
@@ -47,6 +48,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       ),    ///=============================confirmPassword====================
                       const CustomTextField(
                         hintText: AppStrings.confirmPassword,
+                        isPassword: true,
                       ),
 
 

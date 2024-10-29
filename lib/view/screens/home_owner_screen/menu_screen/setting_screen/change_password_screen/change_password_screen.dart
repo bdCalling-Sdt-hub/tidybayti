@@ -49,6 +49,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         ),
                         ///========================Present Password===================
                         const CustomTextField(
+                          isPassword: true,
                           hintText: AppStrings.presentPassword,
                         ),
                         SizedBox(
@@ -57,6 +58,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                         ///=================================New Password===============
                         const CustomTextField(
+                          isPassword: true,
                           hintText: AppStrings.newPassword,
                         ),
                         SizedBox(
@@ -64,6 +66,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         ),
                         ///==========================Confirm Password==================
                         const CustomTextField(
+                          isPassword: true,
                           hintText: AppStrings.confirmPassword,
                         ),
                         SizedBox(

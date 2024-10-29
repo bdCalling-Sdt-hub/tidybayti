@@ -115,7 +115,7 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                             ],
                           ),
                           padding: EdgeInsets.symmetric(
-                              vertical: 20.h, horizontal: 12.w),
+                              vertical: 14.h, horizontal: 12.w),
                           child: Column(
                             children: [
                               CustomImage(

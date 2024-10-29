@@ -48,6 +48,7 @@ class SignInScreen extends StatelessWidget {
                   ///===========================Enter Password======================
                   const CustomTextField(
                     hintText: AppStrings.enterPassword,
+                    isPassword: true,
                   ),
                   ///============================Forgot Password================
                    Row(

@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/utils/app_const/app_const.dart';
-import 'package:tidybayte/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/utils/app_images/app_images.dart';
 
 import 'package:tidybayte/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
@@ -111,14 +108,14 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                       height: 20.h,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.employeeName,
+                      hintText:"First Name",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.designation,
+                      hintText: "Last Name",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
@@ -149,7 +146,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                       height: 8,
                     ),
                     CustomTextField(
-                      hintText: AppStrings.drivingLicense,
+                      hintText: "Note",
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
@@ -162,10 +159,10 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                     SizedBox(
                       height: 8,
                     ),
-                    CustomTextField(
-                      hintText: AppStrings.address,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
+                    // CustomTextField(
+                    //   hintText: AppStrings.address,
+                    //   fillColor: AppColors.employeeCardColor,
+                    // ),
 
                     ///============================
                     const Padding(
@@ -196,7 +193,9 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                       height: 15,
                     ),
                     CustomButton(
-                      onTap: () {},
+                      onTap: () {
+                        Get.back();
+                      },
                       fillColor: Colors.white,
                       title: AppStrings.upgradeProfile,
                     )
