@@ -1,0 +1,294 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:tidybayte/core/app_routes/app_routes.dart';
+import 'package:tidybayte/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/utils/app_const/app_const.dart';
+import 'package:tidybayte/utils/app_icons/app_icons.dart';
+
+import 'package:tidybayte/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/view/components/custom_netwrok_image/custom_network_image.dart';
+import 'package:tidybayte/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tidybayte/view/components/nav_bar/nav_bar.dart';
+
+import '../../../../../utils/app_images/app_images.dart';
+
+class AddEmployeeScreen extends StatefulWidget {
+  const AddEmployeeScreen({super.key});
+
+  @override
+  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
+}
+
+class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+  // Days of the week
+  final List<String> daysOfWeek = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday'
+  ];
+
+  // Selected state for working and off days
+  List<bool> selectedWorkingDays = [
+    true,
+    false,
+    true,
+    true,
+    true,
+    false,
+    true
+  ]; // Preselected working days
+  List<bool> selectedOffDays = [
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]; // Preselected off days
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: const NavBar(currentIndex: 4),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xCCE8F3FA), // First color (with opacity)
+              Color(0xFFB5D8EE),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              ///=============================== Menu Title ========================
+              CustomMenuAppbar(
+                title: AppStrings.addEmployee,
+                onBack: () {
+                  Get.back();
+                },
+              ),
+
+              ///=============================== Employee List ========================
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(16.0),
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // CustomNetworkImage(
+                        //   boxShape: BoxShape.circle,
+                        //     imageUrl: AppConstants.userNtr,
+                        //     height: 117,
+                        //     width: 117),
+                        const ClipOval(
+                          child: SizedBox(
+                            width: 117, // specify width
+                            height: 117, // specify height
+                            child: CustomImage(
+                              imageSrc: AppImages.avatar,
+                              imageType: ImageType.png,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTextField(
+                      hintText: "First Name",
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      hintText: "Last Name ",
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+                      hintText: AppStrings.jobType,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+                      hintText: AppStrings.cPR,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
+                      hintText: AppStrings.passport,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      hintText: "Note",
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      hintText: AppStrings.contactNumber,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    // CustomTextField(
+                    //   hintText: AppStrings.address,
+                    //   fillColor: AppColors.employeeCardColor,
+                    // ),
+  SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      hintText: AppStrings.email,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    CustomTextField(
+                      hintText:"Temporary Password",
+                      fillColor: AppColors.employeeCardColor,
+                      isPassword: true,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    CustomButton(
+                      onTap: () {
+                        showDialoge(context);
+                      },
+                      fillColor: Colors.white,
+                      title: AppStrings.addNewEmployee,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+}
+
+void showDialoge(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Prevent dismissing by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+        ),
+        backgroundColor: AppColors.addedColor,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 16.h,),
+            Container(
+              height: 96,
+              width: 96,
+              decoration: const BoxDecoration(
+                color:AppColors.blue900,
+                shape: BoxShape.circle,
+              ),
+              child: Center(child: CustomImage(imageSrc: AppIcons.rightUp,)),
+            ),
+            CustomText(
+              top: 24,
+              bottom: 40,
+              maxLines: 2,
+              text: 'Employee Added Successfully',
+              fontWeight: FontWeight.w400,
+              fontSize: 24,
+              color: AppColors.successFullyColor,
+            ),
+            CustomText(
+              maxLines: 5,
+              text: 'Employees accounts details is sending to employee email :',
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              color: AppColors.dark400,
+            ),
+            CustomText(
+              maxLines: 2,
+              bottom: 20,
+              text: ' diannerussell@gmail.com',
+              fontWeight: FontWeight.w700,
+              fontSize: 16,
+              color: AppColors.dark400,
+            ),
+            Row(
+              children: [
+                CustomText(
+                  maxLines: 2,
+                  text: ' Temporary Password:',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: AppColors.dark400,
+                ),
+                CustomText(
+                  maxLines: 2,
+                  text: ' Masum017@@@',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: AppColors.dark400,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 48.h,
+            ),
+
+            ///==============================Send Email==================
+
+            CustomButton(
+              title: 'Send email',
+              onTap: () {
+               Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
+              },
+              fillColor: Colors.white,
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
