@@ -16,10 +16,6 @@ void main() {
   di.dependencies();
 
   runApp(
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) =>
-    //====================
     const MyApp(), // Wrap your app
   );
   // const MyApp());
