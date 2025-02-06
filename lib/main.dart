@@ -9,6 +9,7 @@ import 'view/components/device_utils/device_utils.dart';
 
 
 
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DeviceUtils.lockDevicePortrait();
