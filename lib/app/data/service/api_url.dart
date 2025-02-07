@@ -1,4 +1,4 @@
-class ApiConstant {
+class ApiUrl {
 
   static const baseUrl = "http://10.0.60.26:8002";
 
