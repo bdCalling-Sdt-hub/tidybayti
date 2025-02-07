@@ -1,5 +1,5 @@
 class AppConstants {
-  static String bearerToken = "BearerToken";
+  static String token = "token";
 
   static String onBoard = "Onboard";
 
