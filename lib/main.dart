@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/core/app_routes/app_routes.dart';
-import 'package:tidybayte/core/dependency/dependency_injection.dart';
-import 'view/components/device_utils/device_utils.dart';
+import 'package:tidybayte/app/core/dependency/dependency_injection.dart';
+import 'package:tidybayte/app/view/components/device_utils/device_utils.dart';
+
+import 'app/core/app_routes/app_routes.dart';
+
 
 
 
