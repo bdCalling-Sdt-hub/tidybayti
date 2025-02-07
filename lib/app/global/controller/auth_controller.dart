@@ -67,6 +67,8 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       SharePrefsHelper.setString(
           AppConstants.token, response.body['data']["accessToken"]);
+      debugPrint(
+          '======================token   ${response.body['data']['accessToken']}');
       Get.toNamed(AppRoutes.homeScreen);
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
