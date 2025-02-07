@@ -43,6 +43,7 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.signUpOtp);
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
+      Get.toNamed(AppRoutes.signUpOtp);
       toastMessage(message: response.body["message"]);
     }
     else {
