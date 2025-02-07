@@ -131,7 +131,7 @@ class AppRoutes {
   static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
-    GetPage(name: signInScreen, page: () => const SignInScreen()),
+    GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: onboardScreen, page: () => const OnboardScreen()),
     GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
     GetPage(name: homeOwnerChoseAuth, page: () => const HomeOwnerChoseAuth()),

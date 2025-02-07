@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +8,6 @@ import 'package:tidybayte/app/view/components/device_utils/device_utils.dart';
 
 import 'app/core/app_routes/app_routes.dart';
 import 'app/core/dependency/path.dart';
-import 'app/http_certificate.dart';
 
 
 

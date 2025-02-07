@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,9 @@ import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
+import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 class AuthController extends GetxController {
   ApiClient apiClient = serviceLocator();
@@ -49,6 +50,33 @@ class AuthController extends GetxController {
     }
     signUpLoading.value = false;
     signUpLoading.refresh();
+  }
+
+  ///==================================✅✅Sign In Method✅✅=======================
+
+  RxBool isSignInLoading = false.obs;
+
+  signIn() async {
+    isSignInLoading.value = true;
+    var body = {
+      "email": emailController.text,
+      "password":passwordController.text
+    };
+
+    var response = await apiClient.post(body: body, url: ApiUrl.login);
+    if (response.statusCode == 200) {
+      SharePrefsHelper.setString(
+          AppConstants.token, response.body['data']["accessToken"]);
+      Get.toNamed(AppRoutes.homeScreen);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    }
+    else {
+      ApiChecker.checkApi(response);
+    }
+    isSignInLoading.value = false;
+    isSignInLoading.refresh();
   }
 
 
