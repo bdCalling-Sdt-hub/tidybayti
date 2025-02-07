@@ -1,20 +1,26 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/core/app_routes/app_routes.dart';
-import 'package:tidybayte/core/dependency/dependency_injection.dart';
-import 'view/components/device_utils/device_utils.dart';
+import 'package:tidybayte/app/core/dependency/dependency_injection.dart';
+import 'package:tidybayte/app/view/components/device_utils/device_utils.dart';
+
+import 'app/core/app_routes/app_routes.dart';
+import 'app/core/dependency/path.dart';
 
 
 
 
-void main() {
+
+
+void main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  // HttpOverrides.global = MyHttpOverrides();
   DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
-
+  await initDependencies();
   runApp(
     const MyApp(), // Wrap your app
   );
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoutes.onboardScreen ,
+        initialRoute: AppRoutes.signInScreen ,
         navigatorKey: Get.key,
         getPages: AppRoutes.routes,
       ),
