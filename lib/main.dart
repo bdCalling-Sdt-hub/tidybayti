@@ -13,7 +13,6 @@ import 'app/core/dependency/path.dart';
 
 
 
-
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   // HttpOverrides.global = MyHttpOverrides();
