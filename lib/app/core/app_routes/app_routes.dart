@@ -186,7 +186,7 @@ class AppRoutes {
 
 
     ///================================Menu Screen =====================
-    GetPage(name: personalInfoScreen, page: () => const PersonalInfoScreen()),
+    GetPage(name: personalInfoScreen, page: () =>  PersonalInfoScreen()),
     GetPage(name: upgradePackages, page: () =>  UpgradePackages()),
     GetPage(name: myPlanScreen, page: () =>  MyPlanScreen()),
     GetPage(name: settingScreen, page: () => const SettingScreen()),

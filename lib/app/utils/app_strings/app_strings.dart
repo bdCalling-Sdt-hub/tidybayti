@@ -22,6 +22,7 @@ class AppStrings {
   static const String bhd120 = "BHD 3.99 /month/year";
   static const String sixMonth = "6 Months package";
   static const String profile = "Profile";
+  static const String name = "Name:";
   static const String bhdSix = "BHD  4.99/ monthly ";
   static const String autoRenewal = "Auto-renewal";
   static const String reNewPlan = "Re-new plan";

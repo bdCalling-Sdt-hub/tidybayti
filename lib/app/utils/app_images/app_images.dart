@@ -18,4 +18,5 @@ class AppImages {
   static const String villa = "$basePath/villa.png";
   static const String icon = "$basePath/Icon.png";
   static const String avatar = "$basePath/avatar.png";
+  static const String noInternet = "$basePath/no_internet.png";
 }
