@@ -51,6 +51,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/tas
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/grocery_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/ongoing_task/ongoing_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/pending_task/pending_task.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/splash_screen/splash_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
@@ -60,6 +61,7 @@ import 'package:tidybayte/app/view/screens/onboard_screen/onBoard_screen/onboard
 
 class AppRoutes {
 
+  static const String splashScreen = "/SplashScreen";
   static const String signInScreen = "/SignInScreen";
   static const String employeeNotificationScreen = "/EmployeeNotificationScreen";
   static const String onboardScreen = "/OnboardScreen";
@@ -131,15 +133,16 @@ class AppRoutes {
   static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
+    GetPage(name: splashScreen, page: () =>  const SplashScreen()),
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: onboardScreen, page: () => const OnboardScreen()),
     GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
     GetPage(name: homeOwnerChoseAuth, page: () => const HomeOwnerChoseAuth()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
-    GetPage(name: signUpOtp, page: () => const SignUpOtp()),
-    GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
-    GetPage(name: forgotPasswordOtp, page: () => const ForgotPasswordOtp()),
-    GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
+    GetPage(name: signUpOtp, page: () =>  SignUpOtp()),
+    GetPage(name: forgotPasswordScreen, page: () =>  ForgotPasswordScreen()),
+    GetPage(name: forgotPasswordOtp, page: () =>  ForgotPasswordOtp()),
+    GetPage(name: resetPasswordScreen, page: () =>  ResetPasswordScreen()),
     GetPage(name: freeServiceScreen, page: () =>  FreeServiceScreen()),
 
     ///===========================Home Section=======================
@@ -183,16 +186,16 @@ class AppRoutes {
 
 
     ///================================Menu Screen =====================
-    GetPage(name: personalInfoScreen, page: () => const PersonalInfoScreen()),
+    GetPage(name: personalInfoScreen, page: () =>  PersonalInfoScreen()),
     GetPage(name: upgradePackages, page: () =>  UpgradePackages()),
     GetPage(name: myPlanScreen, page: () =>  MyPlanScreen()),
     GetPage(name: settingScreen, page: () => const SettingScreen()),
-    GetPage(name: changePasswordScreen, page: () => const ChangePasswordScreen()),
+    GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen()),
     GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
-    GetPage(name: editProfileScreen, page: () => const EditProfileScreen()),
+    GetPage(name: editProfileScreen, page: () =>  EditProfileScreen()),
     GetPage(name: createTask, page: () => const CreateTask()),
 
 

@@ -13,7 +13,6 @@ import 'app/core/dependency/path.dart';
 
 
 
-
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   // HttpOverrides.global = MyHttpOverrides();
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoutes.signInScreen ,
+        initialRoute: AppRoutes.splashScreen ,
         navigatorKey: Get.key,
         getPages: AppRoutes.routes,
       ),

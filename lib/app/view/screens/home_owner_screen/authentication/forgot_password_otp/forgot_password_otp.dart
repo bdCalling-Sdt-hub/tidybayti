@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/controller/auth_controller.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
+import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
 class ForgotPasswordOtp extends StatelessWidget {
-  const ForgotPasswordOtp({super.key});
+  ForgotPasswordOtp({super.key});
+
+  final AuthController authController = Get.find<AuthController>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,37 +34,52 @@ class ForgotPasswordOtp extends StatelessWidget {
 
             Positioned(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              child: Obx(() {
+                return Form(
+                  key: formKey,
                   child: Column(
                     children: [
+                      const CustomMenuAppbar(title: ''),
+
                       SizedBox(
-                        height: 325.h,
+                        height: MediaQuery.of(context).size.height / 3,
                       ),
 
                       ///=============================Enter 6 Degit code====================
-                      const CustomTextField(
-                        hintText: AppStrings.enterSIxDegit,
+                      CustomTextField(
+                        hintText: AppStrings.enterSIxDegit.tr,
+                        textEditingController: authController.otpController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppStrings.fieldCantBeEmpty;
+                          }
+                          return null;
+                        },
                       ),
 
-
-                           SizedBox(
-                             height: 48.h,
-                           ),
+                      SizedBox(
+                        height: 48.h,
+                      ),
 
                       ///============================Verify Code=============
-                      CustomButton(onTap: (){
-                        Get.toNamed(AppRoutes.resetPasswordScreen);
-                      },
-                        fillColor: AppColors.employeeCardColor,
-                        title:AppStrings.verifyCode,
-                      ),
 
-
-
+                      authController.isForgetOtp.value
+                          ? const CustomLoader()
+                          : CustomButton(
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  authController.forgetOtpVerify();
+                                }
+                              },
+                              fillColor: AppColors.employeeCardColor,
+                              title: AppStrings.verifyCode.tr,
+                            ),
                     ],
                   ),
-                )),
-
+                );
+              }),
+            )),
           ],
         ),
       ),

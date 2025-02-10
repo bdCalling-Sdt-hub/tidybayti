@@ -1,39 +1,36 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/global/helper/connection_checker.dart';
-import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
-import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
+import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/logger/logger.dart';
 
-
 final log = logger(ApiClient);
-Future<Map<String, String>> basicHeaderInfo() async{
-  final DBHelper dbHelper = DBHelper();
-  final token = await dbHelper.getToken();
+
+
+Map<String, String> basicHeaderInfo() {
   return {
     HttpHeaders.acceptHeader: "application/json",
     HttpHeaders.contentTypeHeader: "application/json",
-   HttpHeaders.authorizationHeader: "$token",
   };
 }
 
 Future<Map<String, String>> bearerHeaderInfo() async {
-  final DBHelper dbHelper = DBHelper();
-  final token = await dbHelper.getToken();
-  print("Token $token");
+  final token = await SharePrefsHelper.getString(AppConstants.token);
+  debugPrint("Token _________ $token");
   return {
     HttpHeaders.acceptHeader: "application/json",
     HttpHeaders.contentTypeHeader: "application/json",
-    HttpHeaders.authorizationHeader: "$token",
+    HttpHeaders.authorizationHeader: "Bearer $token",
   };
 }
 
@@ -47,13 +44,12 @@ class ApiClient {
   Future<Response> get(
       {required String url,
         bool isBasic = false,
-        int duration = 60,
+        int duration = 30,
         bool showResult = false,
         BuildContext? context}) async {
     /// ======================- Check Internet ===================
 
     if (!await (connectionChecker.isConnected)) {
-      log.i('|📍📍📍|----------------- [[ GET ]] method GET Internet Issue, URL $url -----------------|📍📍📍|');
       return Response(statusCode: 503, statusText: noInternetConnection);
     }
 
@@ -64,10 +60,12 @@ class ApiClient {
     }
 
     try {
-      final response = await http.get(
+      final response = await http
+          .get(
         Uri.parse(url),
-        headers: isBasic ?await basicHeaderInfo() : await bearerHeaderInfo(),
-      ).timeout(Duration(seconds: duration));
+        headers: isBasic ? basicHeaderInfo() : await bearerHeaderInfo(),
+      )
+          .timeout(Duration(seconds: duration));
 
       if (showResult) {
         log.d("Body => ${response.body}");
@@ -97,7 +95,9 @@ class ApiClient {
       //context.pushNamed(RoutePath.errorScreen);
 
       if (context != null && context.mounted) {
-        toastMessage(message: 'Error Alert on Socket Exception');
+        // showSnackBar(
+        //     context: context, content: 'Error Alert on Socket Exception');
+        // context.pushNamed(RoutePath.errorScreen);
       }
       return const Response(
           body: {},
@@ -119,7 +119,7 @@ class ApiClient {
 
       log.e(stackrace.toString());
       if (context != null && context.mounted) {
-        Get.toNamed(AppRoutes.signInScreen);
+        // context.pushNamed(RoutePath.errorScreen);
       }
       return const Response(
           body: {},
@@ -138,10 +138,11 @@ class ApiClient {
   }
 
   //========================== Post Method =======================
-   Future<Response> post(
+  Future<Response> post(
       {required String url,
         bool isBasic = false,
         Map<String, dynamic>? body,
+        // required BuildContext context,
         int duration = 30,
         bool showResult = true}) async {
     try {
@@ -164,7 +165,7 @@ class ApiClient {
           .post(
         Uri.parse(url),
         body: jsonEncode(body),
-        headers: isBasic ?await basicHeaderInfo() : await bearerHeaderInfo(),
+        headers: isBasic ? basicHeaderInfo() : await bearerHeaderInfo(),
       )
           .timeout(Duration(seconds: duration));
 
@@ -193,7 +194,11 @@ class ApiClient {
     } on SocketException {
       log.e('🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
 
-      toastMessage(message: 'Error Alert on Socket Exception');
+      // if (context.mounted) {
+      //   // showSnackBar(
+      //   //     context: context, content: 'Error Alert on Socket Exception');
+      //   // // context.pushNamed(RoutePath.errorScreen);
+      // }
 
       return const Response(
           body: {},
@@ -243,7 +248,6 @@ class ApiClient {
       /// ======================- Check Internet ===================
 
       if (!await (connectionChecker.isConnected)) {
-        log.i('|📍📍📍|-----------------[[ PATCH ]] internet connection error -----------------|📍📍📍|');
         return Response(statusCode: 503, statusText: noInternetConnection);
       }
 
@@ -256,15 +260,17 @@ class ApiClient {
         log.i("Body => $body");
       }
 
-      final response = await http.patch(
+      final response = await http
+          .patch(
         Uri.parse(url),
-        body: jsonEncode(body??{}),
-        headers: isBasic ?await basicHeaderInfo() : await bearerHeaderInfo(),
-      ).timeout(Duration(seconds: duration));
-      print(response.headers);
+        body: jsonEncode(body),
+        headers: isBasic ? basicHeaderInfo() : await bearerHeaderInfo(),
+      )
+          .timeout(Duration(seconds: duration));
+
       if (showResult) {
         log.i("response.body => ${response.body}");
-        log.i("response.statusCode => ${response.statusCode}");
+        log.i("response.statusCode =>=>=>=>=> ${response.statusCode}");
         log.i(
             '|📒📒📒|-----------------[[ PATCH ]] method response end --------------------|📒📒📒|');
       }
@@ -324,7 +330,7 @@ class ApiClient {
   }
 
   // Param get method
-  Future<Response> paramGet(
+  Future<Map<String, dynamic>?> paramGet(
       {String? url,
         bool? isBasic,
         Map<String, String>? body,
@@ -346,10 +352,12 @@ class ApiClient {
         '|Get param📍📍📍|----------------- [[ GET ]] param method details ended ** ---------------|📍📍📍|');
 
     try {
-      final response = await http.get(
+      final response = await http
+          .get(
         Uri.parse(url!).replace(queryParameters: body),
-        headers: isBasic! ?await basicHeaderInfo() : await bearerHeaderInfo(),
-      ).timeout(const Duration(seconds: 15));
+        headers: isBasic! ? basicHeaderInfo() : await bearerHeaderInfo(),
+      )
+          .timeout(const Duration(seconds: 15));
 
       log.i(
           '|📒📒📒| ----------------[[ Get ]] Peram Response Start---------------|📒📒📒|');
@@ -362,57 +370,35 @@ class ApiClient {
           '|📒📒📒| ----------------[[ Get ]] Peram Response End **-----------------|📒📒📒|');
 
       if (response.statusCode == code) {
-        final body =  jsonDecode(response.body);
-        return Response(
-          body: body ?? response.body,
-          bodyString: response.body.toString(),
-          request: Request(
-              headers: response.request!.headers,
-              method: response.request!.method,
-              url: response.request!.url),
-          headers: response.headers,
-          statusCode: response.statusCode,
-          statusText: response.reasonPhrase,
-        );
+        return jsonDecode(response.body);
       } else {
         log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
-        log.e('unknown error hitted in status code  ${jsonDecode(response.body)}');
+        log.e(
+            'unknown error hitted in status code  ${jsonDecode(response.body)}');
 
-        return const Response(
-            body: {},
-            statusCode: 400,
-            statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+        return null;
       }
     } on SocketException {
       log.e('🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } on TimeoutException {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
       log.e('Time out exception$url');
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } on http.ClientException catch (err, stackrace) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
-      log.e('client exception hit');
+      log.e('client exception hitted');
 
       log.e(err.toString());
 
       log.e(stackrace.toString());
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } catch (e) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
@@ -422,14 +408,11 @@ class ApiClient {
 
       log.e("❌❌❌ $e");
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     }
   }
 
-  /// ========================= MultiPart Request =====================
+  /// ========================= MaltiPart Request =====================
   Future<Response> multipartRequest(
       {required String url,
         required String reqType,
@@ -441,8 +424,6 @@ class ApiClient {
       /// ======================- Check Internet ===================
 
       if (!await (connectionChecker.isConnected)) {
-        log.i(
-            '|📍📍📍|----------------- [[ GET ]] method GET Internet Issue, URL $url -----------------|📍📍📍|');
         return Response(statusCode: 503, statusText: noInternetConnection);
       }
       if (showResult) {
@@ -460,7 +441,7 @@ class ApiClient {
       )
         ..fields.addAll(body ?? {})
         ..headers.addAll(
-          isBasic ? await basicHeaderInfo() : await bearerHeaderInfo(),
+          isBasic ? basicHeaderInfo() : await bearerHeaderInfo(),
         );
 
       if (multipartBody.isNotEmpty) {
@@ -486,7 +467,7 @@ class ApiClient {
       }
 
       // ..files.add(await http.MultipartFile.fromPath(filedName!, filepath!));
-      var response = await request.send().timeout(const Duration(seconds: 60));
+      var response = await request.send();
       var jsonData = await http.Response.fromStream(response);
 
       if (showResult) {
@@ -640,30 +621,39 @@ class ApiClient {
   // }
 
   // Delete method
-  Future<Response> delete(
-      {required String url,
-        bool isBasic = false,
-        int code = 200,
-        Map<String, String>? body,
+  Future<Map<String, dynamic>?> delete(
+      {String? url,
+        bool? isBasic,
+        int code = 202,
+        bool isLogout = false,
         int duration = 15,
         bool showResult = false}) async {
-    log.i('|📍📍📍|-----------------[[ DELETE ]] method details start-----------------|📍📍📍|');
+    log.i(
+        '|📍📍📍|-----------------[[ DELETE ]] method details start-----------------|📍📍📍|');
 
     log.i(url);
 
-    log.i('|📍📍📍|-----------------[[ DELETE ]] method details end ------------------|📍📍📍|');
+    log.i(
+        '|📍📍📍|-----------------[[ DELETE ]] method details end ------------------|📍📍📍|');
 
     try {
-      var headers = isBasic ?await basicHeaderInfo() : await bearerHeaderInfo();
+      var headers = isBasic! ? basicHeaderInfo() : await bearerHeaderInfo();
+
+      if (isLogout) {
+// headers
+
+// ..addAll({"fcm_token": await FirebaseMessaging.instance.getToken()});
+      }
 
       log.i(headers);
 
-      final response = await http.delete(Uri.parse(url),
+      final response = await http
+          .delete(
+        Uri.parse(url!),
         headers: headers,
-        body: body,
-      ).timeout(Duration(seconds: duration));
-      log.i(
-          '|📒📒📒|----------------- [[ DELETE ]] ${response.statusCode}-----------------|📒📒📒|');
+      )
+          .timeout(Duration(seconds: duration));
+
       log.i(
           '|📒📒📒|----------------- [[ DELETE ]] method response start-----------------|📒📒📒|');
 
@@ -679,38 +669,25 @@ class ApiClient {
       if (response.statusCode == code) {
 // LocalStorage.clear();
 
-        final decodeBody = jsonDecode(response.body);
-        return Response(
-          body: decodeBody,
-          statusCode: response.statusCode,
-        );
+        return jsonDecode(response.body);
       } else {
         log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
         log.e(
             'unknown error hitted in status code  ${jsonDecode(response.body)}');
 
-        return const Response(
-            body: {},
-            statusCode: 400,
-            statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+        return null;
       }
     } on SocketException {
       log.e('🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } on TimeoutException {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
       log.e('Time out exception$url');
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } on http.ClientException catch (err, stackrace) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
@@ -720,20 +697,15 @@ class ApiClient {
 
       log.e(stackrace.toString());
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     } catch (e) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
+
       log.e('❌❌❌ unlisted error received');
 
       log.e("❌❌❌ $e");
 
-      return const Response(
-          body: {},
-          statusCode: 400,
-          statusText: '🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
+      return null;
     }
   }
 
@@ -759,7 +731,7 @@ class ApiClient {
           .put(
         Uri.parse(url!),
         body: jsonEncode(body),
-        headers: isBasic! ?await basicHeaderInfo() : await bearerHeaderInfo(),
+        headers: isBasic! ? basicHeaderInfo() : await bearerHeaderInfo(),
       )
           .timeout(Duration(seconds: duration));
 
@@ -809,6 +781,7 @@ class ApiClient {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
 
       log.e('unlisted catch error received');
+
       log.e(e.toString());
 
       return null;

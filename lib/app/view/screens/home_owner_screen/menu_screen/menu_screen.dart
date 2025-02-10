@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+
 import 'package:tidybayte/app/view/components/custom_menu_item/custom_menu_item.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -98,7 +95,13 @@ class MenuScreen extends StatelessWidget {
                     CustomMenuItem(
                       image: AppIcons.logOut,
                       text:AppStrings.logOut,
-                      onTap: () {
+                      onTap: () async{
+                        await SharePrefsHelper.remove(
+                            AppConstants.token);
+                        await SharePrefsHelper.remove(
+                            AppConstants.profileID);
+                        SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+                        SharePrefsHelper.setBool(AppConstants.isOwner, false);
                        Get.toNamed(AppRoutes.choseOnBoardingScreen);
                       },
                     ),

@@ -86,6 +86,22 @@ class SignInScreen extends StatelessWidget {
                         ///============================Forgot Password================
                         Row(
                           children: [
+                            Checkbox(
+                              value: authController.isRemember.value,
+                              checkColor: AppColors.dark200,
+                              activeColor: AppColors.profileCard,
+                              onChanged: (value) {
+                                authController.isRemember.value = value ?? false;
+                                debugPrint("Checkbox clicked, Remember value: ${authController.isRemember.value}");
+                              },
+                            ),
+
+                            CustomRichTextLink(
+                              firstText: 'Remember'.tr,
+                              linkText: '',
+                              onTap: () {
+                              },
+                            ),
                             const Spacer(),
                             GestureDetector(
                               onTap: () {

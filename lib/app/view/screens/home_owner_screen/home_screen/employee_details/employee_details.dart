@@ -9,6 +9,8 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/app/view/components/custom_personal_profile/custom_personal_profile.dart';
+import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';

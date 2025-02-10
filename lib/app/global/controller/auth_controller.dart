@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
@@ -14,13 +13,26 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 class AuthController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
+  ///==================================✅✅Remember✅✅=======================
 
- final firstNameController = TextEditingController();
- final lastNameController = TextEditingController();
- final emailController = TextEditingController();
- final phoneNumberController = TextEditingController();
- final passwordController = TextEditingController();
- final confirmPasswordController = TextEditingController();
+  RxBool isRemember = false.obs;
+
+  toggleRemember() {
+    isRemember.value = !isRemember.value;
+    debugPrint("Remember me==============>>>>>>>>>$isRemember");
+    refresh();
+    SharePrefsHelper.setBool(AppConstants.isRememberMe, isRemember.value);
+  }
+  ///==================================✅✅Controller✅✅=======================
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final otpController = TextEditingController();
 
   ///==================================✅✅SignUp Method✅✅=======================
 
@@ -43,14 +55,49 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.signUpOtp);
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
-      Get.toNamed(AppRoutes.signUpOtp);
-      toastMessage(message: response.body["message"]);
-    }
-    else {
+      String errorMessage = response.body["message"];
+
+      if (errorMessage.contains("Account active. Please Login")) {
+        toastMessage(message: errorMessage);
+        Get.toNamed(AppRoutes.signInScreen);
+      } else if (errorMessage
+          .contains("Already have an account. Please activate")) {
+        toastMessage(message: errorMessage);
+        Get.toNamed(AppRoutes.signUpOtp,);
+      } else {
+        toastMessage(message: errorMessage);
+      }
+    } else {
       ApiChecker.checkApi(response);
     }
     signUpLoading.value = false;
     signUpLoading.refresh();
+  }
+
+  ///==================================✅✅SignUp OTp✅✅=======================
+
+  RxBool isSignUpOtp = false.obs;
+
+  signUpOtp() async {
+    isSignUpOtp.value = true;
+    var body = {
+      "email": emailController.text,
+      "activationCode":otpController.text
+    };
+
+    var response = await apiClient.post(body: body, url: ApiUrl.activateAccount);
+    if (response.statusCode == 201) {
+      SharePrefsHelper.setString(
+          AppConstants.token, response.body['data']["accessToken"]);
+      Get.offAllNamed(AppRoutes.freeServiceScreen);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isSignUpOtp.value = false;
+    isSignUpOtp.refresh();
   }
 
   ///==================================✅✅Sign In Method✅✅=======================
@@ -61,7 +108,7 @@ class AuthController extends GetxController {
     isSignInLoading.value = true;
     var body = {
       "email": emailController.text,
-      "password":passwordController.text
+      "password": passwordController.text
     };
 
     var response = await apiClient.post(body: body, url: ApiUrl.login);
@@ -71,16 +118,106 @@ class AuthController extends GetxController {
       debugPrint(
           '======================token   ${response.body['data']['accessToken']}');
       Get.toNamed(AppRoutes.homeScreen);
+      if (isRemember.value) {
+        SharePrefsHelper.setBool(AppConstants.rememberMe, true);
+        SharePrefsHelper.setBool(AppConstants.isOwner, true);
+
+      } else {
+        SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+        SharePrefsHelper.setBool(AppConstants.isOwner, false);
+      }
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);
-    }
-    else {
+    } else {
+      SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+      SharePrefsHelper.setBool(AppConstants.isOwner, false);
       ApiChecker.checkApi(response);
     }
     isSignInLoading.value = false;
     isSignInLoading.refresh();
   }
 
+  ///==================================✅✅Forget Method✅✅=======================
 
+  RxBool isForgetLoading = false.obs;
+
+  forgetEmail() async {
+    isForgetLoading.value = true;
+    var body = {
+      "email": emailController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.forgotPassword);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.forgotPasswordOtp);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isForgetLoading.value = false;
+    isForgetLoading.refresh();
+  }
+
+  ///==================================✅✅Forget Otp Method✅✅=======================
+
+  RxBool isForgetOtp = false.obs;
+
+  forgetOtpVerify() async {
+    isForgetOtp.value = true;
+    var body ={
+      "email": emailController.text,
+      "code": otpController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.forgetPasswordOtpVerify);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.resetPasswordScreen);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isForgetOtp.value = false;
+    isForgetOtp.refresh();
+  }
+
+  ///==================================✅✅Reset password Method✅✅=======================
+
+  RxBool isResetLoading = false.obs;
+
+  resetPassword() async {
+    isResetLoading.value = true;
+    var body ={
+      "email": emailController.text,
+      "confirmPassword": confirmPasswordController.text,
+      "newPassword": newPasswordController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.resetPassword);
+    if (response.statusCode == 200) {
+      clearResetField();
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.signInScreen);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isResetLoading.value = false;
+    isResetLoading.refresh();
+  }
+
+  clearResetField(){
+     emailController.clear();
+     otpController.clear();
+     newPasswordController.clear();
+     confirmPasswordController.clear();
+  }
 }

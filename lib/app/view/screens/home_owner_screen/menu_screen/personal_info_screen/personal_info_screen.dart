@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/profile_controller/profile_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
+import 'package:tidybayte/app/view/components/custom_personal_profile/custom_personal_profile.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
+
 class PersonalInfoScreen extends StatelessWidget {
-  const PersonalInfoScreen({super.key});
+  PersonalInfoScreen({super.key});
+
+  final ProfileController profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,157 +26,104 @@ class PersonalInfoScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xCCE8F3FA), // First color (with opacity)
-              Color(0xFFB5D8EE),
-            ],
+            colors: [Color(0xCCE8F3FA), Color(0xFFB5D8EE)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///=============================== Personal Information ========================
-                CustomMenuAppbar(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.editProfileScreen);
-                  },
-                  isEdit: true,
-                  title: AppStrings.personalInformation,
-                  onBack: () {
-                    Get.back();
-                  },
-                ),
+          child: Obx(() {
+            if (profileController.rxRequestStatus.value == Status.loading) {
+              return const Center(child: CustomLoader());
+            }
 
-                ///==========================Body Here=====================
+            if (profileController.rxRequestStatus.value == Status.internetError) {
+              return NoInternetScreen(onTap: profileController.getProfile);
+            }
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 21),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xCCE8F3FA), // First color (with opacity)
-                          Color(0xCCE8F3FA), // First color (with opacity)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+            if (profileController.rxRequestStatus.value == Status.error) {
+              return GeneralErrorScreen(onTap: profileController.getProfile);
+            }
+
+            final profile = profileController.profileModel.value;
+
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  /// ========== AppBar ==========
+                  CustomMenuAppbar(
+                    onTap: () => Get.toNamed(AppRoutes.editProfileScreen),
+                    isEdit: true,
+                    title: AppStrings.personalInformation,
+                    onBack: Get.back,
+                  ),
+
+                  /// ========== Profile Info ==========
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 21),
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xCCE8F3FA), Color(0xCCE8F3FA)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                       ),
-                    ),
-                    child: const Column(
-                      children: [
-                        ClipOval(
-                          child: SizedBox(
-                            width: 128.0, // specify width
-                            height: 128.0, // specify height
-                            child: CustomImage(
-                              imageSrc: AppImages.avatar,
-                              imageType: ImageType.png,
+                      child: Column(
+                        children: [
+                          const ClipOval(
+                            child: SizedBox(
+                              width: 128,
+                              height: 128,
+                              child: CustomImage(
+                                imageSrc: AppImages.avatar,
+                                imageType: ImageType.png,
+                              ),
                             ),
                           ),
-                        )
+                          CustomText(
+                            top: 10,
+                            text: profile.firstName ?? "",
+                            color: AppColors.dark400,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                          ),
+                          const CustomText(
+                            text: 'Free User',
+                            color: AppColors.dark300,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            bottom: 24,
+                          ),
 
-                        ,
-                        // CustomNetworkImage(
-                        //     boxShape: BoxShape.circle,
-                        //     imageUrl: AppConstants.userNtr, height: 128, width: 128),
-                        CustomText(
-                          top: 10,
-                          text: 'Name:',
-                          color: AppColors.dark400,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
-                        ),
-                        CustomText(
-                          text: 'Free User',
-                          color: AppColors.dark300,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          bottom: 24,
-                        ),
-
-                        ///============================First Name=====================
-                        CustomProfileItem(
-                          title: AppStrings.firstName,
-                          subTitle: 'First Name ',
-                        ),
-
-                        ///================================last Name========================
-                        CustomProfileItem(
-                          title: AppStrings.lastName,
-                          subTitle: 'Last Name',
-                        ),
-
-                        ///================================Email========================
-                        CustomProfileItem(
-                          title: AppStrings.email,
-                          subTitle: 'Email',
-                        ),
-
-                        ///================================Contact No========================
-                        CustomProfileItem(
-                          title: AppStrings.contactNumber,
-                          subTitle: 'Contact Number',
-                        ),
-
-                        // ///================================Address========================
-                        // CustomProfileItem(
-                        //   title: AppStrings.address,
-                        //   subTitle: 'Address',
-                        // ),
-                      ],
+                          /// ========== Personal Details ==========
+                          CustomPersonalProfile(
+                            title: AppStrings.firstName.tr,
+                            subTitle: profile.firstName ?? "",
+                          ),
+                          CustomPersonalProfile(
+                            title: AppStrings.lastName.tr,
+                            subTitle: profile.lastName ?? "",
+                          ),
+                          CustomPersonalProfile(
+                            title: AppStrings.email.tr,
+                            subTitle: profile.email ?? "",
+                          ),
+                          CustomPersonalProfile(
+                            title: AppStrings.contactNumber.tr,
+                            subTitle: profile.phoneNumber ?? "",
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
+                ],
+              ),
+            );
+          }),
         ),
       ),
-    );
-  }
-}
-
-class CustomProfileItem extends StatelessWidget {
-  final String title;
-  final String subTitle;
-
-  const CustomProfileItem({
-    super.key,
-    required this.title,
-    required this.subTitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          color: AppColors.dark300,
-          text: title,
-          fontWeight: FontWeight.w400,
-          fontSize: 16,
-          bottom: 10,
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(12),
-          color: AppColors.blue50,
-          child: CustomText(
-            textAlign: TextAlign.start,
-            text: subTitle,
-            color: AppColors.dark300,
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 8.h),
-      ],
     );
   }
 }
