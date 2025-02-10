@@ -190,7 +190,7 @@ class AppRoutes {
     GetPage(name: upgradePackages, page: () =>  UpgradePackages()),
     GetPage(name: myPlanScreen, page: () =>  MyPlanScreen()),
     GetPage(name: settingScreen, page: () => const SettingScreen()),
-    GetPage(name: changePasswordScreen, page: () => const ChangePasswordScreen()),
+    GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen()),
     GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
