@@ -20,6 +20,7 @@ class AuthController extends GetxController {
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final otpController = TextEditingController();
 
   ///==================================✅✅SignUp Method✅✅=======================
 
@@ -59,6 +60,32 @@ class AuthController extends GetxController {
     }
     signUpLoading.value = false;
     signUpLoading.refresh();
+  }
+
+  ///==================================✅✅SignUp OTp✅✅=======================
+
+  RxBool isSignUpOtp = false.obs;
+
+  signUpOtp() async {
+    isSignUpOtp.value = true;
+    var body = {
+      "email": emailController.text,
+      "activationCode":otpController.text
+    };
+
+    var response = await apiClient.post(body: body, url: ApiUrl.activateAccount);
+    if (response.statusCode == 201) {
+      SharePrefsHelper.setString(
+          AppConstants.token, response.body['data']["accessToken"]);
+      Get.offAllNamed(AppRoutes.freeServiceScreen);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isSignUpOtp.value = false;
+    isSignUpOtp.refresh();
   }
 
   ///==================================✅✅Sign In Method✅✅=======================

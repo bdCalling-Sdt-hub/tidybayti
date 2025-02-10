@@ -11,6 +11,8 @@ import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_rech_text/custom_rich_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
+import '../../../../components/custom_menu_appbar/custom_menu_appbar.dart';
+
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
 
@@ -42,6 +44,8 @@ class SignUpScreen extends StatelessWidget {
                   clipBehavior: Clip.none,
                   child: Column(
                     children: [
+                      const CustomMenuAppbar(title: ''),
+
                       SizedBox(height: 50.h),
 
                       ///================ First Name ====================
