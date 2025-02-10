@@ -139,7 +139,7 @@ class AppRoutes {
     GetPage(name: signUpOtp, page: () =>  SignUpOtp()),
     GetPage(name: forgotPasswordScreen, page: () =>  ForgotPasswordScreen()),
     GetPage(name: forgotPasswordOtp, page: () =>  ForgotPasswordOtp()),
-    GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
+    GetPage(name: resetPasswordScreen, page: () =>  ResetPasswordScreen()),
     GetPage(name: freeServiceScreen, page: () =>  FreeServiceScreen()),
 
     ///===========================Home Section=======================

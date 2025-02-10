@@ -20,6 +20,7 @@ class AuthController extends GetxController {
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
 
   ///==================================✅✅SignUp Method✅✅=======================
@@ -163,5 +164,39 @@ class AuthController extends GetxController {
     }
     isForgetOtp.value = false;
     isForgetOtp.refresh();
+  }
+
+  ///==================================✅✅Reset password Method✅✅=======================
+
+  RxBool isResetLoading = false.obs;
+
+  resetPassword() async {
+    isResetLoading.value = true;
+    var body ={
+      "email": emailController.text,
+      "confirmPassword": confirmPasswordController.text,
+      "newPassword": newPasswordController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.resetPassword);
+    if (response.statusCode == 200) {
+      clearResetField();
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.signInScreen);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isResetLoading.value = false;
+    isResetLoading.refresh();
+  }
+
+  clearResetField(){
+     emailController.clear();
+     otpController.clear();
+     newPasswordController.clear();
+     confirmPasswordController.clear();
   }
 }
