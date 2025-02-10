@@ -115,4 +115,53 @@ class AuthController extends GetxController {
     isSignInLoading.value = false;
     isSignInLoading.refresh();
   }
+
+  ///==================================✅✅Forget Method✅✅=======================
+
+  RxBool isForgetLoading = false.obs;
+
+  forgetEmail() async {
+    isForgetLoading.value = true;
+    var body = {
+      "email": emailController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.forgotPassword);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.forgotPasswordOtp);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isForgetLoading.value = false;
+    isForgetLoading.refresh();
+  }
+
+  ///==================================✅✅Forget Otp Method✅✅=======================
+
+  RxBool isForgetOtp = false.obs;
+
+  forgetOtpVerify() async {
+    isForgetOtp.value = true;
+    var body ={
+      "email": emailController.text,
+      "code": otpController.text
+    };
+
+    var response = await apiClient.post(body: body,
+        url: ApiUrl.forgetPasswordOtpVerify);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoutes.resetPasswordScreen);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isForgetOtp.value = false;
+    isForgetOtp.refresh();
+  }
 }

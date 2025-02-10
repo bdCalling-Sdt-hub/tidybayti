@@ -20,7 +20,11 @@ class CustomMenuAppbar extends StatelessWidget {
     super.key,
     required this.title,
     this.backIcon = AppIcons.back, // Default back icon
-    this.onBack, this.isEdit, this.onTap, this.download, this.onDownload, // Optional onBack callback
+    this.onBack,
+    this.isEdit,
+    this.onTap,
+    this.download,
+    this.onDownload, // Optional onBack callback
   });
 
   @override
@@ -31,10 +35,14 @@ class CustomMenuAppbar extends StatelessWidget {
         children: [
           if (backIcon != null)
             GestureDetector(
-              onTap: onBack ?? () => Get.back(), // Fallback to Get.back() if onBack is not provided
-              child: CustomImage(imageSrc: backIcon!),
+              onTap: onBack ?? () => Get.back(),
+              // Fallback to Get.back() if onBack is not provided
+              child: CustomImage(
+                imageSrc: backIcon!,
+                imageColor: Colors.black,
+              ),
             ),
-           Expanded(
+          Expanded(
             child: CustomText(
               textAlign: TextAlign.center,
               text: title,
@@ -43,17 +51,18 @@ class CustomMenuAppbar extends StatelessWidget {
               color: AppColors.blue900,
             ),
           ),
-          isEdit==true?
-          GestureDetector(
-              onTap: onTap,
-              child: const CustomImage(imageSrc: AppIcons.edit)):
-          SizedBox(width: 5.w),
+          isEdit == true
+              ? GestureDetector(
+                  onTap: onTap,
+                  child: const CustomImage(imageSrc: AppIcons.edit))
+              : SizedBox(width: 5.w),
 
-          download==true?
-          GestureDetector(
-              onTap: onDownload,
-              child: const CustomImage(imageSrc: AppIcons.download)):
-          SizedBox(width: 5.w), // Add space for alignment purposes (right side)
+          download == true
+              ? GestureDetector(
+                  onTap: onDownload,
+                  child: const CustomImage(imageSrc: AppIcons.download))
+              : SizedBox(
+                  width: 5.w), // Add space for alignment purposes (right side)
         ],
       ),
     );

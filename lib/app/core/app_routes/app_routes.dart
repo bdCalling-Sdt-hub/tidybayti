@@ -137,8 +137,8 @@ class AppRoutes {
     GetPage(name: homeOwnerChoseAuth, page: () => const HomeOwnerChoseAuth()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
     GetPage(name: signUpOtp, page: () =>  SignUpOtp()),
-    GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
-    GetPage(name: forgotPasswordOtp, page: () => const ForgotPasswordOtp()),
+    GetPage(name: forgotPasswordScreen, page: () =>  ForgotPasswordScreen()),
+    GetPage(name: forgotPasswordOtp, page: () =>  ForgotPasswordOtp()),
     GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
     GetPage(name: freeServiceScreen, page: () =>  FreeServiceScreen()),
 
