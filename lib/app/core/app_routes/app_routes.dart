@@ -195,7 +195,7 @@ class AppRoutes {
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
-    GetPage(name: editProfileScreen, page: () => const EditProfileScreen()),
+    GetPage(name: editProfileScreen, page: () =>  EditProfileScreen()),
     GetPage(name: createTask, page: () => const CreateTask()),
 
 

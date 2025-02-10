@@ -12,6 +12,7 @@ class ApiUrl {
 
   ///==================================✅✅Owner Profile✅✅=======================
   static const getOwnerProfile = "$baseUrl/user/profile";
+  static const updateProfile = "$baseUrl/user/edit-profile";
 
 
 }

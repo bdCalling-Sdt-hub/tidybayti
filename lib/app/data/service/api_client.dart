@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
@@ -271,7 +270,7 @@ class ApiClient {
 
       if (showResult) {
         log.i("response.body => ${response.body}");
-        log.i("response.statusCode => ${response.statusCode}");
+        log.i("response.statusCode =>=>=>=>=> ${response.statusCode}");
         log.i(
             '|📒📒📒|-----------------[[ PATCH ]] method response end --------------------|📒📒📒|');
       }
