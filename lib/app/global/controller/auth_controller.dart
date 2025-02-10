@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
@@ -15,12 +14,12 @@ class AuthController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
 
- final firstNameController = TextEditingController();
- final lastNameController = TextEditingController();
- final emailController = TextEditingController();
- final phoneNumberController = TextEditingController();
- final passwordController = TextEditingController();
- final confirmPasswordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   ///==================================✅✅SignUp Method✅✅=======================
 
@@ -43,10 +42,19 @@ class AuthController extends GetxController {
       Get.toNamed(AppRoutes.signUpOtp);
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
-      Get.toNamed(AppRoutes.signUpOtp);
-      toastMessage(message: response.body["message"]);
-    }
-    else {
+      String errorMessage = response.body["message"];
+
+      if (errorMessage.contains("Account active. Please Login")) {
+        toastMessage(message: errorMessage);
+        Get.toNamed(AppRoutes.signInScreen);
+      } else if (errorMessage
+          .contains("Already have an account. Please activate")) {
+        toastMessage(message: errorMessage);
+        Get.toNamed(AppRoutes.signUpOtp,);
+      } else {
+        toastMessage(message: errorMessage);
+      }
+    } else {
       ApiChecker.checkApi(response);
     }
     signUpLoading.value = false;
@@ -61,7 +69,7 @@ class AuthController extends GetxController {
     isSignInLoading.value = true;
     var body = {
       "email": emailController.text,
-      "password":passwordController.text
+      "password": passwordController.text
     };
 
     var response = await apiClient.post(body: body, url: ApiUrl.login);
@@ -74,13 +82,10 @@ class AuthController extends GetxController {
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);
-    }
-    else {
+    } else {
       ApiChecker.checkApi(response);
     }
     isSignInLoading.value = false;
     isSignInLoading.refresh();
   }
-
-
 }
