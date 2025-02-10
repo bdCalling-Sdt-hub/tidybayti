@@ -2,6 +2,7 @@ class AppConstants {
   static String token = "token";
 
   static String onBoard = "Onboard";
+  static String isOwner = "owner";
 
   /// <====================== All Response Message Static==============================>
 

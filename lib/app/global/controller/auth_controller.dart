@@ -13,6 +13,17 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 class AuthController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
+  ///==================================✅✅Remember✅✅=======================
+
+  RxBool isRemember = false.obs;
+
+  toggleRemember() {
+    isRemember.value = !isRemember.value;
+    debugPrint("Remember me==============>>>>>>>>>$isRemember");
+    refresh();
+    SharePrefsHelper.setBool(AppConstants.isRememberMe, isRemember.value);
+  }
+  ///==================================✅✅Controller✅✅=======================
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
@@ -107,10 +118,20 @@ class AuthController extends GetxController {
       debugPrint(
           '======================token   ${response.body['data']['accessToken']}');
       Get.toNamed(AppRoutes.homeScreen);
+      if (isRemember.value) {
+        SharePrefsHelper.setBool(AppConstants.rememberMe, true);
+        SharePrefsHelper.setBool(AppConstants.isOwner, true);
+
+      } else {
+        SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+        SharePrefsHelper.setBool(AppConstants.isOwner, false);
+      }
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);
     } else {
+      SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+      SharePrefsHelper.setBool(AppConstants.isOwner, false);
       ApiChecker.checkApi(response);
     }
     isSignInLoading.value = false;

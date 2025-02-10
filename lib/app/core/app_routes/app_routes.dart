@@ -51,6 +51,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/tas
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/grocery_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/ongoing_task/ongoing_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/pending_task/pending_task.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/splash_screen/splash_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/add_expense_screen/add_expense_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/budget_details_screen/budget_details_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/crerate_budget_screen/create_budget_screen.dart';
@@ -60,6 +61,7 @@ import 'package:tidybayte/app/view/screens/onboard_screen/onBoard_screen/onboard
 
 class AppRoutes {
 
+  static const String splashScreen = "/SplashScreen";
   static const String signInScreen = "/SignInScreen";
   static const String employeeNotificationScreen = "/EmployeeNotificationScreen";
   static const String onboardScreen = "/OnboardScreen";
@@ -131,6 +133,7 @@ class AppRoutes {
   static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
+    GetPage(name: splashScreen, page: () =>  const SplashScreen()),
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: onboardScreen, page: () => const OnboardScreen()),
     GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),

@@ -34,7 +34,7 @@ class ForgotPasswordOtp extends StatelessWidget {
 
             Positioned(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               child: Obx(() {
                 return Form(
                   key: formKey,
