@@ -14,6 +14,7 @@ import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
@@ -123,18 +124,18 @@ class AddEmployeeController extends GetxController {
                       imageSrc: AppIcons.rightUp,
                     )),
               ),
-              const CustomText(
+               CustomText(
                 top: 24,
                 bottom: 40,
                 maxLines: 2,
-                text: 'Employee Added Successfully',
+                text: AppStrings.employeeAddedSu.tr,
                 fontWeight: FontWeight.w400,
                 fontSize: 24,
                 color: AppColors.successFullyColor,
               ),
-              const CustomText(
+               CustomText(
                 maxLines: 5,
-                text: 'Employees accounts details is sending to employee email :',
+                text: AppStrings.emplyeesAccountDetails.tr,
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
                 color: AppColors.dark400,
@@ -147,16 +148,16 @@ class AddEmployeeController extends GetxController {
                 fontSize: 16,
                 color: AppColors.dark400,
               ),
-              const Row(
+               Row(
                 children: [
                   CustomText(
                     maxLines: 2,
-                    text: ' Temporary Password:',
+                    text: "${AppStrings.temporaryPassword}:".tr,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: AppColors.dark400,
                   ),
-                  CustomText(
+                  const CustomText(
                     maxLines: 2,
                     text: ' Masum017@@@',
                     fontWeight: FontWeight.w700,
@@ -172,7 +173,7 @@ class AddEmployeeController extends GetxController {
               ///==============================Send Email==================
 
               CustomButton(
-                title: 'Send email',
+                title: AppStrings.sendEmail.tr,
                 onTap: () {
                   Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
                 },

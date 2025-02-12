@@ -110,6 +110,8 @@ class AppStrings {
   static const String cPR   = 'CPR';
   static const String passport   = 'Passport';
   static const String passportNumber   = 'Passport Number';
+  static const String employeeAddedSu   = 'Employee Added Successfully';
+  static const String emplyeesAccountDetails   = 'Employees accounts details is sending to employee email :';
   static const String drivingLicense   = 'Driving license';
   static const String address   = 'Address';
   static const String selectWorkingDays   = 'Select working days';
