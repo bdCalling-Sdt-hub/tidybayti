@@ -16,5 +16,6 @@ class ApiUrl {
   static const updateProfile = "$baseUrl/user/edit-profile";
   static const changePassword = "$baseUrl/auth/change-password";
 
-
+  ///==================================✅✅Add Employee✅✅=======================
+  static const addEmployee = "$baseUrl/user/add-employee";
 }
