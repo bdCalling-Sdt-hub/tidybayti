@@ -14,7 +14,15 @@ class AddEmployeeController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
   RxString image = "".obs;
-
+  final RxBool isCprOpen = false.obs;
+  final RxBool isPassportOpen = false.obs;
+  final RxString selectedJobType = ''.obs;
+  ///==================================✅✅updateJobType✅✅=======================
+  void updateJobType(String jobType) {
+    selectedJobType.value = jobType;
+    jobTypeController.text = jobType;
+    debugPrint("Selected Job Type: =======================$jobType");
+  }
   Rx<File> imageFile = File("").obs;
 
   selectImage() async {

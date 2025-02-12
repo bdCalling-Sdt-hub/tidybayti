@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
@@ -13,14 +14,10 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 
-class AddEmployeeScreen extends StatefulWidget {
-  const AddEmployeeScreen({super.key});
+class AddEmployeeScreen extends StatelessWidget {
+  AddEmployeeScreen({super.key});
 
-  @override
-  State<AddEmployeeScreen> createState() => _AddEmployeeScreenState();
-}
-
-class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
+final AddEmployeeController controller = Get.find<AddEmployeeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,34 +71,58 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
                     ///==================================✅✅Employee Personal List✅✅=======================
 
-                     CustomTextField(
+                    CustomTextField(
                       hintText: AppStrings.firstName.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
                       height: 8.h,
                     ),
-                     CustomTextField(
+                    CustomTextField(
                       hintText: AppStrings.lastName.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
                       height: 8.h,
                     ),
+
                     ///==================================✅✅jobType✅✅=======================
 
-                     CustomTextField(
-                      suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      hintText: AppStrings.jobType.tr,
+                    Obx(() => CustomTextField(
+                      textEditingController: controller.jobTypeController,
+                      suffixIcon: PopupMenuButton<String>(
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        onSelected: (value) {
+                          controller.updateJobType(value);
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: "Full Time",
+                            child: Text("Full Time"),
+                          ),
+                          const PopupMenuItem(
+                            value: "Part Time",
+                            child: Text("Part Time"),
+                          ),
+                        ],
+                      ),
+                      hintText: controller.selectedJobType.value.isEmpty
+                          ? AppStrings.jobType.tr
+                          : controller.selectedJobType.value,
                       readOnly: true,
                       fillColor: AppColors.employeeCardColor,
-                    ),
+                    )),
                     SizedBox(
                       height: 8.h,
                     ),
+
                     ///==================================✅✅cPR✅✅=======================
 
-                     CustomTextField(
+                    CustomTextField(
+                      readOnly: true,
+                      onTap: () {
+                        controller.isCprOpen.value = !controller.isCprOpen.value;
+                      },
                       suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
                       hintText: AppStrings.cPR.tr,
                       fillColor: AppColors.employeeCardColor,
@@ -109,12 +130,62 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     SizedBox(
                       height: 8.h,
                     ),
+                    Obx(() => controller.isCprOpen.value
+                        ?  Column(
+                            children: [
+                               CustomTextField(
+                                hintText: AppStrings.cprNumber.tr,
+                                fillColor: Colors.white,
+                              ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                               CustomTextField(
+                                readOnly: true,
+                                hintText: AppStrings.expireDate.tr,
+                                fillColor: Colors.white,
+                                suffixIcon: const Icon(Icons.calendar_month),
+                              ),
+                            ],
+                          )
+                        : const SizedBox()),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
                     ///==================================✅✅passport✅✅=======================
+
                     CustomTextField(
+                      readOnly: true,
+                      onTap: () {
+                        controller.isPassportOpen.value = !controller.isPassportOpen.value;
+                      },
                       suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
                       hintText: AppStrings.passport.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    Obx(() => controller.isPassportOpen.value
+                        ?  Column(
+                      children: [
+                        CustomTextField(
+                          hintText: AppStrings.passportNumber.tr,
+                          fillColor: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        CustomTextField(
+                          readOnly: true,
+                          hintText: AppStrings.expireDate.tr,
+                          fillColor: Colors.white,
+                          suffixIcon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    )
+                        : const SizedBox()),
                     SizedBox(
                       height: 8.h,
                     ),
@@ -130,22 +201,22 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       fillColor: AppColors.employeeCardColor,
                     ),
 
-
                     ///==================================✅✅email✅✅=======================
 
                     SizedBox(
                       height: 8.h,
                     ),
-                     CustomTextField(
+                    CustomTextField(
                       hintText: AppStrings.email.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
                       height: 8.h,
                     ),
+
                     ///==================================✅✅temporaryPassword✅✅=======================
 
-                     CustomTextField(
+                    CustomTextField(
                       hintText: AppStrings.temporaryPassword.tr,
                       fillColor: AppColors.employeeCardColor,
                       isPassword: true,
@@ -153,6 +224,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     SizedBox(
                       height: 15.h,
                     ),
+
                     ///==================================✅✅addNewEmployee Button✅✅=======================
 
                     CustomButton(

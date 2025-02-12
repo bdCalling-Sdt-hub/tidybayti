@@ -24,6 +24,8 @@ class AppStrings {
   static const String profile = "Profile";
   static const String name = "Name:";
   static const String note = "Note";
+  static const String cprNumber = "CPR Number";
+  static const String expireDate = "Expire Date";
   static const String temporaryPassword = "Temporary Password";
   static const String bhdSix = "BHD  4.99/ monthly ";
   static const String autoRenewal = "Auto-renewal";
@@ -107,6 +109,7 @@ class AppStrings {
   static const String jobType   = 'Job type';
   static const String cPR   = 'CPR';
   static const String passport   = 'Passport';
+  static const String passportNumber   = 'Passport Number';
   static const String drivingLicense   = 'Driving license';
   static const String address   = 'Address';
   static const String selectWorkingDays   = 'Select working days';
