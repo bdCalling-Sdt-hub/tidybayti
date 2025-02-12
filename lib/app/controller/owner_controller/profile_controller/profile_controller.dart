@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/profile_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
@@ -19,7 +20,6 @@ final firstNameController = TextEditingController();
 final lastNameController = TextEditingController();
 final phoneNumberController = TextEditingController();
 final addressController = TextEditingController();
-  RxString imagePath = "".obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
 
@@ -52,6 +52,20 @@ final addressController = TextEditingController();
   }
 
   ///==================================✅✅Profile Update✅✅=======================
+  RxString image = "".obs;
+
+  Rx<File> imageFile = File("").obs;
+
+  selectImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? getImages =
+    await picker.pickImage(source: ImageSource.gallery, imageQuality: 15);
+    if (getImages != null) {
+      imageFile.value = File(getImages.path);
+      image.value = getImages.path;
+    }
+  }
+
   RxBool updateProfileLoading = false.obs;
 
   updateProfile() async {
@@ -65,13 +79,13 @@ final addressController = TextEditingController();
       "address": addressController.value.text,
     };
 
-    var response = imagePath.isEmpty
+    var response = image.isEmpty
         ? await apiClient.patch(
         body: body,
         url:  ApiUrl.updateProfile)
         : await apiClient.multipartRequest(
         multipartBody: [
-          MultipartBody("profile_image", File(imagePath.value))
+          MultipartBody("profile_image", File(image.value))
         ],
       url: ApiUrl.updateProfile,
         reqType: "PATCH");

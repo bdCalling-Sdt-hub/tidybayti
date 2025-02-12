@@ -55,15 +55,19 @@ class PersonalInfoScreen extends StatelessWidget {
                 children: [
                   /// ========== AppBar ==========
                   CustomMenuAppbar(
-                    onTap: () =>
-                        Get.toNamed(AppRoutes.editProfileScreen, arguments: {
-                      "firstName": profile.firstName,
-                      "lastName": profile.lastName,
-                      "phoneNumber": profile.phoneNumber,
-                    }),
+                    onTap: () {
+                      Get.toNamed(AppRoutes.editProfileScreen, arguments: {
+                        "firstName": profile.firstName,
+                        "lastName": profile.lastName,
+                        "phoneNumber": profile.phoneNumber,
+                        "profileImage": profile.profileImage,
+                      });
+                      print("Profile Image URL:========== ${profile.profileImage}");
+
+
+                    },
+                    title: AppStrings.personalInformation.tr,
                     isEdit: true,
-                    title: AppStrings.personalInformation,
-                    onBack: Get.back,
                   ),
 
                   /// ========== Profile Info ==========
