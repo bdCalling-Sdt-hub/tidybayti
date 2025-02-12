@@ -231,7 +231,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                     ),
 
 
-                    ///============================
+                    ///==================================✅✅Select working days✅✅=======================
+
                     const Padding(
                       padding: EdgeInsets.only(bottom: 16.0, top: 16),
                       child: Text(
@@ -245,6 +246,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                     _buildDaySelectionGrid(selectedWorkingDays, true),
 
                     const SizedBox(height: 24.0), // Spacing between sections
+                    ///==================================✅✅Select off days✅✅=======================
 
                     const CustomText(
                       textAlign: TextAlign.start,
@@ -259,12 +261,14 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                     const SizedBox(
                       height: 15,
                     ),
+                    ///==================================✅✅upgradeProfile✅✅=======================
+
                     CustomButton(
                       onTap: () {
                         Get.back();
                       },
                       fillColor: Colors.white,
-                      title: AppStrings.upgradeProfile,
+                      title: AppStrings.upgradeProfile.tr,
                     )
                   ],
                 ),
