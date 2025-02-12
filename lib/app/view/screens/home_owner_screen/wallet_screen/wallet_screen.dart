@@ -3,18 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/wallet_screen/wallet_overView_screen.dart';
 
@@ -55,7 +47,7 @@ class _WalletScreenState extends State<WalletScreen> {
               children: [
                 ///=============================== Wallet Appbar ========================
                 CustomMenuAppbar(
-                  title: AppStrings.wallet,
+                  title: AppStrings.wallet.tr,
                   onBack: () {
                     Get.back();
                   },
@@ -112,7 +104,9 @@ class _WalletScreenState extends State<WalletScreen> {
         ),
       ),
 
-      floatingActionButton: selectedTabIndex==0?Padding(
+        ///==================================✅✅createBudgets Button✅✅=======================
+
+        floatingActionButton: selectedTabIndex==0?Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomButton(
           width: MediaQuery.of(context).size.width/1.2,
@@ -120,7 +114,7 @@ class _WalletScreenState extends State<WalletScreen> {
             Get.toNamed(AppRoutes.createBudgetScreen);
           },
         fillColor: Colors.white,
-          title: 'Create Budget',
+          title: AppStrings.createBudgets.tr,
         ),
       ):const SizedBox()
     );
