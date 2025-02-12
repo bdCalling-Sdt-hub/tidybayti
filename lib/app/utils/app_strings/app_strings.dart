@@ -23,6 +23,8 @@ class AppStrings {
   static const String sixMonth = "6 Months package";
   static const String profile = "Profile";
   static const String name = "Name:";
+  static const String note = "Note";
+  static const String temporaryPassword = "Temporary Password";
   static const String bhdSix = "BHD  4.99/ monthly ";
   static const String autoRenewal = "Auto-renewal";
   static const String reNewPlan = "Re-new plan";
