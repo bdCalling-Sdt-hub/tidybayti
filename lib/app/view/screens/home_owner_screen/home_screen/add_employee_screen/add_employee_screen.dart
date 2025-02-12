@@ -74,6 +74,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     CustomTextField(
                       hintText: AppStrings.firstName.tr,
                       fillColor: AppColors.employeeCardColor,
+                      textEditingController: controller.firstNameController,
                     ),
                     SizedBox(
                       height: 8.h,
@@ -81,6 +82,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     CustomTextField(
                       hintText: AppStrings.lastName.tr,
                       fillColor: AppColors.employeeCardColor,
+                      textEditingController: controller.lastNameController,
                     ),
                     SizedBox(
                       height: 8.h,
@@ -134,6 +136,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                         ?  Column(
                             children: [
                                CustomTextField(
+                                 textEditingController: controller.cprNumberController,
                                 hintText: AppStrings.cprNumber.tr,
                                 fillColor: Colors.white,
                               ),
@@ -141,6 +144,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                                 height: 8.h,
                               ),
                                CustomTextField(
+                                 textEditingController: controller.cprExpireDateController,
                                 readOnly: true,
                                 hintText: AppStrings.expireDate.tr,
                                 fillColor: Colors.white,
@@ -171,6 +175,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                         ?  Column(
                       children: [
                         CustomTextField(
+                          textEditingController: controller.passportController,
                           hintText: AppStrings.passportNumber.tr,
                           fillColor: Colors.white,
                         ),
@@ -178,6 +183,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                           height: 8.h,
                         ),
                         CustomTextField(
+                          textEditingController: controller.passportExpireDateController,
                           readOnly: true,
                           hintText: AppStrings.expireDate.tr,
                           fillColor: Colors.white,
@@ -190,6 +196,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                       height: 8.h,
                     ),
                     CustomTextField(
+                      textEditingController: controller.noteController,
                       hintText: AppStrings.note.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
@@ -197,6 +204,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                       height: 8.h,
                     ),
                     CustomTextField(
+                      textEditingController: controller.phoneNumberController,
                       hintText: AppStrings.contactNumber.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
@@ -207,6 +215,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                       height: 8.h,
                     ),
                     CustomTextField(
+                      textEditingController: controller.emailController,
                       hintText: AppStrings.email.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
@@ -217,6 +226,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     ///==================================✅✅temporaryPassword✅✅=======================
 
                     CustomTextField(
+                      textEditingController: controller.passportController,
                       hintText: AppStrings.temporaryPassword.tr,
                       fillColor: AppColors.employeeCardColor,
                       isPassword: true,
