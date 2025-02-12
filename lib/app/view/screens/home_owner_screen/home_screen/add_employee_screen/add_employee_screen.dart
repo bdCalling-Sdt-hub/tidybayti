@@ -239,7 +239,7 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
 
                     CustomButton(
                       onTap: () {
-                        showDialoge(context);
+                       controller.sendEmail(context);
                       },
                       fillColor: Colors.white,
                       title: AppStrings.addNewEmployee.tr,
@@ -255,96 +255,4 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
   }
 }
 
-void showDialoge(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false, // Prevent dismissing by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-              Radius.circular(5.0)), // Adjust the radius as needed
-        ),
-        backgroundColor: AppColors.addedColor,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 16.h,
-            ),
-            Container(
-              height: 96,
-              width: 96,
-              decoration: const BoxDecoration(
-                color: AppColors.blue900,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                  child: CustomImage(
-                imageSrc: AppIcons.rightUp,
-              )),
-            ),
-            CustomText(
-              top: 24,
-              bottom: 40,
-              maxLines: 2,
-              text: 'Employee Added Successfully',
-              fontWeight: FontWeight.w400,
-              fontSize: 24,
-              color: AppColors.successFullyColor,
-            ),
-            CustomText(
-              maxLines: 5,
-              text: 'Employees accounts details is sending to employee email :',
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              color: AppColors.dark400,
-            ),
-            CustomText(
-              maxLines: 2,
-              bottom: 20,
-              text: ' diannerussell@gmail.com',
-              fontWeight: FontWeight.w700,
-              fontSize: 16,
-              color: AppColors.dark400,
-            ),
-            Row(
-              children: [
-                CustomText(
-                  maxLines: 2,
-                  text: ' Temporary Password:',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: AppColors.dark400,
-                ),
-                CustomText(
-                  maxLines: 2,
-                  text: ' Masum017@@@',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 12,
-                  color: AppColors.dark400,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 48.h,
-            ),
 
-            ///==============================Send Email==================
-
-            CustomButton(
-              title: 'Send email',
-              onTap: () {
-                Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
-              },
-              fillColor: Colors.white,
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
