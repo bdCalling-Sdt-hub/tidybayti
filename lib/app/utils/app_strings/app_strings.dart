@@ -114,6 +114,10 @@ class AppStrings {
   static const String emplyeesAccountDetails   = 'Employees accounts details is sending to employee email :';
   static const String drivingLicense   = 'Driving license';
   static const String address   = 'Address';
+  static const String confirmDelete   = 'Confirm Delete';
+  static const String cancel   = 'Cancel';
+  static const String delete   = 'Delete';
+  static const String areYouSureYouWant   = 'Are you sure you want to delete this employee?';
   static const String selectWorkingDays   = 'Select working days';
   static const String selectOffDays   = 'Select off days';
   static const String upgradeProfile    = 'Upgrade profile';

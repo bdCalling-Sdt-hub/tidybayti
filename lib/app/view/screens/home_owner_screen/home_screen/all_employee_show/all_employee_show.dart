@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
@@ -61,7 +62,7 @@ class AllEmployeeShow extends StatelessWidget {
 
                     ///==================================✅✅All Employee Card✅✅=======================
                     Column(
-                      children: List.generate(4, (context) {
+                      children: List.generate(4, (index) {
                         return CustomEmployeeData(
                           imageUrl: AppConstants.userNtr,
                           name: "John Doe",
@@ -72,7 +73,9 @@ class AllEmployeeShow extends StatelessWidget {
                             Get.toNamed(AppRoutes.employeeDetails);
                           },
                           onDeleteTap: () {
-                            print("Employee Deleted!");
+                            GlobalAlert.showDeleteDialog(context, () {
+                              print("Employee Deleted!");
+                            }, AppStrings.areYouSureYouWant.tr);
                           },
                         );
                       }),
