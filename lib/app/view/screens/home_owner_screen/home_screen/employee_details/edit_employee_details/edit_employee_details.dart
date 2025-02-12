@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
+import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
@@ -53,6 +51,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
     false
   ]; // Preselected off days
 
+  final AddEmployeeController controller = Get.find<AddEmployeeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,11 +71,11 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
         child: SafeArea(
           child: Column(
             children: [
-              ///=============================== Menu Title ========================
+              ///==================================✅✅AeditEmployeeDetails Appbar✅✅=======================
               Column(
                 children: [
                   CustomMenuAppbar(
-                    title: AppStrings.editEmployeeDetails,
+                    title: AppStrings.editEmployeeDetails.tr,
                     onBack: () {
                       Get.back();
                     },
@@ -89,82 +88,148 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                 child: ListView(
                   padding: const EdgeInsets.all(16.0),
                   children: [
-                    // CustomNetworkImage(
-                    //     boxShape: BoxShape.circle,
-                    //     imageUrl: AppConstants.userNtr,
-                    //     height: 117,
-                    //     width: 117),
-                    const Center(
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 117.0, // specify width
-                          height: 117.0, // specify height
-                          child: CustomImage(
-                            imageSrc: AppImages.avatar,
-                            imageType: ImageType.png,
-                          ),
-                        ),
-                      ),
-                    ),
+                    CustomNetworkImage(
+                        boxShape: BoxShape.circle,
+                        imageUrl: AppConstants.userNtr,
+                        height: 117,
+                        width: 117),
+
                     SizedBox(
                       height: 20.h,
                     ),
                     CustomTextField(
-                      hintText:"First Name",
+                      hintText:AppStrings.firstName.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 8.h,
                     ),
                     CustomTextField(
-                      hintText: "Last Name",
+                      hintText: AppStrings.lastName.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 8.h,
+                    ),
+
+                    ///==================================✅✅jobType✅✅=======================
+
+                    Obx(() => CustomTextField(
+                      textEditingController: controller.jobTypeController,
+                      suffixIcon: PopupMenuButton<String>(
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                        onSelected: (value) {
+                          controller.updateJobType(value);
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: "Full Time",
+                            child: Text("Full Time"),
+                          ),
+                          const PopupMenuItem(
+                            value: "Part Time",
+                            child: Text("Part Time"),
+                          ),
+                        ],
+                      ),
+                      hintText: controller.selectedJobType.value.isEmpty
+                          ? AppStrings.jobType.tr
+                          : controller.selectedJobType.value,
+                      readOnly: true,
+                      fillColor: AppColors.employeeCardColor,
+                    )),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+
+                    ///==================================✅✅cPR✅✅=======================
+
+                    CustomTextField(
+                      readOnly: true,
+                      onTap: () {
+                        controller.isCprOpen.value = !controller.isCprOpen.value;
+                      },
+                      suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      hintText: AppStrings.cPR.tr,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    Obx(() => controller.isCprOpen.value
+                        ?  Column(
+                      children: [
+                        CustomTextField(
+                          textEditingController: controller.cprNumberController,
+                          hintText: AppStrings.cprNumber.tr,
+                          fillColor: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        CustomTextField(
+                          textEditingController: controller.cprExpireDateController,
+                          readOnly: true,
+                          hintText: AppStrings.expireDate.tr,
+                          fillColor: Colors.white,
+                          suffixIcon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    )
+                        : const SizedBox()),
+
+
+                    ///==================================✅✅passport✅✅=======================
+
+                    CustomTextField(
+                      readOnly: true,
+                      onTap: () {
+                        controller.isPassportOpen.value = !controller.isPassportOpen.value;
+                      },
+                      suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      hintText: AppStrings.passport.tr,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    Obx(() => controller.isPassportOpen.value
+                        ?  Column(
+                      children: [
+                        CustomTextField(
+                          textEditingController: controller.passportController,
+                          hintText: AppStrings.passportNumber.tr,
+                          fillColor: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        CustomTextField(
+                          textEditingController: controller.passportExpireDateController,
+                          readOnly: true,
+                          hintText: AppStrings.expireDate.tr,
+                          fillColor: Colors.white,
+                          suffixIcon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    )
+                        : const SizedBox()),
+
+                    CustomTextField(
+                      hintText: AppStrings.note.tr,
+                      fillColor: AppColors.employeeCardColor,
+                    ),
+                    SizedBox(
+                      height: 8.h,
                     ),
                     CustomTextField(
-                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
-                      hintText: AppStrings.jobType,
+                      hintText: AppStrings.contactNumber.tr,
                       fillColor: AppColors.employeeCardColor,
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 8.h,
                     ),
-                    CustomTextField(
-                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
-                      hintText: AppStrings.cPR,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextField(
-                      suffixIcon: Icon(Icons.keyboard_arrow_down_rounded),
-                      hintText: AppStrings.passport,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextField(
-                      hintText: "Note",
-                      fillColor: AppColors.employeeCardColor,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    CustomTextField(
-                      hintText: AppStrings.contactNumber,
-                      fillColor: AppColors.employeeCardColor,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    // CustomTextField(
-                    //   hintText: AppStrings.address,
-                    //   fillColor: AppColors.employeeCardColor,
-                    // ),
+
 
                     ///============================
                     const Padding(
