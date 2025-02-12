@@ -1,6 +1,7 @@
 class ApiUrl {
 
   static const baseUrl = "http://10.0.60.26:8002";
+  static const networkUrl = "http://10.0.60.26:8002/";
 
   ///<======================= For Auth part ====================>
   static const register = "$baseUrl/auth/register";
