@@ -86,11 +86,16 @@ class PersonalInfoScreen extends StatelessWidget {
                         children: [
                           ClipOval(
                               child: profile.profileImage!.isNotEmpty
-                                  ? CustomNetworkImage(
-                                      imageUrl:
-                                          "${ApiUrl.networkUrl}${profile.profileImage ?? ""}",
-                                      height: 128,
-                                      width: 128)
+                                  ? Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue,width: 4)
+                                ),
+                                    child: CustomNetworkImage(
+                                        imageUrl:
+                                            "${ApiUrl.networkUrl}${profile.profileImage ?? ""}",
+                                        height: 128,
+                                        width: 128),
+                                  )
                                   : const CustomImage(
                                       imageSrc: AppImages.avatar,
                                       imageType: ImageType.png,
