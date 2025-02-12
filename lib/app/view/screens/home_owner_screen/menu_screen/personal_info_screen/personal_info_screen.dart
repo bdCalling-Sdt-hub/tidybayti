@@ -55,7 +55,12 @@ class PersonalInfoScreen extends StatelessWidget {
                 children: [
                   /// ========== AppBar ==========
                   CustomMenuAppbar(
-                    onTap: () => Get.toNamed(AppRoutes.editProfileScreen),
+                    onTap: () =>
+                        Get.toNamed(AppRoutes.editProfileScreen, arguments: {
+                      "firstName": profile.firstName,
+                      "lastName": profile.lastName,
+                      "phoneNumber": profile.phoneNumber,
+                    }),
                     isEdit: true,
                     title: AppStrings.personalInformation,
                     onBack: Get.back,
