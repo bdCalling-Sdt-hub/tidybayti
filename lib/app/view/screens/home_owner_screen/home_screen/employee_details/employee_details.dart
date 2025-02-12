@@ -3,20 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_personal_profile/custom_personal_profile.dart';
+import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-import '../../../../../utils/app_images/app_images.dart';
-import '../../menu_screen/personal_info_screen/personal_info_screen.dart';
 
 class EmployeeDetails extends StatelessWidget {
   const EmployeeDetails({super.key});
@@ -41,13 +34,14 @@ class EmployeeDetails extends StatelessWidget {
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ///=============================== profile Appbar ========================
+                ///==================================✅✅employeeDetails Appbar✅✅=======================
+
                 CustomMenuAppbar(
                   onTap: () {
                     Get.toNamed(AppRoutes.editEmployeeDetails);
                   },
                   isEdit: true,
-                  title: AppStrings.employeeDetails,
+                  title: AppStrings.employeeDetails.tr,
                   onBack: () {
                     Get.back();
                   },
@@ -72,119 +66,117 @@ class EmployeeDetails extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Center(
-                        //   child: CustomNetworkImage(
-                        //       boxShape: BoxShape.circle,
-                        //       imageUrl: AppConstants.employee,
-                        //       height: 128,
-                        //       width: 128),
-                        // ),
-                        const Center(
-                          child: ClipOval(
-                            child: SizedBox(
-                              width: 128.0, // specify width
-                              height: 128.0, // specify height
-                              child: CustomImage(
-                                imageSrc: AppImages.avatar,
-                                imageType: ImageType.png,
-                              ),
-                            ),
-                          ),
+                        Center(
+                          child: CustomNetworkImage(
+                              boxShape: BoxShape.circle,
+                              imageUrl: AppConstants.employee,
+                              height: 128,
+                              width: 128),
                         ),
 
-                       SizedBox(
-                         height: 25.h,
-                       ),
-                         const CustomText(
-                          textAlign: TextAlign.start,
-                          top: 10,
-                          text: 'First Name:',
-                          color: AppColors.dark400,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
+                        SizedBox(
+                          height: 25.h,
+                        ),
+                        Row(
+                          children: [
+                            CustomText(
+                              textAlign: TextAlign.start,
+                              top: 10,
+                              text: "${AppStrings.firstName}: ".tr,
+                              color: AppColors.dark400,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                            ),
+                            const Expanded(
+                              child: CustomText(
+                                textAlign: TextAlign.start,
+                                top: 10,
+                                text: "",
+                                color: AppColors.dark400,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
                         ),
 
                         ///============================First Name=====================
-                        const CustomProfileItem(
-                          title: 'Last Name:',
-                          subTitle: ' ',
+                         CustomProfileItem(
+                          title: "${AppStrings.lastName} :".tr,
+                          subTitle: '',
                         ),
 
                         ///================================last Name========================
-                        const CustomProfileItem(
-                          title: AppStrings.id,
+                         CustomProfileItem(
+                          title: AppStrings.id.tr,
                           subTitle: '',
                         ),
 
                         ///================================Email========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.email}:',
+                         CustomProfileItem(
+                          title: '${AppStrings.email.tr}:',
                           subTitle: '',
                         ),
 
                         ///================================Contact No========================
-                        const CustomProfileItem(
-                          title: "${AppStrings.contactNumber}:",
+                         CustomProfileItem(
+                          title: "${AppStrings.contactNumber.tr}:",
                           subTitle: '',
                         ),
 
-                        // ///================================Address========================
-                        // const CustomProfileItem(
-                        //   title: '${AppStrings.address}:',
-                        //   subTitle: '',
-                        // ),
+
 
                         ///================================CPR========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.cPR}:',
+                         CustomProfileItem(
+                          title: '${AppStrings.cPR.tr}:',
                           subTitle: '',
                         ),
 
                         ///================================Passport:  ========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.passport}:',
+                         CustomProfileItem(
+                          title: '${AppStrings.passport.tr}:',
                           subTitle: '',
                         ),
 
                         ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Note:',
+                         CustomProfileItem(
+                          title: "${AppStrings.note.tr} :",
                           subTitle: '',
                         ),
 
                         ///================================jobType  ========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.jobType}:',
+                         CustomProfileItem(
+                          title: '${AppStrings.jobType.tr}:',
                           subTitle: '',
                         ),
 
                         ///================================joiningDate  ========================
-                        const CustomProfileItem(
-                          title: AppStrings.joiningDate,
+                         CustomProfileItem(
+                          title: AppStrings.joiningDate.tr,
                           subTitle: ' ',
                         ),
 
-                        ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Duty Time',
+                        ///================================dutyTime  ========================
+                         CustomProfileItem(
+                          title: AppStrings.dutyTime.tr,
                           subTitle: '',
                         ),
 
-                        ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Working Day',
+                        ///================================workingDay  ========================
+                         CustomProfileItem(
+                          title: AppStrings.workingDay.tr,
                           subTitle: '',
-                        ), ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Off day',
+                        ),
+
+                        ///================================offDay  ========================
+                         CustomProfileItem(
+                          title: AppStrings.offDay.tr,
                           subTitle: '',
                         ),
 
                         SizedBox(
                           height: 20.h,
                         ),
-
-
                       ],
                     ),
                   ),
@@ -199,71 +191,3 @@ class EmployeeDetails extends StatelessWidget {
 }
 
 
-
-Future<void> showMyDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    // The dialog can't be dismissed by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-          title: Row(
-            children: [
-              const CustomText(
-                text: AppStrings.changePassword,
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-              ),
-              const Spacer(),
-              GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const CustomImage(imageSrc: AppIcons.x))
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ///===================================Present Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.presentPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-
-              ///===================================New Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.newPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-
-              ///===================================New Confirm Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.confirmPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomButton(
-                onTap: () {
-                  Get.back();
-                },
-                fillColor: Color(0xFFB5D8EE),
-                title: AppStrings.upDate,
-              )
-            ],
-          ));
-    },
-  );
-}

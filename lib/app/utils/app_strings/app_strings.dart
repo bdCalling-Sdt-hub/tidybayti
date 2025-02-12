@@ -117,6 +117,9 @@ class AppStrings {
   static const String confirmDelete   = 'Confirm Delete';
   static const String cancel   = 'Cancel';
   static const String delete   = 'Delete';
+  static const String dutyTime   = 'Duty Time:';
+  static const String workingDay   = 'Working Day:';
+  static const String offDay   = 'Off day';
   static const String areYouSureYouWant   = 'Are you sure you want to delete this employee?';
   static const String selectWorkingDays   = 'Select working days';
   static const String selectOffDays   = 'Select off days';
