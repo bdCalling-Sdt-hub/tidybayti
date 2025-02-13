@@ -148,9 +148,9 @@ class ApiClient {
     try {
       /// ======================- Check Internet ===================
 
-      // if (!await (connectionChecker.isConnected)) {
-      //   return Response(statusCode: 503, statusText: noInternetConnection);
-      // }
+      if (!await (connectionChecker.isConnected)) {
+        return Response(statusCode: 503, statusText: noInternetConnection);
+      }
 
       if (showResult) {
         log.i(
