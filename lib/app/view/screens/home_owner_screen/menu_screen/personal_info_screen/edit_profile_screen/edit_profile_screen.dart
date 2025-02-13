@@ -136,7 +136,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ///============================FirstName================
                         CustomTextField(
                           hintText: AppStrings.firstName.tr,
-                          textEditingController:
+                           textEditingController:
                               profileController.firstNameController,
                         ),
                         SizedBox(
