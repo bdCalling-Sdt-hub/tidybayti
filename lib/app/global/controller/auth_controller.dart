@@ -128,6 +128,8 @@ class AuthController extends GetxController {
       }
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
+      isSignInLoading.value = false;
+      isSignInLoading.refresh();
       toastMessage(message: response.body["message"]);
     } else {
       SharePrefsHelper.setBool(AppConstants.rememberMe, false);
