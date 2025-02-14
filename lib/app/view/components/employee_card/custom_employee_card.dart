@@ -108,7 +108,7 @@ class CustomEmployeeData extends StatelessWidget {
                   ),
 
                   CustomText(
-                    text: '${AppStrings.designation.tr}: $designation',
+                    text: '${AppStrings.jobType.tr}: $designation',
                     fontWeight: FontWeight.w400,
                     fontSize: 14.sp,
                     color: AppColors.dark300,

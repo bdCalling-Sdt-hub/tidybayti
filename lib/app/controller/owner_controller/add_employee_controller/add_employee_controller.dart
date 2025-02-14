@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,12 +7,15 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
+import 'package:tidybayte/app/data/model/owner_model/employee_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/single_employee_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
@@ -55,35 +59,50 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
+// Convert `Map<String, dynamic>` to `Map<String, String>`
+  Map<String, String> convertToMapString(Map<String, dynamic>? body) {
+    if (body == null) return {};
+    return body.map((key, value) => MapEntry(key, value.toString()));
+  }
 
   RxBool isAddEmployeeLoading = false.obs;
 
   addEmployee() async {
     isAddEmployeeLoading.value = true;
 
-    var body = {
-      "firstName": firstNameController.text,
-      "lastName": lastNameController.text,
-      "jobType": jobTypeController.text,
-      "CPR":cprNumberController.text,
-      "CPRExpireDate":cprExpireDateController.text,
-      "passport":passportController.text,
-      "passportExpire":passportExpireDateController.text,
-      "note":noteController.text,
-      "phoneNumber": phoneNumberController.text,
-      "email": emailController.text,
+    Map<String, dynamic> body = {
+      "firstName": firstNameController.text.trim(),
+      "lastName": lastNameController.text.trim(),
+      "jobType": jobTypeController.text.trim(),
+      "CPRNumber": cprNumberController.text.trim(),
+      "CPRExpireDate": cprExpireDateController.text.trim(),
+      "passportNumber": passportController.text.trim(),
+      "passportExpire": passportExpireDateController.text.trim(),
+      "note": noteController.text.trim(),
+      "phoneNumber": phoneNumberController.text.trim(),
+      "email": emailController.text.trim(),
       "password": passwordController.text,
+      "dutyTime":" dutyTimeController.text.trim()",
+      "offDay": "",
+      "workingDay": "jsonEncode(selectedWorkingDays)",
     };
 
-    var response = image.isEmpty
-        ? await apiClient.post(body: body, url: ApiUrl.addEmployee)
-        : await apiClient.multipartRequest(
-            multipartBody: [MultipartBody("profile_image", File(image.value))],
-            url: ApiUrl.addEmployee,
-            reqType: "Post");
+    var response;
+    if (image.isEmpty) {
+      response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
+    } else {
+      response = await apiClient.multipartRequest(
+        multipartBody: [
+          MultipartBody("profile_image", File(image.value))
+        ],
+        url: ApiUrl.addEmployee,
+        reqType: "Post",
+        body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
+      );
+    }
 
     if (response.statusCode == 200) {
-      toastMessage(message: 'message');
+      toastMessage(message: 'Employee added successfully!');
     } else {
       ApiChecker.checkApi(response);
     }
@@ -91,6 +110,67 @@ class AddEmployeeController extends GetxController {
     isAddEmployeeLoading.value = false;
   }
 
+
+
+  ///==================================✅✅Get Employee✅✅=======================
+  void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  final rxRequestStatus = Status.loading.obs;
+
+
+  Rx<EmployeeData> employeeData = EmployeeData().obs;
+
+  getEmployee() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response = await apiClient.get(url:
+      ApiUrl.getEmployee,showResult: true);
+
+      if (response.statusCode == 200) {
+        employeeData.value = EmployeeData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print('Employee Result==================${employeeData.value.result?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
+
+  ///==================================✅✅Get Single Employee✅✅=======================
+
+
+
+  Rx<SingleEmployeeData> singleEmployeeData = SingleEmployeeData().obs;
+
+  getSingleEmployee({required String employeeId}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response = await apiClient.get(url:
+      ApiUrl.singleEmployee(employeeId),showResult: true);
+
+      if (response.statusCode == 200) {
+        singleEmployeeData.value = SingleEmployeeData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print('Employee Result==================${singleEmployeeData.value.employeeId}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
   ///==================================✅✅Profile Update✅✅=======================
 
 
@@ -186,5 +266,13 @@ class AddEmployeeController extends GetxController {
         );
       },
     );
+  }
+
+
+
+  @override
+  void onInit() {
+    getEmployee();
+    super.onInit();
   }
 }

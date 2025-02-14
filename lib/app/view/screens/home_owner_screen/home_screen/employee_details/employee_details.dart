@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -11,11 +13,33 @@ import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_networ
 import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
-class EmployeeDetails extends StatelessWidget {
-  const EmployeeDetails({super.key});
+class EmployeeDetails extends StatefulWidget {
+  EmployeeDetails({super.key});
+
+  @override
+  State<EmployeeDetails> createState() => _EmployeeDetailsState();
+}
+
+class _EmployeeDetailsState extends State<EmployeeDetails> {
+  final AddEmployeeController employeeController =
+      Get.find<AddEmployeeController>();
+
+  final String employeeId = Get.arguments[0];
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      employeeController.getSingleEmployee(employeeId: employeeId.toString());
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("EmployeeId===========================$employeeId");
+
+    var data = employeeController.singleEmployeeData.value;
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -69,7 +93,8 @@ class EmployeeDetails extends StatelessWidget {
                         Center(
                           child: CustomNetworkImage(
                               boxShape: BoxShape.circle,
-                              imageUrl: AppConstants.employee,
+                              imageUrl:
+                                  "${ApiUrl.networkUrl}${data.profileImage}",
                               height: 128,
                               width: 128),
                         ),
@@ -87,11 +112,11 @@ class EmployeeDetails extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
                             ),
-                            const Expanded(
+                             Expanded(
                               child: CustomText(
                                 textAlign: TextAlign.start,
                                 top: 10,
-                                text: "",
+                                text: data.firstName??"",
                                 color: AppColors.dark400,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 20,
@@ -100,78 +125,73 @@ class EmployeeDetails extends StatelessWidget {
                           ],
                         ),
 
-                        ///============================First Name=====================
-                         CustomProfileItem(
+                        ///============================Last Name=====================
+                        CustomProfileItem(
                           title: "${AppStrings.lastName} :".tr,
-                          subTitle: '',
+                          subTitle: data.lastName??"",
                         ),
 
-                        ///================================last Name========================
-                         CustomProfileItem(
+                        ///================================id========================
+                        CustomProfileItem(
                           title: AppStrings.id.tr,
-                          subTitle: '',
+                          subTitle: data.id??"",
                         ),
 
                         ///================================Email========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: '${AppStrings.email.tr}:',
-                          subTitle: '',
+                          subTitle: data.email??"",
                         ),
 
                         ///================================Contact No========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: "${AppStrings.contactNumber.tr}:",
-                          subTitle: '',
+                          subTitle: data.phoneNumber??"",
                         ),
 
-
-
                         ///================================CPR========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: '${AppStrings.cPR.tr}:',
-                          subTitle: '',
+                          subTitle: data.cprNumber??"",
                         ),
 
                         ///================================Passport:  ========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: '${AppStrings.passport.tr}:',
-                          subTitle: '',
+                          subTitle:data.passportNumber??"",
                         ),
 
-                        ///================================drivingLicense  ========================
-                         CustomProfileItem(
+                        ///================================note  ========================
+                        CustomProfileItem(
                           title: "${AppStrings.note.tr} :",
-                          subTitle: '',
+                          subTitle: data.note??"",
                         ),
 
                         ///================================jobType  ========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: '${AppStrings.jobType.tr}:',
-                          subTitle: '',
+                          subTitle: data.jobType??"",
                         ),
 
-                        ///================================joiningDate  ========================
-                         CustomProfileItem(
-                          title: AppStrings.joiningDate.tr,
-                          subTitle: ' ',
-                        ),
+
 
                         ///================================dutyTime  ========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.dutyTime.tr,
-                          subTitle: '',
+                          subTitle: data.dutyTime??"",
                         ),
 
                         ///================================workingDay  ========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.workingDay.tr,
-                          subTitle: '',
+                          subTitle: data.workingDay!.join(', '),
                         ),
 
+
                         ///================================offDay  ========================
-                         CustomProfileItem(
+                        CustomProfileItem(
                           title: AppStrings.offDay.tr,
-                          subTitle: '',
+                          subTitle: data.offDay??"",
                         ),
 
                         SizedBox(
@@ -189,5 +209,3 @@ class EmployeeDetails extends StatelessWidget {
     );
   }
 }
-
-
