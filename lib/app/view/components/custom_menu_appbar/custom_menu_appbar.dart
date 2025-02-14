@@ -34,14 +34,17 @@ class CustomMenuAppbar extends StatelessWidget {
       child: Row(
         children: [
           if (backIcon != null)
-            GestureDetector(
-              onTap: onBack ?? () => Get.back(),
-              // Fallback to Get.back() if onBack is not provided
-              child: CustomImage(
-                imageSrc: backIcon!,
-                imageColor: Colors.black,
-              ),
-            ),
+            IconButton(onPressed: (){
+              Get.back();
+            }, icon: const Icon(Icons.arrow_back)),
+            // GestureDetector(
+            //   onTap: onBack ?? () => Get.back(),
+            //   // Fallback to Get.back() if onBack is not provided
+            //   child: CustomImage(
+            //     imageSrc:,
+            //     imageColor: Colors.black,
+            //   ),
+            // ),
           Expanded(
             child: CustomText(
               textAlign: TextAlign.center,

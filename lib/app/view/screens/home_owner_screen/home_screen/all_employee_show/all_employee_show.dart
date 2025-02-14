@@ -2,21 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/employee_card/custom_employee_card.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class AllEmployeeShow extends StatelessWidget {
-   AllEmployeeShow({super.key});
+  AllEmployeeShow({super.key});
 
-  final AddEmployeeController employeeController = Get.find<AddEmployeeController>();
+  final AddEmployeeController employeeController =
+      Get.find<AddEmployeeController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,25 +69,52 @@ class AllEmployeeShow extends StatelessWidget {
                     // Spacing between text field and list
 
                     ///==================================✅✅All Employee Card✅✅=======================
-                    Column(
-                      children: List.generate(4, (index) {
-                        return CustomEmployeeData(
-                          imageUrl: AppConstants.userNtr,
-                          name: "John Doe",
-                          designation: "Assistant",
-                          id: "123456789",
-                          email: "johndoe@example.com",
-                          onDetailsTap: () {
-                            Get.toNamed(AppRoutes.employeeDetails);
-                          },
-                          onDeleteTap: () {
-                            GlobalAlert.showDeleteDialog(context, () {
-                              print("Employee Deleted!");
-                            }, AppStrings.areYouSureYouWant.tr);
-                          },
-                        );
-                      }),
-                    )
+
+                    Obx(() {
+                      switch (employeeController.rxRequestStatus.value) {
+                        case Status.loading:
+                          return const CustomLoader(); // Show loading indicator
+
+                        case Status.internetError:
+                          return NoInternetScreen(onTap: () {
+                            employeeController.getEmployee();
+                          });
+
+                        case Status.error:
+                          return GeneralErrorScreen(
+                            onTap: () {
+                              employeeController.getEmployee();
+                            },
+                          );
+
+                        case Status.completed:
+                          return
+                      Column(
+                        children: List.generate(
+                            employeeController.employeeData.value.result?.length??0,
+                            (index) {
+                              var data = employeeController.employeeData.value.result?[index];
+                          return CustomEmployeeData(
+                            imageUrl: "${ApiUrl.networkUrl}${data?.profileImage}",
+                            name: "${data?.firstName??" "} ${data?.lastName}",
+                            designation: data?.jobType??"",
+                            id: data?.id??"",
+                            email: data?.email??"",
+                            onDetailsTap: () {
+                              Get.toNamed(AppRoutes.employeeDetails);
+                            },
+                            onDeleteTap: () {
+                              GlobalAlert.showDeleteDialog(context, () {
+                                print("Employee Deleted!");
+                              }, AppStrings.areYouSureYouWant.tr);
+                            },
+                          );
+                        }),
+                      );
+                      }
+                    })
+
+
                   ],
                 ),
               ),
