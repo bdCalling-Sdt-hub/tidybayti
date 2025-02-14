@@ -19,6 +19,8 @@ class ApiUrl {
   ///==================================✅✅Add Employee✅✅=======================
   static const addEmployee = "$baseUrl/user/add-employee";
   static const getEmployee = "$baseUrl/user/get-my-employee";
+  static const editEmployee = "$baseUrl/user/edit-employee";
+  static const employeeDelete = "$baseUrl/user/delete-employee";
   static String singleEmployee(String employeeId) =>
       "$baseUrl/user/get-single-employee?userId=$employeeId";
 }
