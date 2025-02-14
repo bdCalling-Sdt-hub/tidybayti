@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -58,41 +59,58 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
+// Convert `Map<String, dynamic>` to `Map<String, String>`
+  Map<String, String> convertToMapString(Map<String, dynamic>? body) {
+    if (body == null) return {};
+    return body.map((key, value) => MapEntry(key, value.toString()));
+  }
 
   RxBool isAddEmployeeLoading = false.obs;
 
   addEmployee() async {
     isAddEmployeeLoading.value = true;
 
-    var body = {
-      "firstName": firstNameController.text,
-      "lastName": lastNameController.text,
-      "jobType": jobTypeController.text,
-      "CPR":cprNumberController.text,
-      "CPRExpireDate":cprExpireDateController.text,
-      "passport":passportController.text,
-      "passportExpire":passportExpireDateController.text,
-      "note":noteController.text,
-      "phoneNumber": phoneNumberController.text,
-      "email": emailController.text,
+    Map<String, dynamic> body = {
+      "firstName": firstNameController.text.trim(),
+      "lastName": lastNameController.text.trim(),
+      "jobType": jobTypeController.text.trim(),
+      "CPRNumber": cprNumberController.text.trim(),
+      "CPRExpireDate": cprExpireDateController.text.trim(),
+      "passportNumber": passportController.text.trim(),
+      "passportExpire": passportExpireDateController.text.trim(),
+      "note": noteController.text.trim(),
+      "phoneNumber": phoneNumberController.text.trim(),
+      "email": emailController.text.trim(),
       "password": passwordController.text,
+      "dutyTime":" dutyTimeController.text.trim()",
+      "offDay": "",
+      "workingDay": "jsonEncode(selectedWorkingDays)",
     };
 
-    var response = image.isEmpty
-        ? await apiClient.post(body: body, url: ApiUrl.addEmployee)
-        : await apiClient.multipartRequest(
-            multipartBody: [MultipartBody("profile_image", File(image.value))],
-            url: ApiUrl.addEmployee,
-            reqType: "Post");
+    var response;
+    if (image.isEmpty) {
+      response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
+    } else {
+      response = await apiClient.multipartRequest(
+        multipartBody: [
+          MultipartBody("profile_image", File(image.value))
+        ],
+        url: ApiUrl.addEmployee,
+        reqType: "Post",
+        body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
+      );
+    }
 
     if (response.statusCode == 200) {
-      toastMessage(message: 'message');
+      toastMessage(message: 'Employee added successfully!');
     } else {
       ApiChecker.checkApi(response);
     }
 
     isAddEmployeeLoading.value = false;
   }
+
+
 
   ///==================================✅✅Get Employee✅✅=======================
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
