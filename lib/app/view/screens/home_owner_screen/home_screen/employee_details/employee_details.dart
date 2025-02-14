@@ -184,8 +184,9 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                         ///================================workingDay  ========================
                         CustomProfileItem(
                           title: AppStrings.workingDay.tr,
-                          subTitle: data.workingDay![1],
+                          subTitle: data.workingDay!.join(', '),
                         ),
+
 
                         ///================================offDay  ========================
                         CustomProfileItem(
