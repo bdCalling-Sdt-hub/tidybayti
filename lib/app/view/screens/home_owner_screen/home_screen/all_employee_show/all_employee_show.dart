@@ -101,7 +101,7 @@ class AllEmployeeShow extends StatelessWidget {
                             id: data?.id??"",
                             email: data?.email??"",
                             onDetailsTap: () {
-                              Get.toNamed(AppRoutes.employeeDetails);
+                              Get.toNamed(AppRoutes.employeeDetails,arguments: [data?.id]);
                             },
                             onDeleteTap: () {
                               GlobalAlert.showDeleteDialog(context, () {

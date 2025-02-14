@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/employee_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/single_employee_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -112,6 +113,36 @@ class AddEmployeeController extends GetxController {
 
         print('StatusCode==================${response.statusCode}');
         print('Employee Result==================${employeeData.value.result?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
+
+  ///==================================✅✅Get Single Employee✅✅=======================
+
+
+
+  Rx<SingleEmployeeData> singleEmployeeData = SingleEmployeeData().obs;
+
+  getSingleEmployee({required String employeeId}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response = await apiClient.get(url:
+      ApiUrl.singleEmployee(employeeId),showResult: true);
+
+      if (response.statusCode == 200) {
+        singleEmployeeData.value = SingleEmployeeData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print('Employee Result==================${singleEmployeeData.value.employeeId}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
