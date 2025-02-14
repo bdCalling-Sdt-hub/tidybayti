@@ -18,4 +18,6 @@ class ApiUrl {
 
   ///==================================✅✅Add Employee✅✅=======================
   static const addEmployee = "$baseUrl/user/add-employee";
+  static const getEmployee = "$baseUrl/user/get-my-employee";
+
 }

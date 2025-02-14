@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
@@ -13,8 +14,9 @@ import 'package:tidybayte/app/view/components/employee_card/custom_employee_card
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 
 class AllEmployeeShow extends StatelessWidget {
-  const AllEmployeeShow({super.key});
+   AllEmployeeShow({super.key});
 
+  final AddEmployeeController employeeController = Get.find<AddEmployeeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

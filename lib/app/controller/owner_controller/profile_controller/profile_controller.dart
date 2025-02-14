@@ -15,13 +15,13 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 class ProfileController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
-  final rxRequestStatus = Status.loading.obs;
 final firstNameController = TextEditingController();
 final lastNameController = TextEditingController();
 final phoneNumberController = TextEditingController();
 final addressController = TextEditingController();
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  final rxRequestStatus = Status.loading.obs;
 
   ///==================================✅✅get Profile✅✅=======================
 

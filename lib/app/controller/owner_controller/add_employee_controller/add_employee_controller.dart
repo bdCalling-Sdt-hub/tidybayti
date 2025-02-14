@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
+import 'package:tidybayte/app/data/model/owner_model/employee_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
@@ -91,6 +93,35 @@ class AddEmployeeController extends GetxController {
     isAddEmployeeLoading.value = false;
   }
 
+  ///==================================✅✅Get Employee✅✅=======================
+  void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  final rxRequestStatus = Status.loading.obs;
+
+
+  Rx<EmployeeData> employeeData = EmployeeData().obs;
+
+  getEmployee() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response = await apiClient.get(url:
+      ApiUrl.getEmployee,showResult: true);
+
+      if (response.statusCode == 200) {
+        employeeData.value = EmployeeData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print('Employee Result==================${employeeData.value.result?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
   ///==================================✅✅Profile Update✅✅=======================
 
 
@@ -186,5 +217,13 @@ class AddEmployeeController extends GetxController {
         );
       },
     );
+  }
+
+
+
+  @override
+  void onInit() {
+    getEmployee();
+    super.onInit();
   }
 }
