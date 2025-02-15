@@ -1,0 +1,98 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
+
+class AddEmployee {
+  static Future<void> addEmployee({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required File profileImage,
+    required String phoneNumber,
+    required String jobType,
+    required String cprNumber,
+    required String cprExpDate,
+    required String passportNumber,
+    required String passportExpDate,
+    required String note,
+    required String dutyTime,
+    required List workingDay,
+    required String offDay,
+  }) async {
+    AddEmployeeController employeeController = Get.find(); // Get instance of EmployeeController
+    employeeController.setLoading(true); // Set loading to true before API call
+
+    var url = Uri.parse(ApiUrl.addEmployee);
+
+    var request = http.MultipartRequest("POST", url);
+
+    request.fields["firstName"] = firstName;
+    request.fields["lastName"] = lastName;
+    request.fields["email"] = email;
+    request.fields["password"] = password;
+    request.fields["phoneNumber"] = phoneNumber;
+    request.fields["jobType"] = jobType;
+    request.fields["CPRNumber"] = cprNumber;
+    request.fields["CPRExpDate"] = cprExpDate;
+    request.fields["passportNumber"] = passportNumber;
+    request.fields["passportExpDate"] = passportExpDate;
+    request.fields["note"] = note;
+    request.fields["dutyTime"] = dutyTime;
+    request.fields["workingDay"] = jsonEncode(workingDay);
+    request.fields["offDay"] = offDay;
+
+    request.files.add(await http.MultipartFile.fromPath(
+      "profile_image",
+      profileImage.path,
+      contentType: MediaType('image', 'jpeg'),
+    ));
+
+    String? savedToken = await SharePrefsHelper.getString(AppConstants.token);
+    var token = savedToken;
+
+    request.headers.addAll({
+      "Authorization": "Bearer $token",
+      "Content-Type": "multipart/form-data",
+    });
+
+    try {
+      var response = await request.send();
+      var responseData = await response.stream.bytesToString();
+
+      employeeController.setLoading(false); // Set loading to false after request
+
+      if (response.statusCode == 200) {
+        toastMessage(message: "✅ Employee added successfully!");
+        print("✅ Employee added successfully!");
+        print(responseData);
+      } else {
+        print("❌ Failed: ${response.statusCode}");
+        print("❌ Error Response: $responseData");
+
+        String errorMessage = "Something went wrong!";
+        try {
+          var decodedData = json.decode(responseData);
+          if (decodedData["message"] != null) {
+            errorMessage = decodedData["message"];
+          }
+        } catch (e) {
+          print("❌ JSON Parsing Error: $e");
+        }
+
+        toastMessage(message: "❌ $errorMessage");
+      }
+    } catch (e) {
+      employeeController.setLoading(false); // Hide loader on error
+      toastMessage(message: "❌ An error occurred. Please check your connection.");
+      print("❌ Error: $e");
+    }
+  }
+}

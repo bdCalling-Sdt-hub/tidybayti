@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
-import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
@@ -29,6 +27,12 @@ class AddEmployeeController extends GetxController {
   final RxBool isCprOpen = false.obs;
   final RxBool isPassportOpen = false.obs;
   final RxString selectedJobType = ''.obs;
+  ///==================================✅✅updateJobType✅✅=======================
+  var isLoading = false.obs;  // Observable for loading state
+
+  void setLoading(bool value) {
+    isLoading.value = value; // Update loading state
+  }
   ///==================================✅✅updateJobType✅✅=======================
   void updateJobType(String jobType) {
     selectedJobType.value = jobType;
@@ -59,56 +63,8 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
-// Convert `Map<String, dynamic>` to `Map<String, String>`
-  Map<String, String> convertToMapString(Map<String, dynamic>? body) {
-    if (body == null) return {};
-    return body.map((key, value) => MapEntry(key, value.toString()));
-  }
 
-  // RxBool isAddEmployeeLoading = false.obs;
-  //
-  // addEmployee() async {
-  //   isAddEmployeeLoading.value = true;
-  //
-  //   Map<String, dynamic> body = {
-  //     "firstName": firstNameController.text.trim(),
-  //     "lastName": lastNameController.text.trim(),
-  //     "jobType": jobTypeController.text.trim(),
-  //     "CPRNumber": cprNumberController.text.trim(),
-  //     "CPRExpireDate": cprExpireDateController.text.trim(),
-  //     "passportNumber": passportController.text.trim(),
-  //     "passportExpire": passportExpireDateController.text.trim(),
-  //     "note": noteController.text.trim(),
-  //     "phoneNumber": phoneNumberController.text.trim(),
-  //     "email": emailController.text.trim(),
-  //     "password": passwordController.text,
-  //     "dutyTime":" dutyTimeController.text.trim()",
-  //     "offDay": "",
-  //     "workingDay": "jsonEncode(selectedWorkingDays)",
-  //   };
-  //
-  //   var response;
-  //   if (image.isEmpty) {
-  //     response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
-  //   } else {
-  //     response = await apiClient.multipartRequest(
-  //       multipartBody: [
-  //         MultipartBody("profile_image", File(image.value))
-  //       ],
-  //       url: ApiUrl.addEmployee,
-  //       reqType: "Post",
-  //       body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
-  //     );
-  //   }
-  //
-  //   if (response.statusCode == 200) {
-  //     toastMessage(message: 'Employee added successfully!');
-  //   } else {
-  //     ApiChecker.checkApi(response);
-  //   }
-  //
-  //   isAddEmployeeLoading.value = false;
-  // }
+
 
 
 
