@@ -219,6 +219,8 @@ class AddEmployeeController extends GetxController {
                   title: "Ok".tr,
                   onTap: () {
                     Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
+                    emailController.clear();
+                    passwordController.clear();
                   },
                   fillColor: Colors.white,
                 ),

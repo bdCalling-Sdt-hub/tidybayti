@@ -16,7 +16,6 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/employee_card/custom_employee_card.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class AllEmployeeShow extends StatelessWidget {
@@ -28,7 +27,6 @@ class AllEmployeeShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
