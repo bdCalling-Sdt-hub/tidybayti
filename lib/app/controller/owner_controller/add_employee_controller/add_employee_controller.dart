@@ -57,8 +57,8 @@ class AddEmployeeController extends GetxController {
   addEmployeeFieldClear(){
     firstNameController.clear();
     lastNameController.clear();
-    emailController.clear();
-    passwordController.clear();
+    // emailController.clear();
+    // passwordController.clear();
     phoneNumberController.clear();
     jobTypeController.clear();
     cprNumberController.clear();
@@ -183,10 +183,10 @@ class AddEmployeeController extends GetxController {
                   fontSize: 16,
                   color: AppColors.dark400,
                 ),
-                const CustomText(
+                 CustomText(
                   maxLines: 2,
                   bottom: 20,
-                  text: ' diannerussell@gmail.com',
+                  text: emailController.text,
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: AppColors.dark400,
@@ -200,9 +200,9 @@ class AddEmployeeController extends GetxController {
                       fontSize: 14,
                       color: AppColors.dark400,
                     ),
-                    const CustomText(
+                     CustomText(
                       maxLines: 2,
-                      text: ' Masum017@@@',
+                      text: passwordController.text,
                       fontWeight: FontWeight.w700,
                       fontSize: 12,
                       color: AppColors.dark400,
