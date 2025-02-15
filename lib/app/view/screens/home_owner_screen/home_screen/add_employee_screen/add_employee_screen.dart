@@ -175,13 +175,26 @@ class AddEmployeeScreen extends StatelessWidget {
                                 height: 8.h,
                               ),
                               CustomTextField(
-                                textEditingController:
-                                    controller.cprExpireDateController,
+                                textEditingController: controller.cprExpireDateController,
                                 readOnly: true,
                                 hintText: AppStrings.expireDate.tr,
                                 fillColor: Colors.white,
                                 suffixIcon: const Icon(Icons.calendar_month),
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  if (pickedDate != null) {
+                                    String formattedDate = "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                    controller.cprExpireDateController.text = formattedDate;
+                                  }
+                                },
                               ),
+
                             ],
                           )
                         : const SizedBox()),
@@ -217,12 +230,24 @@ class AddEmployeeScreen extends StatelessWidget {
                                 height: 8.h,
                               ),
                               CustomTextField(
-                                textEditingController:
-                                    controller.passportExpireDateController,
+                                textEditingController: controller.passportExpireDateController,
                                 readOnly: true,
                                 hintText: AppStrings.expireDate.tr,
                                 fillColor: Colors.white,
                                 suffixIcon: const Icon(Icons.calendar_month),
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  if (pickedDate != null) {
+                                    String formattedDate = "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                                    controller.passportExpireDateController.text = formattedDate;
+                                  }
+                                },
                               ),
                             ],
                           )
@@ -274,32 +299,33 @@ class AddEmployeeScreen extends StatelessWidget {
 
                     CustomButton(
                       onTap: () {
+                        if (profileImage == null) {
+                          print("❌ Please select a profile image.");
+                          return;
+                        }
+
                         addEmployee(
-                            firstName: "John",
-                            lastName: "Doe",
-                            email: "johndoffyefguftd@email.com",
-                            password: "123456",
-                            profileImage: profileImage!,
-                            phoneNumber: "1234567890",
-                            jobType: "Developer",
-                            cprNumber: "123456",
-                            cprExpDate: "2025-12-31",
-                            passportNumber: "AB123456",
-                            passportExpDate: "2026-10-15",
-                            note: "Test Employee",
-                            dutyTime: "9 AM - 5 PM",
-                            workingDay: [
-                              "Monday",
-                              "Tuesday",
-                              "Wednesday",
-                              "Thursday",
-                              "Friday"
-                            ],
-                            offDay: 'Saturday');
+                          firstName: controller.firstNameController.text.trim(),
+                          lastName: controller.lastNameController.text.trim(),
+                          email: controller.emailController.text.trim(),
+                          password: controller.passwordController.text.trim(),
+                          profileImage: profileImage!,
+                          phoneNumber: controller.phoneNumberController.text.trim(),
+                          jobType: controller.selectedJobType.value,
+                          cprNumber: controller.cprNumberController.text.trim(),
+                          cprExpDate: controller.cprExpireDateController.text.trim(),
+                          passportNumber: controller.passportController.text.trim(),
+                          passportExpDate: controller.passportExpireDateController.text.trim(),
+                          note: controller.noteController.text.trim(),
+                          dutyTime: "9 AM - 5 PM", // যদি ইউজার থেকে নেওয়া হয়, তাহলে `controller` থেকে নেওয়া উচিত
+                          workingDay: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                          offDay: "Saturday",
+                        );
                       },
                       fillColor: Colors.white,
                       title: AppStrings.addNewEmployee.tr,
                     )
+
                   ],
                 ),
               ),
