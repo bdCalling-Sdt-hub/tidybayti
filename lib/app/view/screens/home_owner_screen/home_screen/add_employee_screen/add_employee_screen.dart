@@ -7,6 +7,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
@@ -276,10 +277,9 @@ class AddEmployeeScreen extends StatelessWidget {
                         addEmployee(
                             firstName: "John",
                             lastName: "Doe",
-                            email: "johndoffefff@email.com",
+                            email: "johndoffyefguftd@email.com",
                             password: "123456",
                             profileImage: profileImage!,
-                            // ✅ ফাইল পাঠানো হচ্ছে
                             phoneNumber: "1234567890",
                             jobType: "Developer",
                             cprNumber: "123456",
@@ -316,7 +316,7 @@ Future<void> addEmployee(
     required String lastName,
     required String email,
     required String password,
-    required File profileImage, // ✅ ফাইল পাঠাতে হবে
+    required File profileImage,
     required String phoneNumber,
     required String jobType,
     required String cprNumber,
@@ -331,7 +331,7 @@ Future<void> addEmployee(
 
   var request = http.MultipartRequest("POST", url);
 
-  // 🔹 Text Data (Form-Data)
+
   request.fields["firstName"] = firstName;
   request.fields["lastName"] = lastName;
   request.fields["email"] = email;
@@ -347,19 +347,19 @@ Future<void> addEmployee(
   request.fields["workingDay"] = jsonEncode(workingDay);
   request.fields["offDay"] = offDay;
 
-  // 🔹 File (Profile Image) ✅ ফাইল যুক্ত করো
+
   request.files.add(await http.MultipartFile.fromPath(
     "profile_image",
     profileImage.path,
-    contentType: MediaType('image', 'jpeg'), // ✅ MIME টাইপ নির্দিষ্ট করা হয়েছে
+    contentType: MediaType('image', 'jpeg'),
   ));
+  String? savedToken = await SharePrefsHelper.getString(AppConstants.token);
+  var token =savedToken;
 
-  var token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2N2IwMGViNGFmZTJmODhjM2E2ZjEzZmQiLCJ1c2VySWQiOiI2N2IwMGViNGFmZTJmODhjM2E2ZjEzZmYiLCJlbWFpbCI6ImxpZGl0Mjc3NTVAc2hvdXhzLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzM5NTkzMjk3LCJleHAiOjE3NzExMjkyOTd9.3Tcn3Ih3FoGAoJZ56-FbQng_cUfG43jOq3xP6ZWAZpk"; // ✅ তোমার টোকেন এখানে দাও
 
   request.headers.addAll({
     "Authorization": "Bearer $token",
-    "Content-Type": "multipart/form-data", // ✅ JSON নয়, Multipart Form-Data
+    "Content-Type": "multipart/form-data",
   });
 
   try {
