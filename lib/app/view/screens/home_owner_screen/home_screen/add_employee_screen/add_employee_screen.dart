@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,8 +21,6 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,167 +50,239 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
 
               ///==================================✅✅Employee Image✅✅=======================
               Expanded(
-                child: Obx(
-                 () {
-                    return ListView(
-                      padding: const EdgeInsets.all(16.0),
-                      children: [
-                        ///==================================✅✅Employee Image✅✅=======================
-                        AddEmployeeImage(controller: controller),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                child: Obx(() {
+                  return ListView(
+                    padding: const EdgeInsets.all(16.0),
+                    children: [
+                      ///==================================✅✅Employee Image✅✅=======================
+                      AddEmployeeImage(controller: controller),
+                      SizedBox(
+                        height: 20.h,
+                      ),
 
-                        ///==================================✅✅Employee Personal List✅✅=======================
+                      ///==================================✅✅Employee Personal List✅✅=======================
 
-                        CustomTextField(
-                          hintText: AppStrings.firstName.tr,
-                          fillColor: AppColors.employeeCardColor,
-                          textEditingController: controller.firstNameController,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        CustomTextField(
-                          hintText: AppStrings.lastName.tr,
-                          fillColor: AppColors.employeeCardColor,
-                          textEditingController: controller.lastNameController,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                      CustomTextField(
+                        hintText: AppStrings.firstName.tr,
+                        fillColor: AppColors.employeeCardColor,
+                        textEditingController: controller.firstNameController,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      CustomTextField(
+                        hintText: AppStrings.lastName.tr,
+                        fillColor: AppColors.employeeCardColor,
+                        textEditingController: controller.lastNameController,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        ///==================================✅✅jobType✅✅=======================
+                      ///==================================✅✅jobType✅✅=======================
 
-                        JobType(controller: controller),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                      JobType(controller: controller),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        ///==================================✅✅cPR✅✅=======================
+                      ///==================================✅✅cPR✅✅=======================
 
-                        CustomTextField(
-                          readOnly: true,
-                          onTap: () {
-                            controller.isCprOpen.value = !controller.isCprOpen.value;
-                          },
-                          suffixIcon: Icon(
-                            controller.isCprOpen.value
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                          ),
-                          hintText: AppStrings.cPR.tr,
-                          fillColor: AppColors.employeeCardColor,
+                      CustomTextField(
+                        readOnly: true,
+                        onTap: () {
+                          controller.isCprOpen.value =
+                              !controller.isCprOpen.value;
+                        },
+                        suffixIcon: Icon(
+                          controller.isCprOpen.value
+                              ? Icons.keyboard_arrow_up_rounded
+                              : Icons.keyboard_arrow_down_rounded,
                         ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        CprOption(controller: controller),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                        hintText: AppStrings.cPR.tr,
+                        fillColor: AppColors.employeeCardColor,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      CprOption(controller: controller),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        ///==================================✅✅passport✅✅=======================
+                      ///==================================✅✅passport✅✅=======================
 
-                        CustomTextField(
-                          readOnly: true,
-                          onTap: () {
-                            controller.isPassportOpen.value = !controller.isPassportOpen.value;
-                          },
-                          suffixIcon: Icon(
-                            controller.isPassportOpen.value
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                          ),
-                          hintText: AppStrings.passport.tr,
-                          fillColor: AppColors.employeeCardColor,
+                      CustomTextField(
+                        readOnly: true,
+                        onTap: () {
+                          controller.isPassportOpen.value =
+                              !controller.isPassportOpen.value;
+                        },
+                        suffixIcon: Icon(
+                          controller.isPassportOpen.value
+                              ? Icons.keyboard_arrow_up_rounded
+                              : Icons.keyboard_arrow_down_rounded,
                         ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        PassportOption(controller: controller),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        ///==================================✅✅Note✅✅=======================
-                        CustomTextField(
-                          textEditingController: controller.noteController,
-                          hintText: AppStrings.note.tr,
-                          fillColor: AppColors.employeeCardColor,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        ///==================================✅✅Phone✅✅=======================
-                        CustomTextField(
-                          textEditingController: controller.phoneNumberController,
-                          hintText: AppStrings.contactNumber.tr,
-                          fillColor: AppColors.employeeCardColor,
-                        ),
+                        hintText: AppStrings.passport.tr,
+                        fillColor: AppColors.employeeCardColor,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      PassportOption(controller: controller),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        ///==================================✅✅email✅✅=======================
+                      ///==================================✅✅Note✅✅=======================
+                      CustomTextField(
+                        textEditingController: controller.noteController,
+                        hintText: AppStrings.note.tr,
+                        fillColor: AppColors.employeeCardColor,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        CustomTextField(
-                          textEditingController: controller.emailController,
-                          hintText: AppStrings.email.tr,
-                          fillColor: AppColors.employeeCardColor,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                      ///==================================✅✅Phone✅✅=======================
+                      CustomTextField(
+                        textEditingController: controller.phoneNumberController,
+                        hintText: AppStrings.contactNumber.tr,
+                        fillColor: AppColors.employeeCardColor,
+                      ),
 
-                        ///==================================✅✅temporaryPassword✅✅=======================
+                      ///==================================✅✅email✅✅=======================
 
-                        CustomTextField(
-                          textEditingController: controller.passwordController,
-                          hintText: AppStrings.temporaryPassword.tr,
-                          fillColor: AppColors.employeeCardColor,
-                          isPassword: true,
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        ///==================================✅✅Duty Time✅✅=======================
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      CustomTextField(
+                        textEditingController: controller.emailController,
+                        hintText: AppStrings.email.tr,
+                        fillColor: AppColors.employeeCardColor,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
 
-                        ///==================================✅✅addNewEmployee Button✅✅=======================
-                      controller.isLoading.value?const CustomLoader():
-                        CustomButton(
-                          onTap: () {
-                            if (controller.profileImage.value == null) {
-                              toastMessage(message: "Please select a profile image.");
-                              print("❌ Please select a profile image.");
-                              return;
-                            }
+                      ///==================================✅✅temporaryPassword✅✅=======================
 
-                            AddEmployee.addEmployee(
-                              firstName: controller.firstNameController.text.trim(),
-                              lastName: controller.lastNameController.text.trim(),
-                              email: controller.emailController.text.trim(),
-                              password: controller.passwordController.text.trim(),
-                              profileImage: controller.profileImage.value!,
-                              phoneNumber: controller.phoneNumberController.text.trim(),
-                              jobType: controller.selectedJobType.value,
-                              cprNumber: controller.cprNumberController.text.trim(),
-                              cprExpDate: controller.cprExpireDateController.text.trim(),
-                              passportNumber: controller.passportController.text.trim(),
-                              passportExpDate: controller.passportExpireDateController.text.trim(),
-                              note: controller.noteController.text.trim(),
-                              dutyTime: "9 AM - 5 PM",
-                              workingDay: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                              offDay: "Saturday", context: context,
-                            );
-                          },
-                          fillColor: Colors.white,
-                          title: AppStrings.addNewEmployee.tr,
-                        )
+                      CustomTextField(
+                        textEditingController: controller.passwordController,
+                        hintText: AppStrings.temporaryPassword.tr,
+                        fillColor: AppColors.employeeCardColor,
+                        isPassword: true,
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
 
-                      ],
-                    );
-                  }
-                ),
+                      ///==================================✅✅Start Time✅✅=======================
+                      CustomTextField(
+                        textEditingController: controller.startTimeController,
+                        readOnly: true,
+                        hintText: AppStrings.startTime.tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time),
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.startTimeController.text = formattedTime;
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+
+                      ///==================================✅✅End Time✅✅=======================
+
+                      CustomTextField(
+                        textEditingController: controller.endTimeController,
+                        readOnly: true,
+                        hintText: AppStrings.endTime.tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time), // Clock icon for time picker
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.endTimeController.text = formattedTime;
+                          }
+                        },
+                      ),
+
+                      SizedBox(
+                        height: 15.h,
+                      ),
+
+                      ///==================================✅✅addNewEmployee Button✅✅=======================
+                      controller.isLoading.value
+                          ? const CustomLoader()
+                          : CustomButton(
+                              onTap: () {
+                                if (controller.profileImage.value == null) {
+                                  toastMessage(
+                                      message:
+                                          "Please select a profile image.");
+                                  print("❌ Please select a profile image.");
+                                  return;
+                                }
+
+                                AddEmployee.addEmployee(
+                                  firstName: controller.firstNameController.text
+                                      .trim(),
+                                  lastName:
+                                      controller.lastNameController.text.trim(),
+                                  email: controller.emailController.text.trim(),
+                                  password:
+                                      controller.passwordController.text.trim(),
+                                  profileImage: controller.profileImage.value!,
+                                  phoneNumber: controller
+                                      .phoneNumberController.text
+                                      .trim(),
+                                  jobType: controller.selectedJobType.value,
+                                  cprNumber: controller.cprNumberController.text
+                                      .trim(),
+                                  cprExpDate: controller
+                                      .cprExpireDateController.text
+                                      .trim(),
+                                  passportNumber:
+                                      controller.passportController.text.trim(),
+                                  passportExpDate: controller
+                                      .passportExpireDateController.text
+                                      .trim(),
+                                  note: controller.noteController.text.trim(),
+                                  dutyTime:
+                                      "${controller.startTimeController.text}-${controller.endTimeController.text}",
+                                  workingDay: [
+                                    "Monday",
+                                    "Tuesday",
+                                    "Wednesday",
+                                    "Thursday",
+                                    "Friday"
+                                  ],
+                                  offDay: "Saturday",
+                                  context: context,
+                                );
+                              },
+                              fillColor: Colors.white,
+                              title: AppStrings.addNewEmployee.tr,
+                            )
+                    ],
+                  );
+                }),
               ),
             ],
           ),
@@ -222,34 +291,6 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class PassportOption extends StatelessWidget {
   const PassportOption({
@@ -265,8 +306,7 @@ class PassportOption extends StatelessWidget {
         ? Column(
             children: [
               CustomTextField(
-                textEditingController:
-                    controller.passportController,
+                textEditingController: controller.passportController,
                 hintText: AppStrings.passportNumber.tr,
                 fillColor: Colors.white,
               ),
@@ -288,8 +328,10 @@ class PassportOption extends StatelessWidget {
                   );
 
                   if (pickedDate != null) {
-                    String formattedDate = "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-                    controller.passportExpireDateController.text = formattedDate;
+                    String formattedDate =
+                        "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                    controller.passportExpireDateController.text =
+                        formattedDate;
                   }
                 },
               ),
@@ -313,8 +355,7 @@ class CprOption extends StatelessWidget {
         ? Column(
             children: [
               CustomTextField(
-                textEditingController:
-                    controller.cprNumberController,
+                textEditingController: controller.cprNumberController,
                 hintText: AppStrings.cprNumber.tr,
                 fillColor: Colors.white,
               ),
@@ -336,12 +377,12 @@ class CprOption extends StatelessWidget {
                   );
 
                   if (pickedDate != null) {
-                    String formattedDate = "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                    String formattedDate =
+                        "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
                     controller.cprExpireDateController.text = formattedDate;
                   }
                 },
               ),
-
             ],
           )
         : const SizedBox());
@@ -406,21 +447,18 @@ class AddEmployeeImage extends StatelessWidget {
             return CircleAvatar(
               radius: 58.5, // Adjust based on your design
               backgroundImage: controller.profileImage.value != null
-              // Show the selected image if available
+                  // Show the selected image if available
                   ? FileImage(controller.profileImage.value!)
-              // Use the default image as an AssetImage
+                  // Use the default image as an AssetImage
                   : const AssetImage(AppImages.avatar) as ImageProvider<Object>,
               child: controller.profileImage.value == null
-              // Show an "add a photo" icon when no image is selected
+                  // Show an "add a photo" icon when no image is selected
                   ? const Icon(Icons.add_a_photo, size: 30, color: Colors.white)
                   : null,
             );
           }),
         )
-
-
       ],
     );
   }
 }
-

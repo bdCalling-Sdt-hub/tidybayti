@@ -50,6 +50,8 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
 
