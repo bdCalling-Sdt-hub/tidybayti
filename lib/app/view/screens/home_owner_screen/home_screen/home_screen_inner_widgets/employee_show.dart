@@ -95,12 +95,15 @@ class EmployeeShow extends StatelessWidget {
                           "${ApiUrl.networkUrl}${data?.profileImage ?? ""}",
                           height: 181,
                           width: 152),
-                      CustomText(
-                        left: 10,
-                        text: "${data?.firstName ?? " "} ${data?.lastName}",
-                        color: AppColors.dark400,
-                        fontSize: 19,
-                        fontWeight: FontWeight.w500,
+                      SizedBox(
+                        width: 152,
+                        child: CustomText(
+                          left: 10,
+                          text: "${data?.firstName ?? " "} ${data?.lastName}",
+                          color: AppColors.dark400,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500,
+                        ),
                       )
                     ],
                     ),
