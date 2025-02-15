@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/employee_model.dart';
@@ -49,6 +52,34 @@ class AddEmployeeController extends GetxController {
   final passportExpireDateController = TextEditingController();
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
+
+
+  addEmployeeFieldClear(){
+    firstNameController.clear();
+    lastNameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    phoneNumberController.clear();
+    jobTypeController.clear();
+    cprNumberController.clear();
+    cprExpireDateController.clear();
+    passportController.clear();
+    passportExpireDateController.clear();
+    noteController.clear();
+
+  }
+  // Reactive Rx variable to store the profile image
+  Rx<File?> profileImage = Rx<File?>(null);
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage.value = File(pickedFile.path);
+      print("✅ Selected Image: ${profileImage.value!.path}");
+    } else {
+      print("❌ No Image Selected");
+    }
+  }
   ///==================================✅✅Get Employee✅✅=======================
 
 

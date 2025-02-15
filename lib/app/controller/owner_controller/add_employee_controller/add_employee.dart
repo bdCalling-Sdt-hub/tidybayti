@@ -71,6 +71,7 @@ class AddEmployee {
       employeeController.setLoading(false); // Set loading to false after request
 
       if (response.statusCode == 200) {
+          employeeController.addEmployeeFieldClear();
         toastMessage(message: "✅ Employee added successfully!");
         print("✅ Employee added successfully!");
         print(responseData);

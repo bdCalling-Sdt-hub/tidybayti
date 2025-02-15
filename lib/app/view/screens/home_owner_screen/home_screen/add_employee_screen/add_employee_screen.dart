@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
+import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -26,18 +29,7 @@ class AddEmployeeScreen extends StatefulWidget {
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
 
-  File? profileImage;
 
-  Future<void> pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
-      print("✅ Selected Image: ${profileImage!.path}");
-    } else {
-      print("❌ No Image Selected");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,25 +68,27 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // ClipOval(
-                            //   child: SizedBox(
-                            //     width: 117, // specify width
-                            //     height: 117, // specify height
-                            //     child: CustomImage(
-                            //       imageSrc: AppImages.avatar,
-                            //       imageType: ImageType.png,
-                            //     ),
-                            //   ),
-                            // ),
                             GestureDetector(
                               onTap: () {
-                                pickImage();
+                                controller.pickImage();
                               },
-                              child: CustomNetworkImage(
-                                  imageUrl: AppConstants.userNtr,
-                                  height: 117,
-                                  width: 117),
+                              child: Obx(() {
+                                return CircleAvatar(
+                                  radius: 58.5, // Adjust based on your design
+                                  backgroundImage: controller.profileImage.value != null
+                                  // Show the selected image if available
+                                      ? FileImage(controller.profileImage.value!)
+                                  // Use the default image as an AssetImage
+                                      : const AssetImage(AppImages.avatar) as ImageProvider<Object>,
+                                  child: controller.profileImage.value == null
+                                  // Show an "add a photo" icon when no image is selected
+                                      ? const Icon(Icons.add_a_photo, size: 30, color: Colors.white)
+                                      : null,
+                                );
+                              }),
                             )
+
+
                           ],
                         ),
                         SizedBox(
@@ -299,10 +293,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         ),
 
                         ///==================================✅✅addNewEmployee Button✅✅=======================
-                      controller.isLoading.value?CustomLoader():
+                      controller.isLoading.value?const CustomLoader():
                         CustomButton(
                           onTap: () {
-                            if (profileImage == null) {
+                            if (controller.profileImage.value == null) {
+                              toastMessage(message: "Please select a profile image.");
                               print("❌ Please select a profile image.");
                               return;
                             }
@@ -312,7 +307,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                               lastName: controller.lastNameController.text.trim(),
                               email: controller.emailController.text.trim(),
                               password: controller.passwordController.text.trim(),
-                              profileImage: profileImage!,
+                              profileImage: controller.profileImage.value!,
                               phoneNumber: controller.phoneNumberController.text.trim(),
                               jobType: controller.selectedJobType.value,
                               cprNumber: controller.cprNumberController.text.trim(),
