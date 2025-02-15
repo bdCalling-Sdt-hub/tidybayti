@@ -1,20 +1,42 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class AddEmployeeScreen extends StatelessWidget {
   AddEmployeeScreen({super.key});
 
-final AddEmployeeController controller = Get.find<AddEmployeeController>();
+  final AddEmployeeController controller = Get.find<AddEmployeeController>();
+  File? profileImage;
+
+  Future<void> pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      print("✅ Selected Image: ${profileImage!.path}");
+    } else {
+      print("❌ No Image Selected");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,19 +69,28 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                 child: ListView(
                   padding: const EdgeInsets.all(16.0),
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ClipOval(
-                          child: SizedBox(
-                            width: 117, // specify width
-                            height: 117, // specify height
-                            child: CustomImage(
-                              imageSrc: AppImages.avatar,
-                              imageType: ImageType.png,
-                            ),
-                          ),
-                        ),
+                        // ClipOval(
+                        //   child: SizedBox(
+                        //     width: 117, // specify width
+                        //     height: 117, // specify height
+                        //     child: CustomImage(
+                        //       imageSrc: AppImages.avatar,
+                        //       imageType: ImageType.png,
+                        //     ),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            pickImage();
+                          },
+                          child: CustomNetworkImage(
+                              imageUrl: AppConstants.userNtr,
+                              height: 117,
+                              width: 117),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -88,29 +119,29 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     ///==================================✅✅jobType✅✅=======================
 
                     Obx(() => CustomTextField(
-                      textEditingController: controller.jobTypeController,
-                      suffixIcon: PopupMenuButton<String>(
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        onSelected: (value) {
-                          controller.updateJobType(value);
-                        },
-                        itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: "Full Time",
-                            child: Text("Full Time"),
+                          textEditingController: controller.jobTypeController,
+                          suffixIcon: PopupMenuButton<String>(
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            onSelected: (value) {
+                              controller.updateJobType(value);
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: "Full Time",
+                                child: Text("Full Time"),
+                              ),
+                              const PopupMenuItem(
+                                value: "Part Time",
+                                child: Text("Part Time"),
+                              ),
+                            ],
                           ),
-                          const PopupMenuItem(
-                            value: "Part Time",
-                            child: Text("Part Time"),
-                          ),
-                        ],
-                      ),
-                      hintText: controller.selectedJobType.value.isEmpty
-                          ? AppStrings.jobType.tr
-                          : controller.selectedJobType.value,
-                      readOnly: true,
-                      fillColor: AppColors.employeeCardColor,
-                    )),
+                          hintText: controller.selectedJobType.value.isEmpty
+                              ? AppStrings.jobType.tr
+                              : controller.selectedJobType.value,
+                          readOnly: true,
+                          fillColor: AppColors.employeeCardColor,
+                        )),
                     SizedBox(
                       height: 8.h,
                     ),
@@ -120,7 +151,8 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     CustomTextField(
                       readOnly: true,
                       onTap: () {
-                        controller.isCprOpen.value = !controller.isCprOpen.value;
+                        controller.isCprOpen.value =
+                            !controller.isCprOpen.value;
                       },
                       suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
                       hintText: AppStrings.cPR.tr,
@@ -130,18 +162,20 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                       height: 8.h,
                     ),
                     Obx(() => controller.isCprOpen.value
-                        ?  Column(
+                        ? Column(
                             children: [
-                               CustomTextField(
-                                 textEditingController: controller.cprNumberController,
+                              CustomTextField(
+                                textEditingController:
+                                    controller.cprNumberController,
                                 hintText: AppStrings.cprNumber.tr,
                                 fillColor: Colors.white,
                               ),
                               SizedBox(
                                 height: 8.h,
                               ),
-                               CustomTextField(
-                                 textEditingController: controller.cprExpireDateController,
+                              CustomTextField(
+                                textEditingController:
+                                    controller.cprExpireDateController,
                                 readOnly: true,
                                 hintText: AppStrings.expireDate.tr,
                                 fillColor: Colors.white,
@@ -159,7 +193,8 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                     CustomTextField(
                       readOnly: true,
                       onTap: () {
-                        controller.isPassportOpen.value = !controller.isPassportOpen.value;
+                        controller.isPassportOpen.value =
+                            !controller.isPassportOpen.value;
                       },
                       suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
                       hintText: AppStrings.passport.tr,
@@ -169,25 +204,27 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
                       height: 8.h,
                     ),
                     Obx(() => controller.isPassportOpen.value
-                        ?  Column(
-                      children: [
-                        CustomTextField(
-                          textEditingController: controller.passportController,
-                          hintText: AppStrings.passportNumber.tr,
-                          fillColor: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        CustomTextField(
-                          textEditingController: controller.passportExpireDateController,
-                          readOnly: true,
-                          hintText: AppStrings.expireDate.tr,
-                          fillColor: Colors.white,
-                          suffixIcon: const Icon(Icons.calendar_month),
-                        ),
-                      ],
-                    )
+                        ? Column(
+                            children: [
+                              CustomTextField(
+                                textEditingController:
+                                    controller.passportController,
+                                hintText: AppStrings.passportNumber.tr,
+                                fillColor: Colors.white,
+                              ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              CustomTextField(
+                                textEditingController:
+                                    controller.passportExpireDateController,
+                                readOnly: true,
+                                hintText: AppStrings.expireDate.tr,
+                                fillColor: Colors.white,
+                                suffixIcon: const Icon(Icons.calendar_month),
+                              ),
+                            ],
+                          )
                         : const SizedBox()),
                     SizedBox(
                       height: 8.h,
@@ -236,8 +273,29 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
 
                     CustomButton(
                       onTap: () {
-                        controller.addEmployee();
-                       // controller.sendEmail(context);
+                        addEmployee(
+                            firstName: "John",
+                            lastName: "Doe",
+                            email: "johndoffefff@email.com",
+                            password: "123456",
+                            profileImage: profileImage!,
+                            // ✅ ফাইল পাঠানো হচ্ছে
+                            phoneNumber: "1234567890",
+                            jobType: "Developer",
+                            cprNumber: "123456",
+                            cprExpDate: "2025-12-31",
+                            passportNumber: "AB123456",
+                            passportExpDate: "2026-10-15",
+                            note: "Test Employee",
+                            dutyTime: "9 AM - 5 PM",
+                            workingDay: [
+                              "Monday",
+                              "Tuesday",
+                              "Wednesday",
+                              "Thursday",
+                              "Friday"
+                            ],
+                            offDay: 'Saturday');
                       },
                       fillColor: Colors.white,
                       title: AppStrings.addNewEmployee.tr,
@@ -253,4 +311,69 @@ final AddEmployeeController controller = Get.find<AddEmployeeController>();
   }
 }
 
+Future<void> addEmployee(
+    {required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required File profileImage, // ✅ ফাইল পাঠাতে হবে
+    required String phoneNumber,
+    required String jobType,
+    required String cprNumber,
+    required String cprExpDate,
+    required String passportNumber,
+    required String passportExpDate,
+    required String note,
+    required String dutyTime,
+    required List workingDay,
+    required String offDay}) async {
+  var url = Uri.parse(ApiUrl.addEmployee);
 
+  var request = http.MultipartRequest("POST", url);
+
+  // 🔹 Text Data (Form-Data)
+  request.fields["firstName"] = firstName;
+  request.fields["lastName"] = lastName;
+  request.fields["email"] = email;
+  request.fields["password"] = password;
+  request.fields["phoneNumber"] = phoneNumber;
+  request.fields["jobType"] = jobType;
+  request.fields["CPRNumber"] = cprNumber;
+  request.fields["CPRExpDate"] = cprExpDate;
+  request.fields["passportNumber"] = passportNumber;
+  request.fields["passportExpDate"] = passportExpDate;
+  request.fields["note"] = note;
+  request.fields["dutyTime"] = dutyTime;
+  request.fields["workingDay"] = jsonEncode(workingDay);
+  request.fields["offDay"] = offDay;
+
+  // 🔹 File (Profile Image) ✅ ফাইল যুক্ত করো
+  request.files.add(await http.MultipartFile.fromPath(
+    "profile_image",
+    profileImage.path,
+    contentType: MediaType('image', 'jpeg'), // ✅ MIME টাইপ নির্দিষ্ট করা হয়েছে
+  ));
+
+  var token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2N2IwMGViNGFmZTJmODhjM2E2ZjEzZmQiLCJ1c2VySWQiOiI2N2IwMGViNGFmZTJmODhjM2E2ZjEzZmYiLCJlbWFpbCI6ImxpZGl0Mjc3NTVAc2hvdXhzLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzM5NTkzMjk3LCJleHAiOjE3NzExMjkyOTd9.3Tcn3Ih3FoGAoJZ56-FbQng_cUfG43jOq3xP6ZWAZpk"; // ✅ তোমার টোকেন এখানে দাও
+
+  request.headers.addAll({
+    "Authorization": "Bearer $token",
+    "Content-Type": "multipart/form-data", // ✅ JSON নয়, Multipart Form-Data
+  });
+
+  try {
+    var response = await request.send();
+    var responseData = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      print("✅ Employee added successfully!");
+      print(responseData);
+    } else {
+      print("❌ Failed: ${response.statusCode}");
+      print("❌ Error Response: $responseData");
+    }
+  } catch (e) {
+    print("❌ Error: $e");
+  }
+}

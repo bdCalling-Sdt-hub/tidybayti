@@ -65,50 +65,50 @@ class AddEmployeeController extends GetxController {
     return body.map((key, value) => MapEntry(key, value.toString()));
   }
 
-  RxBool isAddEmployeeLoading = false.obs;
-
-  addEmployee() async {
-    isAddEmployeeLoading.value = true;
-
-    Map<String, dynamic> body = {
-      "firstName": firstNameController.text.trim(),
-      "lastName": lastNameController.text.trim(),
-      "jobType": jobTypeController.text.trim(),
-      "CPRNumber": cprNumberController.text.trim(),
-      "CPRExpireDate": cprExpireDateController.text.trim(),
-      "passportNumber": passportController.text.trim(),
-      "passportExpire": passportExpireDateController.text.trim(),
-      "note": noteController.text.trim(),
-      "phoneNumber": phoneNumberController.text.trim(),
-      "email": emailController.text.trim(),
-      "password": passwordController.text,
-      "dutyTime":" dutyTimeController.text.trim()",
-      "offDay": "",
-      "workingDay": "jsonEncode(selectedWorkingDays)",
-    };
-
-    var response;
-    if (image.isEmpty) {
-      response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
-    } else {
-      response = await apiClient.multipartRequest(
-        multipartBody: [
-          MultipartBody("profile_image", File(image.value))
-        ],
-        url: ApiUrl.addEmployee,
-        reqType: "Post",
-        body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
-      );
-    }
-
-    if (response.statusCode == 200) {
-      toastMessage(message: 'Employee added successfully!');
-    } else {
-      ApiChecker.checkApi(response);
-    }
-
-    isAddEmployeeLoading.value = false;
-  }
+  // RxBool isAddEmployeeLoading = false.obs;
+  //
+  // addEmployee() async {
+  //   isAddEmployeeLoading.value = true;
+  //
+  //   Map<String, dynamic> body = {
+  //     "firstName": firstNameController.text.trim(),
+  //     "lastName": lastNameController.text.trim(),
+  //     "jobType": jobTypeController.text.trim(),
+  //     "CPRNumber": cprNumberController.text.trim(),
+  //     "CPRExpireDate": cprExpireDateController.text.trim(),
+  //     "passportNumber": passportController.text.trim(),
+  //     "passportExpire": passportExpireDateController.text.trim(),
+  //     "note": noteController.text.trim(),
+  //     "phoneNumber": phoneNumberController.text.trim(),
+  //     "email": emailController.text.trim(),
+  //     "password": passwordController.text,
+  //     "dutyTime":" dutyTimeController.text.trim()",
+  //     "offDay": "",
+  //     "workingDay": "jsonEncode(selectedWorkingDays)",
+  //   };
+  //
+  //   var response;
+  //   if (image.isEmpty) {
+  //     response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
+  //   } else {
+  //     response = await apiClient.multipartRequest(
+  //       multipartBody: [
+  //         MultipartBody("profile_image", File(image.value))
+  //       ],
+  //       url: ApiUrl.addEmployee,
+  //       reqType: "Post",
+  //       body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
+  //     );
+  //   }
+  //
+  //   if (response.statusCode == 200) {
+  //     toastMessage(message: 'Employee added successfully!');
+  //   } else {
+  //     ApiChecker.checkApi(response);
+  //   }
+  //
+  //   isAddEmployeeLoading.value = false;
+  // }
 
 
 

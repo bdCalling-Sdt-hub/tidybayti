@@ -20,7 +20,8 @@ final log = logger(ApiClient);
 Map<String, String> basicHeaderInfo() {
   return {
     HttpHeaders.acceptHeader: "application/json",
-    HttpHeaders.contentTypeHeader: "application/json",
+    // HttpHeaders.contentTypeHeader: "application/json",
+    HttpHeaders.contentTypeHeader: "multipart/form-data",
   };
 }
 
