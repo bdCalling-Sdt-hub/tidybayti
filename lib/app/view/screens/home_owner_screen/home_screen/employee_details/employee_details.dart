@@ -17,7 +17,7 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class EmployeeDetails extends StatefulWidget {
-  EmployeeDetails({super.key});
+  const EmployeeDetails({super.key});
 
   @override
   State<EmployeeDetails> createState() => _EmployeeDetailsState();
@@ -93,7 +93,7 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                       ),
                       child: Obx(() {
                         if (employeeController.rxRequestStatus.value ==
-                                Status.loading) {
+                            Status.loading) {
                           return const CustomLoader();
                         }
 
