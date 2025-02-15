@@ -10,13 +10,10 @@ import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
+
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 import 'home_screen_inner_widgets/employee_show.dart';
 
