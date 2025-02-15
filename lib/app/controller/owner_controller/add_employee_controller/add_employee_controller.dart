@@ -54,7 +54,59 @@ class AddEmployeeController extends GetxController {
   final endTimeController = TextEditingController();
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
+///
 
+  final List<String> daysOfWeek = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday'
+  ];
+  List<String> getSelectedDays() {
+    List<String> workingDays = [];
+
+    for (int i = 0; i < daysOfWeek.length; i++) {
+      if (selectedWorkingDays[i]) {
+        workingDays.add(daysOfWeek[i]);
+      }
+    }
+
+    return workingDays;
+  }
+  List<bool> selectedWorkingDays = [
+    true,
+    false,
+    true,
+    true,
+    true,
+    false,
+    true
+  ];
+
+
+
+
+
+  // Preselected off days
+
+
+  int? selectedOffDayIndex;
+
+  void toggleOffDay(int index) {
+    if (selectedOffDayIndex == index) {
+      selectedOffDayIndex = null; // যদি একই দিন ক্লিক হয়, আনসিলেক্ট করো
+    } else {
+      selectedOffDayIndex = index; // নতুন দিন সিলেক্ট করো
+    }
+  }
+
+  String getSelectedOffDays() {
+    return selectedOffDayIndex != null ? daysOfWeek[selectedOffDayIndex!] : "";
+  }
+  ///
 
   addEmployeeFieldClear(){
     firstNameController.clear();

@@ -10,6 +10,7 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
@@ -21,9 +22,14 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
+// Preselected working days
+
 
   @override
   Widget build(BuildContext context) {
+
+    print("selectedWorkingDays======================${controller.selectedWorkingDays}");
+    print("selectedWorkingDays======================${controller.selectedOffDayIndex}");
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -226,7 +232,30 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 16.0, top: 16),
+                        child: Text(
+                          'Select working days',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      _buildDaySelectionGrid(controller.selectedWorkingDays, true),
 
+                      const SizedBox(height: 24.0), // Spacing between sections
+                      ///==================================✅✅Select off days✅✅=======================
+
+                      const CustomText(
+                        textAlign: TextAlign.start,
+                        bottom: 24,
+                        text: 'Select off days',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        color: AppColors.dark400,
+                      ),
+                      _buildDaySelectionOfGrid(),
                       ///==================================✅✅addNewEmployee Button✅✅=======================
                       controller.isLoading.value
                           ? const CustomLoader()
@@ -266,14 +295,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                   note: controller.noteController.text.trim(),
                                   dutyTime:
                                       "${controller.startTimeController.text}-${controller.endTimeController.text}",
-                                  workingDay: [
-                                    "Monday",
-                                    "Tuesday",
-                                    "Wednesday",
-                                    "Thursday",
-                                    "Friday"
-                                  ],
-                                  offDay: "Saturday",
+                                  workingDay:controller.getSelectedDays(),
+                                  offDay: controller.getSelectedOffDays(),
                                   context: context,
                                 );
                               },
@@ -290,7 +313,85 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       ),
     );
   }
+  Widget _buildDaySelectionGrid(List<bool> selectedDays, bool isWorkingDay) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount:controller. daysOfWeek.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 5, // Adjust this to control checkbox size
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 8,
+      ),
+      itemBuilder: (BuildContext context, int index) {
+        return Row(
+          children: [
+            Checkbox(
+              activeColor: AppColors.blue900,
+              checkColor: AppColors.light200,
+              value: selectedDays[index],
+              onChanged: (bool? newValue) {
+                setState(() {
+                  if (isWorkingDay) {
+                   controller. selectedWorkingDays[index] = newValue ?? false;
+                  }
+                });
+              },
+            ),
+            Text(
+              controller.daysOfWeek[index],
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDaySelectionOfGrid() {
+    return GridView.builder(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, // ৩টা কলাম দেখাবে
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: 2.5,
+      ),
+      itemCount: controller.daysOfWeek.length,
+      itemBuilder: (context, index) {
+        bool isSelected = controller.selectedOffDayIndex == index;
+
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              controller.toggleOffDay(index);
+            });
+          },
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: isSelected ? Colors.red : Colors.grey[300], // সিলেক্ট হলে লাল
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              controller.daysOfWeek[index],
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+
 }
+
+
 
 class PassportOption extends StatelessWidget {
   const PassportOption({
