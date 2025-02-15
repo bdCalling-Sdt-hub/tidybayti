@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
@@ -11,6 +12,7 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/employee_card/custom_employee_card.dart';
@@ -88,33 +90,50 @@ class AllEmployeeShow extends StatelessWidget {
                           );
 
                         case Status.completed:
-                          return
-                      Column(
-                        children: List.generate(
-                            employeeController.employeeData.value.result?.length??0,
-                            (index) {
-                              var data = employeeController.employeeData.value.result?[index];
-                          return CustomEmployeeData(
-                            imageUrl: "${ApiUrl.networkUrl}${data?.profileImage}",
-                            name: "${data?.firstName??" "} ${data?.lastName}",
-                            designation: data?.jobType??"",
-                            id: data?.id??"",
-                            email: data?.email??"",
-                            onDetailsTap: () {
-                              Get.toNamed(AppRoutes.employeeDetails,arguments: [data?.id]);
-                            },
-                            onDeleteTap: () {
-                              GlobalAlert.showDeleteDialog(context, () {
-                                print("Employee Deleted!");
-                              }, AppStrings.areYouSureYouWant.tr);
-                            },
+                          var employeeList =
+                              employeeController.employeeData.value.result ??
+                                  [];
+
+                          if (employeeList.isEmpty) {
+                            return  Padding(
+                              padding: EdgeInsets.symmetric(vertical: 50.h),
+                              child: const CustomText(
+                                text: "No Employee Found",
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            );
+                          }
+                          return Column(
+                            children: List.generate(
+                                employeeController
+                                        .employeeData.value.result?.length ??
+                                    0, (index) {
+                              var data = employeeController
+                                  .employeeData.value.result?[index];
+                              return CustomEmployeeData(
+                                imageUrl:
+                                    "${ApiUrl.networkUrl}${data?.profileImage}",
+                                name:
+                                    "${data?.firstName ?? " "} ${data?.lastName}",
+                                designation: data?.jobType ?? "",
+                                id: data?.id ?? "",
+                                email: data?.email ?? "",
+                                onDetailsTap: () {
+                                  Get.toNamed(AppRoutes.employeeDetails,
+                                      arguments: [data?.id]);
+                                },
+                                onDeleteTap: () {
+                                  GlobalAlert.showDeleteDialog(context, () {
+                                    print("Employee Deleted!");
+                                  }, AppStrings.areYouSureYouWant.tr);
+                                },
+                              );
+                            }),
                           );
-                        }),
-                      );
                       }
                     })
-
-
                   ],
                 ),
               ),
