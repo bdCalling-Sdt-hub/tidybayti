@@ -33,6 +33,12 @@ class AddEmployeeController extends GetxController {
     isLoading.value = value;
   }
 
+  var isEditLoading = false.obs;
+
+  void editLoading(bool value) {
+    isEditLoading.value = value;
+  }
+
   void updateJobType(String jobType) {
     selectedJobType.value = jobType;
     jobTypeController.text = jobType;
