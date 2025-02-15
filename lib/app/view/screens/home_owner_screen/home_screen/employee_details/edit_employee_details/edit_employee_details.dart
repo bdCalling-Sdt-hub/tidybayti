@@ -22,7 +22,6 @@ class EditEmployeeDetails extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
-// Preselected working days
 
 
   @override

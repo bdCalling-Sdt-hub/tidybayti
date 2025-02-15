@@ -165,6 +165,8 @@ class AddEmployee {
       employeeController.editLoading(false); // Set loading to false after request
 
       if (response.statusCode == 200) {
+        Get.back();
+        employeeController.getEmployee();
         toastMessage(message: "✅ Employee updated successfully!");
         print("✅ Employee updated successfully!");
         print(responseData);
