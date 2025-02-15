@@ -75,7 +75,7 @@ class AllEmployeeShow extends StatelessWidget {
                     Obx(() {
                       switch (employeeController.rxRequestStatus.value) {
                         case Status.loading:
-                          return const CustomLoader(); // Show loading indicator
+                          return const CustomLoader();
 
                         case Status.internetError:
                           return NoInternetScreen(onTap: () {
