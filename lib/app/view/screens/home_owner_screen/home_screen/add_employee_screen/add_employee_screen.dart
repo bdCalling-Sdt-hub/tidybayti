@@ -232,6 +232,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+                      ///==================================✅✅Select working days✅✅=======================
+
                       const Padding(
                         padding: EdgeInsets.only(bottom: 16.0, top: 16),
                         child: Text(
@@ -352,8 +354,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   Widget _buildDaySelectionOfGrid() {
     return GridView.builder(
       shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // ৩টা কলাম দেখাবে
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
         childAspectRatio: 2.5,
