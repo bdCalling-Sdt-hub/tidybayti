@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
+import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
@@ -12,6 +14,7 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 class AddEmployee {
 
   static Future<void> addEmployee({
+    required BuildContext context,  // Add this line
     required String firstName,
     required String lastName,
     required String email,
@@ -72,7 +75,8 @@ class AddEmployee {
 
       if (response.statusCode == 200) {
           employeeController.addEmployeeFieldClear();
-        toastMessage(message: "✅ Employee added successfully!");
+          employeeController.sendEmail(context);
+          toastMessage(message: "✅ Employee added successfully!");
         print("✅ Employee added successfully!");
         print(responseData);
       } else {
@@ -92,7 +96,7 @@ class AddEmployee {
         toastMessage(message: "❌ $errorMessage");
       }
     } catch (e) {
-      employeeController.setLoading(false); // Hide loader on error
+      employeeController.setLoading(false);
       toastMessage(message: "❌ An error occurred. Please check your connection.");
       print("❌ Error: $e");
     }
