@@ -12,7 +12,6 @@ import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 
 class AddEmployeeScreen extends StatefulWidget {
   const AddEmployeeScreen({super.key});
@@ -59,6 +58,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                     return ListView(
                       padding: const EdgeInsets.all(16.0),
                       children: [
+                        ///==================================✅✅Employee Image✅✅=======================
                         AddEmployeeImage(controller: controller),
                         SizedBox(
                           height: 20.h,
@@ -135,6 +135,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
+                        ///==================================✅✅Note✅✅=======================
                         CustomTextField(
                           textEditingController: controller.noteController,
                           hintText: AppStrings.note.tr,
@@ -143,6 +144,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
+                        ///==================================✅✅Phone✅✅=======================
                         CustomTextField(
                           textEditingController: controller.phoneNumberController,
                           hintText: AppStrings.contactNumber.tr,
@@ -174,7 +176,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         SizedBox(
                           height: 15.h,
                         ),
-                        ///==================================✅✅temporaryPassword✅✅=======================
+                        ///==================================✅✅Duty Time✅✅=======================
 
                         ///==================================✅✅addNewEmployee Button✅✅=======================
                       controller.isLoading.value?const CustomLoader():
