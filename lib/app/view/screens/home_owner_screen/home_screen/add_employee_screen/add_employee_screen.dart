@@ -258,6 +258,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         color: AppColors.dark400,
                       ),
                       _buildDaySelectionOfGrid(),
+                      const SizedBox(height: 24.0),
                       ///==================================✅✅addNewEmployee Button✅✅=======================
                       controller.isLoading.value
                           ? const CustomLoader()
