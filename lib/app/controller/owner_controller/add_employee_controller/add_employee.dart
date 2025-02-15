@@ -10,6 +10,7 @@ import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 class AddEmployee {
+
   static Future<void> addEmployee({
     required String firstName,
     required String lastName,
@@ -27,8 +28,8 @@ class AddEmployee {
     required List workingDay,
     required String offDay,
   }) async {
-    AddEmployeeController employeeController = Get.find(); // Get instance of EmployeeController
-    employeeController.setLoading(true); // Set loading to true before API call
+    AddEmployeeController employeeController = Get.find();
+    employeeController.setLoading(true);
 
     var url = Uri.parse(ApiUrl.addEmployee);
 
@@ -95,4 +96,7 @@ class AddEmployee {
       print("❌ Error: $e");
     }
   }
+
+
+
 }

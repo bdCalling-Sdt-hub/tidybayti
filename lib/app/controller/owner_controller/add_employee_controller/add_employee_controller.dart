@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/employee_model.dart';
@@ -27,31 +24,18 @@ class AddEmployeeController extends GetxController {
   final RxBool isCprOpen = false.obs;
   final RxBool isPassportOpen = false.obs;
   final RxString selectedJobType = ''.obs;
-  ///==================================✅✅updateJobType✅✅=======================
-  var isLoading = false.obs;  // Observable for loading state
+  var isLoading = false.obs;
 
   void setLoading(bool value) {
-    isLoading.value = value; // Update loading state
+    isLoading.value = value;
   }
-  ///==================================✅✅updateJobType✅✅=======================
+
   void updateJobType(String jobType) {
     selectedJobType.value = jobType;
     jobTypeController.text = jobType;
     debugPrint("Selected Job Type: =======================$jobType");
   }
-  Rx<File> imageFile = File("").obs;
 
-  selectImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? getImages =
-        await picker.pickImage(source: ImageSource.gallery, imageQuality: 15);
-    if (getImages != null) {
-      imageFile.value = File(getImages.path);
-      image.value = getImages.path;
-    }
-  }
-
-  ///==================================✅✅Profile Update✅✅=======================
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -63,14 +47,9 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
-
-
-
-
-
-  ///==================================✅✅Get Employee✅✅=======================
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
+  ///==================================✅✅Get Employee✅✅=======================
 
 
   Rx<EmployeeData> employeeData = EmployeeData().obs;
@@ -79,14 +58,15 @@ class AddEmployeeController extends GetxController {
     setRxRequestStatus(Status.loading);
     refresh();
     try {
-      final response = await apiClient.get(url:
-      ApiUrl.getEmployee,showResult: true);
+      final response =
+          await apiClient.get(url: ApiUrl.getEmployee, showResult: true);
 
       if (response.statusCode == 200) {
         employeeData.value = EmployeeData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print('Employee Result==================${employeeData.value.result?.length}');
+        print(
+            'Employee Result==================${employeeData.value.result?.length}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -98,10 +78,7 @@ class AddEmployeeController extends GetxController {
     }
   }
 
-
   ///==================================✅✅Get Single Employee✅✅=======================
-
-
 
   Rx<SingleEmployeeData> singleEmployeeData = SingleEmployeeData().obs;
 
@@ -109,14 +86,16 @@ class AddEmployeeController extends GetxController {
     setRxRequestStatus(Status.loading);
     refresh();
     try {
-      final response = await apiClient.get(url:
-      ApiUrl.singleEmployee(employeeId),showResult: true);
+      final response = await apiClient.get(
+          url: ApiUrl.singleEmployee(employeeId), showResult: true);
 
       if (response.statusCode == 200) {
-        singleEmployeeData.value = SingleEmployeeData.fromJson(response.body["data"]);
+        singleEmployeeData.value =
+            SingleEmployeeData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print('Employee Result==================${singleEmployeeData.value.employeeId}');
+        print(
+            'Employee Result==================${singleEmployeeData.value.employeeId}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -127,9 +106,7 @@ class AddEmployeeController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
-  ///==================================✅✅Profile Update✅✅=======================
-
-
+  ///==================================✅✅sendEmail✅✅=======================
   void sendEmail(BuildContext context) {
     showDialog(
       context: context,
@@ -156,10 +133,10 @@ class AddEmployeeController extends GetxController {
                 ),
                 child: const Center(
                     child: CustomImage(
-                      imageSrc: AppIcons.rightUp,
-                    )),
+                  imageSrc: AppIcons.rightUp,
+                )),
               ),
-               CustomText(
+              CustomText(
                 top: 24,
                 bottom: 40,
                 maxLines: 2,
@@ -168,7 +145,7 @@ class AddEmployeeController extends GetxController {
                 fontSize: 24,
                 color: AppColors.successFullyColor,
               ),
-               CustomText(
+              CustomText(
                 maxLines: 5,
                 text: AppStrings.emplyeesAccountDetails.tr,
                 fontWeight: FontWeight.w500,
@@ -183,7 +160,7 @@ class AddEmployeeController extends GetxController {
                 fontSize: 16,
                 color: AppColors.dark400,
               ),
-               Row(
+              Row(
                 children: [
                   CustomText(
                     maxLines: 2,
@@ -223,8 +200,6 @@ class AddEmployeeController extends GetxController {
       },
     );
   }
-
-
 
   @override
   void onInit() {
