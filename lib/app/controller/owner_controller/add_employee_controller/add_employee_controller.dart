@@ -25,7 +25,7 @@ class AddEmployeeController extends GetxController {
   DBHelper dbHelper = serviceLocator();
   RxString image = "".obs;
   final RxBool isCprOpen = false.obs;
-  final RxBool isPassportOpen = false.obs;
+  final RxBool isPassportOpen = true.obs;
   final RxString selectedJobType = ''.obs;
   var isLoading = false.obs;
 

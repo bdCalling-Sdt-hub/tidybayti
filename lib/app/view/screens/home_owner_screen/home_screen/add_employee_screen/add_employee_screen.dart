@@ -95,10 +95,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         CustomTextField(
                           readOnly: true,
                           onTap: () {
-                            controller.isCprOpen.value =
-                                !controller.isCprOpen.value;
+                            controller.isCprOpen.value = !controller.isCprOpen.value;
                           },
-                          suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          suffixIcon: Icon(
+                            controller.isCprOpen.value
+                                ? Icons.keyboard_arrow_up_rounded
+                                : Icons.keyboard_arrow_down_rounded,
+                          ),
                           hintText: AppStrings.cPR.tr,
                           fillColor: AppColors.employeeCardColor,
                         ),
@@ -115,10 +118,13 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         CustomTextField(
                           readOnly: true,
                           onTap: () {
-                            controller.isPassportOpen.value =
-                                !controller.isPassportOpen.value;
+                            controller.isPassportOpen.value = !controller.isPassportOpen.value;
                           },
-                          suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          suffixIcon: Icon(
+                            controller.isPassportOpen.value
+                                ? Icons.keyboard_arrow_up_rounded
+                                : Icons.keyboard_arrow_down_rounded,
+                          ),
                           hintText: AppStrings.passport.tr,
                           fillColor: AppColors.employeeCardColor,
                         ),
