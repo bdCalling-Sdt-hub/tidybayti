@@ -23,16 +23,40 @@ class EditEmployeeDetails extends StatefulWidget {
 class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
 
-  final String userId = Get.arguments[0]??"";
-  final String authId = Get.arguments[1]??"";
+  late String userId = controller.singleEmployeeData.value.id.toString();
+  late String authId = controller.singleEmployeeData.value.authId.toString();
+
+  @override
+  void initState() {
+    final args = Get.arguments ?? {};
+
+    userId = args["userId"] ?? '';
+    authId = args["AuthId"] ?? '';
+    controller.firstNameController.text = args["firstName"] ?? '';
+    controller.lastNameController.text = args["lastName"] ?? '';
+    controller.jobTypeController.text = args["JobType"] ?? '';
+    controller.cprNumberController.text = args["CprNumber"] ?? '';
+    controller.cprExpireDateController.text = args["CprExpireDate"] ?? '';
+    controller.passportController.text = args["PassportNumber"] ?? '';
+    controller.passportExpireDateController.text =
+        args["PassportExpireDate"] ?? '';
+    controller.noteController.text = args["Note"] ?? '';
+    controller.phoneNumberController.text = args["phoneNumber"] ?? '';
+    controller.startTimeController.text = args["StartTime"] ?? '';
+    controller.endTimeController.text = args["endTime"] ?? '';
+    controller.image.value = args["profileImage"] ?? '';
+    print("Received Image: =============${args["ProfileImage"]}");
+    print("UserId======================$userId");
+    print("AuthId======================$authId");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    print("UserId======================$userId");
-    print("AuthId======================$authId");
-    print("selectedWorkingDays======================${controller.selectedWorkingDays}");
-    print("selectedOFfDays======================${controller.selectedOffDayIndex}");
+    print(
+        "selectedWorkingDays======================${controller.selectedWorkingDays}");
+    print(
+        "selectedOFfDays======================${controller.selectedOffDayIndex}");
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -101,7 +125,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                         readOnly: true,
                         onTap: () {
                           controller.isCprOpen.value =
-                          !controller.isCprOpen.value;
+                              !controller.isCprOpen.value;
                         },
                         suffixIcon: Icon(
                           controller.isCprOpen.value
@@ -125,7 +149,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                         readOnly: true,
                         onTap: () {
                           controller.isPassportOpen.value =
-                          !controller.isPassportOpen.value;
+                              !controller.isPassportOpen.value;
                         },
                         suffixIcon: Icon(
                           controller.isPassportOpen.value
@@ -160,12 +184,21 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                         fillColor: AppColors.employeeCardColor,
                       ),
 
-                      ///==================================✅✅email✅✅=======================
+                      //const /==================================✅✅email✅✅=======================
 
                       SizedBox(
                         height: 8.h,
                       ),
 
+                      CustomText(
+                        textAlign: TextAlign.start,
+                        text:
+                            "Duty Time: ${controller.startTimeController.text}",
+                        fontSize: 16,
+                        color: Colors.black,
+                        bottom: 8,
+                        fontWeight: FontWeight.w500,
+                      ),
 
                       ///==================================✅✅Start Time✅✅=======================
                       CustomTextField(
@@ -198,7 +231,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                         readOnly: true,
                         hintText: AppStrings.endTime.tr,
                         fillColor: Colors.white,
-                        suffixIcon: const Icon(Icons.access_time), // Clock icon for time picker
+                        suffixIcon: const Icon(Icons.access_time),
+                        // Clock icon for time picker
                         onTap: () async {
                           TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
@@ -216,6 +250,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                       SizedBox(
                         height: 15.h,
                       ),
+
                       ///==================================✅✅Select working days✅✅=======================
 
                       const Padding(
@@ -228,9 +263,11 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                           ),
                         ),
                       ),
-                      _buildDaySelectionGrid(controller.selectedWorkingDays, true),
+                      _buildDaySelectionGrid(
+                          controller.selectedWorkingDays, true),
 
-                      const SizedBox(height: 24.0), // Spacing between sections
+                      const SizedBox(height: 24.0),
+                      // Spacing between sections
                       ///==================================✅✅Select off days✅✅=======================
 
                       const CustomText(
@@ -243,52 +280,53 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                       ),
                       _buildDaySelectionOfGrid(),
                       const SizedBox(height: 24.0),
+
                       ///==================================✅✅addNewEmployee Button✅✅=======================
                       controller.isEditLoading.value
                           ? const CustomLoader()
                           : CustomButton(
-                        onTap: () {
-                          if (controller.profileImage.value == null) {
-                            toastMessage(
-                                message:
-                                "Please select a profile image.");
-                            print("❌ Please select a profile image.");
-                            return;
-                          }
+                              onTap: () {
+                                if (controller.profileImage.value == null) {
+                                  toastMessage(
+                                      message:
+                                          "Please select a profile image.");
+                                  print("❌ Please select a profile image.");
+                                  return;
+                                }
 
-                          AddEmployee.editEmployee(
-                            authId: authId,
-                            userId: userId,
-                            firstName: controller.firstNameController.text
-                                .trim(),
-                            lastName:
-                            controller.lastNameController.text.trim(),
-                            profileImage: controller.profileImage.value!,
-                            phoneNumber: controller
-                                .phoneNumberController.text
-                                .trim(),
-                            jobType: controller.selectedJobType.value,
-                            cprNumber: controller.cprNumberController.text
-                                .trim(),
-                            cprExpDate: controller
-                                .cprExpireDateController.text
-                                .trim(),
-                            passportNumber:
-                            controller.passportController.text.trim(),
-                            passportExpDate: controller
-                                .passportExpireDateController.text
-                                .trim(),
-                            note: controller.noteController.text.trim(),
-                            dutyTime:
-                            "${controller.startTimeController.text}-${controller.endTimeController.text}",
-                            workingDay:controller.getSelectedDays(),
-                            offDay: controller.getSelectedOffDays(),
-                            context: context,
-                          );
-                        },
-                        fillColor: Colors.white,
-                        title: AppStrings.addNewEmployee.tr,
-                      )
+                                AddEmployee.editEmployee(
+                                  authId: authId,
+                                  userId: userId,
+                                  firstName: controller.firstNameController.text
+                                      .trim(),
+                                  lastName:
+                                      controller.lastNameController.text.trim(),
+                                  profileImage: controller.profileImage.value!,
+                                  phoneNumber: controller
+                                      .phoneNumberController.text
+                                      .trim(),
+                                  jobType: controller.selectedJobType.value,
+                                  cprNumber: controller.cprNumberController.text
+                                      .trim(),
+                                  cprExpDate: controller
+                                      .cprExpireDateController.text
+                                      .trim(),
+                                  passportNumber:
+                                      controller.passportController.text.trim(),
+                                  passportExpDate: controller
+                                      .passportExpireDateController.text
+                                      .trim(),
+                                  note: controller.noteController.text.trim(),
+                                  dutyTime:
+                                      "${controller.startTimeController.text}-${controller.endTimeController.text}",
+                                  workingDay: controller.getSelectedDays(),
+                                  offDay: controller.getSelectedOffDays(),
+                                  context: context,
+                                );
+                              },
+                              fillColor: Colors.white,
+                              title: AppStrings.addNewEmployee.tr,
+                            )
                     ],
                   );
                 }),
@@ -299,11 +337,12 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
       ),
     );
   }
+
   Widget _buildDaySelectionGrid(List<bool> selectedDays, bool isWorkingDay) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount:controller. daysOfWeek.length,
+      itemCount: controller.daysOfWeek.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 5, // Adjust this to control checkbox size
@@ -320,7 +359,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
               onChanged: (bool? newValue) {
                 setState(() {
                   if (isWorkingDay) {
-                    controller. selectedWorkingDays[index] = newValue ?? false;
+                    controller.selectedWorkingDays[index] = newValue ?? false;
                   }
                 });
               },
@@ -357,7 +396,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.red : Colors.grey[300], // সিলেক্ট হলে লাল
+              color: isSelected ? Colors.red : Colors.grey[300],
+              // সিলেক্ট হলে লাল
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
@@ -372,12 +412,7 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
       },
     );
   }
-
-
-
 }
-
-
 
 class PassportOption extends StatelessWidget {
   const PassportOption({
@@ -391,39 +426,39 @@ class PassportOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => controller.isPassportOpen.value
         ? Column(
-      children: [
-        CustomTextField(
-          textEditingController: controller.passportController,
-          hintText: AppStrings.passportNumber.tr,
-          fillColor: Colors.white,
-        ),
-        SizedBox(
-          height: 8.h,
-        ),
-        CustomTextField(
-          textEditingController: controller.passportExpireDateController,
-          readOnly: true,
-          hintText: AppStrings.expireDate.tr,
-          fillColor: Colors.white,
-          suffixIcon: const Icon(Icons.calendar_month),
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
+            children: [
+              CustomTextField(
+                textEditingController: controller.passportController,
+                hintText: AppStrings.passportNumber.tr,
+                fillColor: Colors.white,
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              CustomTextField(
+                textEditingController: controller.passportExpireDateController,
+                readOnly: true,
+                hintText: AppStrings.expireDate.tr,
+                fillColor: Colors.white,
+                suffixIcon: const Icon(Icons.calendar_month),
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
 
-            if (pickedDate != null) {
-              String formattedDate =
-                  "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-              controller.passportExpireDateController.text =
-                  formattedDate;
-            }
-          },
-        ),
-      ],
-    )
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                    controller.passportExpireDateController.text =
+                        formattedDate;
+                  }
+                },
+              ),
+            ],
+          )
         : const SizedBox());
   }
 }
@@ -440,38 +475,38 @@ class CprOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => controller.isCprOpen.value
         ? Column(
-      children: [
-        CustomTextField(
-          textEditingController: controller.cprNumberController,
-          hintText: AppStrings.cprNumber.tr,
-          fillColor: Colors.white,
-        ),
-        SizedBox(
-          height: 8.h,
-        ),
-        CustomTextField(
-          textEditingController: controller.cprExpireDateController,
-          readOnly: true,
-          hintText: AppStrings.expireDate.tr,
-          fillColor: Colors.white,
-          suffixIcon: const Icon(Icons.calendar_month),
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
+            children: [
+              CustomTextField(
+                textEditingController: controller.cprNumberController,
+                hintText: AppStrings.cprNumber.tr,
+                fillColor: Colors.white,
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              CustomTextField(
+                textEditingController: controller.cprExpireDateController,
+                readOnly: true,
+                hintText: AppStrings.expireDate.tr,
+                fillColor: Colors.white,
+                suffixIcon: const Icon(Icons.calendar_month),
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
 
-            if (pickedDate != null) {
-              String formattedDate =
-                  "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
-              controller.cprExpireDateController.text = formattedDate;
-            }
-          },
-        ),
-      ],
-    )
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
+                    controller.cprExpireDateController.text = formattedDate;
+                  }
+                },
+              ),
+            ],
+          )
         : const SizedBox());
   }
 }
@@ -487,29 +522,29 @@ class JobType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => CustomTextField(
-      textEditingController: controller.jobTypeController,
-      suffixIcon: PopupMenuButton<String>(
-        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-        onSelected: (value) {
-          controller.updateJobType(value);
-        },
-        itemBuilder: (context) => [
-          const PopupMenuItem(
-            value: "Full Time",
-            child: Text("Full Time"),
+          textEditingController: controller.jobTypeController,
+          suffixIcon: PopupMenuButton<String>(
+            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+            onSelected: (value) {
+              controller.updateJobType(value);
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: "Full Time",
+                child: Text("Full Time"),
+              ),
+              const PopupMenuItem(
+                value: "Part Time",
+                child: Text("Part Time"),
+              ),
+            ],
           ),
-          const PopupMenuItem(
-            value: "Part Time",
-            child: Text("Part Time"),
-          ),
-        ],
-      ),
-      hintText: controller.selectedJobType.value.isEmpty
-          ? AppStrings.jobType.tr
-          : controller.selectedJobType.value,
-      readOnly: true,
-      fillColor: AppColors.employeeCardColor,
-    ));
+          hintText: controller.selectedJobType.value.isEmpty
+              ? AppStrings.jobType.tr
+              : controller.selectedJobType.value,
+          readOnly: true,
+          fillColor: AppColors.employeeCardColor,
+        ));
   }
 }
 
@@ -534,12 +569,12 @@ class AddEmployeeImage extends StatelessWidget {
             return CircleAvatar(
               radius: 58.5, // Adjust based on your design
               backgroundImage: controller.profileImage.value != null
-              // Show the selected image if available
+                  // Show the selected image if available
                   ? FileImage(controller.profileImage.value!)
-              // Use the default image as an AssetImage
+                  // Use the default image as an AssetImage
                   : const AssetImage(AppImages.avatar) as ImageProvider<Object>,
               child: controller.profileImage.value == null
-              // Show an "add a photo" icon when no image is selected
+                  // Show an "add a photo" icon when no image is selected
                   ? const Icon(Icons.add_a_photo, size: 30, color: Colors.white)
                   : null,
             );

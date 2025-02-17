@@ -67,7 +67,22 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                 CustomMenuAppbar(
                   onTap: () {
                     Get.toNamed(AppRoutes.editEmployeeDetails,
-                        arguments: [data.id ?? "", data.authId]);
+                        arguments: {
+                          "userId": data.id,
+                          "AuthId": data.authId,
+                          "firstName": data.firstName,
+                          "lastName": data.lastName,
+                          "JobType": data.jobType,
+                          "CprNumber": data.cprNumber,
+                          "CprExpireDate": data.cprExpDate,
+                          "PassportNumber": data.passportNumber,
+                          "PassportExpireDate": data.passportExpDate,
+                          "Note": data.note,
+                          "phoneNumber": data.phoneNumber,
+                          "StartTime": data.dutyTime,
+                          "endTime": data.dutyTime,
+                          "ProfileImage": data.profileImage,
+                        });
                   },
                   isEdit: true,
                   title: AppStrings.employeeDetails.tr,

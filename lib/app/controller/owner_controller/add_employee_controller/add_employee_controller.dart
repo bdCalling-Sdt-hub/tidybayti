@@ -23,7 +23,6 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 class AddEmployeeController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
-  RxString image = "".obs;
   final RxBool isCprOpen = false.obs;
   final RxBool isPassportOpen = true.obs;
   final RxString selectedJobType = ''.obs;
@@ -130,13 +129,15 @@ class AddEmployeeController extends GetxController {
     noteController.clear();
 
   }
+  RxString image = "".obs;
+
   Rx<File?> profileImage = Rx<File?>(null);
 
   Future<void> pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage.value = File(pickedFile.path);
-      print("✅ Selected Image: ${profileImage.value!.path}");
+      print("✅ Selected Image:===== ${profileImage.value!.path}");
     } else {
       print("❌ No Image Selected");
     }
