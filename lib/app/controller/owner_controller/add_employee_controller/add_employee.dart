@@ -15,7 +15,7 @@ class AddEmployee {
   ///==================================✅✅Add Employee✅✅=======================
 
   static Future<void> addEmployee({
-    required BuildContext context,  // Add this line
+    required BuildContext context, // Add this line
     required String firstName,
     required String lastName,
     required String email,
@@ -72,12 +72,13 @@ class AddEmployee {
       var response = await request.send();
       var responseData = await response.stream.bytesToString();
 
-      employeeController.setLoading(false); // Set loading to false after request
+      employeeController
+          .setLoading(false); // Set loading to false after request
 
       if (response.statusCode == 200) {
-          employeeController.addEmployeeFieldClear();
-          employeeController.sendEmail(context);
-          toastMessage(message: "✅ Employee added successfully!");
+        employeeController.addEmployeeFieldClear();
+        employeeController.sendEmail(context);
+        toastMessage(message: "✅ Employee added successfully!");
         print("✅ Employee added successfully!");
         print(responseData);
       } else {
@@ -98,31 +99,31 @@ class AddEmployee {
       }
     } catch (e) {
       employeeController.setLoading(false);
-      toastMessage(message: "❌ An error occurred. Please check your connection.");
+      toastMessage(
+          message: "❌ An error occurred. Please check your connection.");
       print("❌ Error: $e");
     }
   }
 
-///==================================✅✅Edit Employee✅✅=======================
+  ///==================================✅✅Edit Employee✅✅=======================
 
-  static Future<void> editEmployee({
-    required BuildContext context,  // Add this line
-    required String firstName,
-    required String lastName,
-    required File profileImage,
-    required String phoneNumber,
-    required String jobType,
-    required String cprNumber,
-    required String cprExpDate,
-    required String passportNumber,
-    required String passportExpDate,
-    required String note,
-    required String dutyTime,
-    required List workingDay,
-    required String offDay,
-    required String authId,
-    required String userId
-  }) async {
+  static Future<void> editEmployee(
+      {required BuildContext context, // Add this line
+      required String firstName,
+      required String lastName,
+      required File profileImage,
+      required String phoneNumber,
+      required String jobType,
+      required String cprNumber,
+      required String cprExpDate,
+      required String passportNumber,
+      required String passportExpDate,
+      required String note,
+      required String dutyTime,
+      required List workingDay,
+      required String offDay,
+      required String authId,
+      required String userId}) async {
     AddEmployeeController employeeController = Get.find();
     employeeController.editLoading(true);
 
@@ -163,12 +164,12 @@ class AddEmployee {
       var response = await request.send();
       var responseData = await response.stream.bytesToString();
 
-      employeeController.editLoading(false); // Set loading to false after request
+      employeeController
+          .editLoading(false); // Set loading to false after request
 
       if (response.statusCode == 200) {
         employeeController.getEmployee();
         Get.offAllNamed(AppRoutes.allEmployeeShow);
-
 
         toastMessage(message: "✅ Employee updated successfully!");
         print("✅ Employee updated successfully!");
@@ -191,9 +192,60 @@ class AddEmployee {
       }
     } catch (e) {
       employeeController.editLoading(false);
-      toastMessage(message: "❌ An error occurred. Please check your connection.");
+      toastMessage(
+          message: "❌ An error occurred. Please check your connection.");
       print("❌ Error: $e");
     }
   }
 
+  ///==========
+static  RxBool isDeleteLoading = false.obs;
+
+static  Future<void> deleteEmployee(
+      {required String userId, required String authId}) async {
+    try {
+      isDeleteLoading.value = true;
+
+      String? savedToken = await SharePrefsHelper.getString(AppConstants.token);
+      if (savedToken == null) {
+        toastMessage(message: "❌ Authentication Failed! Please login again.");
+        return;
+      }
+
+      var body = jsonEncode({
+        "userId": userId,
+        "authId": authId,
+      });
+
+      var response = await http.delete(
+        Uri.parse(ApiUrl.employeeDelete),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $savedToken",
+        },
+        body: body,
+      );
+
+      isDeleteLoading.value = false;
+
+      if (response.statusCode == 200) {
+        AddEmployeeController employeeController = Get.find();
+       employeeController.getEmployee();
+        var jsonResponse = jsonDecode(response.body);
+        toastMessage(message: jsonResponse["message"]);
+
+        print("${response.body}");
+      } else if (response.statusCode == 404) {
+        var jsonResponse = jsonDecode(response.body);
+        toastMessage(message: jsonResponse["message"]);
+      } else {
+        toastMessage(message: "❌ Something went wrong! Please try again.");
+      }
+    } catch (e) {
+      isDeleteLoading.value = false;
+      toastMessage(
+          message: "❌ An error occurred. Please check your connection.");
+      print("❌ Error: $e");
+    }
+  }
 }

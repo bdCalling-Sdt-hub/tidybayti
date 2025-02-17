@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -93,7 +94,7 @@ class AllEmployeeShow extends StatelessWidget {
                                   [];
 
                           if (employeeList.isEmpty) {
-                            return  Padding(
+                            return Padding(
                               padding: EdgeInsets.symmetric(vertical: 50.h),
                               child: const CustomText(
                                 text: "No Employee Found",
@@ -124,7 +125,9 @@ class AllEmployeeShow extends StatelessWidget {
                                 },
                                 onDeleteTap: () {
                                   GlobalAlert.showDeleteDialog(context, () {
-                                    employeeController.deleteEmployee();
+                                    AddEmployee.deleteEmployee(
+                                        userId: data?.id ?? "",
+                                        authId: data?.authId ?? "");
                                   }, AppStrings.areYouSureYouWant.tr);
                                 },
                               );

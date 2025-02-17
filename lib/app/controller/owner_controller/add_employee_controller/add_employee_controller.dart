@@ -303,13 +303,13 @@ class AddEmployeeController extends GetxController {
   ///=============================================account delete==========================
   RxBool isDeleteLoading = false.obs;
 
-  deleteEmployee() async {
+  deleteEmployee({required String userId, required String authId}) async {
     try {
       isDeleteLoading.value = true;
 
       var body = {
-        "userId": "67b077bdce2b407d2568e357", // Employee _id
-        "authId": "67b077bdce2b407d2568e355"
+        "userId": userId,
+        "authId": authId
       };
 
       var response = await apiClient.delete(
