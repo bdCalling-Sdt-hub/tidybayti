@@ -76,6 +76,7 @@ class AppStrings {
   static const String manageMultiplePlaces = 'Manage multiple places';
   static const String outSubscriptionPackages = 'Our Subscription packages';
   static const String premium = 'Premium';
+  static const String assignTask = 'AssignTask';
   static const String premiumPro = 'Premium-Pro';
   static const String twelveMonthPackage = '12 Months package';
   static const String oneMonthsPackage = '1 Months package';
