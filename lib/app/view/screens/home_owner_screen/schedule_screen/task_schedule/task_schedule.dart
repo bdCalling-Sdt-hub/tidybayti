@@ -26,14 +26,14 @@ class TaskSchedule extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(20),
             color: AppColors.blue50,
-            child: const Row(
+            child:  Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomImage(imageSrc: AppIcons.add),
+                const CustomImage(imageSrc: AppIcons.add),
                 CustomText(
                   left: 10,
-                  text: AppStrings.addTask,
+                  text: AppStrings.addTask.tr,
                   fontSize: 24,
                   fontWeight: FontWeight.w400,
                   color: AppColors.dark400,
@@ -46,7 +46,7 @@ class TaskSchedule extends StatelessWidget {
         ///========================All task ======================
         CustomMenuItem(
             image: AppIcons.allTask,
-            text: AppStrings.allTasks,
+            text: AppStrings.allTasks.tr,
             onTap: () {
               Get.toNamed(AppRoutes.allTaskScreen);
             }),
@@ -54,7 +54,7 @@ class TaskSchedule extends StatelessWidget {
         ///=============================Completed task===============
         CustomMenuItem(
             image: AppIcons.completeTask,
-            text: AppStrings.completedTask,
+            text: AppStrings.completedTask.tr,
             onTap: () {
               Get.toNamed(AppRoutes.completedScreen);
 
@@ -63,7 +63,7 @@ class TaskSchedule extends StatelessWidget {
         ///==================================Ongoing Task==============
         CustomMenuItem(
             image: AppIcons.ongoing,
-            text: AppStrings.ongoingTask,
+            text: AppStrings.ongoingTask.tr,
             onTap: () {
               Get.toNamed(AppRoutes.ongoingTask);
 
@@ -72,7 +72,7 @@ class TaskSchedule extends StatelessWidget {
         ///=============================Pending ==================
         CustomMenuItem(
             image: AppIcons.ongoing,
-            text: AppStrings.pendingTask,
+            text: AppStrings.pendingTask.tr,
             onTap: () {
               Get.toNamed(AppRoutes.pendingTask);
 
@@ -81,7 +81,7 @@ class TaskSchedule extends StatelessWidget {
         ///==============================Grocery====================
         CustomMenuItem(
             image: AppIcons.grocery,
-            text: 'Grocery list',
+            text: AppStrings.groceryList.tr,
             onTap: () {
               Get.toNamed(AppRoutes.groceryTask);
 
