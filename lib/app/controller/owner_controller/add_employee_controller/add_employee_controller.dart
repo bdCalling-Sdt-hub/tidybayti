@@ -12,6 +12,7 @@ import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
@@ -297,6 +298,47 @@ class AddEmployeeController extends GetxController {
       },
     );
   }
+
+
+  ///=============================================account delete==========================
+  RxBool isDeleteLoading = false.obs;
+
+  deleteEmployee() async {
+    try {
+      isDeleteLoading.value = true;
+
+      var body = {
+        "userId": "67b077bdce2b407d2568e357", // Employee _id
+        "authId": "67b077bdce2b407d2568e355"
+      };
+
+      var response = await apiClient.delete(
+        isBasic: false,
+        showResult: true,
+        body: body,
+        url: ApiUrl.employeeDelete,
+      );
+
+
+
+      if (response == 200) {
+        toastMessage(message: response?["message"]);
+        getEmployee();
+      } else if (response == 404) {
+        toastMessage(message: response?["message"]);
+      } else {
+        // ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      log.e("❌ Error in deleteEmployee: $e");
+      toastMessage(message: "An error occurred, please try again.");
+    } finally {
+      isDeleteLoading.value = false;
+    }
+  }
+
+
+
 
   @override
   void onInit() {

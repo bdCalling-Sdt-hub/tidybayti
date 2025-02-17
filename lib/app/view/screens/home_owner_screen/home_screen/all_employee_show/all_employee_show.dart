@@ -124,7 +124,7 @@ class AllEmployeeShow extends StatelessWidget {
                                 },
                                 onDeleteTap: () {
                                   GlobalAlert.showDeleteDialog(context, () {
-                                    print("Employee Deleted!");
+                                    employeeController.deleteEmployee();
                                   }, AppStrings.areYouSureYouWant.tr);
                                 },
                               );

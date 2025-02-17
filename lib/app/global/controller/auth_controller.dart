@@ -222,4 +222,8 @@ class AuthController extends GetxController {
      newPasswordController.clear();
      confirmPasswordController.clear();
   }
+
+
+
+
 }
