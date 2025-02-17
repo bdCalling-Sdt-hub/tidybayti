@@ -103,9 +103,9 @@ class AddEmployeeController extends GetxController {
 
   void toggleOffDay(int index) {
     if (selectedOffDayIndex == index) {
-      selectedOffDayIndex = null; // যদি একই দিন ক্লিক হয়, আনসিলেক্ট করো
+      selectedOffDayIndex = null;
     } else {
-      selectedOffDayIndex = index; // নতুন দিন সিলেক্ট করো
+      selectedOffDayIndex = index;
     }
   }
 

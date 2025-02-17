@@ -263,9 +263,6 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                                 .trim(),
                             lastName:
                             controller.lastNameController.text.trim(),
-                            // email: controller.emailController.text.trim(),
-                            // password:
-                            // controller.passwordController.text.trim(),
                             profileImage: controller.profileImage.value!,
                             phoneNumber: controller
                                 .phoneNumberController.text
