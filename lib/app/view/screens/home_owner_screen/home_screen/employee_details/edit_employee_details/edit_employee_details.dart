@@ -23,12 +23,16 @@ class EditEmployeeDetails extends StatefulWidget {
 class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
 
+  final String userId = Get.arguments[0]??"";
+  final String authId = Get.arguments[1]??"";
 
   @override
   Widget build(BuildContext context) {
 
+    print("UserId======================$userId");
+    print("AuthId======================$authId");
     print("selectedWorkingDays======================${controller.selectedWorkingDays}");
-    print("selectedWorkingDays======================${controller.selectedOffDayIndex}");
+    print("selectedOFfDays======================${controller.selectedOffDayIndex}");
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -253,8 +257,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                           }
 
                           AddEmployee.editEmployee(
-                            authId: "67b07aadce2b407d2568e37a",
-                            userId: "67b07aadce2b407d2568e37c",
+                            authId: authId,
+                            userId: userId,
                             firstName: controller.firstNameController.text
                                 .trim(),
                             lastName:

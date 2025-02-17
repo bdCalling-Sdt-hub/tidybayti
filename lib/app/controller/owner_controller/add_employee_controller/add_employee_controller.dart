@@ -124,6 +124,8 @@ class AddEmployeeController extends GetxController {
     cprNumberController.clear();
     cprExpireDateController.clear();
     passportController.clear();
+    startTimeController.clear();
+    endTimeController.clear();
     passportExpireDateController.clear();
     noteController.clear();
 
