@@ -126,7 +126,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                 ///================================Grid====================
                 SizedBox(
                   height: MediaQuery.of(context).size.height /
-                      3, // Fixed height for the horizontal GridView
+                      3,
                   child: GridView.builder(
                     scrollDirection: Axis.horizontal,
                     // Horizontal scrolling
