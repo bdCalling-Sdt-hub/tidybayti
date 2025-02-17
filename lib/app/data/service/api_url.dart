@@ -23,4 +23,21 @@ class ApiUrl {
   static const employeeDelete = "$baseUrl/user/delete-employee";
   static String singleEmployee(String employeeId) =>
       "$baseUrl/user/get-single-employee?userId=$employeeId";
+
+///==================================✅✅Task✅✅=======================
+  static const addTask = "$baseUrl/task/post-task";
+  static const getCompleteTask = "$baseUrl/task/get-my-task?status=completed";
+  static const getPending = "$baseUrl/task/get-my-task?status=pending";
+  static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
+
+
+///==================================✅✅Home✅✅=======================
+  static const houseRomeCreate = "$baseUrl/room/post-room";
+  static String getMyRoom(String houseId) =>
+      "$baseUrl/room/get-my-room?houseId=$houseId";
+  static String getSingleRoom(String roomId) =>
+      "$baseUrl/room/get-single-room?roomId=$roomId";
+  static const houseCreate = "$baseUrl/room/post-house";
+
+
 }

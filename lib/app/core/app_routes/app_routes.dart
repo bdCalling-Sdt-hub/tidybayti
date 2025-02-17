@@ -150,8 +150,8 @@ class AppRoutes {
     GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
     GetPage(name: houseInformationScreen, page: () => const HouseInformationScreen()),
     GetPage(name: allEmployeeShow, page: () =>  AllEmployeeShow()),
-    GetPage(name: employeeDetails, page: () =>  EmployeeDetails()),
-    GetPage(name: addEmployeeScreen, page: () =>  AddEmployeeScreen()),
+    GetPage(name: employeeDetails, page: () =>  const EmployeeDetails()),
+    GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () => const RoomDetailsScreen()),
     GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
     GetPage(name: assignWorkScheduleScreen, page: () => const AssignWorkScheduleScreen()),
@@ -195,8 +195,8 @@ class AppRoutes {
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
-    GetPage(name: editProfileScreen, page: () =>  EditProfileScreen()),
-    GetPage(name: createTask, page: () => const CreateTask()),
+    GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen()),
+    GetPage(name: createTask, page: () =>  CreateTask()),
 
 
 

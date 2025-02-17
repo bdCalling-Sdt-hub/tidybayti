@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -10,8 +11,9 @@ import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_app
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 class CreateTask extends StatelessWidget {
-  const CreateTask({super.key});
+   CreateTask({super.key});
 
+  final TaskController taskController = Get.find<TaskController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +88,7 @@ class CreateTask extends StatelessWidget {
                   SizedBox(height: 10.h),
                    CustomTextField(
                     hintText: AppStrings.taskTitle.tr,
+
                   ),
                   SizedBox(height: 8.h),
 
@@ -137,7 +140,7 @@ class CreateTask extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
         child: CustomButton(
           onTap: () {
-            Get.back();
+          taskController.addTask();
           },
           fillColor: AppColors.blue50,
           title: AppStrings.assignTo.tr,

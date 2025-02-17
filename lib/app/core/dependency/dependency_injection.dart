@@ -5,6 +5,7 @@ import 'package:tidybayte/app/controller/owner_controller/add_employee_controlle
 import 'package:tidybayte/app/controller/owner_controller/profile_controller/profile_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/setting_controller/setting_controller.dart';
+import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wallet_controller.dart';
 import 'package:tidybayte/app/global/controller/auth_controller.dart';
 
@@ -21,6 +22,7 @@ class DependencyInjection extends Bindings {
    Get.lazyPut(() => WalletController(), fenix: true);
    Get.lazyPut(() => NotificationController(), fenix: true);
    Get.lazyPut(() => AddEmployeeController(), fenix: true);
+   Get.lazyPut(() => TaskController(), fenix: true);
 
 
 
