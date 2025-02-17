@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
+
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+
 
 class EmployeeNotificationScreen extends StatelessWidget {
   const EmployeeNotificationScreen({super.key});
@@ -31,7 +28,7 @@ class EmployeeNotificationScreen extends StatelessWidget {
           ),
         ),
         child:     Padding(
-          padding: EdgeInsets.all(16.w),
+          padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 25),
           child: Column(
             children: [
               CustomMenuAppbar(

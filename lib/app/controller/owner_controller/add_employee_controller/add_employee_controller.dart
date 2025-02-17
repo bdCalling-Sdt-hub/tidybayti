@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -25,29 +24,27 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 class AddEmployeeController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
-  RxString image = "".obs;
   final RxBool isCprOpen = false.obs;
-  final RxBool isPassportOpen = false.obs;
+  final RxBool isPassportOpen = true.obs;
   final RxString selectedJobType = ''.obs;
-  ///==================================✅✅updateJobType✅✅=======================
+  var isLoading = false.obs;
+
+  void setLoading(bool value) {
+    isLoading.value = value;
+  }
+
+  var isEditLoading = false.obs;
+
+  void editLoading(bool value) {
+    isEditLoading.value = value;
+  }
+
   void updateJobType(String jobType) {
     selectedJobType.value = jobType;
     jobTypeController.text = jobType;
     debugPrint("Selected Job Type: =======================$jobType");
   }
-  Rx<File> imageFile = File("").obs;
 
-  selectImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? getImages =
-        await picker.pickImage(source: ImageSource.gallery, imageQuality: 15);
-    if (getImages != null) {
-      imageFile.value = File(getImages.path);
-      image.value = getImages.path;
-    }
-  }
-
-  ///==================================✅✅Profile Update✅✅=======================
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -59,62 +56,94 @@ class AddEmployeeController extends GetxController {
   final passportController = TextEditingController();
   final noteController = TextEditingController();
   final passportExpireDateController = TextEditingController();
-// Convert `Map<String, dynamic>` to `Map<String, String>`
-  Map<String, String> convertToMapString(Map<String, dynamic>? body) {
-    if (body == null) return {};
-    return body.map((key, value) => MapEntry(key, value.toString()));
-  }
-
-  RxBool isAddEmployeeLoading = false.obs;
-
-  addEmployee() async {
-    isAddEmployeeLoading.value = true;
-
-    Map<String, dynamic> body = {
-      "firstName": firstNameController.text.trim(),
-      "lastName": lastNameController.text.trim(),
-      "jobType": jobTypeController.text.trim(),
-      "CPRNumber": cprNumberController.text.trim(),
-      "CPRExpireDate": cprExpireDateController.text.trim(),
-      "passportNumber": passportController.text.trim(),
-      "passportExpire": passportExpireDateController.text.trim(),
-      "note": noteController.text.trim(),
-      "phoneNumber": phoneNumberController.text.trim(),
-      "email": emailController.text.trim(),
-      "password": passwordController.text,
-      "dutyTime":" dutyTimeController.text.trim()",
-      "offDay": "",
-      "workingDay": "jsonEncode(selectedWorkingDays)",
-    };
-
-    var response;
-    if (image.isEmpty) {
-      response = await apiClient.post(body: body, url: ApiUrl.addEmployee);
-    } else {
-      response = await apiClient.multipartRequest(
-        multipartBody: [
-          MultipartBody("profile_image", File(image.value))
-        ],
-        url: ApiUrl.addEmployee,
-        reqType: "Post",
-        body: convertToMapString(body), // ✅ Convert `Map<String, dynamic>` to `Map<String, String>`
-      );
-    }
-
-    if (response.statusCode == 200) {
-      toastMessage(message: 'Employee added successfully!');
-    } else {
-      ApiChecker.checkApi(response);
-    }
-
-    isAddEmployeeLoading.value = false;
-  }
-
-
-
-  ///==================================✅✅Get Employee✅✅=======================
+  final startTimeController = TextEditingController();
+  final endTimeController = TextEditingController();
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
+///
+
+  final List<String> daysOfWeek = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday'
+  ];
+  List<String> getSelectedDays() {
+    List<String> workingDays = [];
+
+    for (int i = 0; i < daysOfWeek.length; i++) {
+      if (selectedWorkingDays[i]) {
+        workingDays.add(daysOfWeek[i]);
+      }
+    }
+
+    return workingDays;
+  }
+  List<bool> selectedWorkingDays = [
+    true,
+    false,
+    true,
+    true,
+    true,
+    false,
+    true
+  ];
+
+
+
+
+
+  // Preselected off days
+
+
+  int? selectedOffDayIndex;
+
+  void toggleOffDay(int index) {
+    if (selectedOffDayIndex == index) {
+      selectedOffDayIndex = null;
+    } else {
+      selectedOffDayIndex = index;
+    }
+  }
+
+  String getSelectedOffDays() {
+    return selectedOffDayIndex != null ? daysOfWeek[selectedOffDayIndex!] : "";
+  }
+  ///
+
+  addEmployeeFieldClear(){
+    firstNameController.clear();
+    lastNameController.clear();
+    // emailController.clear();
+    // passwordController.clear();
+    phoneNumberController.clear();
+    jobTypeController.clear();
+    cprNumberController.clear();
+    cprExpireDateController.clear();
+    passportController.clear();
+    startTimeController.clear();
+    endTimeController.clear();
+    passportExpireDateController.clear();
+    noteController.clear();
+
+  }
+  RxString image = "".obs;
+
+  Rx<File?> profileImage = Rx<File?>(null);
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage.value = File(pickedFile.path);
+      print("✅ Selected Image:===== ${profileImage.value!.path}");
+    } else {
+      print("❌ No Image Selected");
+    }
+  }
+  ///==================================✅✅Get Employee✅✅=======================
 
 
   Rx<EmployeeData> employeeData = EmployeeData().obs;
@@ -123,14 +152,15 @@ class AddEmployeeController extends GetxController {
     setRxRequestStatus(Status.loading);
     refresh();
     try {
-      final response = await apiClient.get(url:
-      ApiUrl.getEmployee,showResult: true);
+      final response =
+          await apiClient.get(url: ApiUrl.getEmployee, showResult: true);
 
       if (response.statusCode == 200) {
         employeeData.value = EmployeeData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print('Employee Result==================${employeeData.value.result?.length}');
+        print(
+            'Employee Result==================${employeeData.value.result?.length}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -142,10 +172,7 @@ class AddEmployeeController extends GetxController {
     }
   }
 
-
   ///==================================✅✅Get Single Employee✅✅=======================
-
-
 
   Rx<SingleEmployeeData> singleEmployeeData = SingleEmployeeData().obs;
 
@@ -153,14 +180,16 @@ class AddEmployeeController extends GetxController {
     setRxRequestStatus(Status.loading);
     refresh();
     try {
-      final response = await apiClient.get(url:
-      ApiUrl.singleEmployee(employeeId),showResult: true);
+      final response = await apiClient.get(
+          url: ApiUrl.singleEmployee(employeeId), showResult: true);
 
       if (response.statusCode == 200) {
-        singleEmployeeData.value = SingleEmployeeData.fromJson(response.body["data"]);
+        singleEmployeeData.value =
+            SingleEmployeeData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print('Employee Result==================${singleEmployeeData.value.employeeId}');
+        print(
+            'Employee Result==================${singleEmployeeData.value.employeeId}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -171,9 +200,7 @@ class AddEmployeeController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
-  ///==================================✅✅Profile Update✅✅=======================
-
-
+  ///==================================✅✅sendEmail✅✅=======================
   void sendEmail(BuildContext context) {
     showDialog(
       context: context,
@@ -185,88 +212,131 @@ class AddEmployeeController extends GetxController {
                 Radius.circular(5.0)), // Adjust the radius as needed
           ),
           backgroundColor: AppColors.addedColor,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 16.h,
-              ),
-              Container(
-                height: 96,
-                width: 96,
-                decoration: const BoxDecoration(
-                  color: AppColors.blue900,
-                  shape: BoxShape.circle,
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 16.h,
                 ),
-                child: const Center(
-                    child: CustomImage(
-                      imageSrc: AppIcons.rightUp,
-                    )),
-              ),
-               CustomText(
-                top: 24,
-                bottom: 40,
-                maxLines: 2,
-                text: AppStrings.employeeAddedSu.tr,
-                fontWeight: FontWeight.w400,
-                fontSize: 24,
-                color: AppColors.successFullyColor,
-              ),
-               CustomText(
-                maxLines: 5,
-                text: AppStrings.emplyeesAccountDetails.tr,
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-                color: AppColors.dark400,
-              ),
-              const CustomText(
-                maxLines: 2,
-                bottom: 20,
-                text: ' diannerussell@gmail.com',
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: AppColors.dark400,
-              ),
-               Row(
-                children: [
-                  CustomText(
-                    maxLines: 2,
-                    text: "${AppStrings.temporaryPassword}:".tr,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColors.dark400,
+                Container(
+                  height: 96,
+                  width: 96,
+                  decoration: const BoxDecoration(
+                    color: AppColors.blue900,
+                    shape: BoxShape.circle,
                   ),
-                  const CustomText(
-                    maxLines: 2,
-                    text: ' Masum017@@@',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12,
-                    color: AppColors.dark400,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 48.h,
-              ),
+                  child: const Center(
+                      child: CustomImage(
+                    imageSrc: AppIcons.rightUp,
+                  )),
+                ),
+                CustomText(
+                  top: 24,
+                  bottom: 40,
+                  maxLines: 2,
+                  text: AppStrings.employeeAddedSu.tr,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
+                  color: AppColors.successFullyColor,
+                ),
+                CustomText(
+                  maxLines: 5,
+                  text: AppStrings.emplyeesAccountDetails.tr,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: AppColors.dark400,
+                ),
+                 CustomText(
+                  maxLines: 2,
+                  bottom: 20,
+                  text: emailController.text,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: AppColors.dark400,
+                ),
+                Row(
+                  children: [
+                    CustomText(
+                      maxLines: 2,
+                      text: "${AppStrings.temporaryPassword}:".tr,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: AppColors.dark400,
+                    ),
+                     CustomText(
+                      maxLines: 2,
+                      text: passwordController.text,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: AppColors.dark400,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 48.h,
+                ),
 
-              ///==============================Send Email==================
+                ///==============================Send Email==================
 
-              CustomButton(
-                title: AppStrings.sendEmail.tr,
-                onTap: () {
-                  Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
-                },
-                fillColor: Colors.white,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-            ],
+                CustomButton(
+                  title: "Ok".tr,
+                  onTap: () {
+                    Get.toNamed(AppRoutes.mainSentSuccessfullyScreen);
+                    emailController.clear();
+                    passwordController.clear();
+                  },
+                  fillColor: Colors.white,
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
+
+
+  ///=============================================account delete==========================
+  RxBool isDeleteLoading = false.obs;
+
+  deleteEmployee({required String userId, required String authId}) async {
+    try {
+      isDeleteLoading.value = true;
+
+      var body = {
+        "userId": userId,
+        "authId": authId
+      };
+
+      var response = await apiClient.delete(
+        isBasic: false,
+        showResult: true,
+        body: body,
+        url: ApiUrl.employeeDelete,
+      );
+
+
+
+      if (response == 200) {
+        toastMessage(message: response?["message"]);
+        getEmployee();
+      } else if (response == 404) {
+        toastMessage(message: response?["message"]);
+      } else {
+        // ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      log.e("❌ Error in deleteEmployee: $e");
+      toastMessage(message: "An error occurred, please try again.");
+    } finally {
+      isDeleteLoading.value = false;
+    }
+  }
+
 
 
 

@@ -20,7 +20,8 @@ final log = logger(ApiClient);
 Map<String, String> basicHeaderInfo() {
   return {
     HttpHeaders.acceptHeader: "application/json",
-    HttpHeaders.contentTypeHeader: "application/json",
+    // HttpHeaders.contentTypeHeader: "application/json",
+    HttpHeaders.contentTypeHeader: "multipart/form-data",
   };
 }
 
@@ -621,28 +622,26 @@ class ApiClient {
   // }
 
   // Delete method
-  Future<Map<String, dynamic>?> delete(
-      {String? url,
-        bool? isBasic,
-        int code = 202,
-        bool isLogout = false,
-        int duration = 15,
-        bool showResult = false}) async {
-    log.i(
-        '|📍📍📍|-----------------[[ DELETE ]] method details start-----------------|📍📍📍|');
-
+  Future<Map<String, dynamic>?> delete({
+    String? url,
+    bool? isBasic,
+    int code = 202,
+    bool isLogout = false,
+    int duration = 15,
+    bool showResult = false,
+    Map<String, dynamic>? body,
+  }) async {
+    log.i('|📍📍📍|-----------------[[ DELETE ]] method details start-----------------|📍📍📍|');
     log.i(url);
-
-    log.i(
-        '|📍📍📍|-----------------[[ DELETE ]] method details end ------------------|📍📍📍|');
+    log.i('|📍📍📍|-----------------[[ DELETE ]] method details end ------------------|📍📍📍|');
 
     try {
       var headers = isBasic! ? basicHeaderInfo() : await bearerHeaderInfo();
+      headers['Content-Type'] = 'application/json';
 
       if (isLogout) {
-// headers
-
-// ..addAll({"fcm_token": await FirebaseMessaging.instance.getToken()});
+        // headers
+        // ..addAll({"fcm_token": await FirebaseMessaging.instance.getToken()});
       }
 
       log.i(headers);
@@ -651,63 +650,47 @@ class ApiClient {
           .delete(
         Uri.parse(url!),
         headers: headers,
+        body: body != null ? jsonEncode(body) : null, // ✅ Body added if not null
       )
           .timeout(Duration(seconds: duration));
 
-      log.i(
-          '|📒📒📒|----------------- [[ DELETE ]] method response start-----------------|📒📒📒|');
+      log.i('|📒📒📒|----------------- [[ DELETE ]] method response start-----------------|📒📒📒|');
 
       if (showResult) {
         log.i(response.body.toString());
       }
 
       log.i(response.statusCode);
-
-      log.i(
-          '|📒📒📒|----------------- [[ DELETE ]] method response start-----------------|📒📒📒|');
+      log.i('|📒📒📒|----------------- [[ DELETE ]] method response end -----------------|📒📒📒|');
 
       if (response.statusCode == code) {
-// LocalStorage.clear();
-
         return jsonDecode(response.body);
       } else {
         log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
-
-        log.e(
-            'unknown error hitted in status code  ${jsonDecode(response.body)}');
-
+        log.e('unknown error in status code ${jsonDecode(response.body)}');
         return null;
       }
     } on SocketException {
       log.e('🐞🐞🐞 Error Alert on Socket Exception 🐞🐞🐞');
-
       return null;
     } on TimeoutException {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
-
-      log.e('Time out exception$url');
-
+      log.e('Time out exception $url');
       return null;
-    } on http.ClientException catch (err, stackrace) {
+    } on http.ClientException catch (err, stacktrace) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
-
-      log.e('client exception hitted');
-
+      log.e('client exception occurred');
       log.e(err.toString());
-
-      log.e(stackrace.toString());
-
+      log.e(stacktrace.toString());
       return null;
     } catch (e) {
       log.e('🐞🐞🐞 Error Alert 🐞🐞🐞');
-
-      log.e('❌❌❌ unlisted error received');
-
+      log.e('❌❌❌ Unhandled error received');
       log.e("❌❌❌ $e");
-
       return null;
     }
   }
+
 
   Future<Map<String, dynamic>?> put(
       {String? url,

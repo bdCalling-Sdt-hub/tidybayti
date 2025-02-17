@@ -111,7 +111,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         child: CustomImage(
                                       imageSrc: AppImages.avatar,
                                       imageType: ImageType.png,
-                                      size: 35,
+                                      size: 100,
                                     )),
                                     Positioned(
                                       right: 5,

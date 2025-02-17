@@ -56,7 +56,8 @@ class PersonalInfoScreen extends StatelessWidget {
                   /// ========== AppBar ==========
                   CustomMenuAppbar(
                     onTap: () {
-                      Get.toNamed(AppRoutes.editProfileScreen, arguments: {
+                      Get.toNamed(AppRoutes.editProfileScreen,
+                          arguments: {
                         "firstName": profile.firstName,
                         "lastName": profile.lastName,
                         "phoneNumber": profile.phoneNumber,
@@ -85,21 +86,21 @@ class PersonalInfoScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           ClipOval(
-                              child: profile.profileImage!.isNotEmpty
-                                  ? Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blue,width: 4)
-                                ),
-                                    child: CustomNetworkImage(
-                                        imageUrl:
-                                            "${ApiUrl.networkUrl}${profile.profileImage ?? ""}",
-                                        height: 128,
-                                        width: 128),
-                                  )
-                                  : const CustomImage(
-                                      imageSrc: AppImages.avatar,
-                                      imageType: ImageType.png,
-                                    )),
+                            child: profile.profileImage != null && profile.profileImage!.isNotEmpty
+                                ? Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue, width: 4)),
+                              child: CustomNetworkImage(
+                                imageUrl: "${ApiUrl.networkUrl}${profile.profileImage}",
+                                height: 128,
+                                width: 128,
+                              ),
+                            )
+                                : const CustomImage(
+                              imageSrc: AppImages.avatar,
+                              imageType: ImageType.png,
+                            ),
+                          ),
                           CustomText(
                             top: 10,
                             text: profile.firstName ?? "",
