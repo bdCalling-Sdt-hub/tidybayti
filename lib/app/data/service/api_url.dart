@@ -29,6 +29,7 @@ class ApiUrl {
   static const getCompleteTask = "$baseUrl/task/get-my-task?status=completed";
   static const getPending = "$baseUrl/task/get-my-task?status=pending";
   static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
+  static const taskDelete= "$baseUrl/task/delete-task";
 
 
 ///==================================✅✅Home✅✅=======================

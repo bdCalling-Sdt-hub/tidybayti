@@ -4,7 +4,6 @@ import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
-import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 
 class TaskController extends GetxController {
@@ -63,6 +62,29 @@ class TaskController extends GetxController {
   }
 
 
+  var selectedDayIndex = Rxn<int>(); // Nullable RxInt
 
+  final List<String> dayName = [
+    'Completed Tasks',
+    'Ongoing Tasks',
+    'Pending Tasks',
+  ];
+
+  final List<Map<String, String>> allTasks = [
+    {"taskName": "Clean Car", "assignedTo": "Annette Black", "time": "10 Aug, 2024", "status": "Completed"},
+    {"taskName": "Wash Dishes", "assignedTo": "John Doe", "time": "11 Aug, 2024", "status": "Ongoing"},
+    {"taskName": "Mop Floor", "assignedTo": "Alice Smith", "time": "12 Aug, 2024", "status": "Pending"},
+    {"taskName": "Laundry", "assignedTo": "Robert Brown", "time": "13 Aug, 2024", "status": "Completed"},
+    {"taskName": "Grocery Shopping", "assignedTo": "Emily Johnson", "time": "14 Aug, 2024", "status": "Ongoing"},
+    {"taskName": "Cook Dinner", "assignedTo": "David Wilson", "time": "15 Aug, 2024", "status": "Pending"},
+  ];
+
+  List<Map<String, String>> get filteredTasks {
+    if (selectedDayIndex.value == null) {
+      return [];
+    }
+    String statusFilter = dayName[selectedDayIndex.value!].split(" ")[0]; // "Completed" / "Ongoing" / "Pending"
+    return allTasks.where((task) => task["status"] == statusFilter).toList();
+  }
 
 }
