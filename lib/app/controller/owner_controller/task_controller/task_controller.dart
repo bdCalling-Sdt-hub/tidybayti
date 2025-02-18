@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/all_room_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/task_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -109,7 +110,32 @@ class TaskController extends GetxController {
     'Pending Tasks',
   ];
 
+  ///==================================✅✅Get All Task✅✅=======================
 
+  Rx<TaskData> taskData = TaskData().obs;
+  getPendingTask() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response =
+      await apiClient.get(url: ApiUrl.getPendingTask, showResult: true);
+
+      if (response.statusCode == 200) {
+        taskData.value = TaskData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print(
+            'taskData Result==================${taskData.value.result?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
 
 
 
@@ -118,6 +144,7 @@ class TaskController extends GetxController {
   @override
   void onInit() {
     getAllRoom();
+    getPendingTask();
     super.onInit();
   }
 }
