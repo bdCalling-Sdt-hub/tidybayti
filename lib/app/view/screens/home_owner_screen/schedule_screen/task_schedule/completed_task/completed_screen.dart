@@ -113,7 +113,7 @@ class _PendingTaskState extends State<CompletedScreen> {
                                       taskController.getTaskData(
                                           apiUrl: ApiUrl.getPendingTask);
                                     });
-                                  }, "Remove Your Pending Task");
+                                  }, "Remove Your Complete Task");
                                 });
                           }),
                         )

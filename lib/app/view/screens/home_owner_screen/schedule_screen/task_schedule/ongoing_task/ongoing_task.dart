@@ -113,7 +113,7 @@ class _OngoingTaskState extends State<OngoingTask> {
 
                                   await taskController.getTaskData(
                                       apiUrl: ApiUrl.getPendingTask);
-                                }, "Remove Your Pending Task");
+                                }, "Remove Your Ongoing Task");
 
                                 if (isConfirmed ?? false) {
                                   print("Task Deleted & Refreshed!");
