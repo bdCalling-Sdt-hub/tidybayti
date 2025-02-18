@@ -30,7 +30,8 @@ class EmployeeShow extends StatelessWidget {
               employeeController.getEmployee();
             },
             child: const CustomText(
-              top: 20,
+              textAlign: TextAlign.center,
+              top: 25,
               fontWeight: FontWeight.w500,
               fontSize: 16,
               text: 'No Internet',
