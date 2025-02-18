@@ -109,22 +109,9 @@ class TaskController extends GetxController {
     'Pending Tasks',
   ];
 
-  final List<Map<String, String>> allTasks = [
-    {"taskName": "Clean Car", "assignedTo": "Annette Black", "time": "10 Aug, 2024", "status": "Completed"},
-    {"taskName": "Wash Dishes", "assignedTo": "John Doe", "time": "11 Aug, 2024", "status": "Ongoing"},
-    {"taskName": "Mop Floor", "assignedTo": "Alice Smith", "time": "12 Aug, 2024", "status": "Pending"},
-    {"taskName": "Laundry", "assignedTo": "Robert Brown", "time": "13 Aug, 2024", "status": "Completed"},
-    {"taskName": "Grocery Shopping", "assignedTo": "Emily Johnson", "time": "14 Aug, 2024", "status": "Ongoing"},
-    {"taskName": "Cook Dinner", "assignedTo": "David Wilson", "time": "15 Aug, 2024", "status": "Pending"},
-  ];
 
-  List<Map<String, String>> get filteredTasks {
-    if (selectedDayIndex.value == null) {
-      return [];
-    }
-    String statusFilter = dayName[selectedDayIndex.value!].split(" ")[0]; // "Completed" / "Ongoing" / "Pending"
-    return allTasks.where((task) => task["status"] == statusFilter).toList();
-  }
+
+
 
 
 

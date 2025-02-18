@@ -81,19 +81,17 @@ class AllTaskScreen extends StatelessWidget {
               ///=============================== Task List ========================
               Expanded(
                 child: Obx(() {
-                  final tasks = controller.filteredTasks;
-                  return tasks.isNotEmpty
-                      ? ListView.builder(
+                  return ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemCount: tasks.length,
+                    itemCount: 4,
                     itemBuilder: (context, index) {
-                      var task = tasks[index];
+                      // var task = tasks[index];
                       return Column(
                         children: [
                           CustomRoomCard(
-                            taskName: task["taskName"]!,
-                            assignedTo: task["assignedTo"]!,
-                            time: task["time"]!,
+                            taskName:'gg',
+                            assignedTo:"",
+                            time: "gg",
                             onInfoPressed: () {},
                             onDeletePressed: () {},
                           ),
@@ -101,14 +99,6 @@ class AllTaskScreen extends StatelessWidget {
                         ],
                       );
                     },
-                  )
-                      : const Center(
-                    child: CustomText(
-                      text: "No tasks available",
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.blue900,
-                    ),
                   );
                 }),
               ),

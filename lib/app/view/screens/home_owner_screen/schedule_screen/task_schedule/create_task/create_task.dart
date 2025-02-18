@@ -14,7 +14,7 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
 class CreateTask extends StatefulWidget {
-  CreateTask({super.key});
+  const CreateTask({super.key});
 
   @override
   State<CreateTask> createState() => _CreateTaskState();
