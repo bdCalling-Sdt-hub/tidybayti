@@ -11,6 +11,7 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 class TaskController extends GetxController {
   ApiClient apiClient = serviceLocator();
+
   // DBHelper dbHelper = serviceLocator();
   final taskTitleController = TextEditingController();
   final startDateController = TextEditingController();
@@ -25,6 +26,7 @@ class TaskController extends GetxController {
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
+
   clearField() {
     taskTitleController.clear();
     startDateController.clear();
@@ -34,7 +36,6 @@ class TaskController extends GetxController {
     taskDetailsController.clear();
     additionalController.clear();
   }
-
 
   ///==================================✅✅Add Task Method✅✅=======================
 
@@ -48,15 +49,14 @@ class TaskController extends GetxController {
       "taskName": taskTitleController.text,
       "recurrence": recurrenceController.text,
       "startDateStr": startDateController.text,
-      "startTimeStr":startTimeController.text,
+      "startTimeStr": startTimeController.text,
       "endDateStr": endDateController.text,
       "endTimeStr": endTimeController.text,
-      "taskDetails":taskDetailsController.text,
+      "taskDetails": taskDetailsController.text,
       "additionalMessage": additionalController.text
     };
 
-    var response = await apiClient.post(body: body,
-        url: ApiUrl.addTask);
+    var response = await apiClient.post(body: body, url: ApiUrl.addTask);
     if (response.statusCode == 200) {
       clearField();
       toastMessage(message: response.body["message"]);
@@ -70,26 +70,24 @@ class TaskController extends GetxController {
     isTaskLoading.refresh();
   }
 
-
   var selectedDayIndex = Rxn<int>();
-
 
   ///==================================✅✅Get All Room✅✅=======================
 
   Rx<RoomList> roomModel = RoomList().obs;
+
   getAllRoom() async {
     setRxRequestStatus(Status.loading);
     refresh();
     try {
       final response =
-      await apiClient.get(url: ApiUrl.allRoom, showResult: true);
+          await apiClient.get(url: ApiUrl.allRoom, showResult: true);
 
       if (response.statusCode == 200) {
         roomModel.value = RoomList.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print(
-            'Room Result==================${roomModel.value.rooms?.length}');
+        print('Room Result==================${roomModel.value.rooms?.length}');
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -100,10 +98,6 @@ class TaskController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
-
-
-
-
 
   ///==================================✅✅Get All Task✅✅=======================
 
@@ -120,7 +114,8 @@ class TaskController extends GetxController {
         taskData.value = TaskData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print('taskData Result==================${taskData.value.result?.length}');
+        print(
+            'taskData Result==================${taskData.value.result?.length}');
 
         setRxRequestStatus(Status.completed);
         refresh();
@@ -139,16 +134,11 @@ class TaskController extends GetxController {
 
   removeTask({required String taskId}) async {
     isRemoveTask.value = true;
-    var body = {
-      "taskId": taskId.toString()
-    };
+    var body = {"taskId": taskId.toString()};
 
-    var response = await apiClient.delete(body: body,
-        url: ApiUrl.taskDelete);
+    var response = await apiClient.delete(body: body, url: ApiUrl.taskDelete);
     if (response.statusCode == 200) {
-
       toastMessage(message: response.body["message"]);
-      Get.back();
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);
     } else {
@@ -157,8 +147,6 @@ class TaskController extends GetxController {
     isRemoveTask.value = false;
     isRemoveTask.refresh();
   }
-
-
 
   @override
   void onInit() {

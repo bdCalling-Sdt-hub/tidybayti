@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -103,10 +104,14 @@ class _PendingTaskState extends State<PendingTask> {
                                 time:
                                     '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
                                 onInfoPressed: () {},
-                                onDeletePressed: () {
-                                  taskController.removeTask(
-                                      taskId: data?.id ?? "");
-                                });
+                              onDeletePressed: () {
+                                GlobalAlert.showDeleteDialog(context, () {
+                                  taskController.removeTask(taskId: data?.id ?? "").then((_) {
+                                    taskController.getTaskData(apiUrl: ApiUrl.getPendingTask);
+                                  });
+                                }, "Remove Your Pending Task");
+                              },
+                            );
                           }),
                         )
                       ],
