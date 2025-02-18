@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -129,7 +130,34 @@ class AllTaskScreen extends StatelessWidget {
                             "${task.assignedTo?.firstName ?? ""} ${task.assignedTo?.lastName ?? ""}",
                             time: "${task.startDateStr ?? ""} To ${task.endDateStr ?? ""}",
                             onInfoPressed: () {},
-                            onDeletePressed: () {},
+                            onDeletePressed: () async {
+                              bool? isConfirmed = await GlobalAlert.showDeleteDialog(
+                                  context,
+                                      () async {
+                                    // ✅ Step 1: Delete the task
+                                    await controller.removeTask(taskId: task.id ?? "");
+
+                                    // ✅ Step 2: Call the correct API based on the selected tab
+                                    if (controller.selectedDayIndex.value == 0) {
+                                      // If "Pending" is selected
+                                      await controller.getTaskData(apiUrl: ApiUrl.getPendingTask);
+                                    } else if (controller.selectedDayIndex.value == 1) {
+                                      // If "Ongoing" is selected
+                                      await controller.getTaskData(apiUrl: ApiUrl.getOngoing);
+                                    } else if (controller.selectedDayIndex.value == 2) {
+                                      // If "Completed" is selected
+                                      await controller.getTaskData(apiUrl: ApiUrl.getCompleteTask);
+                                    }
+                                  },
+                                  "Are you sure you want to delete this task?"
+                              );
+
+                              if (isConfirmed ?? false) {
+                                print("✅ Task Deleted & Correct API Called!");
+                              }
+                            },
+
+
                           ),
                           const SizedBox(height: 10),
                         ],
