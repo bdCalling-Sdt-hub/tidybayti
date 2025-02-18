@@ -42,5 +42,13 @@ class ApiUrl {
       "$baseUrl/room/get-single-room?roomId=$roomId";
   static const houseCreate = "$baseUrl/room/post-house";
 
+  ///==================================✅✅Budget✅✅=======================
+  static const budgetCreate = "$baseUrl/wallet/post-budget";
+  static const getMyBudget = "$baseUrl/wallet/get-my-budget";
+  static const upDateBudget = "$baseUrl/wallet/update-budget";
+  static const deleteBudget = "$baseUrl/wallet/delete-budget";
+  static const expenseCreate = "$baseUrl/wallet/post-expense";
+  static String getSingleBudget(String budgetId) =>
+      "$baseUrl/wallet/get-budget?budgetId=$budgetId";
 
 }
