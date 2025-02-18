@@ -34,6 +34,7 @@ class ApiUrl {
 
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";
+  static const allRoom = "$baseUrl/room/get-my-room";
   static String getMyRoom(String houseId) =>
       "$baseUrl/room/get-my-room?houseId=$houseId";
   static String getSingleRoom(String roomId) =>

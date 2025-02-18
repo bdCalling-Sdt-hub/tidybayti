@@ -10,7 +10,7 @@ import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_networ
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
 class EmployeeShow extends StatelessWidget {
-  const EmployeeShow({
+  const    EmployeeShow({
     super.key,
     required this.employeeController,
   });
