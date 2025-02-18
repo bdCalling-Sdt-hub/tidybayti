@@ -178,7 +178,7 @@ class AppRoutes {
     ///===========================Schedule Screen=====================
     GetPage(name: allTaskScreen, page: () =>  AllTaskScreen()),
     GetPage(name: completedScreen, page: () => const CompletedScreen()),
-    GetPage(name: ongoingTask, page: () => const OngoingTask()),
+    GetPage(name: ongoingTask, page: () =>  OngoingTask()),
     GetPage(name: pendingTask, page: () =>  PendingTask()),
     GetPage(name: groceryTask, page: () => const GroceryTask()),
     GetPage(name: addGroceryTask, page: () => const AddGroceryTask()),

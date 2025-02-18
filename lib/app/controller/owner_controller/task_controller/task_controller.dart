@@ -113,19 +113,20 @@ class TaskController extends GetxController {
   ///==================================✅✅Get All Task✅✅=======================
 
   Rx<TaskData> taskData = TaskData().obs;
-  getPendingTask() async {
+
+  Future<void> getTaskData({required String apiUrl}) async {
     setRxRequestStatus(Status.loading);
     refresh();
+
     try {
-      final response =
-      await apiClient.get(url: ApiUrl.getPendingTask, showResult: true);
+      final response = await apiClient.get(url: apiUrl, showResult: true);
 
       if (response.statusCode == 200) {
         taskData.value = TaskData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print(
-            'taskData Result==================${taskData.value.result?.length}');
+        print('taskData Result==================${taskData.value.result?.length}');
+
         setRxRequestStatus(Status.completed);
         refresh();
       } else {
@@ -134,8 +135,10 @@ class TaskController extends GetxController {
       }
     } catch (e) {
       setRxRequestStatus(Status.error);
+      print('Error fetching data: $e');
     }
   }
+
 
 
 
@@ -144,7 +147,6 @@ class TaskController extends GetxController {
   @override
   void onInit() {
     getAllRoom();
-    getPendingTask();
     super.onInit();
   }
 }
