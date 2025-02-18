@@ -164,7 +164,7 @@ class _CreateTaskState extends State<CreateTask> {
                         children: [
                           _buildRadioButton("one_time"),
                           SizedBox(width: 20.w),
-                          _buildRadioButton("Weekly"),
+                          _buildRadioButton("weekly"),
                         ],
                       ),
                       SizedBox(height: 16.h),
