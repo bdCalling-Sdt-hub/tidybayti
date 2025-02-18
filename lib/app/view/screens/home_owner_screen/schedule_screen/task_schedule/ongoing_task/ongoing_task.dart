@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -79,7 +80,10 @@ class _OngoingTaskState extends State<OngoingTask> {
                       return const Center(
                         child: Text(
                           "No Data Found",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
                         ),
                       );
                     }
@@ -94,13 +98,28 @@ class _OngoingTaskState extends State<OngoingTask> {
                             final data =
                                 taskController.taskData.value.result?[index];
                             return CustomRoomCard(
-                                taskName: data?.taskName ?? "",
-                                assignedTo:
-                                    "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
-                                time:
-                                    '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                                onInfoPressed: () {},
-                                onDeletePressed: () {});
+                              taskName: data?.taskName ?? "",
+                              assignedTo:
+                                  "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
+                              time:
+                                  '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
+                              onInfoPressed: () {},
+                              onDeletePressed: () async {
+                                bool? isConfirmed =
+                                    await GlobalAlert.showDeleteDialog(context,
+                                        () async {
+                                  await taskController.removeTask(
+                                      taskId: data?.id ?? "");
+
+                                  await taskController.getTaskData(
+                                      apiUrl: ApiUrl.getPendingTask);
+                                }, "Remove Your Pending Task");
+
+                                if (isConfirmed ?? false) {
+                                  print("Task Deleted & Refreshed!");
+                                }
+                              },
+                            );
                           }),
                         )
                       ],

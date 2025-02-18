@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -22,13 +23,13 @@ class CompletedScreen extends StatefulWidget {
 class _PendingTaskState extends State<CompletedScreen> {
   final TaskController taskController = Get.find<TaskController>();
 
-
   @override
   void initState() {
     taskController.getTaskData(apiUrl: ApiUrl.getCompleteTask);
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +64,15 @@ class _PendingTaskState extends State<CompletedScreen> {
 
                   case Status.internetError:
                     return NoInternetScreen(onTap: () {
-                      taskController.getTaskData(apiUrl: ApiUrl.getCompleteTask);
+                      taskController.getTaskData(
+                          apiUrl: ApiUrl.getCompleteTask);
                     });
 
                   case Status.error:
                     return GeneralErrorScreen(
                       onTap: () {
-                        taskController.getTaskData(apiUrl: ApiUrl.getCompleteTask);
+                        taskController.getTaskData(
+                            apiUrl: ApiUrl.getCompleteTask);
                       },
                     );
 
@@ -79,7 +82,10 @@ class _PendingTaskState extends State<CompletedScreen> {
                       return const Center(
                         child: Text(
                           "No Data Found",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
                         ),
                       );
                     }
@@ -89,18 +95,27 @@ class _PendingTaskState extends State<CompletedScreen> {
                         Column(
                           children: List.generate(
                               taskController.taskData.value.result?.length ?? 0,
-                                  (index) {
-                                final data =
+                              (index) {
+                            final data =
                                 taskController.taskData.value.result?[index];
-                                return CustomRoomCard(
-                                    taskName: data?.taskName ?? "",
-                                    assignedTo:
+                            return CustomRoomCard(
+                                taskName: data?.taskName ?? "",
+                                assignedTo:
                                     "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
-                                    time:
+                                time:
                                     '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                                    onInfoPressed: () {},
-                                    onDeletePressed: () {});
-                              }),
+                                onInfoPressed: () {},
+                                onDeletePressed: () {
+                                  GlobalAlert.showDeleteDialog(context, () {
+                                    taskController
+                                        .removeTask(taskId: data?.id ?? "")
+                                        .then((_) {
+                                      taskController.getTaskData(
+                                          apiUrl: ApiUrl.getPendingTask);
+                                    });
+                                  }, "Remove Your Pending Task");
+                                });
+                          }),
                         )
                       ],
                     );
