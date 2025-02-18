@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
@@ -11,6 +14,9 @@ class AllTaskScreen extends StatelessWidget {
   AllTaskScreen({super.key});
 
   final TaskController controller = Get.find<TaskController>();
+
+  // Task Status Tabs
+  final List<String> taskStatuses = ["Pending", "Ongoing", "Completed"];
 
   @override
   Widget build(BuildContext context) {
@@ -35,19 +41,26 @@ class AllTaskScreen extends StatelessWidget {
                 onBack: () => Get.back(),
               ),
 
-              ///=============================== Task Filter ========================
+              ///=============================== Task Status Tabs ========================
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(controller.dayName.length, (index) {
+                    children: List.generate(taskStatuses.length, (index) {
                       return GestureDetector(
                         onTap: () {
+                          // ✅ Call API based on selected status
                           controller.selectedDayIndex.value = index;
+                          if (index == 0) {
+                            controller.getTaskData(apiUrl: ApiUrl.getPendingTask);
+                          } else if (index == 1) {
+                            controller.getTaskData(apiUrl: ApiUrl.getOngoing);
+                          } else if (index == 2) {
+                            controller.getTaskData(apiUrl: ApiUrl.getCompleteTask);
+                          }
                         },
                         child: Obx(() => Container(
-
                           decoration: BoxDecoration(
                             color: controller.selectedDayIndex.value == index
                                 ? AppColors.blue900
@@ -62,7 +75,7 @@ class AllTaskScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(right: 10),
                           child: CustomText(
-                            text: controller.dayName[index],
+                            text: taskStatuses[index],
                             color: controller.selectedDayIndex.value == index
                                 ? Colors.white
                                 : AppColors.blue900,
@@ -76,22 +89,45 @@ class AllTaskScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-                   const Divider(),
+              const Divider(),
               const SizedBox(height: 20),
+
               ///=============================== Task List ========================
               Expanded(
                 child: Obx(() {
+                  if (controller.rxRequestStatus.value == Status.loading) {
+                    return const CustomLoader(); // ✅ Show Loader
+                  }
+                  if (controller.rxRequestStatus.value == Status.internetError) {
+                    return const Center(child: CustomText(text: "No Internet Connection", fontSize: 16));
+                  }
+                  if (controller.rxRequestStatus.value == Status.error) {
+                    return const Center(child: CustomText(text: "Something went wrong", fontSize: 16));
+                  }
+                  if (controller.taskData.value.result == null ||
+                      controller.taskData.value.result!.isEmpty) {
+                    return const Center(
+                      child: CustomText(
+                        text: "No Tasks Found",
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                      ),
+                    );
+                  }
+
                   return ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemCount: 4,
+                    itemCount: controller.taskData.value.result?.length ?? 0,
                     itemBuilder: (context, index) {
-                      // var task = tasks[index];
+                      final task = controller.taskData.value.result![index];
                       return Column(
                         children: [
                           CustomRoomCard(
-                            taskName:'gg',
-                            assignedTo:"",
-                            time: "gg",
+                            taskName: task.taskName ?? "",
+                            assignedTo:
+                            "${task.assignedTo?.firstName ?? ""} ${task.assignedTo?.lastName ?? ""}",
+                            time: "${task.startDateStr ?? ""} To ${task.endDateStr ?? ""}",
                             onInfoPressed: () {},
                             onDeletePressed: () {},
                           ),
