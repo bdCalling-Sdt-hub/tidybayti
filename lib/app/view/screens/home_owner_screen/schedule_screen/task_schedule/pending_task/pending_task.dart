@@ -103,7 +103,9 @@ class _PendingTaskState extends State<PendingTask> {
                                     "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
                                 time:
                                     '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                                onInfoPressed: () {},
+                                onInfoPressed: () {
+                                  taskController.getSingleTask(taskId: data?.id??"");
+                                },
                               onDeletePressed: () {
                                 GlobalAlert.showDeleteDialog(context, () {
                                   taskController.removeTask(taskId: data?.id ?? "").then((_) {
