@@ -300,42 +300,7 @@ class AddEmployeeController extends GetxController {
   }
 
 
-  ///=============================================account delete==========================
-  RxBool isDeleteLoading = false.obs;
 
-  deleteEmployee({required String userId, required String authId}) async {
-    try {
-      isDeleteLoading.value = true;
-
-      var body = {
-        "userId": userId,
-        "authId": authId
-      };
-
-      var response = await apiClient.delete(
-        isBasic: false,
-        showResult: true,
-        body: body,
-        url: ApiUrl.employeeDelete,
-      );
-
-
-
-      if (response == 200) {
-        toastMessage(message: response?["message"]);
-        getEmployee();
-      } else if (response == 404) {
-        toastMessage(message: response?["message"]);
-      } else {
-        // ApiChecker.checkApi(response);
-      }
-    } catch (e) {
-      log.e("❌ Error in deleteEmployee: $e");
-      toastMessage(message: "An error occurred, please try again.");
-    } finally {
-      isDeleteLoading.value = false;
-    }
-  }
 
 
 

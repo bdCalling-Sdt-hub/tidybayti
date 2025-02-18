@@ -36,7 +36,7 @@ class TaskController extends GetxController {
   }
 
 
-  ///==================================✅✅Forget Method✅✅=======================
+  ///==================================✅✅Add Task Method✅✅=======================
 
   RxBool isTaskLoading = false.obs;
 
@@ -103,12 +103,7 @@ class TaskController extends GetxController {
 
 
 
-  //ALl task
-  final List<String> dayName = [
-    'Completed Tasks',
-    'Ongoing Tasks',
-    'Pending Tasks',
-  ];
+
 
   ///==================================✅✅Get All Task✅✅=======================
 
@@ -139,8 +134,29 @@ class TaskController extends GetxController {
     }
   }
 
+  ///==================================✅✅Remove Task✅✅=======================
+  RxBool isRemoveTask = false.obs;
 
+  removeTask({required String taskId}) async {
+    isRemoveTask.value = true;
+    var body = {
+      "taskId": taskId.toString()
+    };
 
+    var response = await apiClient.delete(body: body,
+        url: ApiUrl.taskDelete);
+    if (response.statusCode == 200) {
+
+      toastMessage(message: response.body["message"]);
+      Get.back();
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveTask.value = false;
+    isRemoveTask.refresh();
+  }
 
 
 

@@ -22,13 +22,13 @@ class PendingTask extends StatefulWidget {
 class _PendingTaskState extends State<PendingTask> {
   final TaskController taskController = Get.find<TaskController>();
 
-
   @override
   void initState() {
     taskController.getTaskData(apiUrl: ApiUrl.getPendingTask);
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +69,8 @@ class _PendingTaskState extends State<PendingTask> {
                   case Status.error:
                     return GeneralErrorScreen(
                       onTap: () {
-                        taskController.getTaskData(apiUrl: ApiUrl.getPendingTask);
+                        taskController.getTaskData(
+                            apiUrl: ApiUrl.getPendingTask);
                       },
                     );
 
@@ -79,7 +80,10 @@ class _PendingTaskState extends State<PendingTask> {
                       return const Center(
                         child: Text(
                           "No Data Found",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black54),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
                         ),
                       );
                     }
@@ -99,7 +103,10 @@ class _PendingTaskState extends State<PendingTask> {
                                 time:
                                     '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
                                 onInfoPressed: () {},
-                                onDeletePressed: () {});
+                                onDeletePressed: () {
+                                  taskController.removeTask(
+                                      taskId: data?.id ?? "");
+                                });
                           }),
                         )
                       ],
