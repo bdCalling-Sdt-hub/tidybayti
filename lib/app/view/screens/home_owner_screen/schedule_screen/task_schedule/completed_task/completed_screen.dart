@@ -104,7 +104,18 @@ class _PendingTaskState extends State<CompletedScreen> {
                                     "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
                                 time:
                                     '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                                onInfoPressed: () {},
+                                onInfoPressed: () {
+                                  GlobalAlert.singleTaskDialog(
+                                    context,
+                                    data?.taskName ?? "",
+                                    "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                                    data?.recurrence ?? "",
+                                    data!.startDateStr.toString(),
+                                    data.startTimeStr??"",
+                                    data.endDateStr.toString(),
+                                    data.endTimeStr??"",
+                                  );
+                                },
                                 onDeletePressed: () {
                                   GlobalAlert.showDeleteDialog(context, () {
                                     taskController

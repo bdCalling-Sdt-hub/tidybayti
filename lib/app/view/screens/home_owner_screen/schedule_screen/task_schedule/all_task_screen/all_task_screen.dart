@@ -129,7 +129,18 @@ class AllTaskScreen extends StatelessWidget {
                             assignedTo:
                             "${task.assignedTo?.firstName ?? ""} ${task.assignedTo?.lastName ?? ""}",
                             time: "${task.startDateStr ?? ""} To ${task.endDateStr ?? ""}",
-                            onInfoPressed: () {},
+                            onInfoPressed: () {
+                              GlobalAlert.singleTaskDialog(
+                                context,
+                                task.taskName ?? "",
+                                "${task.assignedTo?.firstName ?? ""}${task.assignedTo?.lastName ?? ""}",
+                                task.recurrence ?? "",
+                                task.startDateStr.toString(),
+                                task.startTimeStr??"",
+                                task.endDateStr.toString(),
+                                task.endTimeStr??"",
+                              );
+                            },
                             onDeletePressed: () async {
                               bool? isConfirmed = await GlobalAlert.showDeleteDialog(
                                   context,

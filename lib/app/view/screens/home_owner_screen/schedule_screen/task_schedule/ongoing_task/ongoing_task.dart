@@ -103,7 +103,18 @@ class _OngoingTaskState extends State<OngoingTask> {
                                   "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
                               time:
                                   '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                              onInfoPressed: () {},
+                              onInfoPressed: () {
+                                GlobalAlert.singleTaskDialog(
+                                  context,
+                                  data?.taskName ?? "",
+                                  "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                                  data?.recurrence ?? "",
+                                  data!.startDateStr.toString(),
+                                  data.startTimeStr??"",
+                                  data.endDateStr.toString(),
+                                  data.endTimeStr??"",
+                                );
+                              },
                               onDeletePressed: () async {
                                 bool? isConfirmed =
                                     await GlobalAlert.showDeleteDialog(context,

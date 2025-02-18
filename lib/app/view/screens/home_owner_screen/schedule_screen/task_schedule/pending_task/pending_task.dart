@@ -98,18 +98,32 @@ class _PendingTaskState extends State<PendingTask> {
                             final data =
                                 taskController.taskData.value.result?[index];
                             return CustomRoomCard(
-                                taskName: data?.taskName ?? "",
-                                assignedTo:
-                                    "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
-                                time:
-                                    '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
-                                onInfoPressed: () {
-                                  taskController.getSingleTask(taskId: data?.id??"");
-                                },
+                              taskName: data?.taskName ?? "",
+                              assignedTo:
+                                  "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
+                              time:
+                                  '${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}',
+                              onInfoPressed: () {
+                                GlobalAlert.singleTaskDialog(
+                                  context,
+                                  data?.taskName ?? "",
+                                  "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                                  data?.recurrence ?? "",
+                                  data!.startDateStr.toString(),
+                                  data.startTimeStr??"",
+                                  data.endDateStr.toString(),
+                                  data.endTimeStr??"",
+                                );
+
+                                // taskController.getSingleTask(taskId: data?.id??"");
+                              },
                               onDeletePressed: () {
                                 GlobalAlert.showDeleteDialog(context, () {
-                                  taskController.removeTask(taskId: data?.id ?? "").then((_) {
-                                    taskController.getTaskData(apiUrl: ApiUrl.getPendingTask);
+                                  taskController
+                                      .removeTask(taskId: data?.id ?? "")
+                                      .then((_) {
+                                    taskController.getTaskData(
+                                        apiUrl: ApiUrl.getPendingTask);
                                   });
                                 }, "Remove Your Pending Task");
                               },

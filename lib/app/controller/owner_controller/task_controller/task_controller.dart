@@ -150,33 +150,33 @@ class TaskController extends GetxController {
 
   ///==================================✅✅Single Task✅✅=======================
 
-  Rx<TaskData> taskSingleData = TaskData().obs;
-
-  Future<void> getSingleTask({required String taskId}) async {
-    setRxRequestStatus(Status.loading);
-    refresh();
-
-    try {
-      final response =
-          await apiClient.get(url: ApiUrl.taskSingle(taskId), showResult: true);
-
-      if (response.statusCode == 200) {
-        taskSingleData.value = TaskData.fromJson(response.body["data"]);
-
-        print('StatusCode==================${response.statusCode}');
-
-
-        setRxRequestStatus(Status.completed);
-        refresh();
-      } else {
-        setRxRequestStatus(Status.error);
-        ApiChecker.checkApi(response);
-      }
-    } catch (e) {
-      setRxRequestStatus(Status.error);
-      print('Error fetching data: $e');
-    }
-  }
+  // Rx<TaskData> taskSingleData = TaskData().obs;
+  //
+  // Future<void> getSingleTask({required String taskId}) async {
+  //   setRxRequestStatus(Status.loading);
+  //   refresh();
+  //
+  //   try {
+  //     final response =
+  //         await apiClient.get(url: ApiUrl.taskSingle(taskId), showResult: true);
+  //
+  //     if (response.statusCode == 200) {
+  //       taskSingleData.value = TaskData.fromJson(response.body["data"]);
+  //
+  //       print('StatusCode==================${response.statusCode}');
+  //
+  //
+  //       setRxRequestStatus(Status.completed);
+  //       refresh();
+  //     } else {
+  //       setRxRequestStatus(Status.error);
+  //       ApiChecker.checkApi(response);
+  //     }
+  //   } catch (e) {
+  //     setRxRequestStatus(Status.error);
+  //     print('Error fetching data: $e');
+  //   }
+  // }
 
   @override
   void onInit() {
