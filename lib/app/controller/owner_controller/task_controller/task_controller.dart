@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
+import 'package:tidybayte/app/data/model/owner_model/all_room_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/task_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 class TaskController extends GetxController {
   ApiClient apiClient = serviceLocator();
+
   // DBHelper dbHelper = serviceLocator();
   final taskTitleController = TextEditingController();
   final startDateController = TextEditingController();
@@ -16,6 +20,12 @@ class TaskController extends GetxController {
   final endTimeController = TextEditingController();
   final taskDetailsController = TextEditingController();
   final additionalController = TextEditingController();
+  final recurrenceController = TextEditingController();
+  late String assignedId = "";
+  late String roomId = "";
+
+  void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  final rxRequestStatus = Status.loading.obs;
 
   clearField() {
     taskTitleController.clear();
@@ -27,29 +37,28 @@ class TaskController extends GetxController {
     additionalController.clear();
   }
 
-
-  ///==================================✅✅Forget Method✅✅=======================
+  ///==================================✅✅Add Task Method✅✅=======================
 
   RxBool isTaskLoading = false.obs;
 
   addTask() async {
     isTaskLoading.value = true;
     var body = {
-      "assignedTo": "67b0120aafe2f88c3a6f142e",
-      "roomId": "67b3014a33e1f91f895dad60",
-      "taskName": "Desk Cleaning",
-      "recurrence": "weekly",
-      "startDateStr": "09/16/2024",
-      "startTimeStr": "1:30 AM",
-      "endDateStr": "09/16/2024",
-      "endTimeStr": "01:50 AM",
-      "taskDetails": "Vacuum and mop the living room and bedrooms.",
-      "additionalMessage": "Use the new cleaning supplies under the sink."
+      "assignedTo": assignedId,
+      "roomId": roomId,
+      "taskName": taskTitleController.text,
+      "recurrence": recurrenceController.text,
+      "startDateStr": startDateController.text,
+      "startTimeStr": startTimeController.text,
+      "endDateStr": endDateController.text,
+      "endTimeStr": endTimeController.text,
+      "taskDetails": taskDetailsController.text,
+      "additionalMessage": additionalController.text
     };
 
-    var response = await apiClient.post(body: body,
-        url: ApiUrl.addTask);
+    var response = await apiClient.post(body: body, url: ApiUrl.addTask);
     if (response.statusCode == 200) {
+      clearField();
       toastMessage(message: response.body["message"]);
       Get.back();
     } else if (response.statusCode == 400) {
@@ -61,30 +70,117 @@ class TaskController extends GetxController {
     isTaskLoading.refresh();
   }
 
+  var selectedDayIndex = Rxn<int>();
 
-  var selectedDayIndex = Rxn<int>(); // Nullable RxInt
+  ///==================================✅✅Get All Room✅✅=======================
 
-  final List<String> dayName = [
-    'Completed Tasks',
-    'Ongoing Tasks',
-    'Pending Tasks',
-  ];
+  Rx<RoomList> roomModel = RoomList().obs;
 
-  final List<Map<String, String>> allTasks = [
-    {"taskName": "Clean Car", "assignedTo": "Annette Black", "time": "10 Aug, 2024", "status": "Completed"},
-    {"taskName": "Wash Dishes", "assignedTo": "John Doe", "time": "11 Aug, 2024", "status": "Ongoing"},
-    {"taskName": "Mop Floor", "assignedTo": "Alice Smith", "time": "12 Aug, 2024", "status": "Pending"},
-    {"taskName": "Laundry", "assignedTo": "Robert Brown", "time": "13 Aug, 2024", "status": "Completed"},
-    {"taskName": "Grocery Shopping", "assignedTo": "Emily Johnson", "time": "14 Aug, 2024", "status": "Ongoing"},
-    {"taskName": "Cook Dinner", "assignedTo": "David Wilson", "time": "15 Aug, 2024", "status": "Pending"},
-  ];
+  getAllRoom() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response =
+          await apiClient.get(url: ApiUrl.allRoom, showResult: true);
 
-  List<Map<String, String>> get filteredTasks {
-    if (selectedDayIndex.value == null) {
-      return [];
+      if (response.statusCode == 200) {
+        roomModel.value = RoomList.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print('Room Result==================${roomModel.value.rooms?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
     }
-    String statusFilter = dayName[selectedDayIndex.value!].split(" ")[0]; // "Completed" / "Ongoing" / "Pending"
-    return allTasks.where((task) => task["status"] == statusFilter).toList();
   }
 
+  ///==================================✅✅Get All Task✅✅=======================
+
+  Rx<TaskData> taskData = TaskData().obs;
+
+  Future<void> getTaskData({required String apiUrl}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+
+    try {
+      final response = await apiClient.get(url: apiUrl, showResult: true);
+
+      if (response.statusCode == 200) {
+        taskData.value = TaskData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print(
+            'taskData Result==================${taskData.value.result?.length}');
+
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('Error fetching data: $e');
+    }
+  }
+
+  ///==================================✅✅Remove Task✅✅=======================
+  RxBool isRemoveTask = false.obs;
+
+  removeTask({required String taskId}) async {
+    isRemoveTask.value = true;
+    var body = {"taskId": taskId.toString()};
+
+    var response = await apiClient.delete(body: body, url: ApiUrl.taskDelete);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveTask.value = false;
+    isRemoveTask.refresh();
+  }
+
+  ///==================================✅✅Single Task✅✅=======================
+
+  // Rx<TaskData> taskSingleData = TaskData().obs;
+  //
+  // Future<void> getSingleTask({required String taskId}) async {
+  //   setRxRequestStatus(Status.loading);
+  //   refresh();
+  //
+  //   try {
+  //     final response =
+  //         await apiClient.get(url: ApiUrl.taskSingle(taskId), showResult: true);
+  //
+  //     if (response.statusCode == 200) {
+  //       taskSingleData.value = TaskData.fromJson(response.body["data"]);
+  //
+  //       print('StatusCode==================${response.statusCode}');
+  //
+  //
+  //       setRxRequestStatus(Status.completed);
+  //       refresh();
+  //     } else {
+  //       setRxRequestStatus(Status.error);
+  //       ApiChecker.checkApi(response);
+  //     }
+  //   } catch (e) {
+  //     setRxRequestStatus(Status.error);
+  //     print('Error fetching data: $e');
+  //   }
+  // }
+
+  @override
+  void onInit() {
+    getAllRoom();
+    super.onInit();
+  }
 }

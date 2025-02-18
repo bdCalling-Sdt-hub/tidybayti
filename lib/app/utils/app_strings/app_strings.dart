@@ -104,6 +104,13 @@ class AppStrings {
   static const String addEmployee   = 'Add employee';
   static const String employeeDetails   = 'Employee details';
   static const String taskDetails   = 'Task details';
+  static const String task   = 'Task :';
+  static const String assignToColon= 'Assign to:   ';
+  static const String recurrenceColon= 'Recurrence: ';
+  static const String date= 'Date:';
+  static const String time= 'Time: ';
+  static const String taskDetailsColon= 'Task details: ';
+  static const String additionalMessageColon= 'Additionsal message:  ';
   static const String editEmployeeDetails   = 'Edit employee details';
   static const String employeeName   = 'Employee name';
   static const String designation   = 'Designation';
@@ -150,6 +157,7 @@ class AppStrings {
   ///============================Schedule Overview=======================
   static const String workSchedule     ='Work Schedule';
   static const String taskSchedule      ='Task Schedule';
+  static const String taskScheduleDetails      ='Task schedule details';
   static const String allTasks      ='All tasks';
   static const String completedTasks      ='Completed tasks';
   static const String ongoingTask      ='Ongoing task';

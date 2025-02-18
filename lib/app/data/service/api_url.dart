@@ -27,18 +27,28 @@ class ApiUrl {
 ///==================================✅✅Task✅✅=======================
   static const addTask = "$baseUrl/task/post-task";
   static const getCompleteTask = "$baseUrl/task/get-my-task?status=completed";
-  static const getPending = "$baseUrl/task/get-my-task?status=pending";
+  static const getPendingTask = "$baseUrl/task/get-my-task?status=pending";
   static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
   static const taskDelete= "$baseUrl/task/delete-task";
-
+  static String taskSingle(String taskID) =>
+      "$baseUrl/task/get-task?taskId=$taskID";
 
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";
+  static const allRoom = "$baseUrl/room/get-my-room";
   static String getMyRoom(String houseId) =>
       "$baseUrl/room/get-my-room?houseId=$houseId";
   static String getSingleRoom(String roomId) =>
       "$baseUrl/room/get-single-room?roomId=$roomId";
   static const houseCreate = "$baseUrl/room/post-house";
 
+  ///==================================✅✅Budget✅✅=======================
+  static const budgetCreate = "$baseUrl/wallet/post-budget";
+  static const getMyBudget = "$baseUrl/wallet/get-my-budget";
+  static const upDateBudget = "$baseUrl/wallet/update-budget";
+  static const deleteBudget = "$baseUrl/wallet/delete-budget";
+  static const expenseCreate = "$baseUrl/wallet/post-expense";
+  static String getSingleBudget(String budgetId) =>
+      "$baseUrl/wallet/get-budget?budgetId=$budgetId";
 
 }
