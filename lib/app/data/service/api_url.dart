@@ -33,6 +33,9 @@ class ApiUrl {
   static String taskSingle(String taskID) =>
       "$baseUrl/task/get-task?taskId=$taskID";
 
+  static String roomTaskSingle(String roomId) =>
+      "$baseUrl/task/get-all-task?room=$roomId";
+
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";
   static const myAllHouse = "$baseUrl/room/get-my-houses";

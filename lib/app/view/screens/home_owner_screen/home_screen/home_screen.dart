@@ -72,12 +72,13 @@ class _HouseTypeScreenState extends State<HomeScreen> {
               children: [
                 ///==================================✅✅House Add✅✅=======================
                 Obx(
-                      () => Column(
+                  () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InkWell(
                         onTap: () {
-                          homeController.isExpanded.value = !homeController.isExpanded.value;
+                          homeController.isExpanded.value =
+                              !homeController.isExpanded.value;
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,7 +99,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed(AppRoutes.employeeNotificationScreen);
+                                Get.toNamed(
+                                    AppRoutes.employeeNotificationScreen);
                               },
                               child: const Icon(
                                 Icons.notification_add,
@@ -108,22 +110,23 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       if (homeController.isExpanded.value) ...[
                         SizedBox(
-                          height: 150, // ✅ Dropdown Height Increased for "Add House" Option
+                          height: 150,
+                          // ✅ Dropdown Height Increased for "Add House" Option
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 ListTile(
                                   title: GestureDetector(
                                     onTap: () {
-                                      Get.toNamed(AppRoutes.houseInformationScreen); // ✅ Navigate to Add House Screen
+                                      Get.toNamed(AppRoutes
+                                          .houseInformationScreen); // ✅ Navigate to Add House Screen
                                     },
                                     child: const Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Icon(Icons.add, color: Colors.blue),
                                         SizedBox(width: 8),
@@ -140,21 +143,28 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                 ),
 
                                 /// ✅ Show House List (if available)
-                                if (homeController.myHouseData.value.houses != null &&
-                                    homeController.myHouseData.value.houses!.isNotEmpty) ...[
-                                  ...homeController.myHouseData.value.houses!.map((house) {
+                                if (homeController.myHouseData.value.houses !=
+                                        null &&
+                                    homeController.myHouseData.value.houses!
+                                        .isNotEmpty) ...[
+                                  ...homeController.myHouseData.value.houses!
+                                      .map((house) {
                                     return ListTile(
                                       title: GestureDetector(
                                         onTap: () {
                                           /// ✅ Set Selected House ID & Name
-                                          homeController.selectedHouseId.value = house.id ?? '';
-                                          homeController.selectedHouseName.value = house.name ?? 'No Name';
+                                          homeController.selectedHouseId.value =
+                                              house.id ?? '';
+                                          homeController.selectedHouseName
+                                              .value = house.name ?? 'No Name';
 
                                           /// ✅ Fetch Rooms for Selected House
                                           homeController.getHouseRoom(
-                                              houseId: homeController.selectedHouseId.value);
+                                              houseId: homeController
+                                                  .selectedHouseId.value);
 
-                                          homeController.isExpanded.value = false; // ✅ Close Dropdown
+                                          homeController.isExpanded.value =
+                                              false; // ✅ Close Dropdown
                                         },
                                         child: CustomText(
                                           decoration: TextDecoration.underline,
@@ -182,7 +192,6 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-
 
                 SizedBox(height: 50.h),
 
@@ -234,8 +243,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                             if (index == 0) {
                               return GestureDetector(
                                 onTap: () {
-
-                                  if (homeController.selectedHouseId.value.isEmpty) {
+                                  if (homeController
+                                      .selectedHouseId.value.isEmpty) {
                                     /// ✅ Show a message if no house is selected
                                     Get.snackbar(
                                       "No House Selected",
@@ -291,7 +300,11 @@ class _HouseTypeScreenState extends State<HomeScreen> {
 
                             return GestureDetector(
                               onTap: () {
-                                Get.toNamed(AppRoutes.roomDetailsScreen);
+                                Get.toNamed(AppRoutes.roomDetailsScreen,
+                                    arguments: [
+                                      data.id ?? "",
+                                      data.name ?? ""
+                                    ]);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -406,8 +419,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                     onTap: () async {
                       if (homeController.roomNameController.text.isNotEmpty) {
                         if (homeController.rooms.isEmpty) {
-                          File roomImageFile = await HouseAdd.getFileFromAsset(
-                              selectedIconPath);
+                          File roomImageFile =
+                              await HouseAdd.getFileFromAsset(selectedIconPath);
                           HouseAdd.roomAdd(
                             context: context,
                             houseId: homeController.selectedHouseId.toString(),

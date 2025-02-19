@@ -7,11 +7,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/get_room_model.dart';
 import 'package:tidybayte/app/data/model/owner_model/my_house_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/single_room_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 
 class HomeController extends GetxController {
@@ -19,12 +19,7 @@ class HomeController extends GetxController {
   final houseNameController = TextEditingController();
   final roomNameController = TextEditingController();
 
-  /// ✅ List of Available Icons
-  List<String> icons = [
-    AppIcons.villa,
-    AppIcons.appartMent,
-    AppIcons.addRoom,
-  ];
+
 
   String selectedIconPath =
       AppImages.apartMent;
@@ -77,18 +72,7 @@ class HomeController extends GetxController {
     isRoomLoading.value = value;
   }
 
-  Rx<File?> profileImage = Rx<File?>(null);
 
-  Future<void> pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      profileImage.value = File(pickedFile.path);
-      print("✅ Selected Image: ${profileImage.value!.path}");
-    } else {
-      print("❌ No Image Selected");
-    }
-  }
 
   ///==================================✅✅get House Room✅✅=======================
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
@@ -146,6 +130,35 @@ class HomeController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
+  ///==================================✅✅SingleRoom Data✅✅=======================
+
+  Rx<SingleRoomModels> singleRoomModels = SingleRoomModels().obs;
+
+  getSingleRoomTask({required String roomId}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response =
+      await apiClient.get(url: ApiUrl.roomTaskSingle(roomId), showResult: true);
+
+      if (response.statusCode == 200) {
+        singleRoomModels.value = SingleRoomModels.fromJson(response.body["data"]);
+
+        print('statusCode==================${response.statusCode}');
+        print(
+            'singleRoomModels Length==================${singleRoomModels.value.result?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
+
 
   @override
   void onInit() {

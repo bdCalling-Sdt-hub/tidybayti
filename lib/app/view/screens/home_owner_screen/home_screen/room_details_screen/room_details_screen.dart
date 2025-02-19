@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-class RoomDetailsScreen extends StatelessWidget {
+
+class RoomDetailsScreen extends StatefulWidget {
   const RoomDetailsScreen({super.key});
 
+  @override
+  State<RoomDetailsScreen> createState() => _RoomDetailsScreenState();
+}
+
+class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
+  final HomeController homeController = Get.find<HomeController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      homeController.getSingleRoomTask(roomId: roomId);
+
+    });
+    super.initState();
+  }
+
+
+  final String roomId = Get.arguments[0];
+  final String roomName = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +50,11 @@ class RoomDetailsScreen extends StatelessWidget {
         ),
         child: SafeArea(
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///=============================== Menu Title ========================
+              ///=============================== roomName Title ========================
               CustomMenuAppbar(
                 isEdit: true,
-                title: 'Bedroom',
+                title: roomName,
                 onBack: () {
                   Get.back();
                 },
@@ -162,14 +177,13 @@ class TaskInfoDialog {
       barrierDismissible: false, // Prevent dismissing by tapping outside
       builder: (BuildContext context) {
         return AlertDialog(
-
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+            borderRadius: BorderRadius.all(
+                Radius.circular(5.0)), // Adjust the radius as needed
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-
               IconButton(
                 onPressed: () {
                   Get.back();
@@ -199,7 +213,9 @@ class TaskInfoDialog {
                   ),
                 ],
               ),
-              SizedBox(height: 16,),
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -217,7 +233,9 @@ class TaskInfoDialog {
                   ),
                 ],
               ),
-              SizedBox(height: 16,),
+              SizedBox(
+                height: 16,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -267,7 +285,8 @@ void showEditRoomDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+          borderRadius: BorderRadius.all(
+              Radius.circular(5.0)), // Adjust the radius as needed
         ),
         title: const CustomText(
           text: 'Edit New Room',
@@ -279,7 +298,9 @@ void showEditRoomDialog(BuildContext context) {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 40.h,),
+              SizedBox(
+                height: 40.h,
+              ),
               const CustomTextField(
                 fillColor: AppColors.blue100,
                 hintText: 'Room Name',
