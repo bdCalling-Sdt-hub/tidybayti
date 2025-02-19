@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
+import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
@@ -62,6 +63,7 @@ class HouseAdd {
       homeController.setLoading(false);
 
       if (response.statusCode == 200) {
+        Get.toNamed(AppRoutes.homeScreen);
         toastMessage(message: "✅ Room created successfully!");
         print("✅ Room created successfully");
         print(responseData);

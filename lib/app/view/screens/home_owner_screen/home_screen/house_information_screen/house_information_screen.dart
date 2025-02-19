@@ -11,9 +11,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
+
 class HouseInformationScreen extends StatelessWidget {
   HouseInformationScreen({super.key});
 
@@ -23,39 +25,44 @@ class HouseInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: const HouseInformationBody(),
-      floatingActionButton: CustomButton(
-        width: MediaQuery.of(context).size.width / 1.1,
-        onTap: () async {
-          /// ✅ Ensure a room is added before saving
-          if (homeController.rooms.isEmpty) {
-            toastMessage(message: "❌ Please add a room before saving.");
-            return;
-          }
+      floatingActionButton: Obx(() {
+        /// ✅ Fix: Wrap `isLoading` check inside `Obx`
+        if (homeController.isLoading.value) {
+          return const CustomLoader(); // Show loader when loading
+        }
 
-          /// ✅ Get the first room
-          var room = homeController.rooms[0];
+        return CustomButton(
+          width: MediaQuery.of(context).size.width / 1.1,
+          onTap: () async {
+            /// ✅ Ensure a room is added before saving
+            if (homeController.rooms.isEmpty) {
+              toastMessage(message: "❌ Please add a room before saving.");
+              return;
+            }
 
-          /// ✅ Convert icon path to File
-          File roomIconFile = File(room['icon']);
+            /// ✅ Get the first room
+            var room = homeController.rooms[0];
 
-          /// ✅ Send data to API
-          HouseAdd.houseRoomAdd(
-            context: context,
-            houseName: homeController.houseNameController.text,
-            roomName: room['name'],
-            roomImage: roomIconFile, // ✅ Send File
-          );
-        },
-        fillColor: Colors.white,
-        title: AppStrings.save.tr,
-      ),
+            /// ✅ Convert icon path to File
+            File roomIconFile = File(room['icon']);
+
+            /// ✅ Send data to API
+            homeController.setLoading(true); // Start loading
+            await HouseAdd.houseRoomAdd(
+              context: context,
+              houseName: homeController.houseNameController.text,
+              roomName: room['name'],
+              roomImage: roomIconFile, // ✅ Send File
+            );
+            homeController.setLoading(false); // Stop loading
+          },
+          fillColor: Colors.white,
+          title: AppStrings.save.tr,
+        );
+      }),
     );
   }
 }
-
-
-
-
 
 class HouseInformationBody extends StatefulWidget {
   const HouseInformationBody({super.key});
@@ -106,7 +113,8 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                         children: [
                           CustomImage(imageSrc: selectedIcon),
                           const SizedBox(width: 10),
-                          const Text('Select Icon', style: TextStyle(color: AppColors.dark500)),
+                          const Text('Select Icon',
+                              style: TextStyle(color: AppColors.dark500)),
                         ],
                       ),
                     ),
@@ -118,7 +126,8 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                     onTap: () {
                       if (roomController.text.isNotEmpty) {
                         if (homeController.rooms.isEmpty) {
-                          homeController.addRoom(roomController.text, selectedIcon);
+                          homeController.addRoom(
+                              roomController.text, selectedIcon);
                           Get.back();
                         }
                       }
@@ -144,14 +153,16 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
   }
 
   /// ✅ Select Icon Dialog
-  void showIconSelection(BuildContext context, Function(String) onIconSelected) {
+  void showIconSelection(
+      BuildContext context, Function(String) onIconSelected) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Select an Icon'),
           content: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+            constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5),
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: homeController.icons.length,
@@ -213,22 +224,22 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                   Obx(() {
                     return homeController.rooms.isEmpty
                         ? GestureDetector(
-                      onTap: () {
-                        showDialoge(context);
-                      },
-                      child: Row(
-                        children: [
-                          const CustomImage(imageSrc: AppIcons.addRoom),
-                          CustomText(
-                            left: 10,
-                            text: "Add Room".tr,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                            color: AppColors.dark500,
-                          ),
-                        ],
-                      ),
-                    )
+                            onTap: () {
+                              showDialoge(context);
+                            },
+                            child: Row(
+                              children: [
+                                const CustomImage(imageSrc: AppIcons.addRoom),
+                                CustomText(
+                                  left: 10,
+                                  text: "Add Room".tr,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 20,
+                                  color: AppColors.dark500,
+                                ),
+                              ],
+                            ),
+                          )
                         : Container(); // Hide button after adding a room
                   }),
                   SizedBox(height: 10.h),
@@ -236,25 +247,25 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                   /// ✅ Display Room (Only One Room Allowed)
                   Obx(() => homeController.rooms.isEmpty
                       ? Center(
-                      child: Text("No room added",
-                          style: TextStyle(color: Colors.grey)))
+                          child: Text("No room added",
+                              style: TextStyle(color: Colors.grey)))
                       : Column(
-                    children: [
-                      Row(
-                        children: [
-                          CustomImage(
-                              imageSrc: homeController.rooms[0]['icon']),
-                          CustomText(
-                            left: 10,
-                            text: homeController.rooms[0]['name'],
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.dark500,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
+                          children: [
+                            Row(
+                              children: [
+                                CustomImage(
+                                    imageSrc: homeController.rooms[0]['icon']),
+                                CustomText(
+                                  left: 10,
+                                  text: homeController.rooms[0]['name'],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.dark500,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
                 ],
               ),
             ),
@@ -264,4 +275,3 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
     );
   }
 }
-
