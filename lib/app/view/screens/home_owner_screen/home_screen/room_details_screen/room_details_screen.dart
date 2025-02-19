@@ -3,13 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class RoomDetailsScreen extends StatefulWidget {
   const RoomDetailsScreen({super.key});
@@ -25,14 +29,13 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       homeController.getSingleRoomTask(roomId: roomId);
-
     });
     super.initState();
   }
 
-
   final String roomId = Get.arguments[0];
   final String roomName = Get.arguments[1];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,53 +68,88 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
               ),
 
               ///=============================== Menu Items ========================
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(16.0),
-                  children: [
-                    Column(
-                      children: List.generate(3, (index) {
-                        return CustomRoomCard(
-                          taskName: 'Clean',
-                          assignedTo: 'Annette Black',
-                          time: '10.00 am - 11 am',
-                          onInfoPressed: () {
-                            TaskInfoDialog.showTask(
-                              context: context,
-                              content:
-                                  'Are you sure you want to delete this task?',
-                              onConfirm: () {
-                                // Handle confirm action (e.g., delete task)
-                                Navigator.of(context).pop(); // Close the dialog
+              Expanded(child: Obx(() {
+                switch (homeController.rxRequestStatus.value) {
+                  case Status.loading:
+                    return const CustomLoader(); // Show loading indicator
+
+                  case Status.internetError:
+                    return NoInternetScreen(onTap: () {
+                      homeController.getSingleRoomTask(roomId: roomId);
+                    });
+
+                  case Status.error:
+                    return GeneralErrorScreen(
+                      onTap: () {
+                        homeController.getSingleRoomTask(roomId: roomId);
+                      },
+                    );
+
+                  case Status.completed:
+                    final roomList = homeController.singleRoomModels.value.result ?? [];
+
+                    if (roomList.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "No Data Found",
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                      );
+                    }
+                    return ListView(
+                      padding: const EdgeInsets.all(16.0),
+                      children: [
+                        Column(
+                          children: List.generate(
+                              homeController
+                                      .singleRoomModels.value.result?.length ??
+                                  0, (index) {
+                            final data = homeController
+                                .singleRoomModels.value.result?[index];
+                            return CustomRoomCard(
+                              taskName: data?.taskName ?? "",
+                              assignedTo: 'Annette Black',
+                              time: '10.00 am - 11 am',
+                              onInfoPressed: () {
+                                TaskInfoDialog.showTask(
+                                  context: context,
+                                  content:
+                                      'Are you sure you want to delete this task?',
+                                  onConfirm: () {
+                                    // Handle confirm action (e.g., delete task)
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  onCancel: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog without any action
+                                  },
+                                );
                               },
-                              onCancel: () {
-                                Navigator.of(context)
-                                    .pop(); // Close the dialog without any action
+                              onDeletePressed: () {
+                                TaskAlertDialog.showTaskDialog(
+                                  context: context,
+                                  title: 'Delete Task',
+                                  content:
+                                      'Are you sure you want to delete this task?',
+                                  onConfirm: () {
+                                    // Handle confirm action (e.g., delete task)
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  onCancel: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog without any action
+                                  },
+                                );
                               },
                             );
-                          },
-                          onDeletePressed: () {
-                            TaskAlertDialog.showTaskDialog(
-                              context: context,
-                              title: 'Delete Task',
-                              content:
-                                  'Are you sure you want to delete this task?',
-                              onConfirm: () {
-                                // Handle confirm action (e.g., delete task)
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              onCancel: () {
-                                Navigator.of(context)
-                                    .pop(); // Close the dialog without any action
-                              },
-                            );
-                          },
-                        );
-                      }),
-                    )
-                  ],
-                ),
-              ),
+                          }),
+                        )
+                      ],
+                    );
+                }
+              })),
             ],
           ),
         ),
