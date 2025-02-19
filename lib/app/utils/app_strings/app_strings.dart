@@ -106,6 +106,7 @@ class AppStrings {
   static const String taskDetails   = 'Task details';
   static const String task   = 'Task :';
   static const String assignToColon= 'Assign to:   ';
+  static const String roomName= 'Room Name';
   static const String recurrenceColon= 'Recurrence: ';
   static const String date= 'Date:';
   static const String time= 'Time: ';

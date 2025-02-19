@@ -4,45 +4,45 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+
 class HouseInformationScreen extends StatelessWidget {
   const HouseInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HouseInformationBody(),
+      body: const HouseInformationBody(),
       floatingActionButton: CustomButton(
         width: MediaQuery.of(context).size.width / 1.1,
         onTap: () {
           Get.toNamed(AppRoutes.homeScreen);
         },
         fillColor: Colors.white,
-        title: AppStrings.save,
+        title: AppStrings.save.tr,
       ),
     );
   }
 }
 
 class HouseInformationBody extends StatefulWidget {
+  const HouseInformationBody({super.key});
+
   @override
   _HouseInformationBodyState createState() => _HouseInformationBodyState();
 }
 
 class _HouseInformationBodyState extends State<HouseInformationBody> {
-  final List<Map<String, dynamic>> _rooms = []; // List to store room names and icons
+  final List<Map<String, dynamic>> _rooms = [];
 
   void _addRoom(String roomName, String iconName) {
     setState(() {
-      _rooms.add({'name': roomName, 'icon': iconName}); // Add the room name and icon to the list
+      _rooms.add({'name': roomName, 'icon': iconName});
     });
   }
 
@@ -54,13 +54,19 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
 
   void _editRoom(int index, String newRoomName, String iconName) {
     setState(() {
-      _rooms[index] = {'name': newRoomName, 'icon': iconName}; // Update the room name and icon
+      _rooms[index] = {
+        'name': newRoomName,
+        'icon': iconName
+      };
     });
   }
 
-  void showDialoge(BuildContext context, {Map<String, dynamic>? currentRoom, int? index}) {
-    TextEditingController roomController = TextEditingController(text: currentRoom?['name']);
-    String selectedIcon = currentRoom?['icon'] ?? AppIcons.villa; // Default icon if editing
+  void showDialoge(BuildContext context,
+      {Map<String, dynamic>? currentRoom, int? index}) {
+    TextEditingController roomController =
+        TextEditingController(text: currentRoom?['name']);
+    String selectedIcon =
+        currentRoom?['icon'] ?? AppIcons.villa; // Default icon if editing
 
     showDialog(
       context: context,
@@ -69,15 +75,16 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              ///==================================✅✅Room Name✅✅=======================
+
               CustomTextField(
                 textEditingController: roomController,
-                hintText: 'Room Name',
+                hintText: AppStrings.roomName.tr,
                 fillColor: AppColors.blue100,
               ),
               SizedBox(height: 10.h),
               GestureDetector(
                 onTap: () {
-                  // Show dialog or bottom sheet for icon selection
                   showIconSelection(context, (icon) {
                     setState(() {
                       selectedIcon = icon; // Update selected icon
@@ -85,13 +92,14 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   color: AppColors.blue100,
                   child: Row(
                     children: [
                       CustomImage(imageSrc: selectedIcon),
                       const SizedBox(width: 10),
-                      const Text('Select Icon', style: TextStyle(color: AppColors.dark500)),
+                      const Text('Select Icon',
+                          style: TextStyle(color: AppColors.dark500)),
                     ],
                   ),
                 ),
@@ -99,6 +107,8 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
               SizedBox(height: 25.h),
               Row(
                 children: [
+                  ///==================================✅✅Cancel Button✅✅=======================
+
                   GestureDetector(
                     onTap: () {
                       Get.back();
@@ -106,8 +116,8 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       color: AppColors.light200,
-                      child: const CustomText(
-                        text: 'Cancel',
+                      child: CustomText(
+                        text: AppStrings.cancel.tr,
                         fontSize: 24,
                         fontWeight: FontWeight.w400,
                         color: AppColors.dark500,
@@ -115,13 +125,17 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                     ),
                   ),
                   const SizedBox(width: 14),
+
+                  ///==================================✅✅Save Button✅✅=======================
                   GestureDetector(
                     onTap: () {
                       if (roomController.text.isNotEmpty) {
                         if (index != null) {
-                          _editRoom(index, roomController.text, selectedIcon); // Call to edit room
+                          _editRoom(index, roomController.text,
+                              selectedIcon); // Call to edit room
                         } else {
-                          _addRoom(roomController.text, selectedIcon); // Call to add room
+                          _addRoom(roomController.text,
+                              selectedIcon); // Call to add room
                         }
                         Get.back();
                       }
@@ -129,8 +143,8 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       color: AppColors.blue300,
-                      child: const CustomText(
-                        text: 'Save   ',
+                      child: CustomText(
+                        text: AppStrings.save.tr,
                         fontSize: 24,
                         fontWeight: FontWeight.w400,
                         color: AppColors.dark500,
@@ -146,13 +160,15 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
     );
   }
 
-  void showIconSelection(BuildContext context, Function(String) onIconSelected) {
-    // Sample icons for selection
-    List<String> icons =
-    [AppIcons.villa,
+  ///==================================✅✅Select Icon Dialog✅✅=======================
+  void showIconSelection(
+      BuildContext context, Function(String) onIconSelected) {
+    List<String> icons = [
+      AppIcons.villa,
       AppIcons.appartMent,
       AppIcons.addRoom,
-      AppIcons.edit];
+      AppIcons.edit
+    ];
 
     showDialog(
       context: context,
@@ -165,7 +181,6 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
               itemCount: icons.length,
               itemBuilder: (context, index) {
                 return ListTile(
-
                   leading: CustomImage(imageSrc: icons[index]),
                   title: Text('Icon ${index + 1}'),
                   onTap: () {
@@ -202,8 +217,9 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                ///==================================✅✅House Information ✅✅=======================
                 CustomMenuAppbar(
-                  title: AppStrings.houseInformation,
+                  title: AppStrings.houseInformation.tr,
                   onBack: () {
                     Get.back();
                   },
@@ -213,21 +229,24 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ///==================================✅✅House Name✅✅=======================
                       const CustomTextField(
                         hintText: AppStrings.houseName,
+
                       ),
                       SizedBox(height: 42.h),
+                      ///==================================✅✅addNewRoom✅✅=======================
                       GestureDetector(
                         onTap: () {
                           showDialoge(context);
                         },
-                        child: const Row(
+                        child:  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomImage(imageSrc: AppIcons.addRoom),
+                            const CustomImage(imageSrc: AppIcons.addRoom),
                             CustomText(
                               left: 10,
-                              text: AppStrings.addNewRoom,
+                              text: AppStrings.addNewRoom.tr,
                               fontWeight: FontWeight.w400,
                               fontSize: 20,
                               color: AppColors.dark500,
@@ -246,7 +265,9 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                             color: Colors.white,
                             child: Row(
                               children: [
+                                ///==================================✅✅Room Icon SHow✅✅=======================
                                 CustomImage(imageSrc: room['icon']),
+                                ///==================================✅✅Room Name SHow✅✅=======================
                                 CustomText(
                                   left: 10,
                                   text: room['name'],
@@ -255,18 +276,26 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                                   color: AppColors.dark500,
                                 ),
                                 const Spacer(),
+                                ///==================================✅✅Edit✅✅=======================
                                 GestureDetector(
                                   onTap: () {
-                                    showDialoge(context, currentRoom: room, index: index); // Pass room and index to edit
+                                    showDialoge(context,
+                                        currentRoom: room,
+                                        index:
+                                            index); // Pass room and index to edit
                                   },
-                                  child: const CustomImage(imageSrc: AppIcons.edit),
+                                  child: const CustomImage(
+                                      imageSrc: AppIcons.edit),
                                 ),
                                 const SizedBox(width: 10),
+                                ///==================================✅✅Close✅✅=======================
                                 GestureDetector(
                                   onTap: () {
-                                    _removeRoom(index); // Remove room when tapped
+                                    _removeRoom(
+                                        index); // Remove room when tapped
                                   },
-                                  child: const CustomImage(imageSrc: AppIcons.x),
+                                  child:
+                                      const CustomImage(imageSrc: AppIcons.x),
                                 ),
                               ],
                             ),
