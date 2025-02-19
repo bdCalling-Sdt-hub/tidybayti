@@ -86,13 +86,15 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                     );
 
                   case Status.completed:
-                    final roomList = homeController.singleRoomModels.value.result ?? [];
+                    final roomList =
+                        homeController.singleRoomModels.value.result ?? [];
 
                     if (roomList.isEmpty) {
                       return const Center(
                         child: Text(
                           "No Data Found",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                       );
                     }
@@ -108,8 +110,9 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                                 .singleRoomModels.value.result?[index];
                             return CustomRoomCard(
                               taskName: data?.taskName ?? "",
-                              assignedTo: 'Annette Black',
-                              time: '10.00 am - 11 am',
+                              assignedTo:
+                                  "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                              time: "${data?.startDateStr??""} To ${data?.endDateStr??""}",
                               onInfoPressed: () {
                                 TaskInfoDialog.showTask(
                                   context: context,
@@ -154,7 +157,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
           ),
         ),
       ),
-
     );
   }
 }
