@@ -154,14 +154,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
           ),
         ),
       ),
-      floatingActionButton: CustomButton(
-        width: MediaQuery.of(context).size.width / 1.1,
-        onTap: () {
-          Get.toNamed(AppRoutes.assignWorkScheduleScreen);
-        },
-        fillColor: AppColors.blue100,
-        title: AppStrings.assignWork,
-      ),
+
     );
   }
 }
