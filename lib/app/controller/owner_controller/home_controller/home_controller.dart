@@ -26,7 +26,8 @@ class HomeController extends GetxController {
     AppIcons.addRoom,
   ];
 
-
+  String selectedIconPath =
+      AppImages.apartMent;
 
   List<String> images = [
     AppImages.apartMent,

@@ -407,7 +407,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                       if (homeController.roomNameController.text.isNotEmpty) {
                         if (homeController.rooms.isEmpty) {
                           File roomImageFile = await HouseAdd.getFileFromAsset(
-                              selectedIconPath); // ✅ Convert asset to file
+                              selectedIconPath);
                           HouseAdd.roomAdd(
                             context: context,
                             houseId: homeController.selectedHouseId.toString(),

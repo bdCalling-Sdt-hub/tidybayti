@@ -43,8 +43,8 @@ class HouseInformationScreen extends StatelessWidget {
             /// ✅ Get the first room
             var room = homeController.rooms[0];
 
-            /// ✅ Convert icon path to File
-            File roomIconFile = File(room['icon']);
+            File roomImageFile = await HouseAdd.getFileFromAsset(
+                homeController.selectedIconPath);
 
             /// ✅ Send data to API
             homeController.setLoading(true); // Start loading
@@ -52,7 +52,7 @@ class HouseInformationScreen extends StatelessWidget {
               context: context,
               houseName: homeController.houseNameController.text,
               roomName: room['name'],
-              roomImage: roomIconFile, // ✅ Send File
+              roomImage: roomImageFile, // ✅ Send File
             );
             homeController.setLoading(false); // Stop loading
           },
@@ -76,9 +76,6 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
 
   /// ✅ Show Dialog to Add Room
   void showDialoge(BuildContext context) {
-    TextEditingController roomController = TextEditingController();
-    String selectedIcon = AppIcons.villa; // Default icon
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -91,7 +88,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                 children: [
                   /// ✅ Room Name Input
                   CustomTextField(
-                    textEditingController: roomController,
+                    textEditingController: homeController.roomNameController,
                     hintText: AppStrings.roomName.tr,
                     fillColor: AppColors.blue100,
                   ),
@@ -102,7 +99,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                     onTap: () {
                       showIconSelection(context, (icon) {
                         setStateDialog(() {
-                          selectedIcon = icon;
+                          homeController.selectedIconPath = icon;
                         });
                       });
                     },
@@ -111,7 +108,10 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                       color: AppColors.blue100,
                       child: Row(
                         children: [
-                          CustomImage(imageSrc: selectedIcon),
+                          CustomImage(
+                            imageSrc: homeController.selectedIconPath,
+                            imageType: ImageType.png,
+                          ),
                           const SizedBox(width: 10),
                           const Text('Select Icon',
                               style: TextStyle(color: AppColors.dark500)),
@@ -124,10 +124,11 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                   /// ✅ Save Button (Only One Room Allowed)
                   GestureDetector(
                     onTap: () {
-                      if (roomController.text.isNotEmpty) {
+                      if (homeController.roomNameController.text.isNotEmpty) {
                         if (homeController.rooms.isEmpty) {
                           homeController.addRoom(
-                              roomController.text, selectedIcon);
+                              homeController.roomNameController.text,
+                              homeController.selectedIconPath);
                           Get.back();
                         }
                       }
@@ -165,13 +166,16 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                 maxHeight: MediaQuery.of(context).size.height * 0.5),
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: homeController.icons.length,
+              itemCount: homeController.images.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: CustomImage(imageSrc: homeController.icons[index]),
+                  leading: Image.asset(homeController.images[index],
+                      width: 40, height: 40),
+                  // ✅ Show asset image
                   title: Text('Icon ${index + 1}'),
                   onTap: () {
-                    onIconSelected(homeController.icons[index]);
+                    onIconSelected(homeController
+                        .images[index]); // ✅ Return selected asset path
                     Get.back();
                   },
                 );
@@ -253,11 +257,14 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                           children: [
                             Row(
                               children: [
-                                CustomImage(
-                                    imageSrc: homeController.rooms[0]['icon']),
+                                // CustomImage(
+                                //     imageSrc: homeController.rooms[0]['icon'],
+                                //   imageType: ImageType.png,),
+
+
                                 CustomText(
                                   left: 10,
-                                  text: homeController.rooms[0]['name'],
+                                  text:"Room Name: ${homeController.rooms[0]['name']}",
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.dark500,

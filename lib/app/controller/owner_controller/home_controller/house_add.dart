@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,6 +64,10 @@ class HouseAdd {
       homeController.setLoading(false);
 
       if (response.statusCode == 200) {
+        homeController.houseNameController.clear();
+        homeController.roomNameController.clear();
+
+        homeController.rooms.clear();
         Get.toNamed(AppRoutes.homeScreen);
         toastMessage(message: "✅ Room created successfully!");
         print("✅ Room created successfully");
@@ -81,6 +84,7 @@ class HouseAdd {
       print("❌ Error: $e");
     }
   }
+
 
  static Future<File> getFileFromAsset(String assetPath) async {
     final byteData = await rootBundle.load(assetPath);
@@ -102,7 +106,7 @@ class HouseAdd {
     /// ✅ Ensure required fields are not empty
     if (houseId.isEmpty || roomName.isEmpty || !roomImage.existsSync()) {
       toastMessage(message: "❌ House Name, Room Name, and Icon are required!");
-      homeController.setLoading(false);
+      homeController.setRoomLoading(false);
       return;
     }
 
