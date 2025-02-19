@@ -5,7 +5,6 @@ import 'package:tidybayte/app/controller/owner_controller/add_employee_controlle
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
-
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
@@ -15,10 +14,8 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
-
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-
 import 'home_screen_inner_widgets/employee_show.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,36 +26,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HouseTypeScreenState extends State<HomeScreen> {
-  final List<String> categoryType = [
-    'Add',
-    'Bungalow',
-    'Villa',
-    'In. Home',
-    'Apartment',
-    'Mansion'
-  ];
-
-  final List<String> houseImages = [
-    AppImages.icon,
-    AppImages.mansion,
-    AppImages.bungalow,
-    AppImages.villa,
-    AppImages.house,
-    AppImages.apartMent,
-  ];
-
-  void checkSavedToken() async {
-    String? savedToken = await SharePrefsHelper.getString(AppConstants.token);
-
-    if (savedToken.isNotEmpty) {
-      debugPrint("✅ Saved Token:=================== $savedToken");
-    } else {
-      debugPrint("❌ No Token Found!");
-    }
-  }
-
   final AddEmployeeController employeeController =
-      Get.find<AddEmployeeController>();
+  Get.find<AddEmployeeController>();
 
   final HomeController homeController = Get.find<HomeController>();
 
@@ -66,15 +35,18 @@ class _HouseTypeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       employeeController.getEmployee();
-      homeController.getHouseRoom(houseId: "67b572f10c446fecf1f0499a");
-      homeController.myAllHouse();
+      homeController.myAllHouse(); // ✅ Fetch all houses
     });
     super.initState();
   }
 
+  /// ✅ State for House Selection
+  final RxBool isExpanded = false.obs;
+  final RxString selectedHouseId = ''.obs;
+  final RxString selectedHouseName = 'Add House'.obs; // ✅ Default House Name
+
   @override
   Widget build(BuildContext context) {
-    checkSavedToken();
     return Scaffold(
       bottomNavigationBar: const NavBar(currentIndex: 0),
       backgroundColor: AppColors.freeServiceColor,
@@ -100,33 +72,95 @@ class _HouseTypeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ///==============================Add House===================
-                Row(
+                Obx(() => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CustomText(
-                      text: 'Add house',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      color: AppColors.dark400,
+                    InkWell(
+                      onTap: () {
+                        isExpanded.value = !isExpanded.value;
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          /// ✅ Display Selected House Name
+                          CustomText(
+                            text: selectedHouseName.value,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                            color: AppColors.dark400,
+                          ),
+                          Icon(
+                            isExpanded.value
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
+                            color: Colors.black,
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.employeeNotificationScreen);
+                            },
+                            child: const Icon(
+                              Icons.notification_add,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.black,
-                        )),
-                    const Spacer(),
 
-                    ///===============================Notification===============
-                    IconButton(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.employeeNotificationScreen);
-                        },
-                        icon: const Icon(
-                          Icons.notification_add,
-                          color: Colors.black12,
-                        )),
+                    if (isExpanded.value) ...[
+                      homeController.myHouseData.value.houses != null &&
+                          homeController.myHouseData.value.houses!
+                              .isNotEmpty
+                          ? SizedBox(
+                        height: 100,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: homeController.myHouseData.value
+                                .houses!
+                                .map((house) {
+                              return ListTile(
+                                title: GestureDetector(
+                                  onTap: () {
+                                    /// ✅ Set Selected House ID & Name
+                                    selectedHouseId.value =
+                                        house.id ?? '';
+                                    selectedHouseName.value =
+                                        house.name ?? 'No Name';
+
+                                    /// ✅ Fetch Rooms for Selected House
+                                    homeController.getHouseRoom(
+                                        houseId:
+                                        selectedHouseId.value);
+
+                                    isExpanded.value =
+                                    false; // ✅ Close Dropdown
+                                  },
+                                  child: CustomText(
+                                    textAlign: TextAlign.start,
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    text: house.name ?? "No Name",
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      )
+                          : const Center(
+                        child: CustomText(
+                            text: "No Houses Found",
+                            color: Colors.red),
+                      ),
+                    ],
                   ],
-                ),
+                )),
+
                 SizedBox(height: 50.h),
 
                 ///================================Grid====================
@@ -141,7 +175,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                       case Status.error:
                         return GestureDetector(
                           onTap: () {
-                            homeController.getHouseRoom(houseId: "67b572f10c446fecf1f0499a");
+                            homeController.getHouseRoom(
+                                houseId: selectedHouseId.value);
                           },
                           child: const CustomText(
                             textAlign: TextAlign.center,
@@ -154,7 +189,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                         );
 
                       case Status.completed:
-                      /// ✅ First, Get Room Data
+                      /// ✅ Get Room Data
                         final List<dynamic> rooms =
                             homeController.houseRoomData.value.rooms ?? [];
 
@@ -163,13 +198,14 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 14,
                             mainAxisExtent: 120,
                           ),
-                          itemCount: rooms.length + 1, // ✅ +1 to account for "Add" button
+                          itemCount: rooms.length + 1, // ✅ +1 for Add Button
                           itemBuilder: (BuildContext context, int index) {
                             if (index == 0) {
                               return GestureDetector(
@@ -189,12 +225,12 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                       ),
                                     ],
                                   ),
-                                  padding:
-                                  EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 16.h, horizontal: 12.w),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      /// ✅ Custom "Add" Icon (Always at Index 0)
+                                      /// ✅ Custom "Add" Icon
                                       const CustomImage(
                                         imageSrc: AppIcons.add,
                                         imageType: ImageType.svg,
@@ -233,13 +269,14 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
-                                padding:
-                                EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 16.h, horizontal: 12.w),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomNetworkImage(
-                                      imageUrl: "${ApiUrl.networkUrl}${data.roomImage ?? ""}",
+                                      imageUrl:
+                                      "${ApiUrl.networkUrl}${data.roomImage ?? ""}",
                                       height: 25,
                                       width: 25,
                                     ),
@@ -260,7 +297,6 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                     }
                   }),
                 ),
-
                 SizedBox(
                   height: 20.h,
                 ),
@@ -281,7 +317,6 @@ class _HouseTypeScreenState extends State<HomeScreen> {
     );
   }
 }
-
 class SeeAll extends StatelessWidget {
   const SeeAll({
     super.key,
