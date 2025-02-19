@@ -246,7 +246,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
 
                   /// ✅ Display Room (Only One Room Allowed)
                   Obx(() => homeController.rooms.isEmpty
-                      ? Center(
+                      ? const Center(
                           child: Text("No room added",
                               style: TextStyle(color: Colors.grey)))
                       : Column(
