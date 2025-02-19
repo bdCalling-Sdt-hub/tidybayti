@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/get_room_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/my_house_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -86,6 +87,41 @@ class HomeController extends GetxController {
   }
 
 
+  ///==================================✅✅MY house Data✅✅=======================
+
+  Rx<MyHouseData> myHouseData = MyHouseData().obs;
+
+  myAllHouse() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response = await apiClient.get(url:
+      ApiUrl.myAllHouse,showResult: true);
+
+      if (response.statusCode == 200) {
+        myHouseData.value = MyHouseData.fromJson(response.body["data"]);
+
+        print('statusCode==================${response.statusCode}');
+        print('House Length==================${myHouseData.value.houses?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
+
+
+
+  @override
+  void onInit() {
+   myAllHouse();
+    super.onInit();
+  }
 
 
 }
