@@ -56,6 +56,8 @@ dependencies:
   internet_connection_checker_plus: ^2.7.0
   logger: ^2.5.0
   image_picker: ^1.1.2
+  path_provider: ^2.1.5
+  typed_data: ^1.4.0
 
 dev_dependencies:
   flutter_test:

@@ -148,7 +148,7 @@ class AppRoutes {
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
-    GetPage(name: houseInformationScreen, page: () => const HouseInformationScreen()),
+    GetPage(name: houseInformationScreen, page: () =>  HouseInformationScreen()),
     GetPage(name: allEmployeeShow, page: () =>  AllEmployeeShow()),
     GetPage(name: employeeDetails, page: () =>  const EmployeeDetails()),
     GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
