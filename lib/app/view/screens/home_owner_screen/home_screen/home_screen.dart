@@ -70,7 +70,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ///==============================Add House===================
+                ///==================================✅✅House Add✅✅=======================
                 Obx(() => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -166,7 +166,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
 
                 SizedBox(height: 50.h),
 
-                ///================================Grid====================
+                ///==================================✅✅All Room✅✅=======================
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 3,
                   child: Obx(() {
@@ -304,13 +304,13 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                   height: 20.h,
                 ),
 
-                ///=======================See all===========
+                ///==================================✅✅See All✅✅=======================
                 const SeeAll(),
                 SizedBox(
                   height: 30.h,
                 ),
 
-                ///===========================Employee Show====================
+                ///==================================✅✅Employee Show✅✅=======================
                 EmployeeShow(employeeController: employeeController)
               ],
             ),
@@ -376,7 +376,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                               selectedIconPath); // ✅ Convert asset to file
                           HouseAdd.roomAdd(
                             context: context,
-                            houseId: "67b572f10c446fecf1f0499a",
+                            houseId: homeController.selectedHouseId.toString(),
                             roomName: homeController.roomNameController.text,
                             roomImage: roomImageFile, // ✅ Sending as File
                           );
