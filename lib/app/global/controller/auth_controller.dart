@@ -32,10 +32,10 @@ class AuthController extends GetxController {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController =
-      TextEditingController(text: kDebugMode ? "" : "");
+      TextEditingController(text: kDebugMode ? "lisina7524@lxheir.com" : "");
   final phoneNumberController = TextEditingController();
   final passwordController =
-      TextEditingController(text: kDebugMode ? "" : "");
+      TextEditingController(text: kDebugMode ? "Masum017" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
@@ -134,11 +134,11 @@ class AuthController extends GetxController {
           AppConstants.token, response.body['data']["accessToken"]);
       if (isRemember.value) {
         SharePrefsHelper.setBool(AppConstants.rememberMe, true);
-
+        SharePrefsHelper.setBool(AppConstants.isOwner, true);
         if (role == 'USER') {
-          SharePrefsHelper.setBool(AppConstants.isOwner, false);
-        } else if (role == 'EMPLOYEE') {
           SharePrefsHelper.setBool(AppConstants.isOwner, true);
+        } else if (role == 'EMPLOYEE') {
+          SharePrefsHelper.setBool(AppConstants.isOwner, false);
         }
       } else {
         SharePrefsHelper.setBool(AppConstants.rememberMe, false);
