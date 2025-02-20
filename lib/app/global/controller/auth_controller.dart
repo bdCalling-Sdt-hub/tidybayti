@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
@@ -121,18 +122,43 @@ class AuthController extends GetxController {
 
     var response = await apiClient.post(body: body, url: ApiUrl.login);
     if (response.statusCode == 200) {
+      Map<String, dynamic> decodedToken =
+      JwtDecoder.decode(response.body["data"]['accessToken']);
+      print("Decoded Token:========================== $decodedToken");
+      String role = decodedToken['role'];
+
+      print('Role:============================ $role');
       SharePrefsHelper.setString(
           AppConstants.token, response.body['data']["accessToken"]);
-      debugPrint(
-          '======================token   ${response.body['data']['accessToken']}');
-      Get.offAllNamed(AppRoutes.homeScreen);
       if (isRemember.value) {
         SharePrefsHelper.setBool(AppConstants.rememberMe, true);
-        SharePrefsHelper.setBool(AppConstants.isOwner, true);
+
+        if (role == 'USER') {
+          SharePrefsHelper.setBool(AppConstants.isOwner, false);
+        } else if (role == 'EMPLOYEE') {
+          SharePrefsHelper.setBool(AppConstants.isOwner, true);
+        }
       } else {
         SharePrefsHelper.setBool(AppConstants.rememberMe, false);
         SharePrefsHelper.setBool(AppConstants.isOwner, false);
       }
+      if (role == 'USER') {
+        Get.offAllNamed(AppRoutes.homeScreen);
+      } else if (role == 'EMPLOYEE') {
+        Get.toNamed(AppRoutes.employeeHomeScreen);
+      } else {
+        return null;
+      }
+      // debugPrint(
+      //     '======================token   ${response.body['data']['accessToken']}');
+      // Get.offAllNamed(AppRoutes.homeScreen);
+      // if (isRemember.value) {
+      //   SharePrefsHelper.setBool(AppConstants.rememberMe, true);
+      //   SharePrefsHelper.setBool(AppConstants.isOwner, true);
+      // } else {
+      //   SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+      //   SharePrefsHelper.setBool(AppConstants.isOwner, false);
+      // }
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
       isSignInLoading.value = false;
