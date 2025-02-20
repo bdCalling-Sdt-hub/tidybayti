@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
@@ -13,6 +14,7 @@ import 'package:tidybayte/app/utils/app_const/app_const.dart';
 class AuthController extends GetxController {
   ApiClient apiClient = serviceLocator();
   DBHelper dbHelper = serviceLocator();
+
   ///==================================✅✅Remember✅✅=======================
 
   RxBool isRemember = false.obs;
@@ -23,13 +25,16 @@ class AuthController extends GetxController {
     refresh();
     SharePrefsHelper.setBool(AppConstants.isRememberMe, isRemember.value);
   }
+
   ///==================================✅✅Controller✅✅=======================
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
-  final emailController = TextEditingController();
+  final emailController =
+      TextEditingController(text: kDebugMode ? "lisina7524@lxheir.com" : "");
   final phoneNumberController = TextEditingController();
-  final passwordController = TextEditingController();
+  final passwordController =
+      TextEditingController(text: kDebugMode ? "Masum017" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
@@ -63,7 +68,9 @@ class AuthController extends GetxController {
       } else if (errorMessage
           .contains("Already have an account. Please activate")) {
         toastMessage(message: errorMessage);
-        Get.toNamed(AppRoutes.signUpOtp,);
+        Get.toNamed(
+          AppRoutes.signUpOtp,
+        );
       } else {
         toastMessage(message: errorMessage);
       }
@@ -82,10 +89,11 @@ class AuthController extends GetxController {
     isSignUpOtp.value = true;
     var body = {
       "email": emailController.text,
-      "activationCode":otpController.text
+      "activationCode": otpController.text
     };
 
-    var response = await apiClient.post(body: body, url: ApiUrl.activateAccount);
+    var response =
+        await apiClient.post(body: body, url: ApiUrl.activateAccount);
     if (response.statusCode == 201) {
       SharePrefsHelper.setString(
           AppConstants.token, response.body['data']["accessToken"]);
@@ -117,11 +125,10 @@ class AuthController extends GetxController {
           AppConstants.token, response.body['data']["accessToken"]);
       debugPrint(
           '======================token   ${response.body['data']['accessToken']}');
-      Get.toNamed(AppRoutes.homeScreen);
+      Get.offAllNamed(AppRoutes.homeScreen);
       if (isRemember.value) {
         SharePrefsHelper.setBool(AppConstants.rememberMe, true);
         SharePrefsHelper.setBool(AppConstants.isOwner, true);
-
       } else {
         SharePrefsHelper.setBool(AppConstants.rememberMe, false);
         SharePrefsHelper.setBool(AppConstants.isOwner, false);
@@ -146,12 +153,9 @@ class AuthController extends GetxController {
 
   forgetEmail() async {
     isForgetLoading.value = true;
-    var body = {
-      "email": emailController.text
-    };
+    var body = {"email": emailController.text};
 
-    var response = await apiClient.post(body: body,
-        url: ApiUrl.forgotPassword);
+    var response = await apiClient.post(body: body, url: ApiUrl.forgotPassword);
     if (response.statusCode == 200) {
       toastMessage(message: response.body["message"]);
       Get.toNamed(AppRoutes.forgotPasswordOtp);
@@ -170,13 +174,10 @@ class AuthController extends GetxController {
 
   forgetOtpVerify() async {
     isForgetOtp.value = true;
-    var body ={
-      "email": emailController.text,
-      "code": otpController.text
-    };
+    var body = {"email": emailController.text, "code": otpController.text};
 
-    var response = await apiClient.post(body: body,
-        url: ApiUrl.forgetPasswordOtpVerify);
+    var response =
+        await apiClient.post(body: body, url: ApiUrl.forgetPasswordOtpVerify);
     if (response.statusCode == 200) {
       toastMessage(message: response.body["message"]);
       Get.toNamed(AppRoutes.resetPasswordScreen);
@@ -195,14 +196,13 @@ class AuthController extends GetxController {
 
   resetPassword() async {
     isResetLoading.value = true;
-    var body ={
+    var body = {
       "email": emailController.text,
       "confirmPassword": confirmPasswordController.text,
       "newPassword": newPasswordController.text
     };
 
-    var response = await apiClient.post(body: body,
-        url: ApiUrl.resetPassword);
+    var response = await apiClient.post(body: body, url: ApiUrl.resetPassword);
     if (response.statusCode == 200) {
       clearResetField();
       toastMessage(message: response.body["message"]);
@@ -216,16 +216,10 @@ class AuthController extends GetxController {
     isResetLoading.refresh();
   }
 
-  clearResetField(){
-     emailController.clear();
-     otpController.clear();
-     newPasswordController.clear();
-     confirmPasswordController.clear();
+  clearResetField() {
+    emailController.clear();
+    otpController.clear();
+    newPasswordController.clear();
+    confirmPasswordController.clear();
   }
-
-
-
-
-
-
 }
