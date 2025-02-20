@@ -29,6 +29,8 @@ class AddEmployee {
     required String passportExpDate,
     required String note,
     required String dutyTime,
+    required String breakTimeStar,
+    required String breakTimeEnd,
     required List workingDay,
     required String offDay,
   }) async {
@@ -51,6 +53,8 @@ class AddEmployee {
     request.fields["passportExpDate"] = passportExpDate;
     request.fields["note"] = note;
     request.fields["dutyTime"] = dutyTime;
+    request.fields["breakTimeStart"] = breakTimeStar;
+    request.fields["breakTimeEnd"] = breakTimeEnd;
     request.fields["workingDay"] = jsonEncode(workingDay);
     request.fields["offDay"] = offDay;
 
@@ -199,9 +203,9 @@ class AddEmployee {
   }
 
   ///==========
-static  RxBool isDeleteLoading = false.obs;
+  static RxBool isDeleteLoading = false.obs;
 
-static  Future<void> deleteEmployee(
+  static Future<void> deleteEmployee(
       {required String userId, required String authId}) async {
     try {
       isDeleteLoading.value = true;
@@ -230,7 +234,7 @@ static  Future<void> deleteEmployee(
 
       if (response.statusCode == 200) {
         AddEmployeeController employeeController = Get.find();
-       employeeController.getEmployee();
+        employeeController.getEmployee();
         var jsonResponse = jsonDecode(response.body);
         toastMessage(message: jsonResponse["message"]);
 

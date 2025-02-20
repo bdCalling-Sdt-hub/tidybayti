@@ -22,14 +22,15 @@ class AddEmployeeScreen extends StatefulWidget {
 
 class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
   final AddEmployeeController controller = Get.find<AddEmployeeController>();
-// Preselected working days
 
+// Preselected working days
 
   @override
   Widget build(BuildContext context) {
-
-    print("selectedWorkingDays======================${controller.selectedWorkingDays}");
-    print("selectedWorkingDays======================${controller.selectedOffDayIndex}");
+    print(
+        "selectedWorkingDays======================${controller.selectedWorkingDays}");
+    print(
+        "selectedWorkingDays======================${controller.selectedOffDayIndex}");
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -214,7 +215,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         readOnly: true,
                         hintText: AppStrings.endTime.tr,
                         fillColor: Colors.white,
-                        suffixIcon: const Icon(Icons.access_time), // Clock icon for time picker
+                        suffixIcon: const Icon(Icons.access_time),
+                        // Clock icon for time picker
                         onTap: () async {
                           TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
@@ -232,6 +234,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+
                       ///==================================✅✅Select working days✅✅=======================
 
                       const Padding(
@@ -244,9 +247,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                           ),
                         ),
                       ),
-                      _buildDaySelectionGrid(controller.selectedWorkingDays, true),
+                      _buildDaySelectionGrid(
+                          controller.selectedWorkingDays, true),
 
-                      const SizedBox(height: 24.0), // Spacing between sections
+                      const SizedBox(height: 24.0),
+                      // Spacing between sections
                       ///==================================✅✅Select off days✅✅=======================
 
                       const CustomText(
@@ -259,6 +264,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       ),
                       _buildDaySelectionOfGrid(),
                       const SizedBox(height: 24.0),
+
                       ///==================================✅✅addNewEmployee Button✅✅=======================
                       controller.isLoading.value
                           ? const CustomLoader()
@@ -298,9 +304,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                   note: controller.noteController.text.trim(),
                                   dutyTime:
                                       "${controller.startTimeController.text}-${controller.endTimeController.text}",
-                                  workingDay:controller.getSelectedDays(),
+                                  workingDay: controller.getSelectedDays(),
                                   offDay: controller.getSelectedOffDays(),
                                   context: context,
+                                  breakTimeStar: '01:00 PM',
+                                  breakTimeEnd: '02:00 PM',
                                 );
                               },
                               fillColor: Colors.white,
@@ -316,11 +324,12 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       ),
     );
   }
+
   Widget _buildDaySelectionGrid(List<bool> selectedDays, bool isWorkingDay) {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount:controller. daysOfWeek.length,
+      itemCount: controller.daysOfWeek.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 5, // Adjust this to control checkbox size
@@ -337,7 +346,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
               onChanged: (bool? newValue) {
                 setState(() {
                   if (isWorkingDay) {
-                   controller. selectedWorkingDays[index] = newValue ?? false;
+                    controller.selectedWorkingDays[index] = newValue ?? false;
                   }
                 });
               },
@@ -374,7 +383,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.red : Colors.grey[300], // সিলেক্ট হলে লাল
+              color: isSelected ? Colors.red : Colors.grey[300],
+              // সিলেক্ট হলে লাল
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
@@ -389,12 +399,7 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
       },
     );
   }
-
-
-
 }
-
-
 
 class PassportOption extends StatelessWidget {
   const PassportOption({
