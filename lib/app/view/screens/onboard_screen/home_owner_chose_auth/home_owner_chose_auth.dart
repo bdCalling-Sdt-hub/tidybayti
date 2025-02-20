@@ -4,24 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
+
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+
 class HomeOwnerChoseAuth extends StatelessWidget {
-  const HomeOwnerChoseAuth({super.key});
+   HomeOwnerChoseAuth({super.key});
+
+  final String role = Get.arguments ?? "Unknown";
 
   @override
   Widget build(BuildContext context) {
+    print(role);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -44,6 +39,10 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                     SizedBox(
                       height: 290.h,
                     ),
+                    role== "Employee"?
+                    SizedBox(
+                      height: 100.h,
+                    ):const SizedBox(),
 
                     ///============================signIn Button=============
                     Center(
@@ -52,29 +51,33 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                           CustomButton(
                             width: MediaQuery.of(context).size.width / 1.7,
                             onTap: () {
-                              Get.toNamed(AppRoutes.signInScreen);
+                              Get.toNamed(AppRoutes.signInScreen,arguments: role);
                             },
                             fillColor: AppColors.employeeCardColor,
                             title: AppStrings.signIn,
                           ),
 
                           ///============================signUp Button=============
+                          role== "Employee"?const SizedBox():
                           SizedBox(
                             height: 16.h,
                           ),
+                          role== "Employee"?const SizedBox():
                           CustomButton(
                             width: MediaQuery.of(context).size.width / 1.7,
                             onTap: () {
-                              Get.toNamed(AppRoutes.signUpScreen);
+                              Get.toNamed(AppRoutes.signUpScreen,);
                             },
                             fillColor: AppColors.employeeCardColor,
                             title: AppStrings.signUp,
                           ),
+                          role== "Employee"?const SizedBox():
                           SizedBox(
                             height: 152.h,
                           ),
 
                           ///=========================== Center the RichText correctly ============================
+                          role== "Employee"?const SizedBox():
                           RichText(
                             textAlign: TextAlign.center,
                             // Center the text in the widget
@@ -137,30 +140,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                           SizedBox(
                             height: 59.h,
                           ),
-                          // Row(
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     const CircleAvatar(
-                          //       radius: 5,
-                          //       backgroundColor: AppColors.customRedColor,
-                          //     ),
-                          //     SizedBox(
-                          //       width: 10.w,
-                          //     ),
-                          //     const CircleAvatar(
-                          //       radius: 5,
-                          //       backgroundColor: AppColors.customRedColor,
-                          //     ),
-                          //     SizedBox(
-                          //       width: 10.w,
-                          //     ),
-                          //     const CircleAvatar(
-                          //       radius: 6,
-                          //       backgroundColor: AppColors.red,
-                          //     ),
-                          //   ],
-                          // ),
+
                         ],
                       ),
                     )
