@@ -51,7 +51,16 @@ class EmployeeProfileScreen extends StatelessWidget {
                 ///=============================== profile Appbar ========================
                 CustomMenuAppbar(
                   onTap: () {
-                    Get.toNamed(AppRoutes.employeeEditProfile);
+                    final profile = profileController.profileModel.value;
+
+                    Get.toNamed(AppRoutes.employeeEditProfile,
+                        arguments: {
+                          "firstName": profile.firstName,
+                          "lastName": profile.lastName,
+                          "phoneNumber": profile.phoneNumber,
+                          "profileImage": profile.profileImage,
+                        });
+                    print("Profile Image URL:========== ${profile.profileImage}");
                   },
                   isEdit: true,
                   title: AppStrings.profile,
@@ -64,7 +73,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                 Obx(() {
                   switch (profileController.rxRequestStatus.value) {
                     case Status.loading:
-                      return const CustomLoader(); // Show loading indicator
+                      return const Center(child: CustomLoader()); // Show loading indicator
 
                     case Status.internetError:
                       return NoInternetScreen(onTap: () {
@@ -172,6 +181,12 @@ class EmployeeProfileScreen extends StatelessWidget {
                                     data.createdAt!.toLocal()),
                               ),
 
+                              ///================================Address  ========================
+                              CustomProfileItem(
+                                title: AppStrings.address,
+                                subTitle:data.address??"",
+                              ),
+
                               ///================================Duty Time  ========================
                               CustomProfileItem(
                                 title: 'Duty Time:',
@@ -190,7 +205,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                                 subTitle: "data.",
                               ),
 
-                              ///================================drivingLicense  ========================
+                              ///================================Working Day  ========================
                               CustomProfileItem(
                                 title: 'Working Day:',
                                 subTitle: data.workingDay != null
