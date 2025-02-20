@@ -5,14 +5,12 @@ import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/employee_nav_bar/employee_navbar.dart';
 
 import '../../../../utils/app_images/app_images.dart';
@@ -214,70 +212,4 @@ class EmployeeProfileScreen extends StatelessWidget {
   }
 }
 
-Future<void> showMyDialog(BuildContext context) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false,
-    // The dialog can't be dismissed by tapping outside
-    builder: (BuildContext context) {
-      return AlertDialog(
-          title: Row(
-            children: [
-              const CustomText(
-                text: AppStrings.changePassword,
-                fontSize: 20,
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-              ),
-              const Spacer(),
-              GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: const CustomImage(imageSrc: AppIcons.x))
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ///===================================Present Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.presentPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
 
-              ///===================================New Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.newPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-
-              ///===================================New Confirm Password=============
-              CustomTextField(
-                fillColor: Color(0xFFB5D8EE),
-                hintText: AppStrings.confirmPassword,
-                textEditingController: TextEditingController(),
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-              CustomButton(
-                onTap: () {
-                  Get.back();
-                },
-                fillColor: Color(0xFFB5D8EE),
-                title: AppStrings.upDate,
-              )
-            ],
-          ));
-    },
-  );
-}
