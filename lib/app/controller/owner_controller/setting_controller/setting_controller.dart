@@ -30,6 +30,7 @@ class SettingController extends GetxController{
         url: ApiUrl.changePassword);
     if (response.statusCode == 200) {
       clearField();
+      print("Body==============${response.body}");
       toastMessage(message: response.body["message"]);
       Get.back();
     } else if (response.statusCode == 400) {

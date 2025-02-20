@@ -181,7 +181,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                         ///==============================Change Password=============
                         CustomButton(
                           onTap: () {
-                            showMyDialog(context);
+                            Get.toNamed(AppRoutes.changePasswordScreen);
                           },
                           fillColor: AppColors.blue50,
                           title: AppStrings.changePassword,
