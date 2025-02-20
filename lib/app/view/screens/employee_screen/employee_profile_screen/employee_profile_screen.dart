@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/profile_controller/profile_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
 import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
@@ -13,6 +14,7 @@ import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/employee_nav_bar/employee_navbar.dart';
@@ -96,20 +98,24 @@ class EmployeeProfileScreen extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              // CustomNetworkImage(
-                              //     boxShape: BoxShape.circle,
-                              //     imageUrl: AppConstants.employee,
-                              //     height: 128,
-                              //     width: 128),
-                              const ClipOval(
-                                child: SizedBox(
-                                  width: 128.0, // specify width
-                                  height: 128.0, // specify height
-                                  child: CustomImage(
-                                    imageSrc: AppImages.avatar,
-                                    imageType: ImageType.png,
-                                  ),
-                                ),
+                              ClipOval(
+                                child: data.profileImage != null &&
+                                        data.profileImage!.isNotEmpty
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.blue, width: 4)),
+                                        child: CustomNetworkImage(
+                                          imageUrl:
+                                              "${ApiUrl.networkUrl}${data.profileImage}",
+                                          height: 128,
+                                          width: 128,
+                                        ),
+                                      )
+                                    : const CustomImage(
+                                        imageSrc: AppImages.avatar,
+                                        imageType: ImageType.png,
+                                      ),
                               ),
 
                               CustomText(
@@ -169,7 +175,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                               ///================================Duty Time  ========================
                               CustomProfileItem(
                                 title: 'Duty Time:',
-                                subTitle: data.dutyTime??"",
+                                subTitle: data.dutyTime ?? "",
                               ),
 
                               ///================================Break Time  ========================
@@ -187,9 +193,10 @@ class EmployeeProfileScreen extends StatelessWidget {
                               ///================================drivingLicense  ========================
                               CustomProfileItem(
                                 title: 'Working Day:',
-                                subTitle: data.workingDay != null ? data.workingDay!.join(", ") : "N/A",
+                                subTitle: data.workingDay != null
+                                    ? data.workingDay!.join(", ")
+                                    : "N/A",
                               ),
-
 
                               SizedBox(
                                 height: 20.h,
