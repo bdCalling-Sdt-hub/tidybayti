@@ -80,6 +80,8 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                       "phoneNumber": data.phoneNumber,
                       "StartTime": data.dutyTime,
                       "endTime": data.dutyTime,
+                      "breakTimeStart": data.breakTimeStart,
+                      "breakTimeEnd": data.breakTimeEnd,
                       "ProfileImage": data.profileImage,
                     });
                   },

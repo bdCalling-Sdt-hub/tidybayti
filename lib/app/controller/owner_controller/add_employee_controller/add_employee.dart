@@ -124,6 +124,8 @@ class AddEmployee {
       required String passportExpDate,
       required String note,
       required String dutyTime,
+      required String breakTimeStart,
+      required String breakTimeEnd,
       required List workingDay,
       required String offDay,
       required String authId,
@@ -145,6 +147,8 @@ class AddEmployee {
     request.fields["passportExpDate"] = passportExpDate;
     request.fields["note"] = note;
     request.fields["dutyTime"] = dutyTime;
+    request.fields["breakTimeStart"] = breakTimeStart;
+    request.fields["breakTimeEnd"] = breakTimeEnd;
     request.fields["workingDay"] = jsonEncode(workingDay);
     request.fields["offDay"] = offDay;
     request.fields["authId"] = authId;
