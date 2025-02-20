@@ -32,10 +32,10 @@ class AuthController extends GetxController {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController =
-      TextEditingController(text: kDebugMode ? "lisina7524@lxheir.com" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   final phoneNumberController = TextEditingController();
   final passwordController =
-      TextEditingController(text: kDebugMode ? "Masum017" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
@@ -122,6 +122,8 @@ class AuthController extends GetxController {
 
     var response = await apiClient.post(body: body, url: ApiUrl.login);
     if (response.statusCode == 200) {
+      emailController.clear();
+      passwordController.clear();
       Map<String, dynamic> decodedToken =
       JwtDecoder.decode(response.body["data"]['accessToken']);
       print("Decoded Token:========================== $decodedToken");
