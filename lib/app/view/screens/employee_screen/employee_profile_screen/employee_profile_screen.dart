@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/profile_controller/profile_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/global/helper/shared_prefe/shared_prefe.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_profile_item/custom_profile_item.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/employee_nav_bar/employee_navbar.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 import '../../../../utils/app_images/app_images.dart';
 
 class EmployeeProfileScreen extends StatelessWidget {
-  const EmployeeProfileScreen({super.key});
+  EmployeeProfileScreen({super.key});
+
+  final ProfileController profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,157 +59,176 @@ class EmployeeProfileScreen extends StatelessWidget {
                 ),
 
                 ///==========================Body Here=====================
+                Obx(() {
+                  switch (profileController.rxRequestStatus.value) {
+                    case Status.loading:
+                      return const CustomLoader(); // Show loading indicator
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 21),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.blue100, // First color (with opacity)
-                          AppColors.blue100, // First color (with opacity)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        // CustomNetworkImage(
-                        //     boxShape: BoxShape.circle,
-                        //     imageUrl: AppConstants.employee,
-                        //     height: 128,
-                        //     width: 128),
-                        const ClipOval(
-                          child: SizedBox(
-                            width: 128.0, // specify width
-                            height: 128.0, // specify height
-                            child: CustomImage(
-                              imageSrc: AppImages.avatar,
-                              imageType: ImageType.png,
+                    case Status.internetError:
+                      return NoInternetScreen(onTap: () {
+                        profileController.getProfile();
+                      });
+
+                    case Status.error:
+                      return GeneralErrorScreen(
+                        onTap: () {
+                          profileController.getProfile();
+                        },
+                      );
+
+                    case Status.completed:
+                      final data = profileController.profileModel.value;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 21),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColors.blue100,
+                                // First color (with opacity)
+                                AppColors.blue100,
+                                // First color (with opacity)
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
                           ),
-                        ),
+                          child: Column(
+                            children: [
+                              // CustomNetworkImage(
+                              //     boxShape: BoxShape.circle,
+                              //     imageUrl: AppConstants.employee,
+                              //     height: 128,
+                              //     width: 128),
+                              const ClipOval(
+                                child: SizedBox(
+                                  width: 128.0, // specify width
+                                  height: 128.0, // specify height
+                                  child: CustomImage(
+                                    imageSrc: AppImages.avatar,
+                                    imageType: ImageType.png,
+                                  ),
+                                ),
+                              ),
 
-                        const CustomText(
-                          top: 10,
-                          text: 'Name:',
-                          color: AppColors.dark400,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20,
-                        ),
-                        const CustomText(
-                          text: 'assistant',
-                          color: AppColors.dark300,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          bottom: 24,
-                        ),
+                              CustomText(
+                                top: 10,
+                                bottom: 10,
+                                text:
+                                    'Name: ${profileController.profileModel.value.firstName} '
+                                    '${profileController.profileModel.value.lastName}',
+                                color: AppColors.dark400,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                              ),
 
-                        ///============================First Name=====================
-                        const CustomProfileItem(
-                          title: '${AppStrings.designation}:',
-                          subTitle: ' ',
-                        ),
+                              ///============================email=====================
+                              CustomProfileItem(
+                                title: '${AppStrings.email}:',
+                                subTitle: data.email ?? "",
+                              ),
 
-                        ///================================last Name========================
-                        const CustomProfileItem(
-                          title: AppStrings.id,
-                          subTitle: '',
-                        ),
+                              ///================================id========================
+                              CustomProfileItem(
+                                title: AppStrings.id,
+                                subTitle: data.id ?? "",
+                              ),
 
-                        ///================================Email========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.email}:',
-                          subTitle: '',
-                        ),
+                              ///================================Contact No========================
+                              CustomProfileItem(
+                                title: "${AppStrings.contactNumber}:",
+                                subTitle: data.phoneNumber ?? "",
+                              ),
 
-                        ///================================Contact No========================
-                        const CustomProfileItem(
-                          title: "${AppStrings.contactNumber}:",
-                          subTitle: '',
-                        ),
+                              ///================================CPR========================
+                              CustomProfileItem(
+                                title: '${AppStrings.cprNumber}:',
+                                subTitle: data.cprNumber ?? "",
+                              ),
 
-                        ///================================Address========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.address}:',
-                          subTitle: '',
-                        ),
+                              ///================================Passport:  ========================
+                              CustomProfileItem(
+                                title: '${AppStrings.passportNumber}:',
+                                subTitle: data.passportNumber ?? "",
+                              ),
 
-                        ///================================CPR========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.cPR}:',
-                          subTitle: ' ',
-                        ),
+                              ///================================jobType  ========================
+                              CustomProfileItem(
+                                title: '${AppStrings.jobType}:',
+                                subTitle: data.jobType ?? "",
+                              ),
 
-                        ///================================Passport:  ========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.passport}:',
-                          subTitle: '',
-                        ),
+                              ///================================joiningDate  ========================
+                              CustomProfileItem(
+                                title: AppStrings.joiningDate,
+                                subTitle: DateConverter.estimatedDate(
+                                    data.createdAt!.toLocal()),
+                              ),
 
-                        ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.drivingLicense}:',
-                          subTitle: '',
-                        ),
+                              ///================================Duty Time  ========================
+                              CustomProfileItem(
+                                title: 'Duty Time:',
+                                subTitle: data.dutyTime??"",
+                              ),
 
-                        ///================================jobType  ========================
-                        const CustomProfileItem(
-                          title: '${AppStrings.jobType}:',
-                          subTitle: '',
-                        ),
+                              ///================================Break Time  ========================
+                              CustomProfileItem(
+                                title: 'Break Start Time:',
+                                subTitle: "data.",
+                              ),
 
-                        ///================================joiningDate  ========================
-                        const CustomProfileItem(
-                          title: AppStrings.joiningDate,
-                          subTitle: '',
-                        ),
+                              ///================================Break End Time  ========================
+                              CustomProfileItem(
+                                title: 'Break End Time:',
+                                subTitle: "data.",
+                              ),
 
-                        ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Duty Time',
-                          subTitle: '',
-                        ),
+                              ///================================drivingLicense  ========================
+                              CustomProfileItem(
+                                title: 'Working Day:',
+                                subTitle: data.workingDay != null ? data.workingDay!.join(", ") : "N/A",
+                              ),
 
-                        ///================================drivingLicense  ========================
-                        const CustomProfileItem(
-                          title: 'Working Day',
-                          subTitle: '',
-                        ),
 
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
 
-                        ///==============================Change Password=============
-                        CustomButton(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.changePasswordScreen);
-                          },
-                          fillColor: AppColors.blue50,
-                          title: AppStrings.changePassword,
-                        )   ,
-                           SizedBox(height: 20.h,),
-                        ///==============================Log Out=============
-                        CustomButton(
-                          onTap: ()async {
-                            await SharePrefsHelper.remove(
-                                AppConstants.token);
-                            await SharePrefsHelper.remove(
-                                AppConstants.profileID);
-                            SharePrefsHelper.setBool(AppConstants.rememberMe, false);
-                            SharePrefsHelper.setBool(AppConstants.isOwner, false);
-                            Get.toNamed(AppRoutes.choseOnBoardingScreen);
-                          },
-                          fillColor: AppColors.blue50,
-                          title: AppStrings.logOut.tr,
-                        )
-                      ],
-                    ),
-                  ),
-                )
+                              ///==============================Change Password=============
+                              CustomButton(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.changePasswordScreen);
+                                },
+                                fillColor: AppColors.blue50,
+                                title: AppStrings.changePassword,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+
+                              ///==============================Log Out=============
+                              CustomButton(
+                                onTap: () async {
+                                  await SharePrefsHelper.remove(
+                                      AppConstants.token);
+                                  await SharePrefsHelper.remove(
+                                      AppConstants.profileID);
+                                  SharePrefsHelper.setBool(
+                                      AppConstants.rememberMe, false);
+                                  SharePrefsHelper.setBool(
+                                      AppConstants.isOwner, false);
+                                  Get.toNamed(AppRoutes.choseOnBoardingScreen);
+                                },
+                                fillColor: AppColors.blue50,
+                                title: AppStrings.logOut.tr,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                  }
+                })
               ],
             ),
           ),
@@ -211,5 +237,3 @@ class EmployeeProfileScreen extends StatelessWidget {
     );
   }
 }
-
-

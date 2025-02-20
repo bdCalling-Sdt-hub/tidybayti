@@ -18,11 +18,11 @@ class ProfileModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "statusCode": statusCode,
-    "success": success,
-    "message": message,
-    "data": data?.toJson(),
-  };
+        "statusCode": statusCode,
+        "success": success,
+        "message": message,
+        "data": data?.toJson(),
+      };
 
   static ProfileModel fromRawJson(String str) =>
       ProfileModel.fromJson(json.decode(str));
@@ -41,53 +41,71 @@ class ProfileData {
   final DateTime? updatedAt;
   final String? address;
   final String? phoneNumber;
+  final String? cprNumber;
+  final String? jobType;
+  final String? dutyTime;
+  final String? passportNumber;
   final String? profileImage;
 
-  ProfileData({
-    this.id,
-    this.authId,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.workingDay,
-    this.createdAt,
-    this.updatedAt,
-    this.address,
-    this.phoneNumber,
-    this.profileImage,
-  });
+  ProfileData(
+      {this.id,
+      this.authId,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.workingDay,
+      this.createdAt,
+      this.updatedAt,
+      this.address,
+      this.phoneNumber,
+      this.profileImage,
+      this.cprNumber,
+      this.passportNumber,
+      this.jobType,
+      this.dutyTime
+      });
 
   factory ProfileData.fromJson(Map<String, dynamic> json) => ProfileData(
-    id: json["_id"],
-    authId: json["authId"] != null ? AuthId.fromJson(json["authId"]) : null,
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    email: json["email"],
-    workingDay: json["workingDay"] != null
-        ? List<dynamic>.from(json["workingDay"])
-        : [],
-    createdAt:
-    json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : null,
-    updatedAt:
-    json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : null,
-    address: json["address"],
-    phoneNumber: json["phoneNumber"],
-    profileImage: json["profile_image"],
-  );
+        id: json["_id"],
+        authId: json["authId"] != null ? AuthId.fromJson(json["authId"]) : null,
+        firstName: json["firstName"],
+        cprNumber: json["CPRNumber"],
+        passportNumber: json["passportNumber"],
+        jobType: json["jobType"],
+        dutyTime: json["dutyTime"],
+        lastName: json["lastName"],
+        email: json["email"],
+        workingDay: json["workingDay"] != null
+            ? List<dynamic>.from(json["workingDay"])
+            : [],
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
+        address: json["address"],
+        phoneNumber: json["phoneNumber"],
+        profileImage: json["profile_image"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "authId": authId?.toJson(),
-    "firstName": firstName,
-    "lastName": lastName,
-    "email": email,
-    "workingDay": workingDay ?? [],
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "address": address,
-    "phoneNumber": phoneNumber,
-    "profile_image": profileImage,
-  };
+        "_id": id,
+        "authId": authId?.toJson(),
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "CPRNumber": cprNumber,
+        "dutyTime": dutyTime,
+        "passportNumber": passportNumber,
+        "jobType": jobType,
+        "workingDay": workingDay ?? [],
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "address": address,
+        "phoneNumber": phoneNumber,
+        "profile_image": profileImage,
+      };
 }
 
 class AuthId {
@@ -114,28 +132,30 @@ class AuthId {
   });
 
   factory AuthId.fromJson(Map<String, dynamic> json) => AuthId(
-    id: json["_id"],
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    email: json["email"],
-    role: json["role"],
-    isBlocked: json["isBlocked"],
-    isActive: json["isActive"],
-    createdAt:
-    json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : null,
-    updatedAt:
-    json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : null,
-  );
+        id: json["_id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        email: json["email"],
+        role: json["role"],
+        isBlocked: json["isBlocked"],
+        isActive: json["isActive"],
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-    "firstName": firstName,
-    "lastName": lastName,
-    "email": email,
-    "role": role,
-    "isBlocked": isBlocked,
-    "isActive": isActive,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-  };
+        "_id": id,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "role": role,
+        "isBlocked": isBlocked,
+        "isActive": isActive,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
 }
