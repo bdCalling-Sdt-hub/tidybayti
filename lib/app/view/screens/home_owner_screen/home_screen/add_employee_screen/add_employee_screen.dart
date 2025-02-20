@@ -208,6 +208,11 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                         height: 15.h,
                       ),
 
+
+                      SizedBox(
+                        height: 15.h,
+                      ),
+
                       ///==================================✅✅End Time✅✅=======================
 
                       CustomTextField(
@@ -234,7 +239,51 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                       SizedBox(
                         height: 15.h,
                       ),
+                      ///==================================✅✅Break Start Time✅✅=======================
+                      CustomTextField(
+                        textEditingController: controller.breakStartTimeController,
+                        readOnly: true,
+                        hintText: "Start Break Time".tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time),
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
 
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.breakStartTimeController.text = formattedTime;
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      ///==================================✅✅Break  End Time✅✅=======================
+                      CustomTextField(
+                        textEditingController: controller.breakEndTimeController,
+                        readOnly: true,
+                        hintText: "Start End Time".tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time),
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.breakEndTimeController.text = formattedTime;
+                          }
+                        },
+                      ),SizedBox(
+                        height: 15.h,
+                      ),
                       ///==================================✅✅Select working days✅✅=======================
 
                       const Padding(
@@ -307,8 +356,8 @@ class _AddEmployeeScreenState extends State<AddEmployeeScreen> {
                                   workingDay: controller.getSelectedDays(),
                                   offDay: controller.getSelectedOffDays(),
                                   context: context,
-                                  breakTimeStar: '01:00 PM',
-                                  breakTimeEnd: '02:00 PM',
+                                  breakTimeStar: controller.breakStartTimeController.text,
+                                  breakTimeEnd: controller.breakEndTimeController.text,
                                 );
                               },
                               fillColor: Colors.white,
