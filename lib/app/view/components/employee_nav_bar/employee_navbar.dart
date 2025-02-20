@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
@@ -83,7 +82,7 @@ class _UserNavBarState extends State<EmployeeNavbar> {
           Get.to(() => const EmployeeAdditionalScreen());
           break;
         case 2:
-          Get.to(() => const EmployeeProfileScreen());
+          Get.to(() =>  EmployeeProfileScreen());
 
       }
     }

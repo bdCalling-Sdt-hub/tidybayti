@@ -17,9 +17,11 @@ class SignInScreen extends StatelessWidget {
 
   final AuthController authController = Get.find<AuthController>();
   final formKey = GlobalKey<FormState>();
+  final String role = Get.arguments ?? "Unknown";
 
   @override
   Widget build(BuildContext context) {
+    print(role);
     return Scaffold(
       body: Obx(
         () {
@@ -71,16 +73,16 @@ class SignInScreen extends StatelessWidget {
                           hintText: AppStrings.enterPassword,
                           isPassword: true,
                           textEditingController: authController.passwordController,
-                          // validator: (value) {
-                          //   if (value!.isEmpty) {
-                          //     return AppStrings.passwordMustHaveEightWith;
-                          //   } else if (value.length < 8 ||
-                          //       !AppStrings.passRegexp.hasMatch(value)) {
-                          //     return AppStrings.passwordLengthAndContain;
-                          //   } else {
-                          //     return null;
-                          //   }
-                          // },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return AppStrings.passwordMustHaveEightWith;
+                            } else if (value.length < 8 ||
+                                !AppStrings.passRegexp.hasMatch(value)) {
+                              return AppStrings.passwordLengthAndContain;
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
 
                         ///============================Forgot Password================
@@ -102,7 +104,9 @@ class SignInScreen extends StatelessWidget {
                               onTap: () {
                               },
                             ),
+                            role== "Employee"?const SizedBox():
                             const Spacer(),
+                            role== "Employee"?const SizedBox():
                             GestureDetector(
                               onTap: () {
                                 Get.toNamed(AppRoutes.forgotPasswordScreen);
@@ -141,6 +145,7 @@ class SignInScreen extends StatelessWidget {
                         ),
 
                         ///==============================Dont Have=============
+                        role== "Employee"?const SizedBox():
                         CustomRichTextLink(
                           firstText: AppStrings.dontHaveAnyAccount.tr,
                           linkText: AppStrings.signUp.tr,

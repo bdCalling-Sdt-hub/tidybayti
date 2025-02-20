@@ -54,52 +54,65 @@ final addressController = TextEditingController();
   ///==================================✅✅Profile Update✅✅=======================
   RxString image = "".obs;
 
-  Rx<File> imageFile = File("").obs;
-
-  selectImage() async {
+  Future<void> selectImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? getImages =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 15);
-    if (getImages != null) {
-      imageFile.value = File(getImages.path);
-      image.value = getImages.path;
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      image.value = pickedFile.path;
+      print("✅ Selected Image Path: ${pickedFile.path}");
+    } else {
+      print("❌ No Image Selected");
     }
   }
 
   RxBool updateProfileLoading = false.obs;
 
   updateProfile() async {
-
     updateProfileLoading.value = true;
 
     var body = {
-      "firstName": firstNameController.value.text,
-      "lastName": lastNameController.value.text,
-      "phoneNumber": phoneNumberController.value.text,
-      "address": addressController.value.text,
+      "firstName": firstNameController.text,
+      "lastName": lastNameController.text,
+      "phoneNumber": phoneNumberController.text,
+      "address": addressController.text,
     };
 
-    var response = image.isEmpty
+    // Ensure correct file path
+    if (image.value.isNotEmpty) {
+      File file = File(image.value);
+
+      if (!file.existsSync()) {
+        print("🚨 File Not Found: ${image.value}");
+        updateProfileLoading.value = false;
+        return;
+      }
+    }
+
+    var response = image.value.isEmpty
         ? await apiClient.patch(
-        body: body,
-        url:  ApiUrl.updateProfile)
-        : await apiClient.multipartRequest(
-        multipartBody: [
-          MultipartBody("profile_image", File(image.value))
-        ],
+      body: body,
       url: ApiUrl.updateProfile,
-        reqType: "PATCH");
+    )
+        : await apiClient.multipartRequest(
+      multipartBody: [
+        MultipartBody("profile_image", File(image.value))
+      ],
+      url: ApiUrl.updateProfile,
+      reqType: "PATCH",
+    );
 
     if (response.statusCode == 200) {
       getProfile();
       Get.back();
-    toastMessage(message: 'message');
+      toastMessage(message: 'Profile updated successfully');
     } else {
       ApiChecker.checkApi(response);
     }
 
     updateProfileLoading.value = false;
   }
+
 
 
 

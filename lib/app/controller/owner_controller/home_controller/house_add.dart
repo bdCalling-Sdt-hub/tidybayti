@@ -68,7 +68,7 @@ class HouseAdd {
         homeController.roomNameController.clear();
 
         homeController.rooms.clear();
-        Get.toNamed(AppRoutes.homeScreen);
+        Get.offAllNamed(AppRoutes.homeScreen);
         toastMessage(message: "✅ Room created successfully!");
         print("✅ Room created successfully");
         print(responseData);
@@ -144,7 +144,7 @@ class HouseAdd {
       homeController.setLoading(false);
 
       if (response.statusCode == 200) {
-        Get.back();
+        Get.offAllNamed(AppRoutes.homeScreen);
         homeController.getHouseRoom(houseId: houseId);
         toastMessage(message: "✅ Room created successfully!");
         print("✅ Room created successfully");

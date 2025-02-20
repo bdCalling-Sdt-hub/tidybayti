@@ -137,7 +137,7 @@ class AppRoutes {
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: onboardScreen, page: () => const OnboardScreen()),
     GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
-    GetPage(name: homeOwnerChoseAuth, page: () => const HomeOwnerChoseAuth()),
+    GetPage(name: homeOwnerChoseAuth, page: () =>  HomeOwnerChoseAuth()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
     GetPage(name: signUpOtp, page: () =>  SignUpOtp()),
     GetPage(name: forgotPasswordScreen, page: () =>  ForgotPasswordScreen()),
@@ -152,7 +152,7 @@ class AppRoutes {
     GetPage(name: allEmployeeShow, page: () =>  AllEmployeeShow()),
     GetPage(name: employeeDetails, page: () =>  const EmployeeDetails()),
     GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
-    GetPage(name: roomDetailsScreen, page: () =>  RoomDetailsScreen()),
+    GetPage(name: roomDetailsScreen, page: () =>  const RoomDetailsScreen()),
     GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
     GetPage(name: assignWorkScheduleScreen, page: () => const AssignWorkScheduleScreen()),
     GetPage(name: assignWorkScreen, page: () => const AssignWorkScreen()),
@@ -178,8 +178,8 @@ class AppRoutes {
     ///===========================Schedule Screen=====================
     GetPage(name: allTaskScreen, page: () =>  AllTaskScreen()),
     GetPage(name: completedScreen, page: () => const CompletedScreen()),
-    GetPage(name: ongoingTask, page: () =>  OngoingTask()),
-    GetPage(name: pendingTask, page: () =>  PendingTask()),
+    GetPage(name: ongoingTask, page: () =>  const OngoingTask()),
+    GetPage(name: pendingTask, page: () =>  const PendingTask()),
     GetPage(name: groceryTask, page: () => const GroceryTask()),
     GetPage(name: addGroceryTask, page: () => const AddGroceryTask()),
     GetPage(name: employeeList, page: () => const EmployeeList()),
@@ -196,7 +196,7 @@ class AppRoutes {
     GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen()),
-    GetPage(name: createTask, page: () =>  CreateTask()),
+    GetPage(name: createTask, page: () =>  const CreateTask()),
 
 
 
@@ -217,7 +217,7 @@ class AppRoutes {
     ///======================Employee section=========================
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
     GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
-    GetPage(name: employeeProfileScreen, page: () => const EmployeeProfileScreen()),
+    GetPage(name: employeeProfileScreen, page: () =>  EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
     GetPage(name: employeeNotificationScreen, page: () =>  const EmployeeNotificationScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
