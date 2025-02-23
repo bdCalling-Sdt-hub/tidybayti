@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wallet_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
@@ -67,7 +68,8 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                 final budget = controller.budgetDetailsData.value;
                 final amount = budget.amount?.toDouble() ?? 0.0;
                 final currentExpense = budget.currentExpense?.toDouble() ?? 0.0;
-                final progress = amount > 0 ? (amount - currentExpense) / amount : 0.0;
+                final progress =
+                    amount > 0 ? (amount - currentExpense) / amount : 0.0;
                 final expenses = budget.expenses ?? [];
 
                 return SingleChildScrollView(
@@ -117,11 +119,13 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                             /// ✅ Budget Date
                             Row(
                               children: [
-                                const Icon(Icons.calendar_month, color: Colors.grey),
+                                const Icon(Icons.calendar_month,
+                                    color: Colors.grey),
                                 const SizedBox(width: 5),
                                 CustomText(
                                   text: budget.budgetDateTime != null
-                                      ? DateConverter.estimatedDate(budget.budgetDateTime!.toLocal())
+                                      ? DateConverter.estimatedDate(
+                                          budget.budgetDateTime!.toLocal())
                                       : "N/A",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
@@ -144,14 +148,16 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                             Row(
                               children: [
                                 CustomText(
-                                  text: "Cost: \$${currentExpense.toStringAsFixed(2)}",
+                                  text:
+                                      "Cost: \$${currentExpense.toStringAsFixed(2)}",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.red,
                                 ),
                                 const Spacer(),
                                 CustomText(
-                                  text: "Left: \$${(amount - currentExpense).toStringAsFixed(2)}",
+                                  text:
+                                      "Left: \$${(amount - currentExpense).toStringAsFixed(2)}",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.green,
@@ -174,52 +180,75 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                       /// ✅ Expense List
                       expenses.isEmpty
                           ? Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 50.h),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.money_off, size: 80, color: Colors.grey),
-                              SizedBox(height: 10.h),
-                              CustomText(
-                                text: "No Expense Found",
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.grey,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 50.h),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.money_off,
+                                        size: 80, color: Colors.grey),
+                                    SizedBox(height: 10.h),
+                                    CustomText(
+                                      text: "No Expense Found",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18.sp,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      )
+                            )
                           : ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: expenses.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(15),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.house, color: Colors.grey),
-                                SizedBox(width: 10.w),
-                                CustomText(
-                                  text: budget.category ?? "",
-                                  color: AppColors.dark300,
-                                  fontSize: 16.h,
-                                ),
-                                const Spacer(),
-                                CustomText(
-                                  text: "\$${expenses[index].amount?.toStringAsFixed(2) ?? '0'}",
-                                  color: AppColors.dark300,
-                                  fontSize: 16.h,
-                                ),
-                              ],
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: expenses.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  color: Colors.white,
+                                  padding: const EdgeInsets.all(15),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Icon(Icons.house,
+                                          color: Colors.grey),
+                                      SizedBox(width: 10.w),
+                                      CustomText(
+                                        text: budget.category ?? "",
+                                        color: AppColors.dark300,
+                                        fontSize: 16.h,
+                                      ),
+                                      const Spacer(),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          IconButton(
+                                              onPressed: () {
+                                                GlobalAlert.showDeleteDialog(
+                                                    context,
+                                                    () {},
+                                                    'Remove Expense');
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.grey,
+                                              )),
+                                          CustomText(
+                                            text:
+                                                "\$${expenses[index].amount?.toStringAsFixed(2) ?? '0'}",
+                                            color: AppColors.dark300,
+                                            fontSize: 16.h,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
 
                       SizedBox(height: 20.h),
                     ],
@@ -236,7 +265,8 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: CustomButton(
-            onTap: () => Get.toNamed(AppRoutes.addExpenseScreen, arguments: [id, categoryName]),
+            onTap: () => Get.toNamed(AppRoutes.addExpenseScreen,
+                arguments: [id, categoryName]),
             fillColor: Colors.white,
             title: AppStrings.addExpanse.tr,
           ),
