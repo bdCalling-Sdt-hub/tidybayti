@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/get_room_model.dart';
@@ -112,12 +111,13 @@ class HomeController extends GetxController {
     refresh();
     try {
       final response =
-          await apiClient.get(url: ApiUrl.myAllHouse, showResult: true);
+          await apiClient.get(url: ApiUrl.myAllHouse, showResult: true,isBasic: false);
+      print('Before 200==================${response.statusCode}');
 
       if (response.statusCode == 200) {
         myHouseData.value = MyHouseData.fromJson(response.body["data"]);
 
-        print('statusCode==================${response.statusCode}');
+        print('After 200==================${response.statusCode}');
         print(
             'House Length==================${myHouseData.value.houses?.length}');
         setRxRequestStatus(Status.completed);

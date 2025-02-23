@@ -19,7 +19,6 @@ import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_networ
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-import 'home_screen_inner_widgets/employee_show.dart';
 import 'home_screen_inner_widgets/seel_all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -64,200 +63,268 @@ class _HouseTypeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SingleChildScrollView(
-            padding: EdgeInsets.symmetric(vertical: 64.h, horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ///==================================✅✅House Add✅✅=======================
-                Obx(
-                  () => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          homeController.isExpanded.value =
-                              !homeController.isExpanded.value;
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            /// ✅ Display Selected House Name
-                            CustomText(
-                              text: homeController.selectedHouseName.value,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
-                              color: AppColors.dark400,
-                            ),
-                            Icon(
-                              homeController.isExpanded.value
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
-                              color: Colors.black,
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(
-                                    AppRoutes.employeeNotificationScreen);
-                              },
-                              child: const Icon(
-                                Icons.notification_add,
+          RefreshIndicator(
+            onRefresh: () async {
+              // Refresh employee and house data.
+              // await employeeController.getEmployee();
+              await homeController.myAllHouse();
+
+              // If a house is selected, refresh its room data.
+              if (homeController.selectedHouseId.value.isNotEmpty) {
+                await homeController.getHouseRoom(
+                  houseId: homeController.selectedHouseId.value,
+                );
+              }
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(vertical: 64.h, horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ///==================================✅✅House Add✅✅=======================
+                  Obx(
+                    () => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            homeController.isExpanded.value =
+                                !homeController.isExpanded.value;
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              /// ✅ Display Selected House Name
+                              CustomText(
+                                text: homeController.selectedHouseName.value,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20,
+                                color: AppColors.dark400,
+                              ),
+                              Icon(
+                                homeController.isExpanded.value
+                                    ? Icons.keyboard_arrow_up
+                                    : Icons.keyboard_arrow_down,
                                 color: Colors.black,
                               ),
-                            ),
-                          ],
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(
+                                      AppRoutes.employeeNotificationScreen);
+                                },
+                                child: const Icon(
+                                  Icons.notification_add,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      if (homeController.isExpanded.value) ...[
-                        SizedBox(
-                          height: 150,
-                          // ✅ Dropdown Height Increased for "Add House" Option
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  title: GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes
-                                          .houseInformationScreen); // ✅ Navigate to Add House Screen
-                                    },
-                                    child: const Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                        if (homeController.isExpanded.value) ...[
+                          SizedBox(
+                            height: 150,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ListTile(
+                                    title: GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes
+                                            .houseInformationScreen); // ✅ Navigate to Add House Screen
+                                      },
+                                      child: const Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Icon(Icons.add, color: Colors.blue),
+                                          SizedBox(width: 8),
+                                          CustomText(
+                                            textAlign: TextAlign.start,
+                                            text: "Add House",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.blue,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// ✅ Show House List (if available)
+                                  if (homeController.myHouseData.value.houses !=
+                                          null &&
+                                      homeController.myHouseData.value.houses!
+                                          .isNotEmpty) ...[
+                                    ...homeController.myHouseData.value.houses!
+                                        .map((house) {
+                                      return ListTile(
+                                        title: GestureDetector(
+                                          onTap: () {
+                                            /// ✅ Set Selected House ID & Name
+                                            homeController.selectedHouseId
+                                                .value = house.id ?? '';
+                                            homeController
+                                                    .selectedHouseName.value =
+                                                house.name ?? 'No Name';
+
+                                            /// ✅ Fetch Rooms for Selected House
+                                            homeController.getHouseRoom(
+                                              houseId: homeController
+                                                  .selectedHouseId.value,
+                                            );
+
+                                            homeController.isExpanded.value =
+                                                false; // ✅ Close Dropdown
+                                          },
+                                          child: CustomText(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            textAlign: TextAlign.start,
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            text: house.name ?? "No Name",
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ] else
+                                    Center(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                         var data = homeController.myHouseData.value.houses?[1];
+
+                                         print(data?.name);
+                                        },
+                                        child: CustomText(
+                                          text: "No Houses Found",
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 50.h),
+
+                  ///==================================✅✅All Room✅✅=======================
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 3,
+                    child: Obx(() {
+                      switch (homeController.rxRequestStatus.value) {
+                        case Status.loading:
+                          return const CustomLoader(); // Show loading indicator
+                        case Status.internetError:
+                        case Status.error:
+                          return GestureDetector(
+                            onTap: () {
+                              homeController.getHouseRoom(
+                                houseId: homeController.selectedHouseId.value,
+                              );
+                            },
+                            child: const CustomText(
+                              textAlign: TextAlign.center,
+                              top: 25,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              text: 'No Internet',
+                              color: Colors.black,
+                            ),
+                          );
+                        case Status.completed:
+
+                          /// ✅ Get Room Data
+                          final List<dynamic> rooms =
+                              homeController.houseRoomData.value.rooms ?? [];
+
+                          /// ✅ Add a Custom "Add" Button at index 0
+                          return GridView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 14,
+                              mainAxisExtent: 120,
+                            ),
+                            itemCount: rooms.length + 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index == 0) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    if (homeController
+                                        .selectedHouseId.value.isEmpty) {
+                                      /// ✅ Show a message if no house is selected
+                                      Get.snackbar(
+                                        "No House Selected",
+                                        "Please select a house before adding a room.",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                      return;
+                                    }
+
+                                    /// ✅ Show Dialog if House is Selected
+                                    showDialoge(context);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.employeeCardColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Color(0x14000000),
+                                          blurRadius: 4,
+                                          offset: Offset(0, 2),
+                                          spreadRadius: 0,
+                                        ),
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.h, horizontal: 12.w),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.add, color: Colors.blue),
-                                        SizedBox(width: 8),
-                                        CustomText(
-                                          textAlign: TextAlign.start,
-                                          text: "Add House",
+                                        const CustomImage(
+                                          imageSrc: AppIcons.add,
+                                          imageType: ImageType.svg,
+                                        ),
+                                        SizedBox(height: 8.h),
+                                        const CustomText(
+                                          text: "Add Room",
+                                          color: AppColors.dark400,
+                                          fontWeight: FontWeight.w400,
                                           fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.blue,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
+                                );
+                              }
 
-                                /// ✅ Show House List (if available)
-                                if (homeController.myHouseData.value.houses !=
-                                        null &&
-                                    homeController.myHouseData.value.houses!
-                                        .isNotEmpty) ...[
-                                  ...homeController.myHouseData.value.houses!
-                                      .map((house) {
-                                    return ListTile(
-                                      title: GestureDetector(
-                                        onTap: () {
-                                          /// ✅ Set Selected House ID & Name
-                                          homeController.selectedHouseId.value =
-                                              house.id ?? '';
-                                          homeController.selectedHouseName
-                                              .value = house.name ?? 'No Name';
-
-                                          /// ✅ Fetch Rooms for Selected House
-                                          homeController.getHouseRoom(
-                                              houseId: homeController
-                                                  .selectedHouseId.value);
-
-                                          homeController.isExpanded.value =
-                                              false; // ✅ Close Dropdown
-                                        },
-                                        child: CustomText(
-                                          decoration: TextDecoration.underline,
-                                          textAlign: TextAlign.start,
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                          text: house.name ?? "No Name",
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ] else
-                                  const Center(
-                                    child: CustomText(
-                                      text: "No Houses Found",
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 50.h),
-
-                ///==================================✅✅All Room✅✅=======================
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: Obx(() {
-                    switch (homeController.rxRequestStatus.value) {
-                      case Status.loading:
-                        return const CustomLoader(); // Show loading indicator
-
-                      case Status.internetError:
-                      case Status.error:
-                        return GestureDetector(
-                          onTap: () {
-                            homeController.getHouseRoom(
-                                houseId: homeController.selectedHouseId.value);
-                          },
-                          child: const CustomText(
-                            textAlign: TextAlign.center,
-                            top: 25,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            text: 'No Internet',
-                            color: Colors.black,
-                          ),
-                        );
-
-                      case Status.completed:
-
-                        /// ✅ Get Room Data
-                        final List<dynamic> rooms =
-                            homeController.houseRoomData.value.rooms ?? [];
-
-                        /// ✅ Add a Custom "Add" Button at index 0
-                        return GridView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 14,
-                            mainAxisExtent: 120,
-                          ),
-                          itemCount: rooms.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 0) {
+                              /// ✅ Display API Data for Other Items
+                              final data = rooms[index - 1];
                               return GestureDetector(
                                 onTap: () {
-                                  if (homeController
-                                      .selectedHouseId.value.isEmpty) {
-                                    /// ✅ Show a message if no house is selected
-                                    Get.snackbar(
-                                      "No House Selected",
-                                      "Please select a house before adding a room.",
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                    );
-                                    return;
-                                  }
-
-                                  /// ✅ Show Dialog if House is Selected
-                                  showDialoge(context);
+                                  Get.toNamed(AppRoutes.roomDetailsScreen,
+                                      arguments: [
+                                        data.id ?? "",
+                                        data.name ?? ""
+                                      ]);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -277,13 +344,15 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const CustomImage(
-                                        imageSrc: AppIcons.add,
-                                        imageType: ImageType.svg,
+                                      CustomNetworkImage(
+                                        imageUrl:
+                                            "${ApiUrl.networkUrl}${data.roomImage ?? ""}",
+                                        height: 25,
+                                        width: 25,
                                       ),
                                       SizedBox(height: 8.h),
-                                      const CustomText(
-                                        text: "Add Room",
+                                      CustomText(
+                                        text: data.name ?? "",
                                         color: AppColors.dark400,
                                         fontWeight: FontWeight.w400,
                                         fontSize: 16,
@@ -293,73 +362,21 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               );
-                            }
+                            },
+                          );
+                      }
+                    }),
+                  ),
+                  SizedBox(height: 20.h),
 
-                            /// ✅ Display API Data for Other Items
-                            final data = rooms[index - 1];
+                  ///==================================✅✅See All✅✅=======================
+                  const SeeAll(),
+                  SizedBox(height: 30.h),
 
-                            return GestureDetector(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.roomDetailsScreen,
-                                    arguments: [
-                                      data.id ?? "",
-                                      data.name ?? ""
-                                    ]);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.employeeCardColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color(0x14000000),
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2),
-                                      spreadRadius: 0,
-                                    ),
-                                  ],
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 16.h, horizontal: 12.w),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    CustomNetworkImage(
-                                      imageUrl:
-                                          "${ApiUrl.networkUrl}${data.roomImage ?? ""}",
-                                      height: 25,
-                                      width: 25,
-                                    ),
-                                    SizedBox(height: 8.h),
-                                    CustomText(
-                                      text: data.name ?? "",
-                                      color: AppColors.dark400,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                    }
-                  }),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-
-                ///==================================✅✅See All✅✅=======================
-                const SeeAll(),
-                SizedBox(
-                  height: 30.h,
-                ),
-
-                ///==================================✅✅Employee Show✅✅=======================
-                EmployeeShow(employeeController: employeeController)
-              ],
+                  ///==================================✅✅Employee Show✅✅=======================
+                  // EmployeeShow(employeeController: employeeController)
+                ],
+              ),
             ),
           ),
         ],
