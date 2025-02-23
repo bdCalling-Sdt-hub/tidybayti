@@ -48,6 +48,8 @@ class SingleEmployeeData {
   final String? passportExpDate;
   final String? note;
   final String? dutyTime;
+  final String? breakTimeStart;
+  final String? breakTimeEnd;
   final List<String>? workingDay;
   final String? offDay;
   final DateTime? createdAt;
@@ -77,6 +79,8 @@ class SingleEmployeeData {
     this.updatedAt,
     this.v,
     this.employeeId,
+    this.breakTimeStart,
+    this.breakTimeEnd
   });
 
   factory SingleEmployeeData.fromRawJson(String str) => SingleEmployeeData.fromJson(json.decode(str));
@@ -99,6 +103,8 @@ class SingleEmployeeData {
     passportExpDate: json["passportExpDate"],
     note: json["note"],
     dutyTime: json["dutyTime"],
+    breakTimeStart: json["breakTimeStart"],
+    breakTimeEnd: json["breakTimeEnd"],
     workingDay: json["workingDay"] == null ? [] : List<String>.from(json["workingDay"]!.map((x) => x)),
     offDay: json["offDay"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
@@ -123,6 +129,8 @@ class SingleEmployeeData {
     "passportExpDate": passportExpDate,
     "note": note,
     "dutyTime": dutyTime,
+    "breakTimeStart": breakTimeStart,
+    "breakTimeEnd": breakTimeEnd,
     "workingDay": workingDay == null ? [] : List<dynamic>.from(workingDay!.map((x) => x)),
     "offDay": offDay,
     "createdAt": createdAt?.toIso8601String(),

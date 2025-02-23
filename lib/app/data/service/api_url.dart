@@ -48,7 +48,8 @@ class ApiUrl {
 
   ///==================================✅✅Budget✅✅=======================
   static const budgetCreate = "$baseUrl/wallet/post-budget";
-  static const getMyBudget = "$baseUrl/wallet/get-my-budget";
+  static const getMyBudget = "$baseUrl/wallet/get-my-budget?limit=100";
+  static const getCategoryBudget = "$baseUrl/wallet/get-budget-category";
   static const upDateBudget = "$baseUrl/wallet/update-budget";
   static const deleteBudget = "$baseUrl/wallet/delete-budget";
   static const expenseCreate = "$baseUrl/wallet/post-expense";

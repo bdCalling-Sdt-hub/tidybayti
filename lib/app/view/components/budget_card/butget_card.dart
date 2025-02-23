@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
-
 class BudgetCard extends StatelessWidget {
-  final IconData icon;
+  final String image;
   final String title;
   final double amount;
   final double progress;
@@ -18,7 +18,7 @@ class BudgetCard extends StatelessWidget {
 
   const BudgetCard({
     super.key,
-    required this.icon,
+    required this.image,
     required this.title,
     required this.amount,
     required this.progress,
@@ -46,11 +46,8 @@ class BudgetCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          icon,
-                          size: 20.w,
-                          color: iconColor,
-                        ),
+                        CustomNetworkImage(
+                            imageUrl:image, height: 20, width: 20),
                         SizedBox(width: 8.w),
                         CustomText(
                           text: title,
@@ -70,7 +67,8 @@ class BudgetCard extends StatelessWidget {
                     SizedBox(height: 8.h),
                     LinearPercentIndicator(
                       lineHeight: 8.h,
-                      percent: progress, // Dynamic progress value
+                      percent: progress,
+                      // Dynamic progress value
                       backgroundColor: backgroundColor,
                       progressColor: progressColor,
                       barRadius: const Radius.circular(8),
@@ -82,10 +80,8 @@ class BudgetCard extends StatelessWidget {
               GestureDetector(
                 onTap: onTap,
                 child: Container(
-                 decoration: BoxDecoration(
-                   color: AppColors.blue900,
-                   shape: BoxShape.circle
-                 ),
+                  decoration: BoxDecoration(
+                      color: AppColors.blue900, shape: BoxShape.circle),
                   child: Icon(
                     Icons.chevron_right,
                     color: Colors.white,
@@ -95,7 +91,9 @@ class BudgetCard extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10.h,)
+        SizedBox(
+          height: 10.h,
+        )
       ],
     );
   }

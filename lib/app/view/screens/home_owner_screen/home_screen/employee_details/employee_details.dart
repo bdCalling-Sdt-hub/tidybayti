@@ -66,23 +66,24 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
 
                 CustomMenuAppbar(
                   onTap: () {
-                    Get.toNamed(AppRoutes.editEmployeeDetails,
-                        arguments: {
-                          "userId": data.id,
-                          "AuthId": data.authId,
-                          "firstName": data.firstName,
-                          "lastName": data.lastName,
-                          "JobType": data.jobType,
-                          "CprNumber": data.cprNumber,
-                          "CprExpireDate": data.cprExpDate,
-                          "PassportNumber": data.passportNumber,
-                          "PassportExpireDate": data.passportExpDate,
-                          "Note": data.note,
-                          "phoneNumber": data.phoneNumber,
-                          "StartTime": data.dutyTime,
-                          "endTime": data.dutyTime,
-                          "ProfileImage": data.profileImage,
-                        });
+                    Get.toNamed(AppRoutes.editEmployeeDetails, arguments: {
+                      "userId": data.id,
+                      "AuthId": data.authId,
+                      "firstName": data.firstName,
+                      "lastName": data.lastName,
+                      "JobType": data.jobType,
+                      "CprNumber": data.cprNumber,
+                      "CprExpireDate": data.cprExpDate,
+                      "PassportNumber": data.passportNumber,
+                      "PassportExpireDate": data.passportExpDate,
+                      "Note": data.note,
+                      "phoneNumber": data.phoneNumber,
+                      "StartTime": data.dutyTime,
+                      "endTime": data.dutyTime,
+                      "breakTimeStart": data.breakTimeStart,
+                      "breakTimeEnd": data.breakTimeEnd,
+                      "ProfileImage": data.profileImage,
+                    });
                   },
                   isEdit: true,
                   title: AppStrings.employeeDetails.tr,
@@ -221,6 +222,18 @@ class _EmployeeDetailsState extends State<EmployeeDetails> {
                             CustomProfileItem(
                               title: AppStrings.dutyTime.tr,
                               subTitle: data.dutyTime ?? "",
+                            ),
+
+                            ///================================BreakTime  ========================
+                            CustomProfileItem(
+                              title: "Break Start Time: ".tr,
+                              subTitle: data.breakTimeStart ?? "",
+                            ),
+
+                            ///================================BreakEndTime  ========================
+                            CustomProfileItem(
+                              title: "Break End Time: ".tr,
+                              subTitle: data.breakTimeEnd ?? "",
                             ),
 
                             ///================================workingDay  ========================

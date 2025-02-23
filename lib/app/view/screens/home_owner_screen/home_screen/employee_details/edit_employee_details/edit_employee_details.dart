@@ -43,6 +43,8 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
     controller.noteController.text = args["Note"] ?? '';
     controller.phoneNumberController.text = args["phoneNumber"] ?? '';
     controller.startTimeController.text = args["StartTime"] ?? '';
+    controller.breakStartTimeController.text = args["breakTimeStart"] ?? '';
+    controller.breakEndTimeController.text = args["breakTimeEnd"] ?? '';
     controller.endTimeController.text = args["endTime"] ?? '';
     controller.image.value = args["profileImage"] ?? '';
     print("Received Image: =============${args["ProfileImage"]}");
@@ -247,6 +249,62 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                         },
                       ),
 
+                      ///==================================✅✅Break Start Time✅✅=======================
+                      SizedBox(
+                        height: 15.h,
+                      ),
+
+                      CustomTextField(
+                        textEditingController:
+                            controller.breakStartTimeController,
+                        readOnly: true,
+                        hintText: "Break Start Time ".tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time),
+                        // Clock icon for time picker
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.breakStartTimeController.text =
+                                formattedTime;
+                          }
+                        },
+                      ),
+
+                      ///==================================✅✅Break End Time✅✅=======================
+                      SizedBox(
+                        height: 15.h,
+                      ),
+
+                      CustomTextField(
+                        textEditingController:
+                            controller.breakEndTimeController,
+                        readOnly: true,
+                        hintText: "Break End Time ".tr,
+                        fillColor: Colors.white,
+                        suffixIcon: const Icon(Icons.access_time),
+                        // Clock icon for time picker
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          );
+
+                          if (pickedTime != null) {
+                            String formattedTime =
+                                "${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}";
+                            controller.breakEndTimeController.text =
+                                formattedTime;
+                          }
+                        },
+                      ),
+
                       SizedBox(
                         height: 15.h,
                       ),
@@ -322,6 +380,10 @@ class _AddEmployeeScreenState extends State<EditEmployeeDetails> {
                                   workingDay: controller.getSelectedDays(),
                                   offDay: controller.getSelectedOffDays(),
                                   context: context,
+                                  breakTimeStart:
+                                      controller.breakStartTimeController.text,
+                                  breakTimeEnd:
+                                      controller.breakEndTimeController.text,
                                 );
                               },
                               fillColor: Colors.white,

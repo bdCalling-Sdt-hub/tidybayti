@@ -9,9 +9,7 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
 class MainSentSuccessfullyScreen extends StatelessWidget {
   const MainSentSuccessfullyScreen({super.key});
@@ -51,37 +49,37 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
               ///=============================== Menu Items ========================
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   children: [
 
 
                     Container(
                       height: 96,
                       width: 96,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color:AppColors.blue900,
                         shape: BoxShape.circle,
                       ),
-                      child: Center(child: CustomImage(imageSrc: AppIcons.rightUp,)),
+                      child: const Center(child: CustomImage(imageSrc: AppIcons.rightUp,)),
                     ),
 
                     CustomText(
                       top: 24,
                       bottom: 40,
                       maxLines: 2,
-                      text: AppStrings.mailSendSuccessfully,
+                      text: AppStrings.mailSendSuccessfully.tr,
                       fontWeight: FontWeight.w400,
                       fontSize: 24,
                       color: AppColors.dark400,
                     ),
-                    CustomButton(
-                      fillColor: Colors.white,
-                      onTap: () {
-                        Get.toNamed(AppRoutes.assignWorkScheduleScreen);
-
-                      },
-                      title: AppStrings.assignWorkSchedule,
-                    ),
+                    // CustomButton(
+                    //   fillColor: Colors.white,
+                    //   onTap: () {
+                    //     Get.toNamed(AppRoutes.assignWorkScheduleScreen);
+                    //
+                    //   },
+                    //   title: AppStrings.assignWorkSchedule.tr,
+                    // ),
 
                     SizedBox(height: 10.h,),
                     CustomButton(
@@ -89,7 +87,7 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(AppRoutes.addEmployeeScreen);
                       },
-                      title: AppStrings.addNewEmployee,
+                      title: AppStrings.addNewEmployee.tr,
                     ),
 
                     SizedBox(height: 10.h,),
@@ -98,8 +96,9 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
                       onTap: () {
                         // Get.toNamed(AppRoutes.)
                       },
-                      title: AppStrings.scheduleOverview,
+                      title: AppStrings.scheduleOverview.tr,
                     ),
+                    ///=========================backToHome==============
 
                     SizedBox(height: 10.h,),
                     CustomButton(
@@ -107,7 +106,7 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(AppRoutes.homeScreen);
                       },
-                      title: AppStrings.backToHome,
+                      title: AppStrings.backToHome.tr,
                     ),
                   ],
                 ),

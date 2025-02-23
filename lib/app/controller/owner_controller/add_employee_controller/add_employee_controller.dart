@@ -12,7 +12,6 @@ import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/local_db/local_db.dart';
-import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
@@ -58,6 +57,8 @@ class AddEmployeeController extends GetxController {
   final passportExpireDateController = TextEditingController();
   final startTimeController = TextEditingController();
   final endTimeController = TextEditingController();
+  final breakStartTimeController = TextEditingController();
+  final breakEndTimeController = TextEditingController();
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
 ///
