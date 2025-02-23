@@ -26,12 +26,20 @@ class WalletController extends GetxController {
     amountController.clear();
   }
 
+  clearExpenseField() {
+    expenseDateController.clear();
+    expenseAmountController.clear();
+  }
+
   final dateController = TextEditingController();
   final amountController = TextEditingController();
   final currencyController = TextEditingController();
   final categoryNameController = TextEditingController();
   final imageController = TextEditingController();
+  final expenseDateController = TextEditingController();
+  final expenseAmountController = TextEditingController();
   RxBool isCreateLoading = false.obs;
+  RxBool isExpenseLoading = false.obs;
 
   ///==================================✅✅Budget Create✅✅=======================
 
@@ -39,7 +47,7 @@ class WalletController extends GetxController {
     isCreateLoading.value = true;
     var body = {
       "category": categoryNameController.text,
-      "budgetImage":imageController.text,
+      "budgetImage": imageController.text,
       "budgetDateStr": dateController.text,
       "currency": currencyController.text,
       "amount": int.parse(amountController.text)
@@ -57,6 +65,31 @@ class WalletController extends GetxController {
     }
     isCreateLoading.value = false;
     isCreateLoading.refresh();
+  }
+
+  ///==================================✅✅Expense ✅✅=======================
+
+  expenseAdd({required String budgetId}) async {
+    isExpenseLoading.value = true;
+    var body = {
+      "budgetId": budgetId,
+      "expenseDateStr": expenseDateController.text,
+      "amount": int.parse(expenseAmountController.text)
+    };
+
+    var response = await apiClient.post(body: body, url: ApiUrl.expenseCreate);
+    if (response.statusCode == 201) {
+      clearExpenseField();
+      getSingleBudget(budgetId: budgetId);
+      toastMessage(message: response.body["message"]);
+      Get.back();
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isExpenseLoading.value = false;
+    isExpenseLoading.refresh();
   }
 
   ///==================================✅✅getCategoryBudget✅✅=======================
@@ -134,7 +167,8 @@ class WalletController extends GetxController {
           url: ApiUrl.getSingleBudget(budgetId), showResult: true);
 
       if (response.statusCode == 200) {
-        budgetDetailsData.value = BudgetDetailsData.fromJson(response.body["data"]);
+        budgetDetailsData.value =
+            BudgetDetailsData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
         print(
