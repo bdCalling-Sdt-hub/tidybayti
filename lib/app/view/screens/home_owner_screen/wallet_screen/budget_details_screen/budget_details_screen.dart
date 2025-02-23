@@ -204,6 +204,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                               itemCount: expenses.length,
                               itemBuilder: (context, index) {
                                 return Container(
+                                  // height: MediaQuery.of(context).size.height/4,
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 5),
                                   color: Colors.white,

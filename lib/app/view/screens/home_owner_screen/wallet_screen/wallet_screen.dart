@@ -100,7 +100,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   ///=============================== Selected Screen ========================
                   SingleChildScrollView(
                     child: SizedBox(
-                        height: MediaQuery.of(context).size.height/1,
+                        height: MediaQuery.of(context).size.height/2,
                         child: screens[selectedTabIndex]),
                   ),
                 ],
