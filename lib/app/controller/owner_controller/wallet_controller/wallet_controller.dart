@@ -29,6 +29,7 @@ class WalletController extends GetxController {
   final amountController = TextEditingController();
   final currencyController = TextEditingController();
   final categoryNameController = TextEditingController();
+  final imageController = TextEditingController();
   RxBool isCreateLoading = false.obs;
 
   ///==================================✅✅Budget Create✅✅=======================
@@ -37,8 +38,7 @@ class WalletController extends GetxController {
     isCreateLoading.value = true;
     var body = {
       "category": categoryNameController.text,
-      "budgetImage":
-          "https://res.cloudinary.com/dsmqrbppz/image/upload/v1740299118/Investment_u6yhxm.png",
+      "budgetImage":imageController.text,
       "budgetDateStr": dateController.text,
       "currency": currencyController.text,
       "amount": int.parse(amountController.text)
