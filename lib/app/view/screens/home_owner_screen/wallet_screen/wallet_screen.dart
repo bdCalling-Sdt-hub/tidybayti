@@ -55,7 +55,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     onBack: () {
                       Get.back();
                     },
-                    download: true,
+                    download: false,
                   ),
                   SizedBox(height: 20.h),
 
