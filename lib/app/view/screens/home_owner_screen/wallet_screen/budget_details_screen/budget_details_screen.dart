@@ -15,7 +15,7 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class BudgetDetailsScreen extends StatefulWidget {
-  BudgetDetailsScreen({super.key});
+  const BudgetDetailsScreen({super.key});
 
   @override
   State<BudgetDetailsScreen> createState() => _BudgetDetailsScreenState();
