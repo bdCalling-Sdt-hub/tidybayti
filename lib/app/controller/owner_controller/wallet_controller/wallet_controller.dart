@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
+import 'package:tidybayte/app/data/model/owner_model/budget_category.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
@@ -13,11 +15,78 @@ class WalletController extends GetxController {
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
 
-  //Budget Crate Loader
-  var isLoading = false.obs;
+  RxString selectedCurrency = 'BHD'.obs; // Default Currency
+  RxBool isSelected = false.obs;
 
-  void setLoading(bool value) {
-    isLoading.value = value;
+  clearField() {
+    categoryNameController.clear();
+    dateController.clear();
+    currencyController.clear();
+    amountController.clear();
+  }
+
+  final dateController = TextEditingController();
+  final amountController = TextEditingController();
+  final currencyController = TextEditingController();
+  final categoryNameController = TextEditingController();
+  RxBool isCreateLoading = false.obs;
+
+  ///==================================✅✅Budget Create✅✅=======================
+
+  budgetCreate() async {
+    isCreateLoading.value = true;
+    var body = {
+      "category": categoryNameController.text,
+      "budgetImage":
+          "https://res.cloudinary.com/dsmqrbppz/image/upload/v1740299118/Investment_u6yhxm.png",
+      "budgetDateStr": dateController.text,
+      "currency": currencyController.text,
+      "amount": int.parse(amountController.text)
+    };
+
+    var response = await apiClient.post(body: body, url: ApiUrl.budgetCreate);
+    if (response.statusCode == 201) {
+      clearField();
+      toastMessage(message: response.body["message"]);
+      Get.back();
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isCreateLoading.value = false;
+    isCreateLoading.refresh();
+  }
+
+  ///==================================✅✅getCategoryBudget✅✅=======================
+
+  RxList<CategoryList> budgetCategoryList = <CategoryList>[].obs;
+
+  getCategoryBudget() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+
+    try {
+      final response =
+          await apiClient.get(url: ApiUrl.getCategoryBudget, showResult: true);
+
+      if (response.statusCode == 200) {
+        budgetCategoryList.value = List<CategoryList>.from(
+            response.body["data"].map((x) => CategoryList.fromJson(x)));
+        print('StatusCode==================${response.statusCode}');
+        print(
+            'Total budgetCategoryList ==================${budgetCategoryList.length}');
+
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('Error fetching data: $e');
+    }
   }
 
   ///==================================✅✅Budget Get✅✅=======================
@@ -104,6 +173,7 @@ class WalletController extends GetxController {
   @override
   void onInit() {
     getBudget();
+    getCategoryBudget();
     super.onInit();
   }
 }

@@ -160,7 +160,7 @@ class AppRoutes {
 
 
     ///=========================Wallet section==============
-    GetPage(name: createBudgetScreen, page: () =>  const CreateBudgetScreen()),
+    GetPage(name: createBudgetScreen, page: () =>   CreateBudgetScreen()),
     GetPage(name: budgetDetailsScreen, page: () => const BudgetDetailsScreen()),
     GetPage(name: addExpenseScreen, page: () => const AddExpenseScreen()),
 

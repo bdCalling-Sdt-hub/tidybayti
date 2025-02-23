@@ -19,6 +19,7 @@ import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_networ
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'home_screen_inner_widgets/employee_show.dart';
 import 'home_screen_inner_widgets/seel_all.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -374,7 +375,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                   SizedBox(height: 30.h),
 
                   ///==================================✅✅Employee Show✅✅=======================
-                  // EmployeeShow(employeeController: employeeController)
+                  EmployeeShow(employeeController: employeeController)
                 ],
               ),
             ),

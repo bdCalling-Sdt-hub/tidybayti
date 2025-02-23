@@ -14,8 +14,8 @@ void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   // HttpOverrides.global = MyHttpOverrides();
   DeviceUtils.lockDevicePortrait();
-  DependencyInjection di = DependencyInjection();
-  di.dependencies();
+  // DependencyInjection di = DependencyInjection();
+  // di.dependencies();
   await initDependencies();
   runApp(
     const MyApp(), // Wrap your app
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       designSize: const Size(375, 812),
       child: GetMaterialApp(
+        initialBinding: DependencyInjection(),
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
