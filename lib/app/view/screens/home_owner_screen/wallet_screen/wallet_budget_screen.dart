@@ -25,7 +25,8 @@ class WalletBudgetScreen extends StatelessWidget {
           await controller.getBudget(); // ✅ Fetch latest budget data
         },
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(), // ✅ Allows pull-to-refresh
+          physics: const AlwaysScrollableScrollPhysics(),
+          // ✅ Allows pull-to-refresh
           child: Column(
             children: [
               SizedBox(height: 20.h),
@@ -34,7 +35,8 @@ class WalletBudgetScreen extends StatelessWidget {
               Obx(() {
                 switch (controller.rxRequestStatus.value) {
                   case Status.loading:
-                    return const Center(child: CustomLoader()); // Show loading indicator
+                    return const Center(
+                        child: CustomLoader()); // Show loading indicator
 
                   case Status.internetError:
                     return NoInternetScreen(onTap: () {
@@ -58,7 +60,8 @@ class WalletBudgetScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 50.h),
                           child: Column(
                             children: [
-                              const Icon(Icons.folder_off, size: 80, color: Colors.grey),
+                              const Icon(Icons.folder_off,
+                                  size: 80, color: Colors.grey),
                               SizedBox(height: 10.h),
                               Text(
                                 "No Data Found",
@@ -77,11 +80,12 @@ class WalletBudgetScreen extends StatelessWidget {
                     return Column(
                       children: List.generate(
                         budgetList.length,
-                            (index) {
+                        (index) {
                           final data = budgetList[index];
 
                           double totalBudget = data.amount?.toDouble() ?? 0.0;
-                          double totalExpense = data.currentExpense?.toDouble() ?? 0.0;
+                          double totalExpense =
+                              data.currentExpense?.toDouble() ?? 0.0;
                           double progress = totalBudget > 0
                               ? (totalBudget - totalExpense) / totalBudget
                               : 0.0;
@@ -90,7 +94,8 @@ class WalletBudgetScreen extends StatelessWidget {
 
                           return GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.budgetDetailsScreen);
+                              Get.toNamed(AppRoutes.budgetDetailsScreen,
+                                  arguments: [data.id,data.category,progress]);
                             },
                             child: BudgetCard(
                               image: data.budgetImage ?? "",

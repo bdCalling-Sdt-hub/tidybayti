@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_category.dart';
+import 'package:tidybayte/app/data/model/owner_model/budget_details.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
@@ -122,7 +123,7 @@ class WalletController extends GetxController {
 
   ///==================================✅✅Budget Single Get✅✅=======================
 
-  // Rx<BudgetData> budgetData = BudgetData().obs;
+  Rx<BudgetDetailsData> budgetDetailsData = BudgetDetailsData().obs;
 
   getSingleBudget({required String budgetId}) async {
     setRxRequestStatus(Status.loading);
@@ -133,11 +134,11 @@ class WalletController extends GetxController {
           url: ApiUrl.getSingleBudget(budgetId), showResult: true);
 
       if (response.statusCode == 200) {
-        // budgetData.value = BudgetData.fromJson(response.body["data"]);
+        budgetDetailsData.value = BudgetDetailsData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
         print(
-            'budgetData Result==================${budgetData.value.result?.length}');
+            'budgetData Single==================${budgetDetailsData.value.expenses?.length}');
 
         setRxRequestStatus(Status.completed);
         refresh();

@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wallet_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
+class BudgetDetailsScreen extends StatefulWidget {
+  BudgetDetailsScreen({super.key});
 
-class BudgetDetailsScreen extends StatelessWidget {
-  const BudgetDetailsScreen({super.key});
+  @override
+  State<BudgetDetailsScreen> createState() => _BudgetDetailsScreenState();
+}
+
+class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
+  final id = Get.arguments[0];
+
+  final categoryName = Get.arguments[1];
+  final progress = Get.arguments[2];
+
+  final WalletController controller = Get.find<WalletController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getSingleBudget(budgetId: id);
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +56,14 @@ class BudgetDetailsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                /// Budget Appbar
+                ///==================================✅✅categoryName Appbar✅✅=======================
+
                 CustomMenuAppbar(
                   isEdit: true,
-                  onTap: (){
+                  onTap: () {
                     Get.toNamed(AppRoutes.createBudgetScreen);
                   },
-                  title: 'Housing',
+                  title: categoryName,
                   onBack: () {
                     Get.back();
                   },
@@ -59,15 +84,19 @@ class BudgetDetailsScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const CustomText(
-                                  text: AppStrings.budgetDetails,
+                                CustomText(
+                                  text: AppStrings.budgetDetails.tr,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 24,
                                   color: AppColors.blue800,
                                 ),
-                                   const Spacer(),
-                                const CustomText(
-                                  text: '\$2000',
+                                const Spacer(),
+
+                                ///==================================✅✅Total AMount✅✅=======================
+
+                                CustomText(
+                                  text:
+                                      '\$${controller.budgetDetailsData.value.amount.toString()}',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 24,
                                   color: AppColors.green,
@@ -75,14 +104,22 @@ class BudgetDetailsScreen extends StatelessWidget {
                                 SizedBox(width: 12.h),
                               ],
                             ),
-
                             SizedBox(height: 8.h),
-                            const Row(
+
+                            ///==================================✅✅Date✅✅=======================
+
+                            Row(
                               children: [
-                               Icon(Icons.calendar_month,color: Colors.grey,),
-                                SizedBox(width: 5),
+                                const Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey,
+                                ),
+                                const SizedBox(width: 5),
                                 CustomText(
-                                  text: "10/2/2025", // Example amount
+                                  text: DateConverter.estimatedDate(controller
+                                      .budgetDetailsData.value.budgetDateTime!
+                                      .toLocal()),
+                                  // Example amount
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.dark300,
@@ -90,102 +127,162 @@ class BudgetDetailsScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 12.h),
+
+                            ///==================================✅✅progress✅✅=======================
+
                             LinearProgressIndicator(
-                              value: 0.7, // Example progress
+                              value: progress, // Example progress
                               backgroundColor: AppColors.blue100,
                               color: AppColors.red,
                               minHeight: 8.0,
                             ),
                             SizedBox(height: 12.h),
-                            const Row(
+                            Row(
                               children: [
+                                ///==================================✅✅Cost✅✅=======================
+
                                 CustomText(
-                                  text: "Cost \$300", // Example remaining amount
+                                  text:
+                                      "Cost \$${controller.budgetDetailsData.value.currentExpense}",
+                                  // Example remaining amount
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.red,
                                 ),
-                                Spacer(),
-
+                                const Spacer(),
                                 CustomText(
-                                  text: "Left budget \$1600", // Example remaining amount
+                                  text:
+                                      "Left budget \$${controller.budgetDetailsData.value.amount}",
+                                  // Example remaining amount
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.green,
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                       SizedBox(height: 16.h),
 
-                      /// Expense Overview
+                      ///==================================✅✅expenseOverview✅✅=======================
+
                       CustomText(
-                        text: AppStrings.expenseOverview,
+                        text: AppStrings.expenseOverview.tr,
                         fontWeight: FontWeight.w500,
                         fontSize: 20.h,
                         color: AppColors.blue900,
                       ),
+                      Obx(() {
+                        switch (controller.rxRequestStatus.value) {
+                          case Status.loading:
+                            return const CustomLoader(); // Show loading indicator
 
-                      /// Example Expense List
-                      Column(
-                        children: List.generate(5, (index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(15),
-                            child: Row(
-                              children: [
+                          case Status.internetError:
+                            return const CustomText(
+                              text: 'Internet Error',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Colors.black,
+                            );
 
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                          case Status.error:
+                            return const CustomText(
+                              text: 'Something went wrong!',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Colors.black,
+                            );
+
+                          case Status.completed:
+                            final expenses = controller.budgetDetailsData.value.expenses ?? [];
+
+                            if (expenses.isEmpty) {
+                              // ✅ Show No Expense Found message
+                              return Center(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 50.h),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.money_off, size: 80, color: Colors.grey),
+                                      SizedBox(height: 10.h),
+                                      CustomText(
+                                        text: "No Expense Found",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18.sp,
+                                        color: Colors.grey,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+
+                            /// ✅ Show Expense List if data is available
+                            return Column(
+                              children: List.generate(
+                                expenses.length,
+                                    (index) => Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: const EdgeInsets.all(15),
+                                    child: Row(
                                       children: [
-                                    const Icon(Icons.house,color: Colors.grey,),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.house,
+                                                  color: Colors.grey,
+                                                ),
+                                                CustomText(
+                                                  left: 10,
+                                                  text: controller.budgetDetailsData.value.category ?? "",
+                                                  color: AppColors.dark300,
+                                                  fontSize: 16.h,
+                                                ),
+                                                SizedBox(width: 150.w),
+                                                CustomText(
+                                                  left: 10,
+                                                  text: "\$${expenses[index].amount?.toString() ?? '0'}",
+                                                  color: AppColors.dark300,
+                                                  fontSize: 16.h,
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
 
-                                        CustomText(
-                                          left: 10,
-                                          text: "Housing", // Example amount
-                                          color: AppColors.dark300,
-                                          fontSize: 16.h,
-                                        ),
-                                        SizedBox(width: 150.w,),
-                                        CustomText(
-                                          left: 10,
-                                          text: "\$200", // Example amount
-                                          color: AppColors.dark300,
-                                          fontSize: 16.h,
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.calendar_month,
+                                                  color: Colors.grey,
+                                                ),
+                                                CustomText(
+                                                  left: 10,
+                                                  text: expenses[index].expenseDateStr ?? "",
+                                                  color: AppColors.dark300,
+                                                  fontSize: 16.h,
+                                                ),
+                                              ],
+                                            ), // Example icon
+                                          ],
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10,),
-
-                                    Row(
-                                      children: [
-                                    const Icon(Icons.calendar_month,color: Colors.grey,),
-
-                                        CustomText(
-                                          left: 10,
-                                          text: "10/2/2025", // Example amount
-                                          color: AppColors.dark300,
-                                          fontSize: 16.h,
-                                        ),
-
-                                      ],
-                                    ), // Example icon
-
-
-                                  ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        )),
-                      ),
-                      SizedBox(height: 100),
+                              ),
+                            );
+                        }
+                      }),
+
+
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -195,20 +292,19 @@ class BudgetDetailsScreen extends StatelessWidget {
         ),
       ),
 
-      /// Add Expense Button
+      ///==================================✅✅addExpanse Button✅✅=======================
+
       bottomSheet: Container(
         color: const Color(0xffB5D8EE),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: CustomButton(
-            onTap: (){
-              Get.toNamed(AppRoutes.addExpenseScreen);
-            },
-          fillColor: Colors.white,
-            title: AppStrings.addExpanse,
-
-          )
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.addExpenseScreen);
+              },
+              fillColor: Colors.white,
+              title: AppStrings.addExpanse.tr,
+            )),
       ),
     );
   }
