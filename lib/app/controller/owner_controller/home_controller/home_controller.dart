@@ -10,6 +10,7 @@ import 'package:tidybayte/app/data/model/owner_model/single_room_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 
@@ -34,10 +35,8 @@ class HomeController extends GetxController {
   final RxString selectedHouseId = ''.obs;
   final RxString selectedHouseName = 'Add House'.obs;
 
-  /// ✅ List of Added Rooms (Stored in `RxList` for global state)
   RxList<Map<String, dynamic>> rooms = <Map<String, dynamic>>[].obs;
 
-  /// ✅ Convert an Icon (Asset Image) to a File
   Future<File> convertIconToFile(String assetPath) async {
     ByteData byteData = await rootBundle.load(assetPath);
     Uint8List uint8List = byteData.buffer.asUint8List();
@@ -51,7 +50,6 @@ class HomeController extends GetxController {
     return file;
   }
 
-  /// ✅ Add a New Room (Ensures only one room can be created)
   void addRoom(String roomName, String iconName) async {
     if (rooms.isEmpty) {
       File iconFile = await convertIconToFile(iconName); // Convert icon to file
@@ -158,7 +156,27 @@ class HomeController extends GetxController {
     }
   }
 
+  ///==================================✅✅Remove task✅✅=======================
+  RxBool isRemoveTask = false.obs;
 
+  removeTask({ required String taskId,required String roomId}) async {
+    isRemoveTask.value = true;
+    var body = {
+      "taskId": taskId
+    };
+
+    var response = await apiClient.delete(body: body, url: ApiUrl.taskDelete);
+    if (response.statusCode == 200) {
+         getSingleRoomTask(roomId: roomId);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveTask.value = false;
+    isRemoveTask.refresh();
+  }
 
   @override
   void onInit() {

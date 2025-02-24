@@ -1,54 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
-import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
-import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class HelpWhereScreen extends StatelessWidget {
+class HelpWhereScreen extends StatefulWidget {
   const HelpWhereScreen({super.key});
+
+  @override
+  State<HelpWhereScreen> createState() => _HelpWhereScreenState();
+}
+
+class _HelpWhereScreenState extends State<HelpWhereScreen> {
+  late YoutubePlayerController _controller;
+  bool _isPlayerReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final videoId = YoutubePlayer.convertUrlToId("https://www.youtube.com/watch?v=a5CKwx01dOE") ?? "";
+
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    )..addListener(() {
+      if (mounted) {
+        setState(() {
+          _isPlayerReady = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xCCE8F3FA), // First color (with opacity)
-              Color(0xFFB5D8EE),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      appBar: AppBar(title: const Text("Help Video")),
+      body: Column(
+        children: [
+          YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.red,
+            onReady: () {
+              if (!_isPlayerReady) {
+                setState(() {
+                  _isPlayerReady = true;
+                });
+              }
+            },
+            onEnded: (metaData) {
+              print("Video Ended: ${metaData.videoId}");
+            },
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///=============================== Help Where ========================
-                CustomMenuAppbar(
-                  title: AppStrings.helpWhere ,
-                  onBack: () {
-                    Get.back();
-                  },
-                ),
-
-
-              ],
-            ),
-          ),
-        ),
+        ],
       ),
     );
   }

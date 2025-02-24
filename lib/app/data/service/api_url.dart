@@ -40,6 +40,7 @@ class ApiUrl {
   static const houseRomeCreate = "$baseUrl/room/post-room";
   static const myAllHouse = "$baseUrl/room/get-my-houses";
   static const allRoom = "$baseUrl/room/get-my-room";
+  static const editRoom = "$baseUrl/room/edit-single-room";
   static String getMyRoom(String houseId) =>
       "$baseUrl/room/get-my-room?houseId=$houseId";
   static String getSingleRoom(String roomId) =>
@@ -52,8 +53,34 @@ class ApiUrl {
   static const getCategoryBudget = "$baseUrl/wallet/get-budget-category";
   static const upDateBudget = "$baseUrl/wallet/update-budget";
   static const deleteBudget = "$baseUrl/wallet/delete-budget";
+  static const deleteExpense = "$baseUrl/wallet/delete-expense";
   static const expenseCreate = "$baseUrl/wallet/post-expense";
   static String getSingleBudget(String budgetId) =>
       "$baseUrl/wallet/get-budget?budgetId=$budgetId";
+
+
+  ///==================================✅✅Manage✅✅=======================
+  static const terms = "$baseUrl/manage/get-terms-conditions";
+  static const privacy = "$baseUrl/manage/get-privacy-policy";
+  static const getFaq = "$baseUrl/manage/get-faq";
+
+  ///==================================✅✅Notification✅✅=======================
+  static const notification = "$baseUrl/task/get-notifications";
+
+  ///==================================✅✅Recipe✅✅=======================
+  static const addRecipe = "$baseUrl/recipe/post-recipe";
+  static const updateRecipe = "$baseUrl/recipe/update-recipe";
+  static const myRecipe = "$baseUrl/recipe/get-my-recipe";
+  static String favoriteRecipe(String recipeId) =>
+      "$baseUrl/recipe/favorite-unfavorite-recipe?recipeId=$recipeId";
+  static String singleRecipe(String recipeId) =>
+      "$baseUrl/recipe/get-recipe?recipeId=$recipeId";
+  static String recipeDelete(String recipeId) =>
+      "$baseUrl/recipe/delete-recipe?recipeId=$recipeId";
+  static String recipeSearch(String searchText) =>
+      "$baseUrl/recipe/get-my-recipe?searchTerm=$searchText";
+
+  static String tagFilter(String tagText) =>
+      "$baseUrl/recipe/get-my-recipe?tags=$tagText";
 
 }

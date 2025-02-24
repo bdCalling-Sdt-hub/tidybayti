@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
+
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_recipe_card/custom_recipe_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
 class MyRecipeScreen extends StatelessWidget {
-  const MyRecipeScreen({super.key});
+  MyRecipeScreen({super.key});
+
+  final RecipeController recipeController = Get.find<RecipeController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 3),
       body: Stack(
         children: [
           SizedBox(
@@ -41,7 +42,7 @@ class MyRecipeScreen extends StatelessWidget {
                 children: [
                   /// Menu Title
                   CustomMenuAppbar(
-                    title: AppStrings.myRecipe,
+                    title: AppStrings.myRecipe.tr,
                     onBack: () {
                       Get.back();
                     },
@@ -51,6 +52,7 @@ class MyRecipeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
+                        ///=============================== Search ========================
                         const CustomTextField(
                           prefixIcon: Icon(Icons.search),
                           hintText: 'Search',
@@ -58,27 +60,72 @@ class MyRecipeScreen extends StatelessWidget {
                         SizedBox(
                           height: 16.h,
                         ),
-                        const Divider(color: AppColors.blue500,),
+                        const Divider(
+                          color: AppColors.blue500,
+                        ),
                         SizedBox(
                           height: 16.h,
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.myRecipeDetails);
-                          },
-                          child: CustomRecipeCard(
-                              isFavorite: true,
-                              title: 'Idlis Steamed Rice ..',
-                              cuisine: 'Asian / Indian',
-                              cookTime: '30 min',
-                              imageUrl: AppConstants.fruits),
-                        ),
-                        CustomRecipeCard(
-                            isFavorite: true,
-                            title: 'Idlis Steamed Rice ..',
-                            cuisine: 'Asian / Indian',
-                            cookTime: '30 min',
-                            imageUrl: AppConstants.fruits)
+
+                        ///=============================== My recipe List ========================
+
+                        Obx(() {
+                          switch (recipeController.rxRequestStatus.value) {
+                            case Status.loading:
+                              return const CustomLoader();
+
+                            case Status.internetError:
+                              return NoInternetScreen(onTap: () {
+                                recipeController.getMyRecipe();
+                              });
+
+                            case Status.error:
+                              return GeneralErrorScreen(
+                                onTap: () {
+                                  recipeController.getMyRecipe();
+                                },
+                              );
+
+                            case Status.completed:
+                              final recipes = recipeController.myRecipeData.value.recipeWithFavorite ?? [];
+
+                              if (recipes.isEmpty) {
+                                // ✅ Show "No Recipe Found" when the list is empty
+                                return const Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 80),
+                                    child: Text(
+                                      "No Recipe Found",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blueGrey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+
+                              return Column(
+                                children: List.generate(recipes.length, (index) {
+                                  final data = recipes[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.myRecipeDetails);
+                                    },
+                                    child: CustomRecipeCard(
+                                      isFavorite: true,
+                                      title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed missing title
+                                      cuisine: 'Asian / Indian',
+                                      cookTime: data.cookingTime ?? "N/A",
+                                      imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                    ),
+                                  );
+                                }),
+                              );
+                          }
+                        })
+
                       ],
                     ),
                   )

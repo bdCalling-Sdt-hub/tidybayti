@@ -55,6 +55,7 @@ class WalletController extends GetxController {
 
     var response = await apiClient.post(body: body, url: ApiUrl.budgetCreate);
     if (response.statusCode == 201) {
+      getBudget();
       clearField();
       toastMessage(message: response.body["message"]);
       Get.back();
@@ -186,15 +187,41 @@ class WalletController extends GetxController {
     }
   }
 
+  ///==================================✅✅Remove Expense✅✅=======================
+  RxBool isRemoveExpense = false.obs;
+
+  removeExpense({required String expenseId, required String budgetId}) async {
+    isRemoveExpense.value = true;
+    var body = {
+      "expenseId": expenseId
+    };
+
+    var response = await apiClient.delete(body: body, url: ApiUrl.deleteExpense);
+    if (response.statusCode == 200) {
+      getSingleBudget(budgetId: budgetId);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveExpense.value = false;
+    isRemoveExpense.refresh();
+  }
+
   ///==================================✅✅Remove Budget✅✅=======================
   RxBool isRemoveBudget = false.obs;
 
-  removeTask({required String budgetId}) async {
+  removeBudget({ required String budgetId}) async {
     isRemoveBudget.value = true;
-    var body = {"budgetId": budgetId};
+    var body = {
+      "budgetId": budgetId
+    };
 
     var response = await apiClient.delete(body: body, url: ApiUrl.deleteBudget);
     if (response.statusCode == 200) {
+     getBudget();
+     Get.back();
       toastMessage(message: response.body["message"]);
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);

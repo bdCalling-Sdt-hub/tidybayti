@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
+
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
@@ -56,14 +56,13 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
             children: [
               ///=============================== roomName Title ========================
               CustomMenuAppbar(
-                isEdit: true,
+                isEdit: false,
                 title: roomName,
                 onBack: () {
                   Get.back();
                 },
                 onTap: () {
-                  showEditRoomDialog(
-                      context); // Call to show the Edit Room Dialog
+                  showEditRoomDialog(context);
                 },
               ),
 
@@ -112,39 +111,26 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
                               taskName: data?.taskName ?? "",
                               assignedTo:
                                   "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
-                              time: "${data?.startDateStr??""} To ${data?.endDateStr??""}",
+                              time:
+                                  "${data?.startDateStr ?? ""} To ${data?.endDateStr ?? ""}",
                               onInfoPressed: () {
-                                TaskInfoDialog.showTask(
-                                  context: context,
-                                  content:
-                                      'Are you sure you want to delete this task?',
-                                  onConfirm: () {
-                                    // Handle confirm action (e.g., delete task)
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  onCancel: () {
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog without any action
-                                  },
+                                GlobalAlert.singleTaskDialog(
+                                  context,
+                                  data?.taskName ?? "",
+                                  "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                                  data?.recurrence ?? "",
+                                  data!.startDateStr.toString(),
+                                  data.startTimeStr ?? "",
+                                  data.endDateStr.toString(),
+                                  data.endTimeStr ?? "",
                                 );
                               },
                               onDeletePressed: () {
-                                TaskAlertDialog.showTaskDialog(
-                                  context: context,
-                                  title: 'Delete Task',
-                                  content:
-                                      'Are you sure you want to delete this task?',
-                                  onConfirm: () {
-                                    // Handle confirm action (e.g., delete task)
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  onCancel: () {
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog without any action
-                                  },
-                                );
+                                GlobalAlert.showDeleteDialog(context, () {
+                                  homeController.removeTask(
+                                      taskId: data?.id ?? "",
+                                      roomId: roomId);
+                                }, "Remove Task");
                               },
                             );
                           }),
@@ -161,156 +147,6 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
   }
 }
 
-class TaskAlertDialog {
-  static Future<void> showTaskDialog({
-    required BuildContext context,
-    required String title,
-    required String content,
-    required VoidCallback onConfirm,
-    required VoidCallback onCancel,
-  }) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // Prevent dismissing by tapping outside
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(content),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: onCancel,
-            ),
-            TextButton(
-              child: const Text('Confirm'),
-              onPressed: onConfirm,
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class TaskInfoDialog {
-  static Future<void> showTask({
-    required BuildContext context,
-    required String content,
-    required VoidCallback onConfirm,
-    required VoidCallback onCancel,
-  }) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // Prevent dismissing by tapping outside
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-                Radius.circular(5.0)), // Adjust the radius as needed
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: const Icon(Icons.backspace_outlined),
-              ),
-            ],
-          ),
-          content: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Room:',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                  CustomText(
-                    text: 'Bedroom',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Task title:',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                  CustomText(
-                    text: 'Clean',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Time',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                  CustomText(
-                    text: '05:00 pm -06:00pm',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.dark300,
-                    fontSize: 16,
-                  ),
-                ],
-              ),
-              CustomText(
-                top: 25,
-                text: 'Details',
-                fontWeight: FontWeight.w400,
-                color: AppColors.dark300,
-                fontSize: 16,
-              ),
-              CustomText(
-                textAlign: TextAlign.start,
-                text:
-                    'Diam elit, odio elit, sollicitudin, urna, goasfgg, this is good for me.',
-                fontWeight: FontWeight.w400,
-                color: AppColors.dark300,
-                fontSize: 12,
-                maxLines: 5,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-// Function to display the Edit Room dialog
 void showEditRoomDialog(BuildContext context) {
   showDialog(
     context: context, // Required to pass the context
@@ -321,8 +157,8 @@ void showEditRoomDialog(BuildContext context) {
           borderRadius: BorderRadius.all(
               Radius.circular(5.0)), // Adjust the radius as needed
         ),
-        title: const CustomText(
-          text: 'Edit New Room',
+        title:  CustomText(
+          text: ApiUrl.editRoom.tr,
           color: AppColors.dark500,
           fontSize: 20,
           fontWeight: FontWeight.w400,

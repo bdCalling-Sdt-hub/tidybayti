@@ -29,8 +29,8 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/room_de
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/my_plan_screen/my_plan_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/personal_info_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/about_us_screen/about_us_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/change_password_screen/change_password_screen.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/faq/faq_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/help_where_screen/help_where_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/setting_screen.dart';
@@ -41,7 +41,6 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/add_r
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/favorite_recipes_screen/favorites_recipe_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_details/my_recipe_details.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/search_recipe_screen/search_recipe_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/all_task_screen/all_task_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
@@ -97,7 +96,6 @@ class AppRoutes {
   ///====================Recipe section===================
   static const String addRecipeScreen = "/AddRecipeScreen";
   static const String myRecipeScreen = "/MyRecipeScreen";
-  static const String searchRecipeScreen = "/SearchRecipeScreen";
   static const String favoritesRecipeScreen = "/FavoritesRecipeScreen";
   static const String tagsScreen = "/TagsScreen";
   static const String addNewRecipe = "/AddNewRecipe";
@@ -120,9 +118,9 @@ class AppRoutes {
   static const String changePasswordScreen = "/ChangePasswordScreen";
   static const String termsAndServiceScreen = "/TermsAndServiceScreen";
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
-  static const String aboutUsScreen = "/AboutUsScreen";
   static const String helpWhereScreen = "/HelpWhereScreen";
   static const String editProfileScreen = "/EditProfileScreen";
+  static const String faqScreen = "/FaqScreen";
 
   ///====================Employee section===================
   static const String employeeSignInScreen = "/EmployeeSignInScreen";
@@ -167,9 +165,8 @@ class AppRoutes {
 
     ///======================Recipe Section====================
     GetPage(name: addRecipeScreen, page: () => const AddRecipeScreen()),
-    GetPage(name: myRecipeScreen, page: () => const MyRecipeScreen()),
-    GetPage(name: searchRecipeScreen, page: () => const SearchRecipeScreen()),
-    GetPage(name: favoritesRecipeScreen, page: () => const FavoritesRecipeScreen()),
+    GetPage(name: myRecipeScreen, page: () =>  MyRecipeScreen()),
+    GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
     GetPage(name: tagsScreen, page: () =>  TagsScreen()),
     GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
     GetPage(name: myRecipeDetails, page: () =>  const MyRecipeDetails()),
@@ -193,10 +190,10 @@ class AppRoutes {
     GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen()),
     GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
-    GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen()),
     GetPage(name: createTask, page: () =>  const CreateTask()),
+    GetPage(name: faqScreen, page: () =>  const FaqScreen()),
 
 
 
@@ -219,7 +216,7 @@ class AppRoutes {
     GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () =>  EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
-    GetPage(name: employeeNotificationScreen, page: () =>  const EmployeeNotificationScreen()),
+    GetPage(name: employeeNotificationScreen, page: () =>   EmployeeNotificationScreen()),
     GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
     GetPage(name: editEmployeeDetails, page: () => const EditEmployeeDetails()),
   ];

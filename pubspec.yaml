@@ -60,6 +60,8 @@ dependencies:
   typed_data: ^1.4.0
   jwt_decoder: ^2.0.1
   currency_picker: ^2.0.21
+  flutter_widget_from_html: ^0.16.0
+  youtube_player_flutter: ^9.1.1
 
 dev_dependencies:
   flutter_test:
