@@ -29,8 +29,8 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/room_de
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/my_plan_screen/my_plan_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/personal_info_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/about_us_screen/about_us_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/change_password_screen/change_password_screen.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/faq/faq_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/help_where_screen/help_where_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/setting_screen/setting_screen.dart';
@@ -120,9 +120,9 @@ class AppRoutes {
   static const String changePasswordScreen = "/ChangePasswordScreen";
   static const String termsAndServiceScreen = "/TermsAndServiceScreen";
   static const String privacyPolicyScreen = "/PrivacyPolicyScreen";
-  static const String aboutUsScreen = "/AboutUsScreen";
   static const String helpWhereScreen = "/HelpWhereScreen";
   static const String editProfileScreen = "/EditProfileScreen";
+  static const String faqScreen = "/FaqScreen";
 
   ///====================Employee section===================
   static const String employeeSignInScreen = "/EmployeeSignInScreen";
@@ -193,10 +193,10 @@ class AppRoutes {
     GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen()),
     GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),
     GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
-    GetPage(name: aboutUsScreen, page: () => const AboutUsScreen()),
     GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
     GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen()),
     GetPage(name: createTask, page: () =>  const CreateTask()),
+    GetPage(name: faqScreen, page: () =>  const FaqScreen()),
 
 
 

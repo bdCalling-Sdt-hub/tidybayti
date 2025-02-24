@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
-import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
+
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_menu_item/custom_menu_item.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -35,9 +29,9 @@ class SettingScreen extends StatelessWidget {
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///=============================== Menu Title ========================
+              ///=============================== settings ========================
               CustomMenuAppbar(
-                title: AppStrings.settings,
+                title: AppStrings.settings.tr,
                 onBack: () {
                   Get.back();
                 },
@@ -51,7 +45,7 @@ class SettingScreen extends StatelessWidget {
                     ///================================changePassword=================
                     CustomMenuItem(
                       image: AppIcons.lock,
-                      text: AppStrings.changePassword,
+                      text: AppStrings.changePassword.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.changePasswordScreen);
                       },
@@ -60,7 +54,7 @@ class SettingScreen extends StatelessWidget {
                     ///===============================termsOfService=================
                     CustomMenuItem(
                       image: AppIcons.terms,
-                      text: AppStrings.termsOfService,
+                      text: AppStrings.termsOfService.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.termsAndServiceScreen);
                       },
@@ -69,25 +63,25 @@ class SettingScreen extends StatelessWidget {
                     ///================================privacyPolicy=================
                     CustomMenuItem(
                       image: AppIcons.privacy,
-                      text: AppStrings.privacyPolicy,
+                      text: AppStrings.privacyPolicy.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.privacyPolicyScreen);
                       },
                     ),
 
-                    ///================================aboutUs=================
+                    ///================================faqScreen=================
                     CustomMenuItem(
                       image: AppIcons.about,
-                      text: AppStrings.aboutUs,
+                      text: "FAQ".tr,
                       onTap: () {
-                        Get.toNamed(AppRoutes.aboutUsScreen);
+                        Get.toNamed(AppRoutes.faqScreen);
                       },
                     ),
 
                     ///================================helpWhere=================
                     CustomMenuItem(
                       image: AppIcons.help,
-                      text: AppStrings.helpWhere,
+                      text: AppStrings.helpWhere.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.helpWhereScreen);
 
