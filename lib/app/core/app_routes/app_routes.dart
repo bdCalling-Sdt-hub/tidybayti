@@ -166,7 +166,7 @@ class AppRoutes {
     ///======================Recipe Section====================
     GetPage(name: addRecipeScreen, page: () => const AddRecipeScreen()),
     GetPage(name: myRecipeScreen, page: () =>  MyRecipeScreen()),
-    GetPage(name: favoritesRecipeScreen, page: () => const FavoritesRecipeScreen()),
+    GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
     GetPage(name: tagsScreen, page: () =>  TagsScreen()),
     GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
     GetPage(name: myRecipeDetails, page: () =>  const MyRecipeDetails()),

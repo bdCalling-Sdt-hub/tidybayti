@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
@@ -117,7 +118,7 @@ class MyRecipeScreen extends StatelessWidget {
                                       title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed missing title
                                       cuisine: 'Asian / Indian',
                                       cookTime: data.cookingTime ?? "N/A",
-                                      imageUrl: data.recipeImage ?? "",
+                                      imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
                                     ),
                                   );
                                 }),
