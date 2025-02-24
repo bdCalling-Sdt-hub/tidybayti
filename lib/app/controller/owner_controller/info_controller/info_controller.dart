@@ -13,32 +13,42 @@ class InfoController extends GetxController{
 
   ///==================================✅✅Get Employee✅✅=======================
 
-
+  bool isApi = false;
   Rx<TermsData> termsData = TermsData().obs;
 
-  getTerms() async {
+  Future<void> getTerms() async {
     setRxRequestStatus(Status.loading);
-    refresh();
+    refresh(); // Ensure UI updates before API call
+
     try {
-      final response =
-      await apiClient.get(url: ApiUrl.terms, showResult: true);
+      String url = isApi ? ApiUrl.terms : ApiUrl.privacy;
+      final response = await apiClient.get(url: url, showResult: true);
 
-      if (response.statusCode == 200) {
-        termsData.value = TermsData.fromJson(response.body["data"]);
+      if (response.statusCode == 200 && response.body != null) {
+        var responseData = response.body["data"];
 
-        print('StatusCode==================${response.statusCode}');
-        print('description==================${termsData.value.description}');
-
-        setRxRequestStatus(Status.completed);
-        refresh();
+        if (responseData != null) {
+          termsData.value = TermsData.fromJson(responseData);
+          print('✅ Success: Status Code = ${response.statusCode}');
+          print('📄 Description: ${termsData.value.description}');
+          setRxRequestStatus(Status.completed);
+        } else {
+          print("⚠️ Warning: Response data is null");
+          setRxRequestStatus(Status.error);
+        }
       } else {
+        print("❌ Error: Unexpected Status Code = ${response.statusCode}");
         setRxRequestStatus(Status.error);
         ApiChecker.checkApi(response);
       }
     } catch (e) {
+      print("❗ Exception: $e");
       setRxRequestStatus(Status.error);
+    } finally {
+      refresh(); // Ensure UI updates after the process
     }
   }
+
 
 
 
