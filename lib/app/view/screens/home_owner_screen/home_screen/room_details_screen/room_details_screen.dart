@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
@@ -55,7 +56,7 @@ class _RoomDetailsScreenState extends State<RoomDetailsScreen> {
             children: [
               ///=============================== roomName Title ========================
               CustomMenuAppbar(
-                isEdit: true,
+                isEdit: false,
                 title: roomName,
                 onBack: () {
                   Get.back();
@@ -156,8 +157,8 @@ void showEditRoomDialog(BuildContext context) {
           borderRadius: BorderRadius.all(
               Radius.circular(5.0)), // Adjust the radius as needed
         ),
-        title: const CustomText(
-          text: 'Edit New Room',
+        title:  CustomText(
+          text: ApiUrl.editRoom.tr,
           color: AppColors.dark500,
           fontSize: 20,
           fontWeight: FontWeight.w400,
