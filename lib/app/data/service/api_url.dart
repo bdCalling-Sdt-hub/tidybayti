@@ -77,4 +77,7 @@ class ApiUrl {
   static String recipeSearch(String searchText) =>
       "$baseUrl/recipe/get-my-recipe?searchTerm=$searchText";
 
+  static String tagFilter(String tagText) =>
+      "$baseUrl/recipe/get-my-recipe?tags=$tagText";
+
 }
