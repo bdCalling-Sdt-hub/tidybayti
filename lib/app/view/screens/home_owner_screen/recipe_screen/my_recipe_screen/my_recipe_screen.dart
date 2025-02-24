@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
@@ -13,8 +14,10 @@ import 'package:tidybayte/app/view/components/custom_recipe_card/custom_recipe_c
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
 class MyRecipeScreen extends StatelessWidget {
-  const MyRecipeScreen({super.key});
+   MyRecipeScreen({super.key});
 
+
+  final RecipeController recipeController = Get.find<RecipeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
