@@ -24,7 +24,7 @@ class _TermsAndServiceScreenState extends State<TermsAndServiceScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       infoController.isApi = true; // Set to true for terms API
-      infoController.getTerms();
+      infoController.infoData();
     });
   }
 
@@ -38,10 +38,10 @@ class _TermsAndServiceScreenState extends State<TermsAndServiceScreen> {
             return const CustomLoader();
 
           case Status.internetError:
-            return NoInternetScreen(onTap: infoController.getTerms);
+            return NoInternetScreen(onTap: infoController.infoData);
 
           case Status.error:
-            return GeneralErrorScreen(onTap: infoController.getTerms);
+            return GeneralErrorScreen(onTap: infoController.infoData);
 
           case Status.completed:
             return Padding(

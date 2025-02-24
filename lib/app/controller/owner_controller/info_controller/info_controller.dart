@@ -11,14 +11,14 @@ class InfoController extends GetxController{
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
 
-  ///==================================✅✅Get Employee✅✅=======================
+  ///==================================✅✅infoData✅✅=======================
 
   bool isApi = false;
   Rx<TermsData> termsData = TermsData().obs;
 
-  Future<void> getTerms() async {
+  Future<void> infoData() async {
     setRxRequestStatus(Status.loading);
-    refresh(); // Ensure UI updates before API call
+    refresh();
 
     try {
       String url = isApi ? ApiUrl.terms : ApiUrl.privacy;
@@ -45,7 +45,7 @@ class InfoController extends GetxController{
       print("❗ Exception: $e");
       setRxRequestStatus(Status.error);
     } finally {
-      refresh(); // Ensure UI updates after the process
+      refresh();
     }
   }
 

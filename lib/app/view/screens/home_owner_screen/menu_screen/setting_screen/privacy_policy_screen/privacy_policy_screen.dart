@@ -23,8 +23,8 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      infoController.isApi = false; // Set to false for privacy policy API
-      infoController.getTerms();
+      infoController.isApi = false;
+      infoController.infoData();
     });
   }
 
@@ -38,10 +38,10 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
             return const CustomLoader();
 
           case Status.internetError:
-            return NoInternetScreen(onTap: infoController.getTerms);
+            return NoInternetScreen(onTap: infoController.infoData);
 
           case Status.error:
-            return GeneralErrorScreen(onTap: infoController.getTerms);
+            return GeneralErrorScreen(onTap: infoController.infoData);
 
           case Status.completed:
             return Padding(
