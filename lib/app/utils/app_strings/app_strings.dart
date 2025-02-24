@@ -18,6 +18,7 @@ class AppStrings {
 
   ///=========================Start Page===================
   static const String welcome = "Welcome";
+  static const String faq = "Faq";
   static const String id = "Id:";
   static const String bhd120 = "BHD 3.99 /month/year";
   static const String sixMonth = "6 Months package";

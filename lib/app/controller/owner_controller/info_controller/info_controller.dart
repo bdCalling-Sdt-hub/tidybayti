@@ -52,6 +52,14 @@ class InfoController extends GetxController {
   }
 
   ///==================================✅✅Faq✅✅=======================
+  // Track the selected FAQ item index
+  var selectedIndex = Rx<int?>(null);
+
+// Toggle the selected FAQ item
+  void toggleItem(int index) {
+    selectedIndex.value = selectedIndex.value == index ? null : index;
+  }
+
   Rx<FaqModel> faqList = FaqModel().obs;
 
   Future<void> getFaq() async {
