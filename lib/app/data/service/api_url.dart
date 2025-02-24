@@ -64,6 +64,9 @@ class ApiUrl {
   static const privacy = "$baseUrl/manage/get-privacy-policy";
   static const getFaq = "$baseUrl/manage/get-faq";
 
+  ///==================================✅✅Notification✅✅=======================
+  static const notification = "$baseUrl/task/get-notifications";
+
   ///==================================✅✅Recipe✅✅=======================
   static const addRecipe = "$baseUrl/recipe/post-recipe";
   static const updateRecipe = "$baseUrl/recipe/update-recipe";

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/notification_controller/notification_controller.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 
@@ -8,8 +9,9 @@ import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_app
 
 
 class EmployeeNotificationScreen extends StatelessWidget {
-  const EmployeeNotificationScreen({super.key});
+   EmployeeNotificationScreen({super.key});
 
+  final NotificationController notificationController = Get.find<NotificationController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +34,7 @@ class EmployeeNotificationScreen extends StatelessWidget {
           child: Column(
             children: [
               CustomMenuAppbar(
-                title: AppStrings.notification,
+                title: AppStrings.notification.tr,
                 onBack: () {
                   Get.back();
                 },
