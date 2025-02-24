@@ -13,18 +13,20 @@ class CustomMenuAppbar extends StatelessWidget {
   final VoidCallback? onBack;
   final bool? isEdit;
   final bool? download;
+  final bool? isRemove;
   final VoidCallback? onTap;
+  final VoidCallback? onRemove;
   final VoidCallback? onDownload;
 
   const CustomMenuAppbar({
     super.key,
     required this.title,
-    this.backIcon = AppIcons.back, // Default back icon
+    this.backIcon = AppIcons.back,
     this.onBack,
     this.isEdit,
     this.onTap,
     this.download,
-    this.onDownload, // Optional onBack callback
+    this.onDownload, this.isRemove, this.onRemove,
   });
 
   @override
@@ -37,14 +39,7 @@ class CustomMenuAppbar extends StatelessWidget {
             IconButton(onPressed: (){
               Get.back();
             }, icon: const Icon(Icons.arrow_back)),
-            // GestureDetector(
-            //   onTap: onBack ?? () => Get.back(),
-            //   // Fallback to Get.back() if onBack is not provided
-            //   child: CustomImage(
-            //     imageSrc:,
-            //     imageColor: Colors.black,
-            //   ),
-            // ),
+
           Expanded(
             child: CustomText(
               textAlign: TextAlign.center,
@@ -58,6 +53,12 @@ class CustomMenuAppbar extends StatelessWidget {
               ? GestureDetector(
                   onTap: onTap,
                   child: const CustomImage(imageSrc: AppIcons.edit))
+              : SizedBox(width: 5.w),
+
+          isRemove == true
+              ? GestureDetector(
+                  onTap: onRemove,
+                  child: const Icon(Icons.delete,color: Colors.grey,))
               : SizedBox(width: 5.w),
 
           download == true

@@ -55,6 +55,7 @@ class WalletController extends GetxController {
 
     var response = await apiClient.post(body: body, url: ApiUrl.budgetCreate);
     if (response.statusCode == 201) {
+      getBudget();
       clearField();
       toastMessage(message: response.body["message"]);
       Get.back();
@@ -206,6 +207,29 @@ class WalletController extends GetxController {
     }
     isRemoveExpense.value = false;
     isRemoveExpense.refresh();
+  }
+
+  ///==================================✅✅Remove Budget✅✅=======================
+  RxBool isRemoveBudget = false.obs;
+
+  removeBudget({ required String budgetId}) async {
+    isRemoveBudget.value = true;
+    var body = {
+      "budgetId": budgetId
+    };
+
+    var response = await apiClient.delete(body: body, url: ApiUrl.deleteBudget);
+    if (response.statusCode == 200) {
+     getBudget();
+     Get.back();
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveBudget.value = false;
+    isRemoveBudget.refresh();
   }
 
   @override

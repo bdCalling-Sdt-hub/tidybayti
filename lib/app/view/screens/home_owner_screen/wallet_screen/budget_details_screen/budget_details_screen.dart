@@ -73,15 +73,18 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                 final expenses = budget.expenses ?? [];
 
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// ✅ Appbar
                       CustomMenuAppbar(
-                        isEdit: true,
-                        onTap: () {
-                          Get.toNamed(AppRoutes.createBudgetScreen);
+                        isRemove: true,
+                        onRemove: () {
+                          GlobalAlert.showDeleteDialog(
+                              context, () {
+                           controller.removeBudget(budgetId: id);
+                          }, 'Remove Budget');
                         },
                         title: categoryName,
                         onBack: () {
@@ -243,7 +246,8 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                                                   controller.removeExpense(
                                                       expenseId:
                                                           expenses[index].id ??
-                                                              "", budgetId: id);
+                                                              "",
+                                                      budgetId: id);
                                                 }, 'Remove Expense');
                                               },
                                               icon: const Icon(
