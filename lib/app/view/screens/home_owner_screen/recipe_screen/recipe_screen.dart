@@ -67,14 +67,7 @@ class RecipeScreen extends StatelessWidget {
                             Get.toNamed(AppRoutes.myRecipeScreen);
                           },
                         ),
-                        /// Search Recipe
-                        CustomMenuItem(
-                          image: AppIcons.search,
-                          text: AppStrings.searchRecipe,
-                          onTap: () {
-                            Get.toNamed(AppRoutes.searchRecipeScreen);
-                          },
-                        ),
+
                         /// Favorite Recipes
                         CustomMenuItem(
                           image: AppIcons.favorite,

@@ -63,4 +63,15 @@ class ApiUrl {
   static const terms = "$baseUrl/manage/get-terms-conditions";
   static const privacy = "$baseUrl/manage/get-privacy-policy";
   static const getFaq = "$baseUrl/manage/get-faq";
+
+  ///==================================✅✅Recipe✅✅=======================
+  static const addRecipe = "$baseUrl/recipe/post-recipe";
+  static const updateRecipe = "$baseUrl/recipe/update-recipe";
+  static String favoriteRecipe(String recipeId) =>
+      "$baseUrl/recipe/favorite-unfavorite-recipe?recipeId=$recipeId";
+  static String singleRecipe(String recipeId) =>
+      "$baseUrl/recipe/get-recipe?recipeId=$recipeId";
+  static String recipeDelete(String recipeId) =>
+      "$baseUrl/recipe/delete-recipe?recipeId=$recipeId";
+
 }

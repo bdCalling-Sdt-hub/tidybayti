@@ -9,7 +9,6 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
@@ -21,7 +20,6 @@ class AddRecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const NavBar(currentIndex: 3),
       body: Stack(
         children: [
           SizedBox(
@@ -39,7 +37,7 @@ class AddRecipeScreen extends StatelessWidget {
                 children: [
                   /// Menu Title
                   CustomMenuAppbar(
-                    title: AppStrings.addRecipe,
+                    title: AppStrings.addRecipe.tr,
                     onBack: () {
                       Get.back();
                     },
