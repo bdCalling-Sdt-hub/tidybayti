@@ -52,6 +52,7 @@ class ApiUrl {
   static const getCategoryBudget = "$baseUrl/wallet/get-budget-category";
   static const upDateBudget = "$baseUrl/wallet/update-budget";
   static const deleteBudget = "$baseUrl/wallet/delete-budget";
+  static const deleteExpense = "$baseUrl/wallet/delete-expense";
   static const expenseCreate = "$baseUrl/wallet/post-expense";
   static String getSingleBudget(String budgetId) =>
       "$baseUrl/wallet/get-budget?budgetId=$budgetId";

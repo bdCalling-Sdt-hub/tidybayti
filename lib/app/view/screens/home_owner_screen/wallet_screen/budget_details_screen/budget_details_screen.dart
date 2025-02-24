@@ -208,43 +208,50 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 5),
                                   color: Colors.white,
-                                  padding: const EdgeInsets.all(15),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  padding: const EdgeInsets.only(
+                                      top: 10, left: 10, right: 10),
+                                  child: Column(
                                     children: [
-                                      const Icon(Icons.house,
-                                          color: Colors.grey),
-                                      SizedBox(width: 10.w),
-                                      CustomText(
-                                        text: budget.category ?? "",
-                                        color: AppColors.dark300,
-                                        fontSize: 16.h,
-                                      ),
-                                      const Spacer(),
-                                      Column(
+                                      Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                GlobalAlert.showDeleteDialog(
-                                                    context,
-                                                    () {},
-                                                    'Remove Expense');
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.grey,
-                                              )),
+                                          const Icon(Icons.house,
+                                              color: Colors.grey),
+                                          SizedBox(width: 10.w),
+                                          CustomText(
+                                            text: budget.category ?? "",
+                                            color: AppColors.dark300,
+                                            fontSize: 16.h,
+                                          ),
+                                          const Spacer(),
                                           CustomText(
                                             text:
                                                 "\$${expenses[index].amount?.toStringAsFixed(2) ?? '0'}",
                                             color: AppColors.dark300,
                                             fontSize: 16.h,
-                                          ),
+                                          )
                                         ],
-                                      )
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Spacer(),
+                                          IconButton(
+                                              onPressed: () {
+                                                GlobalAlert.showDeleteDialog(
+                                                    context, () {
+                                                  controller.removeExpense(
+                                                      expenseId:
+                                                          expenses[index].id ??
+                                                              "", budgetId: id);
+                                                }, 'Remove Expense');
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.grey,
+                                              )),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 );
