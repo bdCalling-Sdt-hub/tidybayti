@@ -2,133 +2,110 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/notification_controller/notification_controller.dart';
-
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
+import 'package:tidybayte/app/view/components/notification_card/notification_card.dart';
 
 class EmployeeNotificationScreen extends StatelessWidget {
-   EmployeeNotificationScreen({super.key});
+  EmployeeNotificationScreen({super.key});
 
-  final NotificationController notificationController = Get.find<NotificationController>();
+  final NotificationController notificationController =
+  Get.find<NotificationController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3F2FD), // Light blue background
-
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xCCE8F3FA), // First color (with opacity)
-              Color(0xFFB5D8EE),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+        backgroundColor: const Color(0xFFE3F2FD), // Light blue background
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xCCE8F3FA), // First color (with opacity)
+                Color(0xFFB5D8EE),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
-        ),
-        child:     Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 25),
-          child: Column(
-            children: [
-              CustomMenuAppbar(
-                title: AppStrings.notification.tr,
-                onBack: () {
-                  Get.back();
-                },
-              ),
-              const NotificationCard(
-                icon: Icons.notifications_none_outlined,
-                title: 'Welcome to Tidy bayti app.',
-                timeAgo: '1 day ago',
-              ),
-              SizedBox(height: 16.h),
-              NotificationCard(
-                icon: Icons.notifications_none_outlined,
-                title: 'You are assigned to a new task',
-                timeAgo: '1 day ago',
-              ),
-              SizedBox(height: 16.h),
-              NotificationCard(
-                icon: Icons.notifications_none_outlined,
-                title: 'Your task has been re-scheduled.',
-                timeAgo: '1 day ago',
-              ),
-              SizedBox(height: 16.h),
-              NotificationCard(
-                icon: Icons.notifications_none_outlined,
-                title: 'You have completed your task.',
-                timeAgo: '1 day ago',
-              ),
-            ],
-          ),
-        ),
-      )
-
-
-    );
-  }
-}
-
-class NotificationCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String timeAgo;
-
-  const NotificationCard({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.timeAgo,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.blue, size: 30.sp),
-          SizedBox(width: 16.w),
-          Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                CustomMenuAppbar(
+                  title: AppStrings.notification.tr,
+                  onBack: () {
+                    Get.back();
+                  },
                 ),
-                SizedBox(height: 5.h),
-                Text(
-                  timeAgo,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.grey,
-                  ),
+                Expanded(
+                  child: Obx(() {
+                    switch (notificationController.rxRequestStatus.value) {
+                      case Status.loading:
+                        return const Center(child: CustomLoader()); // ✅ Loader Centered
+
+                      case Status.internetError:
+                        return NoInternetScreen(
+                          onTap: () {
+                            notificationController.getNotification();
+                          },
+                        );
+
+                      case Status.error:
+                        return GeneralErrorScreen(
+                          onTap: () {
+                            notificationController.getNotification();
+                          },
+                        );
+
+                      case Status.completed:
+                        if (notificationController.notificationList.isEmpty) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text(
+                                "No Notifications Found", // ✅ Show when empty
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            notificationController.getNotification(); // ✅ Refresh Indicator Added
+                          },
+                          child: ListView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            itemCount: notificationController.notificationList.length,
+                            itemBuilder: (context, index) {
+                              final data = notificationController.notificationList[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: NotificationCard(
+                                  icon: Icons.notifications_none_outlined,
+                                  title: data.message ?? "",
+                                  timeAgo: '1 day ago',
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                    }
+                  }),
                 ),
+                SizedBox(height: 16.h),
               ],
             ),
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
