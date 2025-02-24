@@ -3,18 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
+
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
-import '../../room_details_screen/room_details_screen.dart';
 
 class AssignWorkScreen extends StatefulWidget {
   const AssignWorkScreen({super.key});
@@ -101,35 +97,10 @@ class _AssignWorkScheduleScreenState extends State<AssignWorkScreen> {
                           assignedTo: 'Annette Black',
                           time: '10.00 am - 11 am',
                           onInfoPressed: () {
-                            TaskInfoDialog.showTask(
-                              context: context,
-                              content:
-                                  'Are you sure you want to delete this task?',
-                              onConfirm: () {
-                                // Handle confirm action (e.g., delete task)
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              onCancel: () {
-                                Navigator.of(context)
-                                    .pop(); // Close the dialog without any action
-                              },
-                            );
+
                           },
                           onDeletePressed: () {
-                            TaskAlertDialog.showTaskDialog(
-                              context: context,
-                              title: 'Delete Task',
-                              content:
-                                  'Are you sure you want to delete this task?',
-                              onConfirm: () {
-                                // Handle confirm action (e.g., delete task)
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              onCancel: () {
-                                Navigator.of(context)
-                                    .pop(); // Close the dialog without any action
-                              },
-                            );
+
                           },
                         );
                       }),
