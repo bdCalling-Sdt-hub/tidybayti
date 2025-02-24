@@ -3,6 +3,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/info_controller/info_controller.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
@@ -31,7 +32,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:AppColors.addedColor,
       body: Obx(() {
         switch (infoController.rxRequestStatus.value) {
           case Status.loading:
