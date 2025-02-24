@@ -58,4 +58,9 @@ class ApiUrl {
   static String getSingleBudget(String budgetId) =>
       "$baseUrl/wallet/get-budget?budgetId=$budgetId";
 
+
+  ///==================================✅✅Manage✅✅=======================
+  static const terms = "$baseUrl/manage/get-terms-conditions";
+  static const privacy = "$baseUrl/manage/get-privacy-policy";
+  static const getFaq = "$baseUrl/manage/get-faq";
 }
