@@ -71,14 +71,14 @@ class ApiUrl {
   static const addRecipe = "$baseUrl/recipe/post-recipe";
   static const updateRecipe = "$baseUrl/recipe/update-recipe";
   static const myRecipe = "$baseUrl/recipe/get-my-recipe";
+  static const searchRecipe = "$baseUrl/recipe/get-my-recipe?searchTerm";
   static String favoriteRecipe(String recipeId) =>
       "$baseUrl/recipe/favorite-unfavorite-recipe?recipeId=$recipeId";
   static String singleRecipe(String recipeId) =>
       "$baseUrl/recipe/get-recipe?recipeId=$recipeId";
   static String recipeDelete(String recipeId) =>
       "$baseUrl/recipe/delete-recipe?recipeId=$recipeId";
-  static String recipeSearch(String searchText) =>
-      "$baseUrl/recipe/get-my-recipe?searchTerm=$searchText";
+
 
   static String tagFilter(String tagText) =>
       "$baseUrl/recipe/get-my-recipe?tags=$tagText";

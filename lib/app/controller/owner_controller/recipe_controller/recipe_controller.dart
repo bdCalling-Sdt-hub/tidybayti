@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/recipe/my_recipe.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
@@ -6,10 +10,11 @@ import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
-class RecipeController extends GetxController{
+class RecipeController extends GetxController {
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
   ApiClient apiClient = serviceLocator();
+
   ///==================================✅✅get House Room✅✅=======================
 
   Rx<MyRecipeData> myRecipeData = MyRecipeData().obs;
@@ -19,7 +24,7 @@ class RecipeController extends GetxController{
     refresh();
     try {
       final response =
-      await apiClient.get(url: ApiUrl.myRecipe, showResult: true);
+          await apiClient.get(url: ApiUrl.myRecipe, showResult: true);
 
       if (response.statusCode == 200) {
         myRecipeData.value = MyRecipeData.fromJson(response.body["data"]);
@@ -38,6 +43,75 @@ class RecipeController extends GetxController{
     }
   }
 
+  ///==================================✅✅Add New Recipe✅✅=======================
+
+  final ingredientsController = TextEditingController();
+  final describeStepsController = TextEditingController();
+  final recipeNameController = TextEditingController();
+  final cookingTimeController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  ////Tag
+  final List<String> categories = [
+    'Appetizers',
+    'Asian',
+    'Breakfast',
+    'Dessert',
+    'Dinner',
+  ];
+
+  List<bool> selectedCategories = [];
+  List<String> selectedCategoryNames = [];
+
+  //ingeredients and step
+  final List<String> ingredientsList = [];
+  final List<String> stepsList = [];
+  var isLoading = false.obs;
+
+  void setLoading(bool value) {
+    isLoading.value = value;
+  }
+
+  Rx<File?> profileImage = Rx<File?>(null);
+
+  Future<void> pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profileImage.value = File(pickedFile.path);
+      print("✅ Selected Image:===== ${profileImage.value!.path}");
+    } else {
+      print("❌ No Image Selected");
+    }
+  }
+
+
+clearRecipeField(){
+    recipeNameController.clear();
+    cookingTimeController.clear();
+    descriptionController.clear();
+    stepsList.clear();
+    ingredientsList.clear();
+    selectedCategoryNames.clear();
+
+}
+
+  ///==================================✅✅Search✅✅=======================
+  TextEditingController searchController = TextEditingController();
+
+  searchRecipe({required String recipeName}) async {
+    setRxRequestStatus(Status.loading);
+    myRecipeData.refresh();
+    var response = await apiClient.get(url: "${ApiUrl.searchRecipe}=$recipeName");
+    myRecipeData.refresh();
+    if (response.statusCode == 200) {
+      myRecipeData.value = MyRecipeData.fromJson(response.body["data"]);
+
+      setRxRequestStatus(Status.completed);
+      myRecipeData.refresh();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+  }
 
 
   @override
@@ -45,5 +119,4 @@ class RecipeController extends GetxController{
     getMyRecipe();
     super.onInit();
   }
-
 }
