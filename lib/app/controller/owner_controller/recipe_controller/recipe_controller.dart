@@ -48,6 +48,7 @@ class RecipeController extends GetxController{
   final descriptionController = TextEditingController();
 
 
+  ////Tag
   final List<String> categories = [
     'Appetizers',
     'Asian',
@@ -58,6 +59,13 @@ class RecipeController extends GetxController{
 
   List<bool> selectedCategories = [];
   List<String> selectedCategoryNames = [];
+
+  //ingeredients and step
+  final List<String> ingredientsList = [];
+  final List<String> stepsList = [];
+
+
+
   @override
   void onInit() {
     getMyRecipe();

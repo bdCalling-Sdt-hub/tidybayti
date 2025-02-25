@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
@@ -18,9 +20,6 @@ class AddNewRecipe extends StatefulWidget {
 }
 
 class _AddNewRecipeState extends State<AddNewRecipe> {
-  final List<String> ingredientsList = [];
-  final List<String> stepsList = [];
-
   final formKey = GlobalKey<FormState>();
 
   // List to keep track of selected items
@@ -114,6 +113,8 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                           ),
                           const SizedBox(height: 16),
 
+                          ///=============================== Ingredients Step ========================
+
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -148,10 +149,14 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     if (recipeController.ingredientsController
                                         .text.isNotEmpty) {
                                       setState(() {
-                                        ingredientsList.add(recipeController
-                                            .ingredientsController.text);
+                                        recipeController.ingredientsList.add(
+                                            recipeController
+                                                .ingredientsController.text);
                                         recipeController.ingredientsController
                                             .clear();
+
+                                        print(
+                                            'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
                                       });
                                     }
                                   },
@@ -165,9 +170,9 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                           ),
                           const SizedBox(height: 10),
 
-                          ///=============================== Ingredients Step ========================
                           Column(
-                            children: ingredientsList.map((ingredient) {
+                            children: recipeController.ingredientsList
+                                .map((ingredient) {
                               return Row(
                                 children: [
                                   Expanded(
@@ -215,7 +220,10 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          ingredientsList.remove(ingredient);
+                                          recipeController.ingredientsList
+                                              .remove(ingredient);
+                                          print(
+                                              'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
                                         });
                                       },
                                       child: const Icon(
@@ -239,7 +247,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                               Expanded(
                                 flex: 3,
                                 child: CustomTextField(
-                                  hintText: AppStrings.describeSteps,
+                                  hintText: AppStrings.describeSteps.tr,
                                   textEditingController:
                                       recipeController.describeStepsController,
                                 ),
@@ -267,10 +275,14 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     if (recipeController.describeStepsController
                                         .text.isNotEmpty) {
                                       setState(() {
-                                        stepsList.add(recipeController
-                                            .describeStepsController.text);
+                                        recipeController.stepsList.add(
+                                            recipeController
+                                                .describeStepsController.text);
                                         recipeController.describeStepsController
                                             .clear();
+
+                                        print(
+                                            'StepList=======${jsonEncode(recipeController.stepsList)}');
                                       });
                                     }
                                   },
@@ -286,7 +298,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
 
                           /// Display Steps List
                           Column(
-                            children: stepsList.map((step) {
+                            children: recipeController.stepsList.map((step) {
                               return Row(
                                 children: [
                                   Expanded(
@@ -331,7 +343,10 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          stepsList.remove(step);
+                                          recipeController.stepsList
+                                              .remove(step);
+                                          print(
+                                              'StepList=======${jsonEncode(recipeController.stepsList)}');
                                         });
                                       },
                                       child: const Icon(
@@ -377,80 +392,72 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
   ///Tag Section
   Column TagSection() {
     return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.selectTags.tr,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.dark300),
-                            ),
-                            const SizedBox(height: 10),
-                            GridView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 10.0,
-                                mainAxisSpacing: 10.0,
-                                childAspectRatio: 2.5,
-                              ),
-                              itemCount: recipeController.categories.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      // Toggle the selection for this category.
-                                      recipeController
-                                              .selectedCategories[index] =
-                                          !recipeController
-                                              .selectedCategories[index];
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppStrings.selectTags.tr,
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w300,
+              color: AppColors.dark300),
+        ),
+        const SizedBox(height: 10),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 10.0,
+            mainAxisSpacing: 10.0,
+            childAspectRatio: 2.5,
+          ),
+          itemCount: recipeController.categories.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  // Toggle the selection for this category.
+                  recipeController.selectedCategories[index] =
+                      !recipeController.selectedCategories[index];
 
-                                      // Update the list of selected category names.
-                                      recipeController.selectedCategoryNames =
-                                          recipeController.categories
-                                              .asMap()
-                                              .entries
-                                              .where((entry) =>
-                                                  recipeController
-                                                          .selectedCategories[
-                                                      entry.key])
-                                              .map((entry) => entry.value)
-                                              .toList();
+                  // Update the list of selected category names.
+                  recipeController.selectedCategoryNames = recipeController
+                      .categories
+                      .asMap()
+                      .entries
+                      .where((entry) =>
+                          recipeController.selectedCategories[entry.key])
+                      .map((entry) => entry.value)
+                      .toList();
 
-                                      // For debugging or further processing:
-                                      print(
-                                          'Selected Categories: "${recipeController.selectedCategoryNames}"');
-                                    });
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: recipeController
-                                              .selectedCategories[index]
-                                          ? AppColors.blue900
-                                          : AppColors.employeeCardColor,
-                                      border:
-                                          Border.all(color: Colors.black12),
-                                    ),
-                                    child: Text(
-                                      recipeController.categories[index],
-                                      style: TextStyle(
-                                        color: recipeController
-                                                .selectedCategories[index]
-                                            ? AppColors.light200
-                                            : AppColors.dark300,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        );
+                  // For debugging or further processing:
+                  print(
+                      'Selected Categories: "${recipeController.selectedCategoryNames}"');
+                });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: recipeController.selectedCategories[index]
+                      ? AppColors.blue900
+                      : AppColors.employeeCardColor,
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Text(
+                  recipeController.categories[index],
+                  style: TextStyle(
+                    color: recipeController.selectedCategories[index]
+                        ? AppColors.light200
+                        : AppColors.dark300,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 }
