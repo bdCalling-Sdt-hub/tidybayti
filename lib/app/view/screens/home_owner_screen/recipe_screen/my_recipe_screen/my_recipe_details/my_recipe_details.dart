@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
@@ -97,7 +98,8 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                         children: [
                           //TODO:Image
                           CustomNetworkImage(
-                              imageUrl: AppConstants.fruits,
+                              imageUrl:
+                                  "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
                               height: 191,
                               width: 375),
                           const SizedBox(
@@ -117,8 +119,9 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                               value: "${data.cookingTime ?? " "} minutes"),
                           const SizedBox(height: 8),
                           //TODO:Tag
-                          const RecipeInfoRow(
-                              label: 'Tag:', value: 'Asian / Indian'),
+                          RecipeInfoRow(
+                              label: AppStrings.tag.tr,
+                              value: data.tags.toString()),
 
                           const SizedBox(height: 32),
                           //TODo:Description
