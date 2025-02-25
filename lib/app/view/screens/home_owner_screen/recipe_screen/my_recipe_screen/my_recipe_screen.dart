@@ -38,98 +38,100 @@ class MyRecipeScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SafeArea(
-              child: Column(
-                children: [
-                  /// Menu Title
-                  CustomMenuAppbar(
-                    title: AppStrings.myRecipe.tr,
-                    onBack: () {
-                      Get.back();
-                    },
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    /// Menu Title
+                    CustomMenuAppbar(
+                      title: AppStrings.myRecipe.tr,
+                      onBack: () {
+                        Get.back();
+                      },
+                    ),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        ///=============================== Search ========================
-                        const CustomTextField(
-                          prefixIcon: Icon(Icons.search),
-                          hintText: 'Search',
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        const Divider(
-                          color: AppColors.blue500,
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          ///=============================== Search ========================
+                          const CustomTextField(
+                            prefixIcon: Icon(Icons.search),
+                            hintText: 'Search',
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          const Divider(
+                            color: AppColors.blue500,
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
 
-                        ///=============================== My recipe List ========================
+                          ///=============================== My recipe List ========================
 
-                        Obx(() {
-                          switch (recipeController.rxRequestStatus.value) {
-                            case Status.loading:
-                              return const CustomLoader();
+                          Obx(() {
+                            switch (recipeController.rxRequestStatus.value) {
+                              case Status.loading:
+                                return const CustomLoader();
 
-                            case Status.internetError:
-                              return NoInternetScreen(onTap: () {
-                                recipeController.getMyRecipe();
-                              });
-
-                            case Status.error:
-                              return GeneralErrorScreen(
-                                onTap: () {
+                              case Status.internetError:
+                                return NoInternetScreen(onTap: () {
                                   recipeController.getMyRecipe();
-                                },
-                              );
+                                });
 
-                            case Status.completed:
-                              final recipes = recipeController.myRecipeData.value.recipeWithFavorite ?? [];
+                              case Status.error:
+                                return GeneralErrorScreen(
+                                  onTap: () {
+                                    recipeController.getMyRecipe();
+                                  },
+                                );
 
-                              if (recipes.isEmpty) {
-                                // ✅ Show "No Recipe Found" when the list is empty
-                                return const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 80),
-                                    child: Text(
-                                      "No Recipe Found",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.blueGrey,
+                              case Status.completed:
+                                final recipes = recipeController.myRecipeData.value.recipeWithFavorite ?? [];
+
+                                if (recipes.isEmpty) {
+                                  // ✅ Show "No Recipe Found" when the list is empty
+                                  return const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 80),
+                                      child: Text(
+                                        "No Recipe Found",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-
-                              return Column(
-                                children: List.generate(recipes.length, (index) {
-                                  final data = recipes[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.myRecipeDetails);
-                                    },
-                                    child: CustomRecipeCard(
-                                      isFavorite: true,
-                                      title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed missing title
-                                      cuisine: 'Asian / Indian',
-                                      cookTime: data.cookingTime ?? "N/A",
-                                      imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
-                                    ),
                                   );
-                                }),
-                              );
-                          }
-                        })
+                                }
 
-                      ],
-                    ),
-                  )
-                ],
+                                return Column(
+                                  children: List.generate(recipes.length, (index) {
+                                    final data = recipes[index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.myRecipeDetails);
+                                      },
+                                      child: CustomRecipeCard(
+                                        isFavorite: true,
+                                        title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed missing title
+                                        cuisine: 'Asian / Indian',
+                                        cookTime: data.cookingTime ?? "N/A",
+                                        imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                      ),
+                                    );
+                                  }),
+                                );
+                            }
+                          })
+
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
