@@ -12,7 +12,7 @@ class CustomRecipeCard extends StatelessWidget {
   final String cuisine;
   final String cookTime;
   final String imageUrl;
-  final bool isFavorite;
+  final bool? isDelete;
   final VoidCallback? onDelete;
 
   const CustomRecipeCard({
@@ -20,7 +20,7 @@ class CustomRecipeCard extends StatelessWidget {
     required this.title,
     required this.cuisine,
     required this.cookTime,
-    required this.imageUrl, required this.isFavorite, this.onDelete,
+    required this.imageUrl, this.onDelete, this.isDelete,
   });
 
   @override
@@ -46,6 +46,8 @@ class CustomRecipeCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: CustomText(
+                        top: 10,
+                        textAlign: TextAlign.start,
                         text: title,
                         color: AppColors.dark400,
                         fontWeight: FontWeight.w400,
@@ -53,12 +55,13 @@ class CustomRecipeCard extends StatelessWidget {
                         // overflow: TextOverflow.ellipsis, // Prevent text overflow
                       ),
                     ),
-                    IconButton(
-                      icon: isFavorite? Icon(Icons.favorite_border):Icon(Icons.favorite),
-                      onPressed: () {
-                        // Handle favorite button pressed
-                      },
-                    ),
+                    // IconButton(
+                    //   icon: isFavorite? Icon(Icons.favorite_border):Icon(Icons.favorite),
+                    //   onPressed: () {
+                    //     // Handle favorite button pressed
+                    //   },
+                    // ),
+                    isDelete == true?
                     GestureDetector(
                       onTap: onDelete,
                       child: const CustomImage(
@@ -66,7 +69,7 @@ class CustomRecipeCard extends StatelessWidget {
                         imageType: ImageType.svg,
                         imageColor: AppColors.dark400,
                       ),
-                    ),
+                    ):const SizedBox(),
                     SizedBox(width: 10.w,)
                   ],
                 ),

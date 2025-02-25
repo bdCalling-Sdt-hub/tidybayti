@@ -4,6 +4,7 @@ import 'package:tidybayte/app/controller/owner_controller/recipe_controller/reci
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -104,7 +105,7 @@ class _MySingleTagsState extends State<MySingleTags> {
                             }
 
                             return ListView.builder(
-                              padding: EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.only(top: 10),
                               itemCount: recipes.length,
                               itemBuilder: (context, index) {
                                 final data = recipes[index];
@@ -113,10 +114,8 @@ class _MySingleTagsState extends State<MySingleTags> {
                                     Get.toNamed(AppRoutes.myRecipeDetails, arguments: data.id);
                                   },
                                   child: CustomRecipeCard(
-                                    onDelete: () {
-                                      // Handle delete functionality
-                                    },
-                                    isFavorite: true,
+
+
                                     title: data.recipeName ?? "Untitled Recipe",
                                     cuisine: 'Asian / Indian',
                                     cookTime: data.cookingTime ?? "N/A",

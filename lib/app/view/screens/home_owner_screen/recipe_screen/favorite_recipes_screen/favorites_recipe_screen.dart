@@ -92,7 +92,7 @@ class FavoritesRecipeScreen extends StatelessWidget {
                                   Get.toNamed(AppRoutes.myRecipeDetails);
                                 },
                                 child: CustomRecipeCard(
-                                  isFavorite: false,
+
                                   title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed title
                                   cuisine: '',
                                   cookTime: data.cookingTime ?? "N/A",

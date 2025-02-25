@@ -140,7 +140,7 @@ class MyRecipeScreen extends StatelessWidget {
                                                 recipeId: data.id ?? "");
                                           }, "Remove My Recipe");
                                         },
-                                        isFavorite: true,
+
                                         title: data.recipeName ??
                                             "Untitled Recipe",
                                         // ✅ Fixed missing title
