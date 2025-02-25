@@ -31,12 +31,15 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
     recipeController.selectedCategories =
         List.generate(recipeController.categories.length, (index) => false);
     recipeController.selectedCategoryNames = [];
+
+    // var recipeName = recipeController.recipeNameController.text;
   }
 
   final RecipeController recipeController = Get.find<RecipeController>();
 
   final String isEdit = Get.arguments[0];
   final String recipeId = Get.arguments[1];
+  final String recipeName = Get.arguments[2];
   @override
   Widget build(BuildContext context) {
     print(isEdit);

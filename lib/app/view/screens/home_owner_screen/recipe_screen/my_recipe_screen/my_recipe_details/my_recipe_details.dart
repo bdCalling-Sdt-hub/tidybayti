@@ -64,7 +64,13 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                 },
                 isEdit: true,
                 onTap: () {
-                  Get.toNamed(AppRoutes.addNewRecipe,arguments: ["IsEdit",recipeId],);
+                  final data = recipeController.recipeSingleData.value;
+                  Get.toNamed(
+                    AppRoutes.addNewRecipe,
+                    arguments: ["IsEdit", recipeId,
+                    data.recipeName
+                    ],
+                  );
                 },
               ),
               const SizedBox(
@@ -124,12 +130,14 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(data.tags?.length ?? 0, (index) {
+                            children:
+                                List.generate(data.tags?.length ?? 0, (index) {
                               final tags = data.tags?[index];
                               return CustomText(
                                 textAlign: TextAlign.start,
                                 maxLines: 10,
-                                text: "${index + 1}. ${tags ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                text: "${index + 1}. ${tags ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: AppColors.dark300,
@@ -151,12 +159,14 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                           const SizedBox(height: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(data.ingredients?.length ?? 0, (index) {
+                            children: List.generate(
+                                data.ingredients?.length ?? 0, (index) {
                               final ingredients = data.ingredients?[index];
                               return CustomText(
                                 textAlign: TextAlign.start,
                                 maxLines: 10,
-                                text: "${index + 1}. ${ingredients ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                text: "${index + 1}. ${ingredients ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: AppColors.dark300,
@@ -170,19 +180,20 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                           const SizedBox(height: 8),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(data.steps?.length ?? 0, (index) {
+                            children:
+                                List.generate(data.steps?.length ?? 0, (index) {
                               final steps = data.steps?[index];
                               return CustomText(
                                 textAlign: TextAlign.start,
                                 maxLines: 10,
-                                text: "${index + 1}. ${steps ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                text: "${index + 1}. ${steps ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: AppColors.dark300,
                               );
                             }),
                           )
-
                         ],
                       ),
                     );
