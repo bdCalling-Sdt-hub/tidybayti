@@ -13,13 +13,14 @@ class CustomRecipeCard extends StatelessWidget {
   final String cookTime;
   final String imageUrl;
   final bool isFavorite;
+  final VoidCallback? onDelete;
 
   const CustomRecipeCard({
     super.key,
     required this.title,
     required this.cuisine,
     required this.cookTime,
-    required this.imageUrl, required this.isFavorite,
+    required this.imageUrl, required this.isFavorite, this.onDelete,
   });
 
   @override
@@ -58,10 +59,13 @@ class CustomRecipeCard extends StatelessWidget {
                         // Handle favorite button pressed
                       },
                     ),
-                    const CustomImage(
-                      imageSrc:AppIcons.delete,
-                      imageType: ImageType.svg,
-                      imageColor: AppColors.dark400,
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: const CustomImage(
+                        imageSrc:AppIcons.delete,
+                        imageType: ImageType.svg,
+                        imageColor: AppColors.dark400,
+                      ),
                     ),
                     SizedBox(width: 10.w,)
                   ],

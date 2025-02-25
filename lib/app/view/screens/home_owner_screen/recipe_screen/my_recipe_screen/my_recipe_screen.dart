@@ -5,6 +5,7 @@ import 'package:tidybayte/app/controller/owner_controller/recipe_controller/reci
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
@@ -57,10 +58,7 @@ class MyRecipeScreen extends StatelessWidget {
 
                           CustomTextField(
                             onFieldSubmitted: (value) {
-
-                              recipeController.searchRecipe(
-                                  recipeName: value
-                              );
+                              recipeController.searchRecipe(recipeName: value);
                             },
                             // textEditingController: homeController.searchController,
                             hintText: AppStrings.search.tr,
@@ -70,7 +68,6 @@ class MyRecipeScreen extends StatelessWidget {
                             ),
                             fillColor: Colors.white,
                             fieldBorderColor: Colors.white,
-
                           ),
                           SizedBox(
                             height: 16.h,
@@ -102,13 +99,16 @@ class MyRecipeScreen extends StatelessWidget {
                                 );
 
                               case Status.completed:
-                                final recipes = recipeController.myRecipeData.value.recipeWithFavorite ?? [];
+                                final recipes = recipeController.myRecipeData
+                                        .value.recipeWithFavorite ??
+                                    [];
 
                                 if (recipes.isEmpty) {
                                   // ✅ Show "No Recipe Found" when the list is empty
                                   return const Center(
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 80),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 80),
                                       child: Text(
                                         "No Recipe Found",
                                         style: TextStyle(
@@ -122,25 +122,34 @@ class MyRecipeScreen extends StatelessWidget {
                                 }
 
                                 return Column(
-                                  children: List.generate(recipes.length, (index) {
+                                  children:
+                                      List.generate(recipes.length, (index) {
                                     final data = recipes[index];
                                     return GestureDetector(
                                       onTap: () {
                                         Get.toNamed(AppRoutes.myRecipeDetails);
                                       },
                                       child: CustomRecipeCard(
+                                        onDelete: () {
+                                          GlobalAlert.showDeleteDialog(context,
+                                              () {
+
+                                              }, "Remove My Recipe");
+                                        },
                                         isFavorite: true,
-                                        title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed missing title
+                                        title: data.recipeName ??
+                                            "Untitled Recipe",
+                                        // ✅ Fixed missing title
                                         cuisine: 'Asian / Indian',
                                         cookTime: data.cookingTime ?? "N/A",
-                                        imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                        imageUrl:
+                                            "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
                                       ),
                                     );
                                   }),
                                 );
                             }
                           })
-
                         ],
                       ),
                     )
