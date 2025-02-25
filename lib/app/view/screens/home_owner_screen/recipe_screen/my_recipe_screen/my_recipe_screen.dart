@@ -127,14 +127,15 @@ class MyRecipeScreen extends StatelessWidget {
                                     final data = recipes[index];
                                     return GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(AppRoutes.myRecipeDetails);
+                                        // Get.toNamed(AppRoutes.myRecipeDetails);
                                       },
                                       child: CustomRecipeCard(
                                         onDelete: () {
                                           GlobalAlert.showDeleteDialog(context,
                                               () {
-
-                                              }, "Remove My Recipe");
+                                            recipeController.removeRecipe(
+                                                recipeId: data.id ?? "");
+                                          }, "Remove My Recipe");
                                         },
                                         isFavorite: true,
                                         title: data.recipeName ??

@@ -8,6 +8,7 @@ import 'package:tidybayte/app/data/model/owner_model/recipe/my_recipe.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
 class RecipeController extends GetxController {
@@ -114,6 +115,25 @@ clearRecipeField(){
   }
 
 
+  ///==================================✅✅Remove Recipe✅✅=======================
+  RxBool isRemoveRecipe = false.obs;
+
+  removeRecipe({required String recipeId}) async {
+    isRemoveRecipe.value = true;
+    var body = {"recipeId": recipeId};
+
+    var response = await apiClient.delete(body: body, url: ApiUrl.deleteRecipe);
+    if (response.statusCode == 200) {
+      getMyRecipe();
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isRemoveRecipe.value = false;
+    isRemoveRecipe.refresh();
+  }
   @override
   void onInit() {
     getMyRecipe();
