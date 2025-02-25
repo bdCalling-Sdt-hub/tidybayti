@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
-class MyRecipeDetails extends StatelessWidget {
+class MyRecipeDetails extends StatefulWidget {
   const MyRecipeDetails({super.key});
 
   @override
+  State<MyRecipeDetails> createState() => _MyRecipeDetailsState();
+}
+
+class _MyRecipeDetailsState extends State<MyRecipeDetails> {
+  final String recipeId = Get.arguments;
+  final RecipeController recipeController = Get.find<RecipeController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      recipeController.getRecipeSingle(recipeId: recipeId);
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(recipeId);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -27,12 +47,14 @@ class MyRecipeDetails extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ///==================================✅✅Recipe Details✅✅=======================
+
               CustomMenuAppbar(
-                title: 'Recipe Details'.tr,
+                title: AppStrings.recipeDetails.tr,
                 onBack: () {
                   Get.back();
                 },
@@ -44,50 +66,58 @@ class MyRecipeDetails extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              CustomNetworkImage(
-                  imageUrl: AppConstants.fruits, height: 191, width: 375),
-              const SizedBox(
-                height: 25,
-              ),
-              const CustomText(
-                text: 'Idlis Steamed Rice Cake',
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                color: AppColors.dark400,
-              ),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Cooking time:', value: '30 min'),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Tag:', value: 'Asian / Indian'),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Email:', value: 'sadhu@gmail.com'),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Description:'),
-              SizedBox(height: 8),
-              RecipeDescription(
-                description:
-                    'Mix chicken pieces with yogurt, ginger-garlic paste, biryani spice mix, chopped green chilies, a squeeze of lemon juice, and salt.',
-              ),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Ingredients:'),
-              SizedBox(height: 8),
-              RecipeIngredients(
-                ingredients:
-                    '· 3 cups rice\n· 1 cup skinless black gram urad daal\n· 1/4 teaspoon salt\n· 2 tablespoons vegetable oil, or canola oil',
-              ),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Describe steps:'),
-              SizedBox(height: 8),
-              RecipeSteps(
-                steps:
-                    '1. Wash the rice and urad daal separately and soak them overnight.\n'
-                    '2. Grind each separately, into thick pastes (adding a little water at a time) in a blender.\n'
-                    '3. Mix the pastes together and add salt to taste.\n'
-                    '4. Set the batter aside overnight to ferment.\n'
-                    '5. Grease the molds on an idli tray with cooking oil. Pour enough batter into each mold to fill it three-fourths full.\n'
-                    '6. Pour 2 cups of water into a large pot and heat. Put the idli tray into the pot and steam for 20 minutes.\n'
-                    '7. Check the idlis by poking each with a toothpick. If the toothpick comes out clean, the idlis are done.',
-              ),
+
+              ///==================================✅✅Recipe Details✅✅=======================
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //TODO:Image
+                    CustomNetworkImage(
+                        imageUrl: AppConstants.fruits, height: 191, width: 375),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    //TODO:Recipe Title
+                    const CustomText(
+                      text: 'Recipe Title',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: AppColors.dark400,
+                    ),
+                    const SizedBox(height: 8),
+                    //TODO:Cooking time
+                    const RecipeInfoRow(
+                        label: 'Cooking time:', value: '30 min'),
+                    const SizedBox(height: 8),
+                    //TODO:Tag
+                    const RecipeInfoRow(label: 'Tag:', value: 'Asian / Indian'),
+
+                    const SizedBox(height: 32),
+                    //TODo:Description
+                    const RecipeSectionTitle(title: 'Description:'),
+                    const SizedBox(height: 8),
+                    const RecipeDescription(
+                      description: '',
+                    ),
+                    const SizedBox(height: 16),
+                    //TODo:Ingredients
+                    const RecipeSectionTitle(title: 'Ingredients:'),
+                    const SizedBox(height: 8),
+                    const RecipeIngredients(
+                      ingredients:
+                          '· 3 cups rice\n· 1 cup skinless black gram urad daal\n· 1/4 teaspoon salt\n· 2 tablespoons vegetable oil, or canola oil',
+                    ),
+                    const SizedBox(height: 16),
+                    //TODo:steps
+                    const RecipeSectionTitle(title: 'Describe steps:'),
+                    const SizedBox(height: 8),
+                    RecipeSteps(steps: ""),
+                  ],
+                ),
+              )
             ],
           ),
         ),

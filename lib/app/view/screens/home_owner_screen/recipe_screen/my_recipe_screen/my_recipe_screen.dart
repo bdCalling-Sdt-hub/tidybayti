@@ -127,7 +127,8 @@ class MyRecipeScreen extends StatelessWidget {
                                     final data = recipes[index];
                                     return GestureDetector(
                                       onTap: () {
-                                        // Get.toNamed(AppRoutes.myRecipeDetails);
+                                        Get.toNamed(AppRoutes.myRecipeDetails,
+                                            arguments: data.id);
                                       },
                                       child: CustomRecipeCard(
                                         onDelete: () {

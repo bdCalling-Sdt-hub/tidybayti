@@ -154,6 +154,7 @@ class AppStrings {
   static const String endTime     = 'End time';
   static const String details     = 'Details';
   static const String addTask     = 'Add task';
+  static const String recipeDetails     = 'Recipe Details';
   static const String addBreak     = 'Add break';
   static const String assignTaskSuccessfully     = 'Assign task succesfully';
 

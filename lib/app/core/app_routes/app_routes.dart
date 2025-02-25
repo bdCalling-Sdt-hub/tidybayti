@@ -169,7 +169,7 @@ class AppRoutes {
     GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
     GetPage(name: tagsScreen, page: () =>  TagsScreen()),
     GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
-    GetPage(name: myRecipeDetails, page: () =>  const MyRecipeDetails()),
+    GetPage(name: myRecipeDetails, page: () =>   MyRecipeDetails()),
 
 
     ///===========================Schedule Screen=====================

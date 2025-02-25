@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/recipe/my_recipe.dart';
+import 'package:tidybayte/app/data/model/owner_model/recipe/recipe_single.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -134,6 +135,35 @@ clearRecipeField(){
     isRemoveRecipe.value = false;
     isRemoveRecipe.refresh();
   }
+
+  ///==================================✅✅Recipe Details✅✅=======================
+
+  Rx<RecipeSingleData> recipeSingleData = RecipeSingleData().obs;
+
+  getRecipeSingle({required String recipeId}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response =
+      await apiClient.get(url: ApiUrl.singleRecipe(recipeId), showResult: true);
+
+      if (response.statusCode == 200) {
+        recipeSingleData.value = RecipeSingleData.fromJson(response.body["data"]);
+
+        print('otp==================${response.statusCode}');
+        print(
+            'ingredients Length==================${recipeSingleData.value.ingredients?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
   @override
   void onInit() {
     getMyRecipe();
