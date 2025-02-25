@@ -59,7 +59,7 @@ class RecipeController extends GetxController {
     'Asian',
     'Breakfast',
     'Dessert',
-    'Dinner',
+    'Dinner', 'Italian',
   ];
 
   List<bool> selectedCategories = [];
@@ -183,11 +183,42 @@ clearRecipeField(){
     {
       'title': 'Dessert',
       'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },{
-      'title': 'Dessert',
+    },
+    {
+      'title': 'Italian',
       'imageUrl': AppConstants.fruits, // Replace with actual image URL
     },
   ];
+
+  ///==================================✅✅get Single Tags✅✅=======================
+
+  Rx<MyRecipeData> singleTags = MyRecipeData().obs;
+
+  getSingleTags({required String tagText}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    try {
+      final response =
+      await apiClient.get(url: ApiUrl.tagFilter(tagText), showResult: true);
+
+      if (response.statusCode == 200) {
+        singleTags.value = MyRecipeData.fromJson(response.body["data"]);
+
+        print('otp==================${response.statusCode}');
+        print(
+            'myRecipeData Length==================${singleTags.value.recipeWithFavorite?.length}');
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+    }
+  }
+
+
   @override
   void onInit() {
     getMyRecipe();

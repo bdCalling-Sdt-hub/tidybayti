@@ -9,10 +9,11 @@ import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_app
 
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 import 'package:tidybayte/app/view/components/tags_card/tags_card.dart';
-class TagsScreen extends StatelessWidget {
-   TagsScreen({super.key});
 
-final RecipeController recipeController = Get.find<RecipeController>();
+class TagsScreen extends StatelessWidget {
+  TagsScreen({super.key});
+
+  final RecipeController recipeController = Get.find<RecipeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,8 @@ final RecipeController recipeController = Get.find<RecipeController>();
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
@@ -66,8 +68,12 @@ final RecipeController recipeController = Get.find<RecipeController>();
                       itemCount: recipeController.tags.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.mySingleTags,);
+                          onTap: () {
+                            Get.toNamed(
+                              AppRoutes.mySingleTags,
+                              arguments: recipeController.tags[index]["title"], // ✅ শুধু String পাঠাচ্ছি
+                            );
+
                           },
                           child: TagsCard(
                             title: recipeController.tags[index]['title']!,
@@ -86,5 +92,3 @@ final RecipeController recipeController = Get.find<RecipeController>();
     );
   }
 }
-
-
