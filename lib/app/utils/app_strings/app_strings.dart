@@ -220,7 +220,7 @@ class AppStrings {
   static const String addPhoto   ='Add photo';
   static const String urlHere    ='URL here';
   static const String cookingTime    ='Cooking time (Min)';
-  static const String cookingTimes    ='Cooking time';
+  static const String cookingTimes    ='Cooking time:';
   static const String description    ='Description';
   static const String addIngredients    ='Add ingredients';
   static const String describeSteps    ='Describe steps';

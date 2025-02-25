@@ -106,12 +106,9 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                             height: 25,
                           ),
                           //TODO:Recipe Title
-                          CustomText(
-                            text: data.recipeName ?? "",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color: AppColors.dark400,
-                          ),
+                          RecipeInfoRow(
+                              label: "${AppStrings.recipeName}:".tr,
+                              value: "${data.recipeName ?? " "} "),
                           const SizedBox(height: 8),
                           //TODO:Cooking time
                           RecipeInfoRow(
