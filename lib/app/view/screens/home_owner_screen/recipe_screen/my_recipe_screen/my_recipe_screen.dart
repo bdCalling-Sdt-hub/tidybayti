@@ -122,20 +122,25 @@ class MyRecipeScreen extends StatelessWidget {
                                 final data = recipes[index];
                                 final isFavorite = data.isFavorite ?? false; // Fetch from API
 
-                                return CustomRecipeCard(
-                                  recipeId: data.id ?? "",
-                                  title: data.recipeName ?? "Untitled Recipe",
-                                  cuisine: 'Asian / Indian',
-                                  cookTime: data.cookingTime ?? "N/A",
-                                  imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
-                                  isFavorite: recipeController.getFavoriteStatus(data.id ?? "", isFavorite), // ✅ Corrected
-                                  onFavorite: () => recipeController.toggleFavorite(data.id ?? ""),
-                                  isDelete: true,
-                                  onDelete: () {
-                                    GlobalAlert.showDeleteDialog(context, () {
-                                      recipeController.removeRecipe(recipeId: data.id ?? "");
-                                    }, "Remove My Recipe");
+                                return GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoutes.myRecipeDetails,arguments: data.id);
                                   },
+                                  child: CustomRecipeCard(
+                                    recipeId: data.id ?? "",
+                                    title: data.recipeName ?? "Untitled Recipe",
+                                    cuisine: 'Asian / Indian',
+                                    cookTime: data.cookingTime ?? "N/A",
+                                    imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                    isFavorite: recipeController.getFavoriteStatus(data.id ?? "", isFavorite), // ✅ Corrected
+                                    onFavorite: () => recipeController.toggleFavorite(data.id ?? ""),
+                                    isDelete: true,
+                                    onDelete: () {
+                                      GlobalAlert.showDeleteDialog(context, () {
+                                        recipeController.removeRecipe(recipeId: data.id ?? "");
+                                      }, "Remove My Recipe");
+                                    },
+                                  ),
                                 );
                               },
                             );
