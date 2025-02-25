@@ -41,6 +41,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/add_r
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/favorite_recipes_screen/favorites_recipe_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_details/my_recipe_details.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_screen.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/tags_screen/my_single_tags.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/all_task_screen/all_task_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
@@ -100,6 +101,7 @@ class AppRoutes {
   static const String tagsScreen = "/TagsScreen";
   static const String addNewRecipe = "/AddNewRecipe";
   static const String myRecipeDetails = "/MyRecipeDetails";
+  static const String mySingleTags = "/MySingleTags";
 
   ///===================Schedule Screen====================
   static const String allTaskScreen = "/AllTaskScreen";
@@ -169,7 +171,8 @@ class AppRoutes {
     GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
     GetPage(name: tagsScreen, page: () =>  TagsScreen()),
     GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
-    GetPage(name: myRecipeDetails, page: () =>   MyRecipeDetails()),
+    GetPage(name: myRecipeDetails, page: () =>   const MyRecipeDetails()),
+    GetPage(name: mySingleTags, page: () =>    MySingleTags()),
 
 
     ///===========================Schedule Screen=====================

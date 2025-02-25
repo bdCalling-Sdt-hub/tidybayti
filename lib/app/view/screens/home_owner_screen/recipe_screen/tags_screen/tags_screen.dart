@@ -67,7 +67,7 @@ final RecipeController recipeController = Get.find<RecipeController>();
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: (){
-                            Get.toNamed(AppRoutes.myRecipeScreen,);
+                            Get.toNamed(AppRoutes.mySingleTags,);
                           },
                           child: TagsCard(
                             title: recipeController.tags[index]['title']!,
