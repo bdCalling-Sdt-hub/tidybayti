@@ -212,6 +212,7 @@ class AppStrings {
   static const String favoriteRecipes   ='Favorite recipes';
   static const String tags   ='Tags';
   static const String tag   ='Tags:';
+  static const String ingredients   ='Ingredients:';
   static const String newBlackRecipe   ='New blank recipe';
   static const String importFromWebsite   ='Import from website';
   static const String uploadFile   ='Upload file';

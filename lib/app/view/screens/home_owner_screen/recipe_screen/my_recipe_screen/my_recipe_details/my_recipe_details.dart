@@ -119,30 +119,73 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                               value: "${data.cookingTime ?? " "} minutes"),
                           const SizedBox(height: 8),
                           //TODO:Tag
-                          RecipeInfoRow(
-                              label: AppStrings.tag.tr,
-                              value: data.tags.toString()),
+                          CustomText(
+                            text: AppStrings.tag.tr,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                            color: AppColors.dark400,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(data.tags?.length ?? 0, (index) {
+                              final tags = data.tags?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${tags ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
+                          ),
 
                           const SizedBox(height: 32),
                           //TODo:Description
-                          const RecipeSectionTitle(title: 'Description:'),
+                          RecipeSectionTitle(
+                              title: "${AppStrings.description}:".tr),
                           const SizedBox(height: 8),
-                          const RecipeDescription(
-                            description: '',
+                          RecipeDescription(
+                            description: data.description ?? "",
                           ),
                           const SizedBox(height: 16),
                           //TODo:Ingredients
-                          const RecipeSectionTitle(title: 'Ingredients:'),
+                          RecipeSectionTitle(title: AppStrings.ingredients.tr),
                           const SizedBox(height: 8),
-                          const RecipeIngredients(
-                            ingredients:
-                                '· 3 cups rice\n· 1 cup skinless black gram urad daal\n· 1/4 teaspoon salt\n· 2 tablespoons vegetable oil, or canola oil',
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(data.ingredients?.length ?? 0, (index) {
+                              final ingredients = data.ingredients?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${ingredients ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
                           ),
                           const SizedBox(height: 16),
                           //TODo:steps
-                          const RecipeSectionTitle(title: 'Describe steps:'),
+                          RecipeSectionTitle(
+                              title: "${AppStrings.describeSteps.tr}:"),
                           const SizedBox(height: 8),
-                          RecipeSteps(steps: ""),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(data.steps?.length ?? 0, (index) {
+                              final steps = data.steps?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${steps ?? " "}", // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
+                          )
+
                         ],
                       ),
                     );
@@ -200,9 +243,9 @@ class RecipeSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomText(
       text: '$title ',
-      fontSize: 16,
+      fontSize: 20,
       fontWeight: FontWeight.w400,
-      color: AppColors.dark300,
+      color: Colors.black,
       right: 30,
     );
   }
