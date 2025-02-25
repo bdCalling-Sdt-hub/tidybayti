@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/recipe/my_recipe.dart';
@@ -38,12 +39,31 @@ class RecipeController extends GetxController{
     }
   }
 
+  ///==================================✅✅Add New Recipe✅✅=======================
+
+  final ingredientsController = TextEditingController();
+  final  describeStepsController = TextEditingController();
+  final  recipeNameController = TextEditingController();
+  final cookingTimeController = TextEditingController();
+  final descriptionController = TextEditingController();
 
 
+  final List<String> categories = [
+    'Appetizers',
+    'Asian',
+    'Breakfast',
+    'Dessert',
+    'Dinner',
+  ];
+
+  List<bool> selectedCategories = [];
+  List<String> selectedCategoryNames = [];
   @override
   void onInit() {
     getMyRecipe();
     super.onInit();
   }
+
+
 
 }

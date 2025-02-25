@@ -144,6 +144,8 @@ class AppStrings {
   static const String backToHome    = 'Back to home';
   static const String addNewTask    = 'Add new task';
   static const String addBreakTime    = 'Add break time';
+  static const String addNewRecipe    = 'Add New Recipe';
+  static const String selectTags    = 'Select Tags';
   static const String finish     = 'Finish';
   static const String selectRoom     = 'Select room';
   static const String taskTitle     = 'Task title';
