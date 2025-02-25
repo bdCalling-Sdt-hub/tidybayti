@@ -63,6 +63,7 @@ class RecipeApi {
           .setLoading(false); // Set loading to false after request
 
       if (response.statusCode == 201) {
+        recipeController.getMyRecipe();
             Get.toNamed(AppRoutes.myRecipeScreen);
            recipeController.clearRecipeField();
         toastMessage(message: "✅Recipe added successfully");

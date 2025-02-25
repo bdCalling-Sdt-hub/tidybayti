@@ -33,36 +33,38 @@ class AddRecipeScreen extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height,
             child: SafeArea(
-              child: Column(
-                children: [
-                  /// Menu Title
-                  CustomMenuAppbar(
-                    title: AppStrings.addRecipe.tr,
-                    onBack: () {
-                      Get.back();
-                    },
-                  ),
-                  SizedBox(height: 200.h), // Space between title and menu items
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    /// Menu Title
+                    CustomMenuAppbar(
+                      title: AppStrings.addRecipe.tr,
+                      onBack: () {
+                        Get.back();
+                      },
+                    ),
+                    SizedBox(height: 200.h), // Space between title and menu items
 
-                  RecipeButton(
-                    text: 'New blank recipe',
-                    onPressed: () {
-                        Get.toNamed(AppRoutes.addNewRecipe);
-                    },
-                  ),
-                  RecipeButton(
-                    text: 'Import From Website',
-                    onPressed: () {
-                      importDialog(context);
-                    },
-                  ),
-                  RecipeButton(
-                    text: 'Upload File',
-                    onPressed: () {
-                      uploadFileDialog(context);
-                    },
-                  )
-                ],
+                    RecipeButton(
+                      text: 'New blank recipe',
+                      onPressed: () {
+                          Get.toNamed(AppRoutes.addNewRecipe);
+                      },
+                    ),
+                    RecipeButton(
+                      text: 'Import From Website',
+                      onPressed: () {
+                        importDialog(context);
+                      },
+                    ),
+                    RecipeButton(
+                      text: 'Upload File',
+                      onPressed: () {
+                        uploadFileDialog(context);
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           ),
