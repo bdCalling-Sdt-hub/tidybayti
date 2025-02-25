@@ -115,215 +115,158 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
 
                           ///=============================== Ingredients Step ========================
 
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Column(
                             children: [
-                              /// Ingredient Input Field
-                              Expanded(
-                                  flex: 3,
-                                  child: CustomTextField(
-                                    hintText: AppStrings.addIngredients,
-                                    textEditingController:
-                                        recipeController.ingredientsController,
-                                  )),
-                              const SizedBox(width: 20),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  /// Ingredient Input Field
+                                  Expanded(
+                                      flex: 3,
+                                      child: CustomTextField(
+                                        hintText: AppStrings.addIngredients,
+                                        textEditingController: recipeController
+                                            .ingredientsController,
+                                      )),
+                                  const SizedBox(width: 20),
 
-                              /// Add Button
-                              Expanded(
-                                flex: 1,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor:
-                                        AppColors.employeeCardColor,
-                                    // Text color
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 15),
-                                    textStyle: const TextStyle(fontSize: 18),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          1), // Rounded corners
+                                  /// Add Button
+                                  Expanded(
+                                    flex: 1,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor:
+                                            AppColors.employeeCardColor,
+                                        // Text color
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 15),
+                                        textStyle:
+                                            const TextStyle(fontSize: 18),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              1), // Rounded corners
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (recipeController
+                                            .ingredientsController
+                                            .text
+                                            .isNotEmpty) {
+                                          setState(() {
+                                            recipeController.ingredientsList
+                                                .add(recipeController
+                                                    .ingredientsController
+                                                    .text);
+                                            recipeController
+                                                .ingredientsController
+                                                .clear();
+
+                                            print(
+                                                'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
+                                          });
+                                        }
+                                      },
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: AppColors.blue900,
+                                      ),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    if (recipeController.ingredientsController
-                                        .text.isNotEmpty) {
-                                      setState(() {
-                                        recipeController.ingredientsList.add(
-                                            recipeController
-                                                .ingredientsController.text);
-                                        recipeController.ingredientsController
-                                            .clear();
-
-                                        print(
-                                            'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
-                                      });
-                                    }
-                                  },
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: AppColors.blue900,
-                                  ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-
-                          Column(
-                            children: recipeController.ingredientsList
-                                .map((ingredient) {
-                              return Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      child: Container(
-                                        height: 64,
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.employeeCardColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Text(
-                                          ingredient,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.black,
+                              const SizedBox(height: 10),
+                              Column(
+                                children: recipeController.ingredientsList
+                                    .map((ingredient) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 10),
+                                          child: Container(
+                                            height: 64,
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  AppColors.employeeCardColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              ingredient,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 18),
+                                      const SizedBox(width: 18),
 
-                                  /// Remove Button
-                                  Expanded(
-                                    flex: 1,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        foregroundColor: Colors.white,
-                                        backgroundColor:
-                                            AppColors.employeeCardColor,
-                                        // Text color
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        textStyle:
-                                            const TextStyle(fontSize: 18),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              1), // Rounded corners
+                                      /// Remove Button
+                                      Expanded(
+                                        flex: 1,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor:
+                                                AppColors.employeeCardColor,
+                                            // Text color
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 15),
+                                            textStyle:
+                                                const TextStyle(fontSize: 18),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      1), // Rounded corners
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              recipeController.ingredientsList
+                                                  .remove(ingredient);
+                                              print(
+                                                  'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
+                                            });
+                                          },
+                                          child: const Icon(
+                                            Icons.remove,
+                                            color: AppColors.blue900,
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                        setState(() {
-                                          recipeController.ingredientsList
-                                              .remove(ingredient);
-                                          print(
-                                              'ingredients=======${jsonEncode(recipeController.ingredientsList)}');
-                                        });
-                                      },
-                                      child: const Icon(
-                                        Icons.remove,
-                                        color: AppColors.blue900,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }).toList(),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
                           ),
-                          const SizedBox(height: 20),
 
                           ///=============================== Description Step ========================
 
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /// Step Input Field
-                              Expanded(
-                                flex: 3,
-                                child: CustomTextField(
-                                  hintText: AppStrings.describeSteps.tr,
-                                  textEditingController:
-                                      recipeController.describeStepsController,
-                                ),
-                              ),
-                              const SizedBox(width: 20),
-
-                              /// Add Step Button
-                              Expanded(
-                                flex: 1,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor:
-                                        AppColors.employeeCardColor,
-                                    // Text color
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 15),
-                                    textStyle: const TextStyle(fontSize: 18),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          1), // Rounded corners
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    if (recipeController.describeStepsController
-                                        .text.isNotEmpty) {
-                                      setState(() {
-                                        recipeController.stepsList.add(
-                                            recipeController
-                                                .describeStepsController.text);
-                                        recipeController.describeStepsController
-                                            .clear();
-
-                                        print(
-                                            'StepList=======${jsonEncode(recipeController.stepsList)}');
-                                      });
-                                    }
-                                  },
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: AppColors.blue900,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-
-                          /// Display Steps List
                           Column(
-                            children: recipeController.stepsList.map((step) {
-                              return Row(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  /// Step Input Field
                                   Expanded(
                                     flex: 3,
-                                    child: Container(
-                                      height: 64,
-                                      padding: const EdgeInsets.all(12),
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 5),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.employeeCardColor,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        step,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                        ),
-                                      ),
+                                    child: CustomTextField(
+                                      hintText: AppStrings.describeSteps.tr,
+                                      textEditingController: recipeController
+                                          .describeStepsController,
                                     ),
                                   ),
-                                  const SizedBox(width: 18),
+                                  const SizedBox(width: 20),
 
-                                  /// Remove Step Button
+                                  /// Add Step Button
                                   Expanded(
                                     flex: 1,
                                     child: ElevatedButton(
@@ -342,25 +285,104 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        setState(() {
-                                          recipeController.stepsList
-                                              .remove(step);
-                                          print(
-                                              'StepList=======${jsonEncode(recipeController.stepsList)}');
-                                        });
+                                        if (recipeController
+                                            .describeStepsController
+                                            .text
+                                            .isNotEmpty) {
+                                          setState(() {
+                                            recipeController.stepsList.add(
+                                                recipeController
+                                                    .describeStepsController
+                                                    .text);
+                                            recipeController
+                                                .describeStepsController
+                                                .clear();
+
+                                            print(
+                                                'StepList=======${jsonEncode(recipeController.stepsList)}');
+                                          });
+                                        }
                                       },
                                       child: const Icon(
-                                        Icons.remove,
+                                        Icons.add,
                                         color: AppColors.blue900,
                                       ),
                                     ),
                                   ),
                                 ],
-                              );
-                            }).toList(),
-                          ),
+                              ),
+                              const SizedBox(height: 10),
 
-                          const SizedBox(height: 20),
+                              /// Display Steps List
+                              Column(
+                                children:
+                                    recipeController.stepsList.map((step) {
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          height: 64,
+                                          padding: const EdgeInsets.all(12),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.employeeCardColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Text(
+                                            step,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 18),
+
+                                      /// Remove Step Button
+                                      Expanded(
+                                        flex: 1,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor:
+                                                AppColors.employeeCardColor,
+                                            // Text color
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 15),
+                                            textStyle:
+                                                const TextStyle(fontSize: 18),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      1), // Rounded corners
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              recipeController.stepsList
+                                                  .remove(step);
+                                              print(
+                                                  'StepList=======${jsonEncode(recipeController.stepsList)}');
+                                            });
+                                          },
+                                          child: const Icon(
+                                            Icons.remove,
+                                            color: AppColors.blue900,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+
+                              const SizedBox(height: 20),
+                            ],
+                          ),
 
                           ///=============================== Select Tags ========================
                           TagSection(),
