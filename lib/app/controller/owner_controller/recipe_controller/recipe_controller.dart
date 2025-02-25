@@ -96,6 +96,26 @@ clearRecipeField(){
     selectedCategoryNames.clear();
 
 }
+
+  ///==================================✅✅Search✅✅=======================
+  TextEditingController searchController = TextEditingController();
+
+  searchRecipe({required String recipeName}) async {
+    setRxRequestStatus(Status.loading);
+    myRecipeData.refresh();
+    var response = await apiClient.get(url: "${ApiUrl.searchRecipe}=$recipeName");
+    myRecipeData.refresh();
+    if (response.statusCode == 200) {
+      myRecipeData.value = MyRecipeData.fromJson(response.body["data"]);
+
+      setRxRequestStatus(Status.completed);
+      myRecipeData.refresh();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+  }
+
+
   @override
   void onInit() {
     getMyRecipe();

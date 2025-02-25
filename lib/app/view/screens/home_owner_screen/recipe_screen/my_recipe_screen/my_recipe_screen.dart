@@ -54,9 +54,23 @@ class MyRecipeScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           ///=============================== Search ========================
-                          const CustomTextField(
-                            prefixIcon: Icon(Icons.search),
-                            hintText: 'Search',
+
+                          CustomTextField(
+                            onFieldSubmitted: (value) {
+
+                              recipeController.searchRecipe(
+                                  recipeName: value
+                              );
+                            },
+                            // textEditingController: homeController.searchController,
+                            hintText: AppStrings.search.tr,
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                            fillColor: Colors.white,
+                            fieldBorderColor: Colors.white,
+
                           ),
                           SizedBox(
                             height: 16.h,
