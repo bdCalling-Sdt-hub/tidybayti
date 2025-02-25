@@ -131,8 +131,10 @@ class MyRecipeScreen extends StatelessWidget {
                                       },
                                       child: CustomRecipeCard(
                                         onDelete: () {
+                                          print(data.id);
                                           GlobalAlert.showDeleteDialog(context,
                                               () {
+                                            print(data.id);
                                             recipeController.removeRecipe(
                                                 recipeId: data.id ?? "");
                                           }, "Remove My Recipe");
