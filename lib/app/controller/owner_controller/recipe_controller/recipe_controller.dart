@@ -95,6 +95,7 @@ clearRecipeField(){
     ingredientsList.clear();
     selectedCategoryNames.clear();
 
+
 }
 
   ///==================================✅✅Search✅✅=======================
@@ -164,6 +165,29 @@ clearRecipeField(){
     }
   }
 
+
+//Tags
+  final List<Map<String, String>> tags = [
+    {
+      'title': 'Appetizers',
+      'imageUrl': AppConstants.fruits, // Replace with actual image URL
+    },
+    {
+      'title': 'Asian',
+      'imageUrl': AppConstants.fruits, // Replace with actual image URL
+    },
+    {
+      'title': 'Breakfast',
+      'imageUrl': AppConstants.fruits, // Replace with actual image URL
+    },
+    {
+      'title': 'Dessert',
+      'imageUrl': AppConstants.fruits, // Replace with actual image URL
+    },{
+      'title': 'Dessert',
+      'imageUrl': AppConstants.fruits, // Replace with actual image URL
+    },
+  ];
   @override
   void onInit() {
     getMyRecipe();

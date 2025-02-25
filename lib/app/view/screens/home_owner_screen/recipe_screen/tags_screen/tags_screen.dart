@@ -1,43 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
-import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
-import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
-import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
-class TagsScreen extends StatelessWidget {
-  TagsScreen({super.key});
 
-  final List<Map<String, String>> categories = [
-    {
-      'title': 'Appetizers',
-      'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },
-    {
-      'title': 'Asian',
-      'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },
-    {
-      'title': 'Breakfast',
-      'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },
-    {
-      'title': 'Dessert',
-      'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },{
-      'title': 'Dessert',
-      'imageUrl': AppConstants.fruits, // Replace with actual image URL
-    },
-  ];
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
+
+import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
+
+import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'package:tidybayte/app/view/components/tags_card/tags_card.dart';
+class TagsScreen extends StatelessWidget {
+   TagsScreen({super.key});
+
+final RecipeController recipeController = Get.find<RecipeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,104 +30,61 @@ class TagsScreen extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              ///=============================== Menu Title ========================
-              Column(
+        child: Column(
+          children: [
+            ///=============================== Menu Title ========================
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomMenuAppbar(
-                    title: AppStrings.tags,
+                    title: AppStrings.tags.tr,
                     onBack: () {
                       Get.back();
                     },
                   ),
                 ],
               ),
+            ),
 
-              ///=============================== Menu Items ========================
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(16.0),
-                  children: [
-                    /// Fix: Wrap GridView.builder in a SizedBox with a fixed height
-                    SizedBox(
-                      // height: MediaQuery.of(context).size.height * 0.5, // Fix the height
-                      child: GridView.builder(
-                        shrinkWrap: true, // Allows GridView to shrink within the available space
-                        physics: const NeverScrollableScrollPhysics(), // Disable GridView scrolling
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // Number of columns
-                          crossAxisSpacing: 10.0, // Spacing between columns
-                          mainAxisSpacing: 10.0, // Spacing between rows
-                          childAspectRatio: 1.0, // Aspect ratio of each grid item (1.0 for square)
-                        ),
-                        itemCount: categories.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AppRoutes.myRecipeScreen);
-                            },
-                            child: CategoryCard(
-                              title: categories[index]['title']!,
-                              imageUrl: categories[index]['imageUrl']!,
-                            ),
-                          );
-                        },
+            ///=============================== Menu Items ========================
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                children: [
+                  SizedBox(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                        childAspectRatio: 1.0,
                       ),
+                      itemCount: recipeController.tags.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.myRecipeScreen,);
+                          },
+                          child: TagsCard(
+                            title: recipeController.tags[index]['title']!,
+                            imageUrl: recipeController.tags[index]['imageUrl']!,
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class CategoryCard extends StatelessWidget {
-  final String title;
-  final String imageUrl;
 
-  const CategoryCard({
-    super.key,
-    required this.title,
-    required this.imageUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.4), // Dark overlay
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          Center(
-            child: Text(
-              title,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
