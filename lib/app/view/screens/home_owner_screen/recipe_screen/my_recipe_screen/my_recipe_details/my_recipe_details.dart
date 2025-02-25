@@ -64,7 +64,7 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                 },
                 isEdit: true,
                 onTap: () {
-                  Get.toNamed(AppRoutes.addNewRecipe);
+                  Get.toNamed(AppRoutes.addNewRecipe,arguments: ["IsEdit",recipeId],);
                 },
               ),
               const SizedBox(

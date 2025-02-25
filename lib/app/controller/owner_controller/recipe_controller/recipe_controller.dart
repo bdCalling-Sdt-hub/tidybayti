@@ -74,6 +74,12 @@ class RecipeController extends GetxController {
     isLoading.value = value;
   }
 
+  var isEditLoading = false.obs;
+
+  void setEditLoading(bool value) {
+    isEditLoading.value = value;
+  }
+
   Rx<File?> profileImage = Rx<File?>(null);
 
   Future<void> pickImage() async {

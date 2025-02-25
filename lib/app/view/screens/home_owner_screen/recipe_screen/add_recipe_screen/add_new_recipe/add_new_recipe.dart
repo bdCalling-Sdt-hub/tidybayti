@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipeApi.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
@@ -26,12 +24,10 @@ class AddNewRecipe extends StatefulWidget {
 class _AddNewRecipeState extends State<AddNewRecipe> {
   final formKey = GlobalKey<FormState>();
 
-  // List to keep track of selected items
 
   @override
   void initState() {
     super.initState();
-    // Initialize the selection list with false (not selected)
     recipeController.selectedCategories =
         List.generate(recipeController.categories.length, (index) => false);
     recipeController.selectedCategoryNames = [];
@@ -39,8 +35,11 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
 
   final RecipeController recipeController = Get.find<RecipeController>();
 
+  final String isEdit = Get.arguments[0];
+  final String recipeId = Get.arguments[1];
   @override
   Widget build(BuildContext context) {
+    print(isEdit);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -440,6 +439,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     width:
                                         MediaQuery.of(context).size.width / 1.1,
                                     onTap: () {
+
                                       if (recipeController.profileImage.value ==
                                           null) {
                                         toastMessage(
@@ -449,6 +449,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                             "❌ Please select a Recipe image.");
                                         return;
                                       }
+                                      isEdit == false?
                                       RecipeApi.addRecipe(
                                           context: context,
                                           recipeName: recipeController
@@ -463,7 +464,23 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                               recipeController.ingredientsList,
                                           steps: recipeController.stepsList,
                                           tags: recipeController
-                                              .selectedCategoryNames);
+                                              .selectedCategoryNames):
+                                      RecipeApi.editRecipe(
+
+                                          context: context,
+                                          recipeName: recipeController
+                                              .recipeNameController.text,
+                                          recipeImage: recipeController
+                                              .profileImage.value!,
+                                          cookingTime: recipeController
+                                              .cookingTimeController.text,
+                                          description: recipeController
+                                              .descriptionController.text,
+                                          ingredients:
+                                          recipeController.ingredientsList,
+                                          steps: recipeController.stepsList,
+                                          tags: recipeController
+                                              .selectedCategoryNames, recipeId: recipeId);
                                       // recipeController.addNewRecipe();
                                     },
                                     fillColor: Colors.white,
