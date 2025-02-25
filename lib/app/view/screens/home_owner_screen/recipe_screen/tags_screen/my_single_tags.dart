@@ -119,7 +119,7 @@ class _MySingleTagsState extends State<MySingleTags> {
                                     title: data.recipeName ?? "Untitled Recipe",
                                     cuisine: 'Asian / Indian',
                                     cookTime: data.cookingTime ?? "N/A",
-                                    imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                    imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}", recipeId: '', isFavorite: true.obs,
                                   ),
                                 );
                               },

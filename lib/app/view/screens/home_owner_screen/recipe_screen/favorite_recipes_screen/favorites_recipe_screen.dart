@@ -96,7 +96,7 @@ class FavoritesRecipeScreen extends StatelessWidget {
                                   title: data.recipeName ?? "Untitled Recipe", // ✅ Fixed title
                                   cuisine: '',
                                   cookTime: data.cookingTime ?? "N/A",
-                                  imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                                  imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}", recipeId: '', isFavorite: true.obs,
                                 ),
                               );
                             },

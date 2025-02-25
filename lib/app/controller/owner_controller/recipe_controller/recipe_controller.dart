@@ -218,6 +218,46 @@ clearRecipeField(){
     }
   }
 
+  ///==================================✅✅addFavorite✅✅=======================
+  var favoriteStatus = <String, RxBool>{}.obs; // Map to track favorite status by recipe ID
+
+  /// Load Favorite Status from API
+  void loadFavoriteStatus(List<RecipeWithFavorite> recipes) {
+    for (var recipe in recipes) {
+      favoriteStatus[recipe.id ?? ""] = RxBool(recipe.isFavorite ?? false);
+    }
+  }
+
+  /// Toggle Favorite Status & Send API Request
+  void toggleFavorite(String recipeId) async {
+    if (!favoriteStatus.containsKey(recipeId)) {
+      favoriteStatus[recipeId] = RxBool(false);
+    }
+
+    // Toggle UI state
+    favoriteStatus[recipeId]!.value = !favoriteStatus[recipeId]!.value;
+
+    // Send API request to update favorite status
+    var response = await apiClient.patch(body: {}, url: ApiUrl.favoriteRecipe(recipeId));
+
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      // Revert UI state if API fails
+      favoriteStatus[recipeId]!.value = !favoriteStatus[recipeId]!.value;
+      toastMessage(message: "Failed to update favorite status.");
+    }
+  }
+
+  /// Get Favorite Status for a Recipe
+  RxBool getFavoriteStatus(String recipeId, bool isFavoriteFromApi) {
+    return favoriteStatus.putIfAbsent(recipeId, () => RxBool(isFavoriteFromApi));
+  }
+
+
+
+
+
 
   @override
   void onInit() {
