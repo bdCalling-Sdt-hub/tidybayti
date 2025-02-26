@@ -67,8 +67,8 @@ class EmployeeHomeController extends GetxController {
     setRxRequestStatus(Status.loading);
 
     try {
-      final response =
-          await apiClient.get(url: ApiUrl.getEmployeePendingTask, showResult: true);
+      final response = await apiClient.get(
+          url: ApiUrl.getEmployeePendingTask, showResult: true);
 
       if (response.statusCode == 200 && response.body["data"] != null) {
         pendingTask.value = UserTaskData.fromJson(response.body["data"]);
@@ -88,23 +88,54 @@ class EmployeeHomeController extends GetxController {
     }
   }
 
+  ///==================================✅✅getOngoing✅✅=======================
+
+  Rx<UserTaskData> ongoing = UserTaskData().obs;
+
+  Future<void> getOngoing() async {
+    setRxRequestStatus(Status.loading);
+
+    try {
+      final response = await apiClient.get(
+          url: ApiUrl.getEmployeeOngoingTask, showResult: true);
+
+      if (response.statusCode == 200 && response.body["data"] != null) {
+        ongoing.value = UserTaskData.fromJson(response.body["data"]);
+
+        print('✅ Status Code: ${response.statusCode}');
+        print(' ongoing Count: ${ongoing.value.result?.length ?? 0}');
+
+        setRxRequestStatus(Status.completed);
+      } else {
+        print("⚠️ Error: Unexpected API Response");
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('❌ Error fetching data: $e');
+    }
+  }
+
   ///==================================✅✅PendingTask✅✅=======================
   RxBool isPendingTask = false.obs;
-  RxString pendingTaskId = "".obs; // ✅ Track which task is loading
+  RxString pendingTaskId = "".obs;
 
-  Future<void> employeePendingTask({required String taskId, required String status}) async {
+  employeePendingTask({required String taskId, required String status}) async {
     isPendingTask.value = true;
-    pendingTaskId.value = taskId; // ✅ Set loading state for the specific task
+    pendingTaskId.value = taskId;
 
     var body = {"taskId": taskId, "status": status};
 
     try {
-      var response = await apiClient.patch(body: body, url: ApiUrl.updateStatus);
+      var response =
+          await apiClient.patch(body: body, url: ApiUrl.updateStatus);
 
       if (response.statusCode == 200) {
         print(response.body);
         toastMessage(message: response.body["message"]);
-        await getPending(); // ✅ Refresh Pending Task List After Updating
+        await getPending();
+        await getOngoing();
       } else if (response.statusCode == 400) {
         toastMessage(message: response.body["message"]);
       } else {
@@ -121,6 +152,7 @@ class EmployeeHomeController extends GetxController {
   @override
   void onInit() {
     getPending();
+    getOngoing();
     super.onInit();
   }
 }

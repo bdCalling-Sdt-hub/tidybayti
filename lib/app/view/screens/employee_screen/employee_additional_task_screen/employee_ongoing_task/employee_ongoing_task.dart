@@ -20,15 +20,16 @@ class _AdditionalPendingTaskState extends State<EmployeeOngoingTask> {
 
   @override
   void initState() {
-    controller.getPending();
+    controller.getOngoing();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.w),
       child: Obx(() {
-        final taskList = controller.pendingTask.value.result ?? [];
+        final taskList = controller.ongoing.value.result ?? [];
 
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -37,7 +38,7 @@ class _AdditionalPendingTaskState extends State<EmployeeOngoingTask> {
         if (taskList.isEmpty) {
           return const Center(
             child: CustomText(
-              text: "No pending tasks available",
+              text: "No Ongoing tasks available",
               color: AppColors.dark200,
               fontWeight: FontWeight.w400,
               fontSize: 16,
@@ -53,7 +54,8 @@ class _AdditionalPendingTaskState extends State<EmployeeOngoingTask> {
               taskCount: taskList.length,
               tasks: taskList,
               onTap: (String taskId) {
-                controller.employeePendingTask(taskId: taskId, status: "ongoing");
+                controller.employeePendingTask(
+                    taskId: taskId, status: "completed");
               },
             ),
             SizedBox(height: 16.h),
