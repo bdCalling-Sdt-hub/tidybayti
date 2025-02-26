@@ -27,4 +27,16 @@ class DateConverter {
       return "Good Evening";
     }
   }
+
+
+  static DateTime? parseTimeString(String? timeStr) {
+    if (timeStr == null || timeStr.isEmpty) return null;
+    try {
+      final format = DateFormat("hh:mm a"); // Example: "10:00 AM"
+      return format.parse(timeStr);
+    } catch (e) {
+      return null; // Return null if parsing fails
+    }
+  }
+
 }

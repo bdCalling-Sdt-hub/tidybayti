@@ -93,7 +93,7 @@ class Result {
   String? user;
   String? room;
   AssignedTo? assignedTo;
-  TaskName? taskName;
+  String? taskName;
   Recurrence? recurrence;
   String? startDateStr;
   StartTimeStr? startTimeStr;
@@ -102,9 +102,9 @@ class Result {
   EndTimeStr? endTimeStr;
   DateTime? endDateTime;
   String? dayOfWeek;
-  TaskDetails? taskDetails;
+  String? taskDetails;
   AdditionalMessage? additionalMessage;
-  Statusd? status;
+  String? status;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -138,7 +138,7 @@ class Result {
     user: json["user"],
     room: json["room"],
     assignedTo: json["assignedTo"] == null ? null : AssignedTo.fromJson(json["assignedTo"]),
-    taskName: taskNameValues.map[json["taskName"]] ?? TaskName.DESK_CLEANING, // ✅ Null check fix
+    taskName: json["taskName"], // ✅ Null check fix
     recurrence: recurrenceValues.map[json["recurrence"]] ?? Recurrence.WEEKLY, // ✅ Default value
     startDateStr: json["startDateStr"] ?? "",
     startTimeStr: startTimeStrValues.map[json["startTimeStr"]] ?? StartTimeStr.THE_0220_PM, // ✅ Fix
@@ -147,9 +147,9 @@ class Result {
     endTimeStr: endTimeStrValues.map[json["endTimeStr"]] ?? EndTimeStr.THE_0150_AM,
     endDateTime: json["endDateTime"] != null ? DateTime.parse(json["endDateTime"]) : null,
     dayOfWeek: json["dayOfWeek"] ?? "Unknown",
-    taskDetails: taskDetailsValues.map[json["taskDetails"]] ?? TaskDetails.GG,
+    taskDetails:json["taskDetails"],
     additionalMessage: additionalMessageValues.map[json["additionalMessage"]] ?? AdditionalMessage.GG,
-    status: statusValues.map[json["status"]] ?? Statusd.PENDING, // ✅ Null check
+    status: json["status"], // ✅ Null check
     createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : null,
     updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : null,
   );
@@ -159,7 +159,7 @@ class Result {
     "user": user,
     "room": room,
     "assignedTo": assignedTo?.toJson(),
-    "taskName": taskNameValues.reverse[taskName],
+    "taskName": taskName,
     "recurrence": recurrenceValues.reverse[recurrence],
     "startDateStr": startDateStr,
     "startTimeStr": startTimeStrValues.reverse[startTimeStr],
@@ -168,9 +168,9 @@ class Result {
     "endTimeStr": endTimeStrValues.reverse[endTimeStr],
     "endDateTime": endDateTime?.toIso8601String(),
     "dayOfWeek": dayOfWeek,
-    "taskDetails": taskDetailsValues.reverse[taskDetails],
+    "taskDetails": taskDetails,
     "additionalMessage": additionalMessageValues.reverse[additionalMessage],
-    "status": statusValues.reverse[status],
+    "status":status,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
   };

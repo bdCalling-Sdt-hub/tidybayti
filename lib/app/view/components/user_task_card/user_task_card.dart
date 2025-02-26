@@ -87,11 +87,12 @@ class UserTaskCard extends StatelessWidget {
                         color: AppColors.dark300,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
+
                       ),
                       Row(
                         children: [
                           const CustomImage(
-                            imageSrc: AppIcons.watch,
+                            imageSrc: AppIcons.calendar,
                             imageType: ImageType.svg,
                             imageColor: AppColors.dark400,
                           ),

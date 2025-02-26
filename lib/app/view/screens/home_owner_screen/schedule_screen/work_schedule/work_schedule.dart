@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/work_schedule_controller/work_schedule_controller.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
@@ -22,6 +23,7 @@ class _WorkScheduleState extends State<WorkSchedule> {
     controller.getUserTask(dayName: 'Tuesday');
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,19 +85,28 @@ class _WorkScheduleState extends State<WorkSchedule> {
                         fontSize: 16,
                       ),
                       const SizedBox(height: 10),
+
                       ///<<<<========================= Task Card ================================>>>>
                       Column(
-                        children: List.generate(1, (index) {
-                          return
-                            UserTaskCard(
-                              name: "Sadhu",
-                              role: "Assistant",
-                              workTitle: "Work",
-                              workDetails: "Arrange Appointment",
-                              time: "10:00am - 11:00am",
-                              imageUrl: AppConstants.userNtr,
-                            );
-
+                        children: List.generate(
+                            controller.userTaskData.value.result?.length ?? 0,
+                            (index) {
+                          final data =
+                              controller.userTaskData.value.result?[index];
+                          return UserTaskCard(
+                            name:
+                                "${data?.assignedTo?.firstName ?? ""}${data?.assignedTo?.lastName ?? ""}",
+                            role: data?.status ?? "",
+                            workTitle: data?.taskName ?? "",
+                            workDetails: data?.taskDetails ?? "",
+                            time:
+                                "${DateConverter.estimatedDate(data?.startDateTime?.toLocal() ??
+                                    DateTime.now())} To ""${DateConverter.estimatedDate(
+                                    DateConverter.parseTimeString(data?.endDateStr) ?? DateTime.now()
+                                )}"
+                            ,
+                            imageUrl: AppConstants.userNtr,
+                          );
                         }),
                       )
                     ],
