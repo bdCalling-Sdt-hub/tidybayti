@@ -143,15 +143,27 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                       final data = taskList[index];
 
                       return UserTaskCard(
+                        isWorkingDay: true,
+                        workingDay: (data.assignedTo?.workingDay ?? [])
+                            .map((day) => day.toString().split('.').last)  // ✅ Extract readable day names
+                            .join(', ')
+                            .isEmpty
+                            ? "No working days available"
+                            : (data.assignedTo?.workingDay ?? [])
+                            .map((day) => day.toString().split('.').last)  // ✅ Extract readable day names
+                            .join(', '),
+
+                        isOffDay: true,
                         name:
                             "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
                         role: data.status ?? "Pending",
                         workTitle: data.taskName ?? "Unknown Task",
-                        workDetails: data.taskDetails ?? "No details provided",
+                        workDetails:'',
                         time:
                             "${DateConverter.estimatedDate(data.startDateTime?.toLocal() ?? DateTime.now())} To ${DateConverter.estimatedDate(DateConverter.parseTimeString(data.endDateStr) ?? DateTime.now())}",
                         imageUrl:
                             "${ApiUrl.networkUrl}${data.assignedTo?.profileImage ?? ""}",
+                        offDay: data.dayOfWeek,
                       );
                     }),
                   ),

@@ -9,9 +9,13 @@ class UserTaskCard extends StatelessWidget {
   final String name;
   final String role;
   final String workTitle;
+  final String? offDay;
+  final String? workingDay;
   final String workDetails;
   final String time;
   final String imageUrl;
+  final bool? isOffDay;
+  final bool? isWorkingDay;
 
   const UserTaskCard({
     super.key,
@@ -21,6 +25,10 @@ class UserTaskCard extends StatelessWidget {
     required this.workDetails,
     required this.time,
     required this.imageUrl,
+    this.offDay,
+    this.isOffDay,
+    this.workingDay,
+    this.isWorkingDay,
   });
 
   @override
@@ -80,6 +88,54 @@ class UserTaskCard extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
                       ),
+                      isOffDay == true
+                          ? Row(
+                            children: [
+                              const CustomText(
+                                  textAlign: TextAlign.start,
+                                  text: "OffDay: ",
+                                  color: AppColors.red,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+
+                              CustomText(
+                                  textAlign: TextAlign.start,
+                                  text: offDay ?? " ",
+                                  color: AppColors.dark500,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                            ],
+                          )
+                          : const SizedBox(),
+                      isWorkingDay == true
+                          ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const CustomText(
+                                  maxLines: 10,
+                                  textAlign: TextAlign.start,
+                                  text: "WorkingDay:",
+                                  // ✅ Displays only day names
+                                  color: AppColors.blue,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                                Expanded(
+                                  child: CustomText(
+                                    maxLines: 10,
+                                    textAlign: TextAlign.start,
+                                    text: " ${workingDay ?? " "}",
+                                    // ✅ Displays only day names
+                                    color: AppColors.dark500,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
                       const SizedBox(height: 5),
                       CustomText(
                         textAlign: TextAlign.start,
@@ -87,7 +143,6 @@ class UserTaskCard extends StatelessWidget {
                         color: AppColors.dark300,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-
                       ),
                       Row(
                         children: [
