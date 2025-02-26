@@ -33,6 +33,9 @@ class ApiUrl {
   static String taskSingle(String taskID) =>
       "$baseUrl/task/get-task?taskId=$taskID";
 
+  static String userDayOfTask(String dayName) =>
+      "$baseUrl/task/get-all-task?dayOfWeek=$dayName";
+
   static String roomTaskSingle(String roomId) =>
       "$baseUrl/task/get-all-task?room=$roomId";
 
