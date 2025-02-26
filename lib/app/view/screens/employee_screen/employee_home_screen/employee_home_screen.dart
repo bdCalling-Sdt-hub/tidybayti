@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/employee_controller/employee_home_controller.dart';
+import 'package:tidybayte/app/controller/owner_controller/profile_controller/profile_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
@@ -21,12 +22,18 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final EmployeeHomeController controller = Get.find<EmployeeHomeController>();
+  final ProfileController profileController = Get.find<ProfileController>();
 
   @override
   void initState() {
-    controller.getEmployeeAllTask(dayName: "All");
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      profileController.getProfile();
+      controller.getEmployeeAllTask(dayName: "All");
+    });
+
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +43,12 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            EmployeeHomeAppBar(scaffoldKey: scaffoldKey),
+            EmployeeHomeAppBar(
+              scaffoldKey: scaffoldKey,
+              image:
+                  "${ApiUrl.networkUrl}${profileController.profileModel.value.profileImage ?? " "}",
+              name: profileController.profileModel.value.firstName ?? "",
+            ),
 
             /// ========================= Day Name Selection ========================= ///
             Padding(
