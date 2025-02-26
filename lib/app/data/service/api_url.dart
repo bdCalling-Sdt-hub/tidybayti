@@ -28,6 +28,7 @@ class ApiUrl {
   static const addTask = "$baseUrl/task/post-task";
   static const getCompleteTask = "$baseUrl/task/get-my-task?status=completed";
   static const getPendingTask = "$baseUrl/task/get-my-task?status=pending";
+  static const getEmployeePendingTask = "$baseUrl/task/get-all-task?status=pending";
   static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
   static const taskDelete= "$baseUrl/task/delete-task";
   static const userAllTasks= "$baseUrl/task/get-all-task";
@@ -44,6 +45,7 @@ class ApiUrl {
   static const employeeAllTask= "$baseUrl/task/get-employee-specific-task";
   static String employeeDateAllTask(String dayName) =>
       "$baseUrl/task/get-employee-specific-task?dayOfWeek=$dayName";
+  static const updateStatus= "$baseUrl/task/update-task-or-grocery-status";
 
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";

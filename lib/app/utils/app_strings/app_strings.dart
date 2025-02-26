@@ -66,6 +66,7 @@ class AppStrings {
   static const String sendVerificationCode = "Send Verification Code";
   static const String resendConfirmationCode = "Resend Confirmation Code";
   static const String confirm = "Confirm";
+  static const String confirmTask = "Confirm task";
   static const String youHaveFiveDays = "You have  5 days free service.";
   static const String ourSubscriptionPackages = "Our Subscription packages";
 

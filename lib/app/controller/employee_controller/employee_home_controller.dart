@@ -4,9 +4,10 @@ import 'package:tidybayte/app/data/model/owner_model/work_schedule/user_task_mod
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 
-class EmployeeHomeController extends GetxController{
+class EmployeeHomeController extends GetxController {
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   final rxRequestStatus = Status.loading.obs;
   ApiClient apiClient = serviceLocator();
@@ -26,14 +27,12 @@ class EmployeeHomeController extends GetxController{
   ///==================================✅✅Get All Task✅✅=======================
   RxBool isLoading = false.obs;
 
-
   Rx<UserTaskData> userTaskData = UserTaskData().obs;
 
   Future<void> getEmployeeAllTask({required String dayName}) async {
     setRxRequestStatus(Status.loading);
 
     try {
-
       String apiUrl = dayName == "All"
           ? ApiUrl.employeeAllTask
           : ApiUrl.employeeDateAllTask(dayName);
@@ -60,4 +59,60 @@ class EmployeeHomeController extends GetxController{
     }
   }
 
+  ///==================================✅✅getPending✅✅=======================
+
+  Rx<UserTaskData> pendingTask = UserTaskData().obs;
+
+  Future<void> getPending() async {
+    setRxRequestStatus(Status.loading);
+
+    try {
+      final response =
+          await apiClient.get(url: ApiUrl.getEmployeePendingTask, showResult: true);
+
+      if (response.statusCode == 200 && response.body["data"] != null) {
+        pendingTask.value = UserTaskData.fromJson(response.body["data"]);
+
+        print('✅ Status Code: ${response.statusCode}');
+        print(' pendingTask Count: ${pendingTask.value.result?.length ?? 0}');
+
+        setRxRequestStatus(Status.completed);
+      } else {
+        print("⚠️ Error: Unexpected API Response");
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('❌ Error fetching data: $e');
+    }
+  }
+
+  ///==================================✅✅PendingTask✅✅=======================
+
+  RxBool isPendingTask = false.obs;
+
+  employeePendingTask({required String taskId, required String status}) async {
+    isPendingTask.value = true;
+    var body = {"taskId": taskId, "status": status};
+
+    var response = await apiClient.patch(body: body, url: ApiUrl.updateStatus);
+    if (response.statusCode == 200) {
+      getPending();
+      print(response.body);
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isPendingTask.value = false;
+    isPendingTask.refresh();
+  }
+
+  @override
+  void onInit() {
+    getPending();
+    super.onInit();
+  }
 }
