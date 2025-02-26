@@ -129,7 +129,7 @@ class MyRecipeScreen extends StatelessWidget {
                                   child: CustomRecipeCard(
                                     recipeId: data.id ?? "",
                                     title: data.recipeName ?? "Untitled Recipe",
-                                    cuisine: 'Asian / Indian',
+                                    cuisine: data.description??"",
                                     cookTime: data.cookingTime ?? "N/A",
                                     imageUrl: "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
                                     isFavorite: recipeController.getFavoriteStatus(data.id ?? "", isFavorite), // ✅ Corrected

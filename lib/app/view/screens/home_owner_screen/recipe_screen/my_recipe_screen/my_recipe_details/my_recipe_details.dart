@@ -68,7 +68,14 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                   Get.toNamed(AppRoutes.addNewRecipe,
                       arguments: {
                     "IsEdit": "true",
-                        "recipeId": recipeId});
+                        "recipeId": recipeId,
+                        "recipeName": data.recipeName,
+                        "cookingTime": data.cookingTime,
+                        "description": data.description,
+                        "ingredients": data.ingredients,
+                        "step": data.steps,
+                        "tag": data.tags,
+                      });
                 },
               ),
               const SizedBox(

@@ -31,12 +31,46 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
         List.generate(recipeController.categories.length, (index) => false);
     recipeController.selectedCategoryNames = [];
 
-    // var recipeName = recipeController.recipeNameController.text;
+
 
     final arguments = Get.arguments ?? {};
-    isEdit = arguments["IsEdit"] == "true"; // Convert string to boolean
+    isEdit = arguments["IsEdit"] == "true";
     recipeId = arguments["recipeId"];
+
+
+    final args = Get.arguments ?? {};
+    recipeController.recipeNameController.text = args["recipeName"] ?? '';
+    recipeController.cookingTimeController.text = args["cookingTime"] ?? '';
+    recipeController.descriptionController.text = args["description"] ?? '';
+    //ingredients
+    List<String> ingredients = List<String>.from(arguments["ingredients"] ?? []);
+      print(ingredients);
+    recipeController.ingredientsList.assignAll(ingredients);
+   //steps
+    List<String> steps = List<String>.from(arguments["step"] ?? []);
+      print(steps);
+    recipeController.stepsList.assignAll(steps);
+
+    //tag
+    tag = List<String>.from(arguments["tag"] ?? []);
+
+    // ✅ Update selected categories in the controller based on received tags
+    for (int i = 0; i < recipeController.categories.length; i++) {
+      if (tag.contains(recipeController.categories[i])) {
+        recipeController.selectedCategories[i] = true;
+      }
+    }
+
+    // ✅ Store selected category names initially
+    recipeController.selectedCategoryNames = recipeController
+        .categories
+        .asMap()
+        .entries
+        .where((entry) => recipeController.selectedCategories[entry.key])
+        .map((entry) => entry.value)
+        .toList();
   }
+  late List<String> tag;
 
   late bool isEdit;
   String? recipeId;
@@ -45,6 +79,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
   @override
   Widget build(BuildContext context) {
     print(isEdit);
+
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
