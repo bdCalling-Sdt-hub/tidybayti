@@ -14,9 +14,6 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/add_employee_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_task_successfully_screen/assign_task_successfully_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_schedule_screen/assign_work_schedule_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_screen/assign_work_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/mail_sent_successfully_screen/main_sent_successfully_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/all_employee_show/all_employee_show.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/employee_details/edit_employee_details/edit_employee_details.dart';
@@ -83,9 +80,6 @@ class AppRoutes {
   static const String roomDetailsScreen = "/RoomDetailsScreen";
   static const String editEmployeeDetails = "/EditEmployeeDetails";
   static const String mainSentSuccessfullyScreen = "/MainSentSuccessfullyScreen";
-  static const String assignWorkScheduleScreen = "/AssignWorkScheduleScreen";
-  static const String assignWorkScreen = "/AssignWorkScreen";
-  static const String assignTaskSuccessfullyScreen = "/AssignTaskSuccessfullyScreen";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
@@ -152,9 +146,6 @@ class AppRoutes {
     GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () =>  const RoomDetailsScreen()),
     GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
-    GetPage(name: assignWorkScheduleScreen, page: () => const AssignWorkScheduleScreen()),
-    GetPage(name: assignWorkScreen, page: () => const AssignWorkScreen()),
-    GetPage(name: assignTaskSuccessfullyScreen, page: () => const AssignTaskSuccessfullyScreen()),
 
 
     ///=========================Wallet section==============
