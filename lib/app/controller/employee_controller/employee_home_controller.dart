@@ -89,25 +89,33 @@ class EmployeeHomeController extends GetxController {
   }
 
   ///==================================✅✅PendingTask✅✅=======================
-
   RxBool isPendingTask = false.obs;
+  RxString pendingTaskId = "".obs; // ✅ Track which task is loading
 
-  employeePendingTask({required String taskId, required String status}) async {
+  Future<void> employeePendingTask({required String taskId, required String status}) async {
     isPendingTask.value = true;
+    pendingTaskId.value = taskId; // ✅ Set loading state for the specific task
+
     var body = {"taskId": taskId, "status": status};
 
-    var response = await apiClient.patch(body: body, url: ApiUrl.updateStatus);
-    if (response.statusCode == 200) {
-      getPending();
-      print(response.body);
-      toastMessage(message: response.body["message"]);
-    } else if (response.statusCode == 400) {
-      toastMessage(message: response.body["message"]);
-    } else {
-      ApiChecker.checkApi(response);
+    try {
+      var response = await apiClient.patch(body: body, url: ApiUrl.updateStatus);
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        toastMessage(message: response.body["message"]);
+        await getPending(); // ✅ Refresh Pending Task List After Updating
+      } else if (response.statusCode == 400) {
+        toastMessage(message: response.body["message"]);
+      } else {
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      print("❌ Error updating task status: $e");
+    } finally {
+      isPendingTask.value = false;
+      pendingTaskId.value = ""; // ✅ Reset loading state
     }
-    isPendingTask.value = false;
-    isPendingTask.refresh();
   }
 
   @override

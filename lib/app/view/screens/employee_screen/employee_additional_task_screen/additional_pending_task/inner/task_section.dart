@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/employee_controller/employee_home_controller.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import '../../../../../../data/model/owner_model/work_schedule/user_task_model.dart';
 
@@ -32,6 +33,7 @@ class _TaskSectionState extends State<TaskSection> {
     isTabList = List<bool>.filled(widget.taskCount, false);
   }
 
+  final EmployeeHomeController controller = Get.find<EmployeeHomeController>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -141,26 +143,34 @@ class _TaskSectionState extends State<TaskSection> {
                         const Spacer(),
                         ElevatedButton(
                           onPressed: () {
-                            if (widget.onTap != null) {
-                              widget.onTap!(task.id ?? ""); // ✅ Pass `taskId`
+                            if (widget.onTap != null && !controller.isPendingTask.value) {
+                              widget.onTap!(task.id ?? ""); // ✅ Call the method with taskId
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey[800],
+                            backgroundColor: controller.isPendingTask.value && controller.pendingTaskId.value == task.id
+                                ? Colors.grey // ✅ Show grey when loading
+                                : Colors.grey[800],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.r),
                             ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 8.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                           ),
-                          child: Text(
-                            AppStrings.confirmTask.tr,
-                            style: TextStyle(
-                              fontSize: 14.sp,
+                          child: controller.isPendingTask.value && controller.pendingTaskId.value == task.id
+                              ? const SizedBox( // ✅ Show Loader While Task is Being Updated
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
                               color: Colors.white,
+                              strokeWidth: 2,
                             ),
+                          )
+                              : Text(
+                            AppStrings.confirmTask.tr,
+                            style: TextStyle(fontSize: 14.sp, color: Colors.white),
                           ),
                         ),
+
                       ],
                     ),
                   ],

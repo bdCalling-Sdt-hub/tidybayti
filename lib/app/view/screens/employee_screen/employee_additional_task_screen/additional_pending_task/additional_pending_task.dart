@@ -18,6 +18,11 @@ class _AdditionalPendingTaskState extends State<AdditionalPendingTask> {
   final EmployeeHomeController controller = Get.find<EmployeeHomeController>();
 
   @override
+  void initState() {
+    controller.getPending();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.w),
