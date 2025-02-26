@@ -48,6 +48,7 @@ class _AdditionalPendingTaskState extends State<AdditionalPendingTask> {
           children: [
             /// ================== Task Schedule Section ==================
             TaskSection(
+              isButton: true,
               title: AppStrings.taskSchedule.tr,
               taskCount: taskList.length,
               tasks: taskList,

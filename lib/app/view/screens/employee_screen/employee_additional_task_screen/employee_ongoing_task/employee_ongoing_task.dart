@@ -50,6 +50,7 @@ class _AdditionalPendingTaskState extends State<EmployeeOngoingTask> {
           children: [
             /// ================== Task Schedule Section ==================
             TaskSection(
+              isButton: true,
               title: AppStrings.taskSchedule.tr,
               taskCount: taskList.length,
               tasks: taskList,
