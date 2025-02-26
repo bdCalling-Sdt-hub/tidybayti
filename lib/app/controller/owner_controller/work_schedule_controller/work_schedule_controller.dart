@@ -26,9 +26,7 @@ class WorkScheduleController extends GetxController {
   ///==================================✅✅Get All Task✅✅=======================
   RxBool isLoading = false.obs;
 
-  // void setLoading(bool value) {
-  //   isLoading.value = value;
-  // }
+
   Rx<UserTaskData> userTaskData = UserTaskData().obs;
 
   Future<void> getUserTask({required String dayName}) async {

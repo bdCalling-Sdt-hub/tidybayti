@@ -40,6 +40,11 @@ class ApiUrl {
   static String roomTaskSingle(String roomId) =>
       "$baseUrl/task/get-all-task?room=$roomId";
 
+  // employee
+  static const employeeAllTask= "$baseUrl/task/get-employee-specific-task";
+  static String employeeDateAllTask(String dayName) =>
+      "$baseUrl/task/get-employee-specific-task?dayOfWeek=$dayName";
+
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";
   static const myAllHouse = "$baseUrl/room/get-my-houses";
