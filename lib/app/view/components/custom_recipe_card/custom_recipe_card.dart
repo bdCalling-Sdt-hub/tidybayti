@@ -16,16 +16,16 @@ class CustomRecipeCard extends StatelessWidget {
   final bool isDelete;
   final VoidCallback? onDelete;
   final VoidCallback? onFavorite;
-  final RxBool isFavorite; // ✅ Ensure it's an RxBool for real-time UI updates
+  final RxBool isFavorite;
 
-  CustomRecipeCard({
+  const CustomRecipeCard({
     super.key,
     required this.recipeId,
     required this.title,
     required this.cuisine,
     required this.cookTime,
     required this.imageUrl,
-    required this.isFavorite, // Pass RxBool instead of bool
+    required this.isFavorite,
     this.onDelete,
     this.isDelete = false,
     this.onFavorite,
@@ -89,7 +89,15 @@ class CustomRecipeCard extends StatelessWidget {
                 ),
                 CustomText(
                   textAlign: TextAlign.start,
-                  text: '$cuisine \nCooking time: $cookTime',
+                  text: cuisine,
+                  color: AppColors.dark300,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                ),
+
+                CustomText(
+                  textAlign: TextAlign.start,
+                  text: 'Cooking time: $cookTime',
                   color: AppColors.dark300,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,

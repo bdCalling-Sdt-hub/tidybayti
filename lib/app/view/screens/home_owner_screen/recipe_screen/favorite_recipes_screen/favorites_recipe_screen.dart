@@ -100,7 +100,7 @@ class FavoritesRecipeScreen extends StatelessWidget {
 
                               return GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(AppRoutes.myRecipeDetails);
+                                  Get.toNamed(AppRoutes.myRecipeDetails,arguments: data.id);
                                 },
                                 child: CustomRecipeCard(
                                   onFavorite: () {
@@ -110,7 +110,7 @@ class FavoritesRecipeScreen extends StatelessWidget {
                                         .update(); // ✅ Force UI refresh
                                   },
                                   title: data.recipeName ?? "Untitled Recipe",
-                                  cuisine: '',
+                                  cuisine: data.description??"",
                                   cookTime: data.cookingTime ?? "N/A",
                                   imageUrl:
                                   "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
