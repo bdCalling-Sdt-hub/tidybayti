@@ -9,6 +9,7 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/employee_nav_bar/employee_navbar.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/additional_pending_task/additional_pending_task.dart';
 import 'additional_completed_task/additional_completed_task.dart';
+import 'employee_ongoing_task/employee_ongoing_task.dart';
 
 class EmployeeAdditionalScreen extends StatefulWidget {
   const EmployeeAdditionalScreen({super.key});
@@ -20,9 +21,13 @@ class EmployeeAdditionalScreen extends StatefulWidget {
 class _WalletScreenState extends State<EmployeeAdditionalScreen> {
   int selectedTabIndex = 0;
 
-  final List<Widget> screens = [const AdditionalPendingTask(), const AdditionalCompletedTask()];
+  final List<Widget> screens = [
+    const AdditionalPendingTask(),
+    const EmployeeOngoingTask(),
+    const AdditionalCompletedTask()
+  ];
 
-  final List<String> schedule = ["pending", "Completed"];
+  final List<String> schedule = ["pending", "Ongoing" ,"Completed"];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,7 @@ class _WalletScreenState extends State<EmployeeAdditionalScreen> {
                 Row(
                   children: List.generate(
                     schedule.length,
-                        (index) => Expanded(
+                    (index) => Expanded(
                       child: InkWell(
                         onTap: () {
                           setState(() {
@@ -74,16 +79,14 @@ class _WalletScreenState extends State<EmployeeAdditionalScreen> {
                               border: Border(
                                 bottom: selectedTabIndex == index
                                     ? const BorderSide(
-                                    color: AppColors.blue900,
-                                    width: 4)
+                                        color: AppColors.blue900, width: 4)
                                     : const BorderSide(
-                                    color: AppColors.blue50,
-                                    width: 4),
+                                        color: AppColors.blue50, width: 4),
                               )),
                           child: CustomText(
                             text: schedule[index],
                             fontWeight: FontWeight.w500,
-                            fontSize: 18.h,
+                            fontSize: 14,
                             color: AppColors.blue900,
                           ),
                         ),
