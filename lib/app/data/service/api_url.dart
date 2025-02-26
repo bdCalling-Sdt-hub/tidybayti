@@ -30,6 +30,7 @@ class ApiUrl {
   static const getPendingTask = "$baseUrl/task/get-my-task?status=pending";
   static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
   static const taskDelete= "$baseUrl/task/delete-task";
+  static const userAllTasks= "$baseUrl/task/get-all-task";
   static String taskSingle(String taskID) =>
       "$baseUrl/task/get-task?taskId=$taskID";
 

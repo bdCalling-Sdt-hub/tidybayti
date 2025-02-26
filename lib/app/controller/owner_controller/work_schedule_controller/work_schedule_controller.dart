@@ -24,33 +24,41 @@ class WorkScheduleController extends GetxController {
   ];
 
   ///==================================✅✅Get All Task✅✅=======================
+  RxBool isLoading = false.obs;
 
+  // void setLoading(bool value) {
+  //   isLoading.value = value;
+  // }
   Rx<UserTaskData> userTaskData = UserTaskData().obs;
 
   Future<void> getUserTask({required String dayName}) async {
     setRxRequestStatus(Status.loading);
-    refresh();
 
     try {
-      final response = await apiClient.get(
-          url: ApiUrl.userDayOfTask(dayName), showResult: true);
 
-      if (response.statusCode == 200) {
+      String apiUrl = dayName == "All"
+          ? ApiUrl.userAllTasks
+          : ApiUrl.userDayOfTask(dayName);
+
+      print("Fetching tasks from: $apiUrl");
+
+      final response = await apiClient.get(url: apiUrl, showResult: true);
+
+      if (response.statusCode == 200 && response.body["data"] != null) {
         userTaskData.value = UserTaskData.fromJson(response.body["data"]);
 
-        print('StatusCode==================${response.statusCode}');
-        print(
-            'userTaskData Result==================${userTaskData.value.result?.length}');
+        print('✅ Status Code: ${response.statusCode}');
+        print('✅ Task Count: ${userTaskData.value.result?.length ?? 0}');
 
         setRxRequestStatus(Status.completed);
-        refresh();
       } else {
+        print("⚠️ Error: Unexpected API Response");
         setRxRequestStatus(Status.error);
         ApiChecker.checkApi(response);
       }
     } catch (e) {
       setRxRequestStatus(Status.error);
-      print('Error fetching data: $e');
+      print('❌ Error fetching data: $e');
     }
   }
 
