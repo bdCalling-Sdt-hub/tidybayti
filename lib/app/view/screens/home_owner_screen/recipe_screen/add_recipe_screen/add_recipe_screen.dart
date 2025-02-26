@@ -43,12 +43,18 @@ class AddRecipeScreen extends StatelessWidget {
                         Get.back();
                       },
                     ),
-                    SizedBox(height: 200.h), // Space between title and menu items
+                    SizedBox(height: 200.h),
+                    // Space between title and menu items
 
                     RecipeButton(
                       text: 'New blank recipe',
                       onPressed: () {
-                          Get.toNamed(AppRoutes.addNewRecipe);
+                        Get.toNamed(
+                          AppRoutes.addNewRecipe,
+                          arguments: {
+                            "IsEdit": "false",
+                            }
+                        );
                       },
                     ),
                     RecipeButton(
@@ -80,7 +86,8 @@ void importDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+          borderRadius: BorderRadius.all(
+              Radius.circular(5.0)), // Adjust the radius as needed
         ),
         title: Row(
           children: [
@@ -144,11 +151,14 @@ void uploadFileDialog(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)), // Adjust the radius as needed
+          borderRadius: BorderRadius.all(
+              Radius.circular(5.0)), // Adjust the radius as needed
         ),
         title: Row(
           children: [
-           SizedBox(width: 35.w,),
+            SizedBox(
+              width: 35.w,
+            ),
             const CustomText(
               text: AppStrings.uploadFile,
               color: AppColors.dark400,

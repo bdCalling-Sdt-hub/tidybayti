@@ -24,7 +24,6 @@ class AddNewRecipe extends StatefulWidget {
 class _AddNewRecipeState extends State<AddNewRecipe> {
   final formKey = GlobalKey<FormState>();
 
-
   @override
   void initState() {
     super.initState();
@@ -33,13 +32,16 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
     recipeController.selectedCategoryNames = [];
 
     // var recipeName = recipeController.recipeNameController.text;
+
+    final arguments = Get.arguments ?? {};
+    isEdit = arguments["IsEdit"] == "true"; // Convert string to boolean
+    recipeId = arguments["recipeId"];
   }
 
+  late bool isEdit;
+  String? recipeId;
   final RecipeController recipeController = Get.find<RecipeController>();
 
-  final String isEdit = Get.arguments[0];
-  final String recipeId = Get.arguments[1];
-  final String recipeName = Get.arguments[2];
   @override
   Widget build(BuildContext context) {
     print(isEdit);
@@ -442,7 +444,6 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     width:
                                         MediaQuery.of(context).size.width / 1.1,
                                     onTap: () {
-
                                       if (recipeController.profileImage.value ==
                                           null) {
                                         toastMessage(
@@ -452,38 +453,36 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                             "❌ Please select a Recipe image.");
                                         return;
                                       }
-                                      isEdit == false?
-                                      RecipeApi.addRecipe(
-                                          context: context,
-                                          recipeName: recipeController
-                                              .recipeNameController.text,
-                                          recipeImage: recipeController
-                                              .profileImage.value!,
-                                          cookingTime: recipeController
-                                              .cookingTimeController.text,
-                                          description: recipeController
-                                              .descriptionController.text,
-                                          ingredients:
-                                              recipeController.ingredientsList,
-                                          steps: recipeController.stepsList,
-                                          tags: recipeController
-                                              .selectedCategoryNames):
-                                      RecipeApi.editRecipe(
-
-                                          context: context,
-                                          recipeName: recipeController
-                                              .recipeNameController.text,
-                                          recipeImage: recipeController
-                                              .profileImage.value!,
-                                          cookingTime: recipeController
-                                              .cookingTimeController.text,
-                                          description: recipeController
-                                              .descriptionController.text,
-                                          ingredients:
-                                          recipeController.ingredientsList,
-                                          steps: recipeController.stepsList,
-                                          tags: recipeController
-                                              .selectedCategoryNames, recipeId: recipeId);
+                                      isEdit == false
+                                          ? RecipeApi.addRecipe(
+                                              context: context,
+                                              recipeName: recipeController
+                                                  .recipeNameController.text,
+                                              recipeImage: recipeController
+                                                  .profileImage.value!,
+                                              cookingTime: recipeController
+                                                  .cookingTimeController.text,
+                                              description: recipeController
+                                                  .descriptionController.text,
+                                              ingredients: recipeController
+                                                  .ingredientsList,
+                                              steps: recipeController.stepsList,
+                                              tags: recipeController
+                                                  .selectedCategoryNames)
+                                          : RecipeApi.editRecipe(
+                                              context: context,
+                                              recipeName: recipeController
+                                                  .recipeNameController.text,
+                                              recipeImage: recipeController
+                                                  .profileImage.value!,
+                                              cookingTime: recipeController
+                                                  .cookingTimeController.text,
+                                              description: recipeController
+                                                  .descriptionController.text,
+                                              ingredients: recipeController.ingredientsList,
+                                              steps: recipeController.stepsList,
+                                              tags: recipeController.selectedCategoryNames,
+                                              recipeId: recipeId.toString());
                                       // recipeController.addNewRecipe();
                                     },
                                     fillColor: Colors.white,
