@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
@@ -45,7 +46,7 @@ class _WalletScreenState extends State<EmployeeAdditionalScreen> {
               children: [
                 ///=============================== Wallet Appbar ========================
                 CustomMenuAppbar(
-                  title: 'Additional Task',
+                  title: AppStrings.additionalTask.tr,
                   onBack: () {
                     Get.back();
                   },

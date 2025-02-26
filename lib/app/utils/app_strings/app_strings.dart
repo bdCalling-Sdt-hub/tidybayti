@@ -178,6 +178,7 @@ class AppStrings {
   static const String selectTime       ='Select Time';
   static const String additionalMessage       ='Additional message';
   static const String downloadPdf       ='Download PDF';
+  static const String additionalTask       ='Additional Task';
   static const String doYouWantToDownload       ='Do you want to download Task details';
   static const String downloadNow       ='Download now';
   static const String grocery       ='Grocery';
