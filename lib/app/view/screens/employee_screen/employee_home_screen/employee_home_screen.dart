@@ -40,124 +40,126 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
       key: scaffoldKey,
       backgroundColor: AppColors.addedColor,
       bottomNavigationBar: const EmployeeNavbar(currentIndex: 0),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            EmployeeHomeAppBar(
-              scaffoldKey: scaffoldKey,
-              image:
-                  "${ApiUrl.networkUrl}${profileController.profileModel.value.profileImage ?? " "}",
-              name: profileController.profileModel.value.firstName ?? "",
-            ),
+      body: Column(
+        children: [
+          EmployeeHomeAppBar(
+            scaffoldKey: scaffoldKey,
+            image:
+                "${ApiUrl.networkUrl}${profileController.profileModel.value.profileImage ?? " "}",
+            name: profileController.profileModel.value.firstName ?? "",
+          ),
 
-            /// ========================= Day Name Selection ========================= ///
-            Padding(
-              padding: const EdgeInsets.only(top: 20, left: 20),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Obx(() => Row(
-                      children:
-                          List.generate(controller.dayName.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            controller.selectedDayIndex.value = index;
-                            String selectedDay = controller.dayName[index];
+          /// ========================= Day Name Selection ========================= ///
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Obx(() => Row(
+                    children: List.generate(controller.dayName.length, (index) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.selectedDayIndex.value = index;
+                          String selectedDay = controller.dayName[index];
 
-                            // ✅ If "All" is selected, remove day filter
-                            controller.getEmployeeAllTask(dayName: selectedDay);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
+                          // ✅ If "All" is selected, remove day filter
+                          controller.getEmployeeAllTask(dayName: selectedDay);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: controller.selectedDayIndex.value == index
+                                ? AppColors.blue900
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
                               color: controller.selectedDayIndex.value == index
                                   ? AppColors.blue900
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color:
-                                    controller.selectedDayIndex.value == index
-                                        ? AppColors.blue900
-                                        : AppColors.blue50,
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: CustomText(
-                              text: controller.dayName[index],
-                              color: controller.selectedDayIndex.value == index
-                                  ? Colors.white
-                                  : AppColors.blue900,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                                  : AppColors.blue50,
                             ),
                           ),
-                        );
-                      }),
-                    )),
-              ),
-            ),
-
-            /// ========================= Display Selected Day ========================= ///
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// ✅ Wrap only the `Selected Day` text in `Obx()`
-                  Obx(() => CustomText(
-                        textAlign: TextAlign.start,
-                        text:
-                            'Selected Day: ${controller.dayName[controller.selectedDayIndex.value]}',
-                        color: AppColors.dark300,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      )),
-                  const SizedBox(height: 10),
-
-                  /// ✅ Separate Obx() for Loader and Task List
-                  Obx(() {
-                    if (controller.isLoading.value) {
-                      // ✅ Show loader when data is loading
-                      return const Center(child: CustomLoader());
-                    }
-
-                    final taskList = controller.userTaskData.value.result ?? [];
-                    if (taskList.isEmpty) {
-                      // ✅ Show message when no tasks are found
-                      return const Center(
-                        child: CustomText(
-                          text: "No tasks available for this day.",
-                          color: AppColors.dark200,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(right: 10),
+                          child: CustomText(
+                            text: controller.dayName[index],
+                            color: controller.selectedDayIndex.value == index
+                                ? Colors.white
+                                : AppColors.blue900,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
                         ),
                       );
-                    }
-
-                    /// ✅ Display Task List
-                    return Column(
-                      children: List.generate(taskList.length, (index) {
-                        final data = taskList[index];
-
-                        return UserTaskCard(
-                          name:
-                              "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
-                          role: data.status ?? "Pending",
-                          workTitle: data.taskName ?? "Unknown Task",
-                          workDetails:
-                              data.taskDetails ?? "No details provided",
-                          time:
-                              "${DateConverter.estimatedDate(data.startDateTime?.toLocal() ?? DateTime.now())} To ${DateConverter.estimatedDate(DateConverter.parseTimeString(data.endDateStr) ?? DateTime.now())}",
-                          imageUrl:
-                              "${ApiUrl.networkUrl}${data.assignedTo?.profileImage ?? ""}",
-                        );
-                      }),
-                    );
-                  }),
-                ],
-              ),
+                    }),
+                  )),
             ),
-          ],
-        ),
+          ),
+
+          /// ========================= Display Selected Day ========================= ///
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// ✅ Wrap only the `Selected Day` text in `Obx()`
+                Obx(() => CustomText(
+                      textAlign: TextAlign.start,
+                      text:
+                          'Selected Day: ${controller.dayName[controller.selectedDayIndex.value]}',
+                      color: AppColors.dark300,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                    )),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+
+          /// ========================= Scrollable Task List ========================= ///
+          Expanded(
+            child: Obx(() {
+              if (controller.isLoading.value) {
+                // ✅ Show loader when data is loading
+                return const Center(child: CustomLoader());
+              }
+
+              final taskList = controller.userTaskData.value.result ?? [];
+              if (taskList.isEmpty) {
+                // ✅ Show message when no tasks are found
+                return const Center(
+                  child: CustomText(
+                    text: "No tasks available for this day.",
+                    color: AppColors.dark200,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                  ),
+                );
+              }
+
+              /// ✅ Display Scrollable Task List
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: List.generate(taskList.length, (index) {
+                      final data = taskList[index];
+
+                      return UserTaskCard(
+                        name:
+                            "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
+                        role: data.status ?? "Pending",
+                        workTitle: data.taskName ?? "Unknown Task",
+                        workDetails: data.taskDetails ?? "No details provided",
+                        time:
+                            "${DateConverter.estimatedDate(data.startDateTime?.toLocal() ?? DateTime.now())} To ${DateConverter.estimatedDate(DateConverter.parseTimeString(data.endDateStr) ?? DateTime.now())}",
+                        imageUrl:
+                            "${ApiUrl.networkUrl}${data.assignedTo?.profileImage ?? ""}",
+                      );
+                    }),
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
