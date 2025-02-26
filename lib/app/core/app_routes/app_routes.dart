@@ -6,7 +6,6 @@ import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/
 import 'package:tidybayte/app/view/screens/employee_screen/employee_notification_screen/employee_notification_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_edit_profile/employee_edit_profile.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
-import 'package:tidybayte/app/view/screens/employee_screen/employee_sign_in_screen/employee_sign_in_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/free_service_screen/free_service_screen.dart';
@@ -125,7 +124,6 @@ class AppRoutes {
   static const String faqScreen = "/FaqScreen";
 
   ///====================Employee section===================
-  static const String employeeSignInScreen = "/EmployeeSignInScreen";
   static const String employeeEditProfile = "/EmployeeEditProfile";
   static const String employeeProfileScreen = "/EmployeeProfileScreen";
   static const String employeeHomeScreen = "/EmployeeHomeScreen";
@@ -216,7 +214,6 @@ class AppRoutes {
 
     ///======================Employee section=========================
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
-    GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () =>  EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
     GetPage(name: employeeNotificationScreen, page: () =>   EmployeeNotificationScreen()),
