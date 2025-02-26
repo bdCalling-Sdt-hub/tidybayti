@@ -1,25 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
+import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
 
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/app/view/components/no_internet_screen/no_internet_screen.dart';
 
-class MyRecipeDetails extends StatelessWidget {
+class MyRecipeDetails extends StatefulWidget {
   const MyRecipeDetails({super.key});
 
   @override
+  State<MyRecipeDetails> createState() => _MyRecipeDetailsState();
+}
+
+class _MyRecipeDetailsState extends State<MyRecipeDetails> {
+  final String recipeId = Get.arguments;
+  final RecipeController recipeController = Get.find<RecipeController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      recipeController.getRecipeSingle(recipeId: recipeId);
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(recipeId);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xCCE8F3FA), // First color (with opacity)
+              Color(0xCCE8F3FA),
               Color(0xFFB5D8EE),
             ],
             begin: Alignment.topLeft,
@@ -27,67 +51,159 @@ class MyRecipeDetails extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ///==================================✅✅Recipe Details✅✅=======================
+
               CustomMenuAppbar(
-                title: 'Recipe Details'.tr,
+                title: AppStrings.recipeDetails.tr,
                 onBack: () {
                   Get.back();
                 },
                 isEdit: true,
                 onTap: () {
-                  Get.toNamed(AppRoutes.addNewRecipe);
+                  final data = recipeController.recipeSingleData.value;
+                  Get.toNamed(AppRoutes.addNewRecipe,
+                      arguments: {
+                    "IsEdit": "true",
+                        "recipeId": recipeId,
+                        "recipeName": data.recipeName,
+                        "cookingTime": data.cookingTime,
+                        "description": data.description,
+                        "ingredients": data.ingredients,
+                        "step": data.steps,
+                        "tag": data.tags,
+                      });
                 },
               ),
               const SizedBox(
                 height: 15,
               ),
-              CustomNetworkImage(
-                  imageUrl: AppConstants.fruits, height: 191, width: 375),
-              const SizedBox(
-                height: 25,
-              ),
-              const CustomText(
-                text: 'Idlis Steamed Rice Cake',
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                color: AppColors.dark400,
-              ),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Cooking time:', value: '30 min'),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Tag:', value: 'Asian / Indian'),
-              SizedBox(height: 8),
-              RecipeInfoRow(label: 'Email:', value: 'sadhu@gmail.com'),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Description:'),
-              SizedBox(height: 8),
-              RecipeDescription(
-                description:
-                    'Mix chicken pieces with yogurt, ginger-garlic paste, biryani spice mix, chopped green chilies, a squeeze of lemon juice, and salt.',
-              ),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Ingredients:'),
-              SizedBox(height: 8),
-              RecipeIngredients(
-                ingredients:
-                    '· 3 cups rice\n· 1 cup skinless black gram urad daal\n· 1/4 teaspoon salt\n· 2 tablespoons vegetable oil, or canola oil',
-              ),
-              SizedBox(height: 16),
-              RecipeSectionTitle(title: 'Describe steps:'),
-              SizedBox(height: 8),
-              RecipeSteps(
-                steps:
-                    '1. Wash the rice and urad daal separately and soak them overnight.\n'
-                    '2. Grind each separately, into thick pastes (adding a little water at a time) in a blender.\n'
-                    '3. Mix the pastes together and add salt to taste.\n'
-                    '4. Set the batter aside overnight to ferment.\n'
-                    '5. Grease the molds on an idli tray with cooking oil. Pour enough batter into each mold to fill it three-fourths full.\n'
-                    '6. Pour 2 cups of water into a large pot and heat. Put the idli tray into the pot and steam for 20 minutes.\n'
-                    '7. Check the idlis by poking each with a toothpick. If the toothpick comes out clean, the idlis are done.',
-              ),
+
+              ///==================================✅✅Recipe Details✅✅=======================
+              Obx(() {
+                switch (recipeController.rxRequestStatus.value) {
+                  case Status.loading:
+                    return const CustomLoader(); // Show loading indicator
+
+                  case Status.internetError:
+                    return NoInternetScreen(onTap: () {
+                      recipeController.getRecipeSingle(recipeId: recipeId);
+                    });
+
+                  case Status.error:
+                    return GeneralErrorScreen(
+                      onTap: () {
+                        recipeController.getRecipeSingle(recipeId: recipeId);
+                      },
+                    );
+
+                  case Status.completed:
+                    var data = recipeController.recipeSingleData.value;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //TODO:Image
+                          CustomNetworkImage(
+                              imageUrl:
+                                  "${ApiUrl.networkUrl}${data.recipeImage ?? ""}",
+                              height: 191,
+                              width: 375),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          //TODO:Recipe Title
+                          RecipeInfoRow(
+                              label: "${AppStrings.recipeName}:".tr,
+                              value: "${data.recipeName ?? " "} "),
+                          const SizedBox(height: 8),
+                          //TODO:Cooking time
+                          RecipeInfoRow(
+                              label: AppStrings.cookingTimes.tr,
+                              value: "${data.cookingTime ?? " "} minutes"),
+                          const SizedBox(height: 8),
+                          //TODO:Tag
+                          CustomText(
+                            text: AppStrings.tag.tr,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
+                            color: AppColors.dark400,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                List.generate(data.tags?.length ?? 0, (index) {
+                              final tags = data.tags?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${tags ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
+                          ),
+
+                          const SizedBox(height: 32),
+                          //TODo:Description
+                          RecipeSectionTitle(
+                              title: "${AppStrings.description}:".tr),
+                          const SizedBox(height: 8),
+                          RecipeDescription(
+                            description: data.description ?? "",
+                          ),
+                          const SizedBox(height: 16),
+                          //TODo:Ingredients
+                          RecipeSectionTitle(title: AppStrings.ingredients.tr),
+                          const SizedBox(height: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                                data.ingredients?.length ?? 0, (index) {
+                              final ingredients = data.ingredients?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${ingredients ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
+                          ),
+                          const SizedBox(height: 16),
+                          //TODo:steps
+                          RecipeSectionTitle(
+                              title: "${AppStrings.describeSteps.tr}:"),
+                          const SizedBox(height: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                List.generate(data.steps?.length ?? 0, (index) {
+                              final steps = data.steps?[index];
+                              return CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 10,
+                                text: "${index + 1}. ${steps ?? " "}",
+                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: AppColors.dark300,
+                              );
+                            }),
+                          )
+                        ],
+                      ),
+                    );
+                }
+              })
             ],
           ),
         ),
@@ -100,26 +216,31 @@ class RecipeInfoRow extends StatelessWidget {
   final String label;
   final String value;
 
-  const RecipeInfoRow({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const RecipeInfoRow({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
+          textAlign: TextAlign.start,
           text: '$label ',
           fontSize: 16,
           fontWeight: FontWeight.w400,
           color: AppColors.dark300,
           right: 30,
         ),
-        CustomText(
-          text: '$value ',
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: AppColors.dark300,
-          right: 30,
+        Expanded(
+          child: CustomText(
+            textAlign: TextAlign.start,
+            maxLines: 10,
+            text: '$value ',
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: AppColors.dark300,
+            right: 30,
+          ),
         ),
       ],
     );
@@ -135,9 +256,9 @@ class RecipeSectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomText(
       text: '$title ',
-      fontSize: 16,
+      fontSize: 20,
       fontWeight: FontWeight.w400,
-      color: AppColors.dark300,
+      color: Colors.black,
       right: 30,
     );
   }

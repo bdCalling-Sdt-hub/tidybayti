@@ -72,14 +72,7 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
                       fontSize: 24,
                       color: AppColors.dark400,
                     ),
-                    // CustomButton(
-                    //   fillColor: Colors.white,
-                    //   onTap: () {
-                    //     Get.toNamed(AppRoutes.assignWorkScheduleScreen);
-                    //
-                    //   },
-                    //   title: AppStrings.assignWorkSchedule.tr,
-                    // ),
+
 
                     SizedBox(height: 10.h,),
                     CustomButton(

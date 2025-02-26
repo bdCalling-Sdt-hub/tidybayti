@@ -6,7 +6,6 @@ import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/
 import 'package:tidybayte/app/view/screens/employee_screen/employee_notification_screen/employee_notification_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_edit_profile/employee_edit_profile.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
-import 'package:tidybayte/app/view/screens/employee_screen/employee_sign_in_screen/employee_sign_in_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/forget_password_screen/forgot_password_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/forgot_password_otp/forgot_password_otp.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/free_service_screen/free_service_screen.dart';
@@ -15,9 +14,6 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign_up_otp/sign_up_otp.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/add_employee_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_task_successfully_screen/assign_task_successfully_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_schedule_screen/assign_work_schedule_screen.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/assign_work_screen/assign_work_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/add_employee_screen/mail_sent_successfully_screen/main_sent_successfully_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/all_employee_show/all_employee_show.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/employee_details/edit_employee_details/edit_employee_details.dart';
@@ -41,6 +37,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/add_r
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/favorite_recipes_screen/favorites_recipe_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_details/my_recipe_details.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/my_recipe_screen/my_recipe_screen.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/tags_screen/my_single_tags.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/recipe_screen/tags_screen/tags_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/all_task_screen/all_task_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
@@ -83,9 +80,6 @@ class AppRoutes {
   static const String roomDetailsScreen = "/RoomDetailsScreen";
   static const String editEmployeeDetails = "/EditEmployeeDetails";
   static const String mainSentSuccessfullyScreen = "/MainSentSuccessfullyScreen";
-  static const String assignWorkScheduleScreen = "/AssignWorkScheduleScreen";
-  static const String assignWorkScreen = "/AssignWorkScreen";
-  static const String assignTaskSuccessfullyScreen = "/AssignTaskSuccessfullyScreen";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
@@ -100,6 +94,7 @@ class AppRoutes {
   static const String tagsScreen = "/TagsScreen";
   static const String addNewRecipe = "/AddNewRecipe";
   static const String myRecipeDetails = "/MyRecipeDetails";
+  static const String mySingleTags = "/MySingleTags";
 
   ///===================Schedule Screen====================
   static const String allTaskScreen = "/AllTaskScreen";
@@ -123,7 +118,6 @@ class AppRoutes {
   static const String faqScreen = "/FaqScreen";
 
   ///====================Employee section===================
-  static const String employeeSignInScreen = "/EmployeeSignInScreen";
   static const String employeeEditProfile = "/EmployeeEditProfile";
   static const String employeeProfileScreen = "/EmployeeProfileScreen";
   static const String employeeHomeScreen = "/EmployeeHomeScreen";
@@ -152,9 +146,6 @@ class AppRoutes {
     GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () =>  const RoomDetailsScreen()),
     GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
-    GetPage(name: assignWorkScheduleScreen, page: () => const AssignWorkScheduleScreen()),
-    GetPage(name: assignWorkScreen, page: () => const AssignWorkScreen()),
-    GetPage(name: assignTaskSuccessfullyScreen, page: () => const AssignTaskSuccessfullyScreen()),
 
 
     ///=========================Wallet section==============
@@ -169,7 +160,8 @@ class AppRoutes {
     GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
     GetPage(name: tagsScreen, page: () =>  TagsScreen()),
     GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
-    GetPage(name: myRecipeDetails, page: () =>  const MyRecipeDetails()),
+    GetPage(name: myRecipeDetails, page: () =>   const MyRecipeDetails()),
+    GetPage(name: mySingleTags, page: () =>    MySingleTags()),
 
 
     ///===========================Schedule Screen=====================
@@ -213,7 +205,6 @@ class AppRoutes {
 
     ///======================Employee section=========================
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
-    GetPage(name: employeeSignInScreen, page: () => const EmployeeSignInScreen()),
     GetPage(name: employeeProfileScreen, page: () =>  EmployeeProfileScreen()),
     GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
     GetPage(name: employeeNotificationScreen, page: () =>   EmployeeNotificationScreen()),

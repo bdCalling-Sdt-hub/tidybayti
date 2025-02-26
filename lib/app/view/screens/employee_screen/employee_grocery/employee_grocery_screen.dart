@@ -7,32 +7,33 @@ import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_app
 
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/employee_nav_bar/employee_navbar.dart';
-import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/additional_pending_task/additional_pending_task.dart';
-import 'additional_completed_task/additional_completed_task.dart';
-import 'employee_ongoing_task/employee_ongoing_task.dart';
 
-class EmployeeAdditionalScreen extends StatefulWidget {
-  const EmployeeAdditionalScreen({super.key});
+import 'grocery_complete/grocery_complete_screen.dart';
+import 'grocery_ongoing/grocery_ongoing_screen.dart';
+import 'grocery_pending/grocery_pending_screen.dart';
+
+class EmployeeGroceryScreen extends StatefulWidget {
+  const EmployeeGroceryScreen({super.key});
 
   @override
-  State<EmployeeAdditionalScreen> createState() => _WalletScreenState();
+  State<EmployeeGroceryScreen> createState() => _WalletScreenState();
 }
 
-class _WalletScreenState extends State<EmployeeAdditionalScreen> {
+class _WalletScreenState extends State<EmployeeGroceryScreen> {
   int selectedTabIndex = 0;
 
   final List<Widget> screens = [
-    const AdditionalPendingTask(),
-    const EmployeeOngoingTask(),
-    const AdditionalCompletedTask()
+    const GroceryPendingScreen(),
+    const GroceryOngoingScreen(),
+    const GroceryCompleteScreen()
   ];
 
-  final List<String> schedule = ["pending", "Ongoing" ,"Completed"];
+  final List<String> schedule = ["pending", "Ongoing", "Completed"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const EmployeeNavbar(currentIndex: 1),
+      bottomNavigationBar: const EmployeeNavbar(currentIndex: 2),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
@@ -51,7 +52,7 @@ class _WalletScreenState extends State<EmployeeAdditionalScreen> {
               children: [
                 ///=============================== additionalTask Appbar ========================
                 CustomMenuAppbar(
-                  title: AppStrings.additionalTask.tr,
+                  title: AppStrings.grocery.tr,
                   onBack: () {
                     Get.back();
                   },

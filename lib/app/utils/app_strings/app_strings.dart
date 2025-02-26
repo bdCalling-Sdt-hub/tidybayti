@@ -66,6 +66,7 @@ class AppStrings {
   static const String sendVerificationCode = "Send Verification Code";
   static const String resendConfirmationCode = "Resend Confirmation Code";
   static const String confirm = "Confirm";
+  static const String confirmTask = "Confirm task";
   static const String youHaveFiveDays = "You have  5 days free service.";
   static const String ourSubscriptionPackages = "Our Subscription packages";
 
@@ -154,6 +155,7 @@ class AppStrings {
   static const String endTime     = 'End time';
   static const String details     = 'Details';
   static const String addTask     = 'Add task';
+  static const String recipeDetails     = 'Recipe Details';
   static const String addBreak     = 'Add break';
   static const String assignTaskSuccessfully     = 'Assign task succesfully';
 
@@ -177,6 +179,7 @@ class AppStrings {
   static const String selectTime       ='Select Time';
   static const String additionalMessage       ='Additional message';
   static const String downloadPdf       ='Download PDF';
+  static const String additionalTask       ='Additional Task';
   static const String doYouWantToDownload       ='Do you want to download Task details';
   static const String downloadNow       ='Download now';
   static const String grocery       ='Grocery';
@@ -210,13 +213,16 @@ class AppStrings {
   static const String searchRecipe   ='Search recipe';
   static const String favoriteRecipes   ='Favorite recipes';
   static const String tags   ='Tags';
+  static const String tag   ='Tags:';
+  static const String ingredients   ='Ingredients:';
   static const String newBlackRecipe   ='New blank recipe';
   static const String importFromWebsite   ='Import from website';
   static const String uploadFile   ='Upload file';
   static const String recipeName   ='Recipe name';
   static const String addPhoto   ='Add photo';
   static const String urlHere    ='URL here';
-  static const String cookingTime    ='Cooking time';
+  static const String cookingTime    ='Cooking time (Min)';
+  static const String cookingTimes    ='Cooking time:';
   static const String description    ='Description';
   static const String addIngredients    ='Add ingredients';
   static const String describeSteps    ='Describe steps';

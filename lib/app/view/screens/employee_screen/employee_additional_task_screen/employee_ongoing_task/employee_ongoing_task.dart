@@ -5,29 +5,31 @@ import 'package:tidybayte/app/controller/employee_controller/employee_home_contr
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'inner/task_section.dart';
 
-class AdditionalPendingTask extends StatefulWidget {
-  const AdditionalPendingTask({super.key});
+import '../additional_pending_task/inner/task_section.dart';
+
+class EmployeeOngoingTask extends StatefulWidget {
+  const EmployeeOngoingTask({super.key});
 
   @override
-  State<AdditionalPendingTask> createState() => _AdditionalPendingTaskState();
+  State<EmployeeOngoingTask> createState() => _AdditionalPendingTaskState();
 }
 
-class _AdditionalPendingTaskState extends State<AdditionalPendingTask> {
+class _AdditionalPendingTaskState extends State<EmployeeOngoingTask> {
   final EmployeeHomeController controller = Get.find<EmployeeHomeController>();
 
   @override
   void initState() {
-    controller.getPending();
+    controller.getOngoing();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.w),
       child: Obx(() {
-        final taskList = controller.pendingTask.value.result ?? [];
+        final taskList = controller.ongoing.value.result ?? [];
 
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -36,7 +38,7 @@ class _AdditionalPendingTaskState extends State<AdditionalPendingTask> {
         if (taskList.isEmpty) {
           return const Center(
             child: CustomText(
-              text: "No pending tasks available",
+              text: "No Ongoing tasks available",
               color: AppColors.dark200,
               fontWeight: FontWeight.w400,
               fontSize: 16,
@@ -53,7 +55,8 @@ class _AdditionalPendingTaskState extends State<AdditionalPendingTask> {
               taskCount: taskList.length,
               tasks: taskList,
               onTap: (String taskId) {
-                controller.employeePendingTask(taskId: taskId, status: "ongoing");
+                controller.employeePendingTask(
+                    taskId: taskId, status: "completed");
               },
             ),
             SizedBox(height: 16.h),

@@ -5,6 +5,7 @@ import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
+import 'package:tidybayte/app/view/screens/employee_screen/employee_grocery/employee_grocery_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_profile_screen/employee_profile_screen.dart';
 
@@ -24,10 +25,13 @@ class _UserNavBarState extends State<EmployeeNavbar> {
   final List<String> unselectedIcon = [
     AppIcons.homeUnselected,
     AppIcons.scheduleUnselected,
+    AppIcons.grocery,
     AppIcons.person,
-  ]; final List<String> selectedIcon = [
+  ];
+  final List<String> selectedIcon = [
     AppIcons.homeSelected,
     AppIcons.scheduleSelected,
+    AppIcons.grocery,
     AppIcons.personSelected,
   ];
 
@@ -76,12 +80,16 @@ class _UserNavBarState extends State<EmployeeNavbar> {
     if (index != bottomNavIndex) {
       switch (index) {
         case 0:
-          Get.offAll(() =>  EmployeeHomeScreen( ));
+          Get.offAll(() =>  const EmployeeHomeScreen( ));
           break;
         case 1:
           Get.to(() => const EmployeeAdditionalScreen());
           break;
         case 2:
+          Get.to(() =>  const EmployeeGroceryScreen());
+
+          break;
+        case 3:
           Get.to(() =>  EmployeeProfileScreen());
 
       }

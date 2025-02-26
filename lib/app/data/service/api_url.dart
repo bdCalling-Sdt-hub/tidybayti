@@ -28,13 +28,26 @@ class ApiUrl {
   static const addTask = "$baseUrl/task/post-task";
   static const getCompleteTask = "$baseUrl/task/get-my-task?status=completed";
   static const getPendingTask = "$baseUrl/task/get-my-task?status=pending";
+  static const getEmployeePendingTask = "$baseUrl/task/get-all-task?status=pending";
+  static const getEmployeeOngoingTask = "$baseUrl/task/get-all-task?status=ongoing";
+  static const getEmployeeCompletedTask = "$baseUrl/task/get-all-task?status=completed";
   static const getOngoing= "$baseUrl/task/get-my-task?status=ongoing";
   static const taskDelete= "$baseUrl/task/delete-task";
+  static const userAllTasks= "$baseUrl/task/get-all-task";
   static String taskSingle(String taskID) =>
       "$baseUrl/task/get-task?taskId=$taskID";
 
+  static String userDayOfTask(String dayName) =>
+      "$baseUrl/task/get-all-task?dayOfWeek=$dayName";
+
   static String roomTaskSingle(String roomId) =>
       "$baseUrl/task/get-all-task?room=$roomId";
+
+  // employee
+  static const employeeAllTask= "$baseUrl/task/get-employee-specific-task";
+  static String employeeDateAllTask(String dayName) =>
+      "$baseUrl/task/get-employee-specific-task?dayOfWeek=$dayName";
+  static const updateStatus= "$baseUrl/task/update-task-or-grocery-status";
 
 ///==================================✅✅Home✅✅=======================
   static const houseRomeCreate = "$baseUrl/room/post-room";
@@ -72,12 +85,12 @@ class ApiUrl {
   static const updateRecipe = "$baseUrl/recipe/update-recipe";
   static const myRecipe = "$baseUrl/recipe/get-my-recipe";
   static const searchRecipe = "$baseUrl/recipe/get-my-recipe?searchTerm";
+  static const deleteRecipe = "$baseUrl/recipe/delete-recipe";
   static String favoriteRecipe(String recipeId) =>
       "$baseUrl/recipe/favorite-unfavorite-recipe?recipeId=$recipeId";
   static String singleRecipe(String recipeId) =>
       "$baseUrl/recipe/get-recipe?recipeId=$recipeId";
-  static String recipeDelete(String recipeId) =>
-      "$baseUrl/recipe/delete-recipe?recipeId=$recipeId";
+
 
 
   static String tagFilter(String tagText) =>

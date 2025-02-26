@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipeApi.dart';
 import 'package:tidybayte/app/controller/owner_controller/recipe_controller/recipe_controller.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/ToastMsg/toast_message.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
@@ -26,21 +24,62 @@ class AddNewRecipe extends StatefulWidget {
 class _AddNewRecipeState extends State<AddNewRecipe> {
   final formKey = GlobalKey<FormState>();
 
-  // List to keep track of selected items
-
   @override
   void initState() {
     super.initState();
-    // Initialize the selection list with false (not selected)
     recipeController.selectedCategories =
         List.generate(recipeController.categories.length, (index) => false);
     recipeController.selectedCategoryNames = [];
-  }
 
+
+
+    final arguments = Get.arguments ?? {};
+    isEdit = arguments["IsEdit"] == "true";
+    recipeId = arguments["recipeId"];
+
+
+    final args = Get.arguments ?? {};
+    recipeController.recipeNameController.text = args["recipeName"] ?? '';
+    recipeController.cookingTimeController.text = args["cookingTime"] ?? '';
+    recipeController.descriptionController.text = args["description"] ?? '';
+    //ingredients
+    List<String> ingredients = List<String>.from(arguments["ingredients"] ?? []);
+      print(ingredients);
+    recipeController.ingredientsList.assignAll(ingredients);
+   //steps
+    List<String> steps = List<String>.from(arguments["step"] ?? []);
+      print(steps);
+    recipeController.stepsList.assignAll(steps);
+
+    //tag
+    tag = List<String>.from(arguments["tag"] ?? []);
+
+    // ✅ Update selected categories in the controller based on received tags
+    for (int i = 0; i < recipeController.categories.length; i++) {
+      if (tag.contains(recipeController.categories[i])) {
+        recipeController.selectedCategories[i] = true;
+      }
+    }
+
+    // ✅ Store selected category names initially
+    recipeController.selectedCategoryNames = recipeController
+        .categories
+        .asMap()
+        .entries
+        .where((entry) => recipeController.selectedCategories[entry.key])
+        .map((entry) => entry.value)
+        .toList();
+  }
+  late List<String> tag;
+
+  late bool isEdit;
+  String? recipeId;
   final RecipeController recipeController = Get.find<RecipeController>();
 
   @override
   Widget build(BuildContext context) {
+    print(isEdit);
+
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -449,21 +488,36 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                             "❌ Please select a Recipe image.");
                                         return;
                                       }
-                                      RecipeApi.addRecipe(
-                                          context: context,
-                                          recipeName: recipeController
-                                              .recipeNameController.text,
-                                          recipeImage: recipeController
-                                              .profileImage.value!,
-                                          cookingTime: recipeController
-                                              .cookingTimeController.text,
-                                          description: recipeController
-                                              .descriptionController.text,
-                                          ingredients:
-                                              recipeController.ingredientsList,
-                                          steps: recipeController.stepsList,
-                                          tags: recipeController
-                                              .selectedCategoryNames);
+                                      isEdit == false
+                                          ? RecipeApi.addRecipe(
+                                              context: context,
+                                              recipeName: recipeController
+                                                  .recipeNameController.text,
+                                              recipeImage: recipeController
+                                                  .profileImage.value!,
+                                              cookingTime: recipeController
+                                                  .cookingTimeController.text,
+                                              description: recipeController
+                                                  .descriptionController.text,
+                                              ingredients: recipeController
+                                                  .ingredientsList,
+                                              steps: recipeController.stepsList,
+                                              tags: recipeController
+                                                  .selectedCategoryNames)
+                                          : RecipeApi.editRecipe(
+                                              context: context,
+                                              recipeName: recipeController
+                                                  .recipeNameController.text,
+                                              recipeImage: recipeController
+                                                  .profileImage.value!,
+                                              cookingTime: recipeController
+                                                  .cookingTimeController.text,
+                                              description: recipeController
+                                                  .descriptionController.text,
+                                              ingredients: recipeController.ingredientsList,
+                                              steps: recipeController.stepsList,
+                                              tags: recipeController.selectedCategoryNames,
+                                              recipeId: recipeId.toString());
                                       // recipeController.addNewRecipe();
                                     },
                                     fillColor: Colors.white,

@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/employee_controller/employee_home_controller.dart';
 import 'package:tidybayte/app/controller/notification_controller/notification_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
@@ -9,6 +10,7 @@ import 'package:tidybayte/app/controller/owner_controller/recipe_controller/reci
 import 'package:tidybayte/app/controller/owner_controller/setting_controller/setting_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wallet_controller.dart';
+import 'package:tidybayte/app/controller/owner_controller/work_schedule_controller/work_schedule_controller.dart';
 import 'package:tidybayte/app/global/controller/auth_controller.dart';
 
 
@@ -27,6 +29,9 @@ class DependencyInjection extends Bindings {
    Get.lazyPut(() => TaskController(), fenix: true);
    Get.lazyPut(() => HomeController(), fenix: true);
    Get.lazyPut(() => InfoController(), fenix: true);
+   Get.lazyPut(() => WorkScheduleController(), fenix: true);
+   ///==========================Employee Section==================
+   Get.lazyPut(() => EmployeeHomeController(), fenix: true);
 
 
 
