@@ -29,7 +29,7 @@ class _AdditionalPendingTaskState extends State<GroceryCompleteScreen> {
     return Padding(
       padding: EdgeInsets.all(16.w),
       child: Obx(() {
-        final taskList = controller.ongoingTask.value.result ?? [];
+        final taskList = controller.completeTask.value.result ?? [];
 
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());

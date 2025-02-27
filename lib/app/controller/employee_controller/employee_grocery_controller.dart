@@ -77,7 +77,7 @@ class EmployeeGroceryController extends GetxController {
 
     try {
       final response =
-          await apiClient.get(url: ApiUrl.getGroceryOngoing, showResult: true);
+          await apiClient.get(url: ApiUrl.groceryComplete, showResult: true);
 
       if (response.statusCode == 200 && response.body["data"] != null) {
         completeTask.value = GroceryData.fromJson(response.body["data"]);
