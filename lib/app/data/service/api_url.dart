@@ -96,4 +96,9 @@ class ApiUrl {
   static String tagFilter(String tagText) =>
       "$baseUrl/recipe/get-my-recipe?tags=$tagText";
 
+
+  ///==================================✅✅Grocery✅✅=======================
+  static const addGrocery = "$baseUrl/task/post-grocery";
+  static const groceryDelete = "$baseUrl/task/delete-grocery";
+  static const getMyGrocery = "$baseUrl/task/get-my-grocery";
 }
