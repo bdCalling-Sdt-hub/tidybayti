@@ -103,4 +103,5 @@ class ApiUrl {
   static const getMyGrocery = "$baseUrl/task/get-my-grocery";
   static const getGroceryOngoing = "$baseUrl/task/get-my-grocery?status=ongoing";
   static const groceryComplete = "$baseUrl/task/get-my-grocery?status=completed";
+  static const employeeGroceryPending = "$baseUrl/task/get-my-grocery?status=pending";
 }
