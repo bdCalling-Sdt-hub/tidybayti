@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:tidybayte/app/controller/owner_controller/grocery_controller/grocery_controller.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
-import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
-import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
-import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 class AddGroceryTask extends StatefulWidget {
   const AddGroceryTask({super.key});
 
@@ -24,14 +16,10 @@ class AddGroceryTask extends StatefulWidget {
 }
 
 class _AllTaskScreenState extends State<AddGroceryTask> {
-  final List<String> dayName = [
-    'Pending Tasks',
-    'Completed Tasks',
-  ];
 
-  // To track the selected employee
+
   String? selectedEmployee;
-
+final GroceryController controller = Get.find<GroceryController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +37,9 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
         child: SafeArea(
           child: Column(
             children: [
-              ///=============================== Menu Title ========================
+              ///=============================== addGrocery Title ========================
               CustomMenuAppbar(
-                title: AppStrings.addGrocery,
+                title: AppStrings.addGrocery.tr,
                 onBack: () {
                   Get.back();
                 },
@@ -62,39 +50,120 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   children: [
-                    CustomTextField(
+                    ///===============================addItem  ========================
+                     CustomTextField(
                       readOnly: true,
-                      hintText: 'Add item',
+                      hintText: AppStrings.addItem.tr,
+                      textEditingController: controller.groceryNameController,
                     ),
                     SizedBox(height: 12.h),
 
-                    // Assign to field with employee selection
+                    ///=============================== Employee ========================
+
+                    SizedBox(height: 16.h),
+                    ///=========================== Start Date =======================
                     CustomTextField(
+                      hintText: "Start Date".tr,
+                      suffixIcon: const Icon(Icons.calendar_month),
+                      textEditingController: controller.startDateController,
+                      readOnly: true,
+                      // Prevent manual input
                       onTap: () async {
-                        final result = await Get.toNamed(AppRoutes.employeeList);
-                        if (result != null) {
-                          setState(() {
-                            selectedEmployee = result as String; // Set selected employee
-                          });
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                          DateFormat('MM/dd/yyyy').format(pickedDate);
+                          controller.startDateController.text = formattedDate;
                         }
                       },
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== Start Time =======================
+                    CustomTextField(
+                      hintText: "Start Time".tr,
+                      suffixIcon: const Icon(Icons.watch_later_outlined),
+                      textEditingController: controller.startTimeController,
                       readOnly: true,
-                      hintText: selectedEmployee ?? 'Assign To', // Display selected employee
-                      suffixIcon: Icon(Icons.arrow_forward_ios),
+                      // Prevent manual input
+                      onTap: () async {
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+
+                        if (pickedTime != null) {
+                          // ✅ Format time to HH:mm a (12-hour format with AM/PM)
+                          final now = DateTime.now();
+                          final selectedTime = DateTime(now.year, now.month,
+                              now.day, pickedTime.hour, pickedTime.minute);
+                          final formattedTime =
+                          DateFormat('hh:mm a').format(selectedTime);
+
+                          controller.startTimeController.text = formattedTime;
+                        }
+                      },
                     ),
 
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== End Date =======================
+
                     CustomTextField(
+                      hintText: "End Date".tr,
+                      suffixIcon: const Icon(Icons.calendar_month),
+                      textEditingController: controller.endDateController,
                       readOnly: true,
-                      hintText: 'Select Date',
-                      suffixIcon: Icon(Icons.calendar_month),
+                      // Prevent manual input
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                          DateFormat('MM/dd/yyyy').format(pickedDate);
+                          controller.endDateController.text = formattedDate;
+                        }
+                      },
                     ),
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== End Time =======================
+
                     CustomTextField(
+                      hintText: "Start Time".tr,
+                      suffixIcon: const Icon(Icons.watch_later_outlined),
+                      textEditingController: controller.endTimeController,
                       readOnly: true,
-                      hintText: 'Select Time',
-                      suffixIcon: Icon(Icons.watch_later_outlined),
+                      // Prevent manual input
+                      onTap: () async {
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+
+                        if (pickedTime != null) {
+                          final now = DateTime.now();
+                          final selectedTime = DateTime(now.year, now.month,
+                              now.day, pickedTime.hour, pickedTime.minute);
+                          final formattedTime =
+                          DateFormat('hh:mm a').format(selectedTime);
+
+                          controller.endTimeController.text = formattedTime;
+                        }
+                      },
                     ),
+                    SizedBox(height: 16.h),
                     SizedBox(height: 25.h),
                     CustomButton(
                       onTap: () {

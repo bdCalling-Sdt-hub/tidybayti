@@ -43,7 +43,6 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/tas
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/create_task/create_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/add_grocery_task/add_grocery_task.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/employee_list/employee_list.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/grocery_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/ongoing_task/ongoing_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/pending_task/pending_task.dart';
@@ -103,7 +102,6 @@ class AppRoutes {
   static const String pendingTask = "/PendingTask";
   static const String groceryTask = "/GroceryTask";
   static const String addGroceryTask = "/AddGroceryTask";
-  static const String employeeList = "/EmployeeList";
 
   ///================================Menu Screen =====================
   static const String personalInfoScreen = "/PersonalInfoScreen";
@@ -171,7 +169,6 @@ class AppRoutes {
     GetPage(name: pendingTask, page: () =>  const PendingTask()),
     GetPage(name: groceryTask, page: () => const GroceryTask()),
     GetPage(name: addGroceryTask, page: () => const AddGroceryTask()),
-    GetPage(name: employeeList, page: () => const EmployeeList()),
 
 
     ///================================Menu Screen =====================
