@@ -69,6 +69,34 @@ class EmployeeGroceryController extends GetxController {
     }
   }
 
+  ///==================================✅✅complete✅✅=======================
+  Rx<GroceryData> completeTask = GroceryData().obs;
+
+  Future<void> getComplete() async {
+    setRxRequestStatus(Status.loading);
+
+    try {
+      final response =
+          await apiClient.get(url: ApiUrl.getGroceryOngoing, showResult: true);
+
+      if (response.statusCode == 200 && response.body["data"] != null) {
+        completeTask.value = GroceryData.fromJson(response.body["data"]);
+
+        print('✅ Status Code: ${response.statusCode}');
+        print(' completeTask Count: ${completeTask.value.result?.length ?? 0}');
+
+        setRxRequestStatus(Status.completed);
+      } else {
+        print("⚠️ Error: Unexpected API Response");
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('❌ Error fetching data: $e');
+    }
+  }
+
   // ///==================================✅✅PendingTask✅✅=======================
   RxBool isPendingTask = false.obs;
   RxString pendingTaskId = "".obs;
