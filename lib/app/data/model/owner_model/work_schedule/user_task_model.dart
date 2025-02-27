@@ -94,16 +94,16 @@ class Result {
   String? room;
   AssignedTo? assignedTo;
   String? taskName;
-  Recurrence? recurrence;
+  String? recurrence;
   String? startDateStr;
-  StartTimeStr? startTimeStr;
+  String? startTimeStr;
   DateTime? startDateTime;
   String? endDateStr;
-  EndTimeStr? endTimeStr;
+  String? endTimeStr;
   DateTime? endDateTime;
   String? dayOfWeek;
   String? taskDetails;
-  AdditionalMessage? additionalMessage;
+  String? additionalMessage;
   String? status;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -138,20 +138,20 @@ class Result {
     user: json["user"],
     room: json["room"],
     assignedTo: json["assignedTo"] == null ? null : AssignedTo.fromJson(json["assignedTo"]),
-    taskName: json["taskName"], // ✅ Null check fix
-    recurrence: recurrenceValues.map[json["recurrence"]] ?? Recurrence.WEEKLY, // ✅ Default value
-    startDateStr: json["startDateStr"] ?? "",
-    startTimeStr: startTimeStrValues.map[json["startTimeStr"]] ?? StartTimeStr.THE_0220_PM, // ✅ Fix
-    startDateTime: json["startDateTime"] != null ? DateTime.parse(json["startDateTime"]) : null,
-    endDateStr: json["endDateStr"] ?? "",
-    endTimeStr: endTimeStrValues.map[json["endTimeStr"]] ?? EndTimeStr.THE_0150_AM,
-    endDateTime: json["endDateTime"] != null ? DateTime.parse(json["endDateTime"]) : null,
-    dayOfWeek: json["dayOfWeek"] ?? "Unknown",
-    taskDetails:json["taskDetails"],
-    additionalMessage: additionalMessageValues.map[json["additionalMessage"]] ?? AdditionalMessage.GG,
-    status: json["status"], // ✅ Null check
-    createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : null,
-    updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : null,
+    taskName: json["taskName"],
+    recurrence: json["recurrence"],
+    startDateStr: json["startDateStr"],
+    startTimeStr: json["startTimeStr"],
+    startDateTime: json["startDateTime"] == null ? null : DateTime.parse(json["startDateTime"]),
+    endDateStr: json["endDateStr"],
+    endTimeStr: json["endTimeStr"],
+    endDateTime: json["endDateTime"] == null ? null : DateTime.parse(json["endDateTime"]),
+    dayOfWeek: json["dayOfWeek"],
+    taskDetails: json["taskDetails"],
+    additionalMessage: json["additionalMessage"],
+    status: json["status"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -160,47 +160,37 @@ class Result {
     "room": room,
     "assignedTo": assignedTo?.toJson(),
     "taskName": taskName,
-    "recurrence": recurrenceValues.reverse[recurrence],
+    "recurrence": recurrence,
     "startDateStr": startDateStr,
-    "startTimeStr": startTimeStrValues.reverse[startTimeStr],
+    "startTimeStr": startTimeStr,
     "startDateTime": startDateTime?.toIso8601String(),
     "endDateStr": endDateStr,
-    "endTimeStr": endTimeStrValues.reverse[endTimeStr],
+    "endTimeStr": endTimeStr,
     "endDateTime": endDateTime?.toIso8601String(),
     "dayOfWeek": dayOfWeek,
     "taskDetails": taskDetails,
-    "additionalMessage": additionalMessageValues.reverse[additionalMessage],
-    "status":status,
+    "additionalMessage": additionalMessage,
+    "status": status,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
   };
 }
 
-enum AdditionalMessage {
-  GG,
-  USE_THE_NEW_CLEANING_SUPPLIES_UNDER_THE_SINK
-}
-
-final additionalMessageValues = EnumValues({
-  "gg": AdditionalMessage.GG,
-  "Use the new cleaning supplies under the sink.": AdditionalMessage.USE_THE_NEW_CLEANING_SUPPLIES_UNDER_THE_SINK
-});
-
 class AssignedTo {
   String? id;
-  String? email;
-  String? profileImage;
-  List<WorkingDay>? workingDay;
   String? firstName;
   String? lastName;
+  String? email;
+  String? profileImage;
+  List<String>? workingDay;
 
   AssignedTo({
     this.id,
+    this.firstName,
+    this.lastName,
     this.email,
     this.profileImage,
     this.workingDay,
-    this.firstName,
-    this.lastName,
   });
 
   factory AssignedTo.fromRawJson(String str) => AssignedTo.fromJson(json.decode(str));
@@ -209,113 +199,19 @@ class AssignedTo {
 
   factory AssignedTo.fromJson(Map<String, dynamic> json) => AssignedTo(
     id: json["_id"],
-    email: json["email"],
-    profileImage: json["profile_image"],
-    workingDay: json["workingDay"] == null ? [] : List<WorkingDay>.from(json["workingDay"]!.map((x) => workingDayValues.map[x]!)),
     firstName: json["firstName"],
     lastName: json["lastName"],
+    email: json["email"],
+    profileImage: json["profile_image"],
+    workingDay: json["workingDay"] == null ? [] : List<String>.from(json["workingDay"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "email": email,
-    "profile_image": profileImage,
-    "workingDay": workingDay == null ? [] : List<dynamic>.from(workingDay!.map((x) => workingDayValues.reverse[x])),
     "firstName": firstName,
     "lastName": lastName,
+    "email": email,
+    "profile_image": profileImage,
+    "workingDay": workingDay == null ? [] : List<dynamic>.from(workingDay!.map((x) => x)),
   };
-}
-
-enum WorkingDay {
-  FRIDAY,
-  MONDAY,
-  THURSDAY,
-  TUESDAY,
-  WEDNESDAY
-}
-
-final workingDayValues = EnumValues({
-  "Friday": WorkingDay.FRIDAY,
-  "Monday": WorkingDay.MONDAY,
-  "Thursday": WorkingDay.THURSDAY,
-  "Tuesday": WorkingDay.TUESDAY,
-  "Wednesday": WorkingDay.WEDNESDAY
-});
-
-enum EndTimeStr {
-  THE_0150_AM,
-  THE_0619_PM,
-  THE_150_AM
-}
-
-final endTimeStrValues = EnumValues({
-  "01:50 AM": EndTimeStr.THE_0150_AM,
-  "06:19 PM": EndTimeStr.THE_0619_PM,
-  "1:50 AM": EndTimeStr.THE_150_AM
-});
-
-enum Recurrence {
-  ONE_TIME,
-  WEEKLY
-}
-
-final recurrenceValues = EnumValues({
-  "one_time": Recurrence.ONE_TIME,
-  "weekly": Recurrence.WEEKLY
-});
-
-enum StartTimeStr {
-  THE_0220_PM,
-  THE_0619_PM,
-  THE_130_AM
-}
-
-final startTimeStrValues = EnumValues({
-  "02:20 PM": StartTimeStr.THE_0220_PM,
-  "06:19 PM": StartTimeStr.THE_0619_PM,
-  "1:30 AM": StartTimeStr.THE_130_AM
-});
-
-enum Statusd {
-  COMPLETED,
-  ONGOING,
-  PENDING
-}
-
-final statusValues = EnumValues({
-  "completed": Statusd.COMPLETED,
-  "ongoing": Statusd.ONGOING,
-  "pending": Statusd.PENDING
-});
-
-enum TaskDetails {
-  GG,
-  VACUUM_AND_MOP_THE_LIVING_ROOM_AND_BEDROOMS
-}
-
-final taskDetailsValues = EnumValues({
-  "gg": TaskDetails.GG,
-  "Vacuum and mop the living room and bedrooms.": TaskDetails.VACUUM_AND_MOP_THE_LIVING_ROOM_AND_BEDROOMS
-});
-
-enum TaskName {
-  DESK_CLEANING,
-  GGG
-}
-
-final taskNameValues = EnumValues({
-  "Desk Cleaning": TaskName.DESK_CLEANING,
-  "ggg": TaskName.GGG
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
