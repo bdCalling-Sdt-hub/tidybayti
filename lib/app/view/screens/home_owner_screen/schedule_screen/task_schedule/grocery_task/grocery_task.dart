@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tidybayte/app/controller/owner_controller/grocery_controller/grocery_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
 import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-
 import 'inner_widgets/add_grocery_button.dart';
 
 class GroceryTask extends StatefulWidget {
@@ -25,11 +25,7 @@ class _GroceryTaskState extends State<GroceryTask> {
   @override
   void initState() {
     super.initState();
-    _fetchGroceryData();
-  }
-
-  Future<void> _fetchGroceryData() async {
-    await controller.getMyGrocery(apiUrl: ApiUrl.getMyGrocery);
+    controller.fetchGroceryData();
   }
 
   @override
@@ -49,33 +45,18 @@ class _GroceryTaskState extends State<GroceryTask> {
         child: SafeArea(
           child: Column(
             children: [
-              /// Grocery Title
               CustomMenuAppbar(
                 title: AppStrings.grocery.tr,
                 onBack: () => Get.back(),
               ),
-
-              /// Settings Items
               Expanded(
                 child: Obx(
                   () => controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(), // ✅ Loader
-                        )
+                      ? const Center(child: CircularProgressIndicator())
                       : ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
                           children: [
-                            /// AddGroceryButton
                             const AddGroceryButton(),
-
-                            /// Show loader under AddGroceryButton when loading
-                            if (controller.isLoading.value)
-                              const Center(
-                                child:
-                                    CircularProgressIndicator(), // ✅ Loader under button
-                              ),
-
-                            /// Pending & Completed Tabs
                             Obx(
                               () => Row(
                                 mainAxisAlignment:
@@ -84,16 +65,17 @@ class _GroceryTaskState extends State<GroceryTask> {
                                   _buildTabButton(
                                       "Pending", 0, ApiUrl.getMyGrocery),
                                   _buildTabButton(
-                                      "Completed", 1, ApiUrl.groceryComplete),
+                                      "Ongoing", 1, ApiUrl.getGroceryOngoing),
+                                  _buildTabButton(
+                                      "Completed", 2, ApiUrl.groceryComplete),
                                 ],
                               ),
                             ),
                             const SizedBox(height: 20),
-
-                            /// Grocery List
-                            controller.selectedTabIndex.value == 0
-                                ? _buildGroceryList(ApiUrl.getMyGrocery)
-                                : _buildGroceryList(ApiUrl.groceryComplete),
+                            Obx(
+                              () => _buildGroceryList(
+                                  controller.selectedTabIndex.value),
+                            ),
                           ],
                         ),
                 ),
@@ -105,14 +87,13 @@ class _GroceryTaskState extends State<GroceryTask> {
     );
   }
 
-  /// **Tab Button Builder**
   Widget _buildTabButton(String title, int index, String apiUrl) {
     return GestureDetector(
       onTap: () async {
         controller.selectedTabIndex.value = index;
-        controller.isLoading.value = true; // Show loader on tap
+        controller.isLoading.value = true;
         await controller.getMyGrocery(apiUrl: apiUrl);
-        controller.isLoading.value = false; // Hide loader after data load
+        controller.isLoading.value = false;
       },
       child: Container(
         decoration: BoxDecoration(
@@ -139,49 +120,51 @@ class _GroceryTaskState extends State<GroceryTask> {
     );
   }
 
-  /// **Grocery List Builder**
-  Widget _buildGroceryList(String apiUrl) {
-    return Obx(
-      () {
-        final groceryData = controller.groceryData.value.result;
+  Widget _buildGroceryList(int selectedIndex) {
+    String apiUrl;
+    switch (selectedIndex) {
+      case 1:
+        apiUrl = ApiUrl.getGroceryOngoing;
+        break;
+      case 2:
+        apiUrl = ApiUrl.groceryComplete;
+        break;
+      default:
+        apiUrl = ApiUrl.getMyGrocery;
+    }
 
-        if (groceryData == null || groceryData.isEmpty) {
-          return const Center(
-            child: CustomText(
-              text: "No Data Found", // Message when no data is available
-              color: AppColors.blue900,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          );
-        }
+    final groceryData = controller.groceryData.value.result;
+    if (groceryData == null || groceryData.isEmpty) {
+      return const Center(
+        child: CustomText(
+          text: "No Data Found",
+          color: AppColors.blue900,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
 
-        return Column(
-          children: List.generate(
-            groceryData.length,
-            (index) {
-              final data = groceryData[index];
-              return CustomRoomCard(
-                taskName: data.groceryName ?? "",
-                assignedTo:
-                    "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
-                time: "${DateConverter.estimatedDate(
-                  data.startDateStr != null
-                      ? DateFormat("MM/dd/yyyy").parse(data.startDateStr!)
-                      : DateTime.now(),
-                )}"
-                    " To ${DateConverter.estimatedDate(
-                  data.endDateStr != null
-                      ? DateFormat("MM/dd/yyyy").parse(data.endDateStr!)
-                      : DateTime.now(),
-                )}",
-                onInfoPressed: () {},
-                onDeletePressed: () {},
-              );
+    return Column(
+      children: List.generate(
+        groceryData.length,
+        (index) {
+          final data = groceryData[index];
+          return CustomRoomCard(
+            taskName: data.groceryName ?? "",
+            assignedTo:
+                "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
+            time:
+                "${DateConverter.estimatedDate(DateFormat("MM/dd/yyyy").parse(data.startDateStr ?? DateTime.now().toString()))} To ${DateConverter.estimatedDate(DateFormat("MM/dd/yyyy").parse(data.endDateStr ?? DateTime.now().toString()))}",
+            onInfoPressed: () {},
+            onDeletePressed: () {
+              GlobalAlert.showDeleteDialog(context, () {
+                controller.removeGrocery(groceryId: data.id ?? "");
+              }, "Are You Sure you want to remove");
             },
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

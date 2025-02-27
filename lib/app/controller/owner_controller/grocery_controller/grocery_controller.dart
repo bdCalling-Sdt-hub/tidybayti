@@ -63,15 +63,15 @@ class GroceryController extends GetxController {
 
   RxBool isRemoveGrocery = false.obs;
 
-  removeGrocery() async {
+  removeGrocery({required String groceryId}) async {
     isRemoveGrocery.value = true;
-    var body = {"groceryId": "67b4092eb14e12970ad4fa6e"};
+    var body = {"groceryId": groceryId};
 
     var response =
         await apiClient.delete(body: body, url: ApiUrl.groceryDelete);
     if (response.statusCode == 200) {
+     fetchGroceryData();
       toastMessage(message: response.body["message"]);
-      Get.back();
     } else if (response.statusCode == 400) {
       toastMessage(message: response.body["message"]);
     } else {
@@ -112,6 +112,8 @@ class GroceryController extends GetxController {
       isLoading.value = false;
     }
   }
-
+  Future<void> fetchGroceryData() async {
+    await getMyGrocery(apiUrl: ApiUrl.getMyGrocery);
+  }
 
 }
