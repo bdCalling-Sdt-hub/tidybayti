@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:tidybayte/app/controller/owner_controller/grocery_controller/grocery_controller.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
@@ -56,40 +58,44 @@ class _GroceryTaskState extends State<GroceryTask> {
               /// Settings Items
               Expanded(
                 child: Obx(
-                      () => controller.isLoading.value
+                  () => controller.isLoading.value
                       ? const Center(
-                    child: CircularProgressIndicator(), // ✅ Loader
-                  )
+                          child: CircularProgressIndicator(), // ✅ Loader
+                        )
                       : ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    children: [
-                      /// AddGroceryButton
-                      const AddGroceryButton(),
-
-                      /// Show loader under AddGroceryButton when loading
-                      if (controller.isLoading.value)
-                        const Center(
-                          child: CircularProgressIndicator(), // ✅ Loader under button
-                        ),
-
-                      /// Pending & Completed Tabs
-                      Obx(
-                            () => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           children: [
-                            _buildTabButton("Pending", 0, ApiUrl.getMyGrocery),
-                            _buildTabButton("Completed", 1, ApiUrl.groceryComplete),
+                            /// AddGroceryButton
+                            const AddGroceryButton(),
+
+                            /// Show loader under AddGroceryButton when loading
+                            if (controller.isLoading.value)
+                              const Center(
+                                child:
+                                    CircularProgressIndicator(), // ✅ Loader under button
+                              ),
+
+                            /// Pending & Completed Tabs
+                            Obx(
+                              () => Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildTabButton(
+                                      "Pending", 0, ApiUrl.getMyGrocery),
+                                  _buildTabButton(
+                                      "Completed", 1, ApiUrl.groceryComplete),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+
+                            /// Grocery List
+                            controller.selectedTabIndex.value == 0
+                                ? _buildGroceryList(ApiUrl.getMyGrocery)
+                                : _buildGroceryList(ApiUrl.groceryComplete),
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      /// Grocery List
-                      controller.selectedTabIndex.value == 0
-                          ? _buildGroceryList(ApiUrl.getMyGrocery)
-                          : _buildGroceryList(ApiUrl.groceryComplete),
-                    ],
-                  ),
                 ),
               ),
             ],
@@ -136,21 +142,46 @@ class _GroceryTaskState extends State<GroceryTask> {
   /// **Grocery List Builder**
   Widget _buildGroceryList(String apiUrl) {
     return Obx(
-          () => Column(
-        children: List.generate(
-          controller.groceryData.value.result?.length ?? 0,
-              (index) {
-            final data = controller.groceryData.value.result?[index];
-            return CustomRoomCard(
-              taskName: data?.groceryName ?? "",
-              assignedTo: "${data?.assignedTo?.firstName ?? ""} ${data?.assignedTo?.lastName ?? ""}",
-              time: '10 Aug, 2024',
-              onInfoPressed: () {},
-              onDeletePressed: () {},
-            );
-          },
-        ),
-      ),
+      () {
+        final groceryData = controller.groceryData.value.result;
+
+        if (groceryData == null || groceryData.isEmpty) {
+          return const Center(
+            child: CustomText(
+              text: "No Data Found", // Message when no data is available
+              color: AppColors.blue900,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }
+
+        return Column(
+          children: List.generate(
+            groceryData.length,
+            (index) {
+              final data = groceryData[index];
+              return CustomRoomCard(
+                taskName: data.groceryName ?? "",
+                assignedTo:
+                    "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
+                time: "${DateConverter.estimatedDate(
+                  data.startDateStr != null
+                      ? DateFormat("MM/dd/yyyy").parse(data.startDateStr!)
+                      : DateTime.now(),
+                )}"
+                    " To ${DateConverter.estimatedDate(
+                  data.endDateStr != null
+                      ? DateFormat("MM/dd/yyyy").parse(data.endDateStr!)
+                      : DateTime.now(),
+                )}",
+                onInfoPressed: () {},
+                onDeletePressed: () {},
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
