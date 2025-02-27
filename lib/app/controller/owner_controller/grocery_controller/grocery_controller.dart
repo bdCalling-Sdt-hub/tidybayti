@@ -18,7 +18,13 @@ class GroceryController extends GetxController {
   final startTimeController = TextEditingController();
   final endDateController = TextEditingController();
   final endTimeController = TextEditingController();
+  final List<String> dayName = [
+    'Pending Tasks',
+    'Completed Tasks',
+  ];
 
+  // To track selected day index
+  var selectedDayIndex = 0.obs;
   clearGroceryField() {
     groceryNameController.clear();
     startDateController.clear();
