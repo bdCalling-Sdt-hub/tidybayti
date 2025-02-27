@@ -18,13 +18,10 @@ class GroceryController extends GetxController {
   final startTimeController = TextEditingController();
   final endDateController = TextEditingController();
   final endTimeController = TextEditingController();
-  final List<String> dayName = [
-    'Pending Tasks',
-    'Completed Tasks',
-  ];
 
-  // To track selected day index
-  var selectedDayIndex = 0.obs;
+
+
+
   clearGroceryField() {
     groceryNameController.clear();
     startDateController.clear();
@@ -85,10 +82,12 @@ class GroceryController extends GetxController {
   }
 
   ///==================================✅✅getMyGrocery✅✅=======================
-
   Rx<GroceryData> groceryData = GroceryData().obs;
-
+  RxInt selectedTabIndex = 0.obs;
+  RxBool isLoading = false.obs;
+  var selectedDayIndex = 0.obs;
   Future<void> getMyGrocery({required String apiUrl}) async {
+    isLoading.value = true;
     setRxRequestStatus(Status.loading);
     refresh();
     try {
@@ -98,8 +97,7 @@ class GroceryController extends GetxController {
         groceryData.value = GroceryData.fromJson(response.body["data"]);
 
         print('StatusCode==================${response.statusCode}');
-        print(
-            'groceryData Result==================${groceryData.value.result?.length}');
+        print('groceryData Result==================${groceryData.value.result?.length}');
 
         setRxRequestStatus(Status.completed);
         refresh();
@@ -110,6 +108,8 @@ class GroceryController extends GetxController {
     } catch (e) {
       setRxRequestStatus(Status.error);
       print('Error fetching data: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 
