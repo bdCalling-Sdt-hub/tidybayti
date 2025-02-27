@@ -19,6 +19,7 @@ class GroceryController extends GetxController {
   final endDateController = TextEditingController();
   final endTimeController = TextEditingController();
 
+  late String assignedId = "";
 
 
 
@@ -37,7 +38,7 @@ class GroceryController extends GetxController {
   addGrocery() async {
     isAddGroceryLoading.value = true;
     var body = {
-      "assignedTo": "67a5dcd0da89b5111daff368",
+      "assignedTo": assignedId,
       "groceryName": groceryNameController.text,
       "startDateStr": startDateController.text,
       "startTimeStr": startTimeController.text,
@@ -46,7 +47,7 @@ class GroceryController extends GetxController {
     };
 
     var response = await apiClient.post(body: body, url: ApiUrl.addGrocery);
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       clearGroceryField();
       toastMessage(message: response.body["message"]);
       Get.back();
