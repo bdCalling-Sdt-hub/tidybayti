@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tidybayte/app/controller/owner_controller/work_schedule_controller/work_schedule_controller.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
@@ -10,6 +11,7 @@ import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/task_schedule.dart';
 
+import 'work_schedule/pdf_download_page.dart';
 import 'work_schedule/work_schedule.dart';
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -25,6 +27,7 @@ class _WalletScreenState extends State<ScheduleScreen> {
 
   final List<String> schedule = ["Work Schedule", "Task Schedule"];
 
+  final WorkScheduleController controller = Get.find<WorkScheduleController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +50,10 @@ class _WalletScreenState extends State<ScheduleScreen> {
               children: [
                 ///=============================== Schedule Appbar ========================
                 CustomMenuAppbar(
+                  onDownload: (){
+                    Get.to(WorkScheduleDownloadScreen());
+                  },
+
                   title: AppStrings.scheduleOverview.tr,
                   onBack: () {
                     Get.back();

@@ -71,16 +71,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Column(
                       children: [
-                         GestureDetector(
-                           onTap: (){
-                             profileController.selectImage();
-                           },
-                           child: Obx(() {
+                        GestureDetector(
+                          onTap: () {
+                            profileController.selectImage();
+                          },
+                          child: Obx(() {
                             String imagePath = profileController.image.value;
 
                             if (imagePath.isNotEmpty) {
-                              if (imagePath.startsWith('/data')
-                                  || imagePath.startsWith('/storage')) {
+                              if (imagePath.startsWith('/data') || imagePath.startsWith('/storage')) {
+                                // This is a locally selected image
                                 return ClipOval(
                                   child: Image.file(
                                     File(imagePath),
@@ -90,9 +90,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                 );
                               } else {
+                                // If the image is from the server, append base URL
+                                String fullImageUrl = imagePath.startsWith('http')
+                                    ? imagePath
+                                    : "${ApiUrl.baseUrl}/$imagePath";
+
                                 return ClipOval(
                                   child: Image.network(
-                                    "${ApiUrl.baseUrl}/$imagePath",
+                                    fullImageUrl,
                                     height: 128.h,
                                     width: 128.w,
                                     fit: BoxFit.cover,
@@ -124,65 +129,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ],
                               );
                             }
-                                                   }),
-                         ),
+                          }),
+                        ),
 
-                        // Align(
-                        //   alignment: Alignment.center,
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       profileController.selectImage();
-                        //     },
-                        //     child: Obx(() {
-                        //       if (profileController.image.value.isNotEmpty) {
-                        //         String imagePath =
-                        //             profileController.image.value;
-                        //
-                        //         if (imagePath.startsWith('/data') ||
-                        //             imagePath.startsWith('/storage')) {
-                        //           return ClipOval(
-                        //             child: Image.file(
-                        //               File(imagePath),
-                        //               height: 128.h,
-                        //               width: 128.w,
-                        //               fit: BoxFit.cover,
-                        //             ),
-                        //           );
-                        //         } else {
-                        //           return ClipOval(
-                        //             child: Image.network(
-                        //               "${ApiUrl.baseUrl}/$imagePath",
-                        //               height: 128.h,
-                        //               width: 128.w,
-                        //               fit: BoxFit.cover,
-                        //             ),
-                        //           );
-                        //         }
-                        //       } else {
-                        //         return const Stack(
-                        //           alignment: Alignment.bottomRight,
-                        //           children: [
-                        //             ClipOval(
-                        //                 child: CustomImage(
-                        //               imageSrc: AppImages.avatar,
-                        //               imageType: ImageType.png,
-                        //               size: 100,
-                        //             )),
-                        //             Positioned(
-                        //               right: 5,
-                        //               bottom: 5,
-                        //               child: CircleAvatar(
-                        //                 backgroundColor: Colors.white,
-                        //                 child: Icon(Icons.camera_alt,
-                        //                     color: Colors.black),
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         );
-                        //       }
-                        //     }),
-                        //   ),
-                        // ),
 
                         SizedBox(
                           height: 20.h,

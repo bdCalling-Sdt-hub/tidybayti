@@ -67,7 +67,6 @@ final addressController = TextEditingController();
   }
 
   RxBool updateProfileLoading = false.obs;
-
   updateProfile() async {
     updateProfileLoading.value = true;
 
@@ -78,28 +77,32 @@ final addressController = TextEditingController();
       "address": addressController.text,
     };
 
-    // Ensure correct file path
-    if (image.value.isNotEmpty) {
-      File file = File(image.value);
+    String imagePath = image.value;
+
+    // Check if image path is local or from server
+    bool isLocalImage = imagePath.startsWith('/data') || imagePath.startsWith('/storage');
+
+    if (isLocalImage) {
+      File file = File(imagePath);
 
       if (!file.existsSync()) {
-        print("🚨 File Not Found: ${image.value}");
+        print("🚨 File Not Found:=========== $imagePath");
         updateProfileLoading.value = false;
         return;
       }
+    } else {
+      print("📡 Using server image, no need to check locally: $imagePath");
     }
 
-    var response = image.value.isEmpty
-        ? await apiClient.patch(
-      body: body,
-      url: ApiUrl.updateProfile,
-    )
-        : await apiClient.multipartRequest(
-      multipartBody: [
-        MultipartBody("profile_image", File(image.value))
-      ],
+    var response = isLocalImage
+        ? await apiClient.multipartRequest(
+      multipartBody: [MultipartBody("profile_image", File(imagePath))],
       url: ApiUrl.updateProfile,
       reqType: "PATCH",
+    )
+        : await apiClient.patch(
+      body: body,
+      url: ApiUrl.updateProfile,
     );
 
     if (response.statusCode == 200) {
@@ -112,6 +115,7 @@ final addressController = TextEditingController();
 
     updateProfileLoading.value = false;
   }
+
 
 
 
