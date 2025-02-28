@@ -159,8 +159,8 @@ class AppRoutes {
 
     ///======================Recipe Section====================
     GetPage(
-        name: addRecipeScreen,
-        page: () => const AddRecipeScreen(),
+      name: addRecipeScreen,
+      page: () => const AddRecipeScreen(),
     ),
     GetPage(
         name: myRecipeScreen,
@@ -174,9 +174,15 @@ class AppRoutes {
         name: tagsScreen,
         page: () => TagsScreen(),
         customTransition: SlideScaleTransition()),
-    GetPage(name: addNewRecipe, page: () => const AddNewRecipe()),
-    GetPage(name: myRecipeDetails, page: () => const MyRecipeDetails()),
-    GetPage(name: mySingleTags, page: () => MySingleTags()),
+    GetPage(
+        name: addNewRecipe,
+        page: () => const AddNewRecipe(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: myRecipeDetails,
+        page: () => const MyRecipeDetails(),
+        customTransition: SlideScaleTransition()),
+    GetPage(name: mySingleTags, page: () => const MySingleTags()),
 
     ///===========================Schedule Screen=====================
     GetPage(name: allTaskScreen, page: () => AllTaskScreen()),
