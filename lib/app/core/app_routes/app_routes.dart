@@ -178,13 +178,20 @@ class AppRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
     GetPage(name: houseInformationScreen, page: () => HouseInformationScreen()),
-    GetPage(name: allEmployeeShow, page: () => AllEmployeeShow()),
-    GetPage(name: employeeDetails, page: () => const EmployeeDetails()),
+    GetPage(
+        name: allEmployeeShow,
+        page: () => AllEmployeeShow(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: employeeDetails,
+        page: () => const EmployeeDetails(),
+        customTransition: SlideScaleTransition()),
     GetPage(name: addEmployeeScreen, page: () => const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () => const RoomDetailsScreen()),
     GetPage(
         name: mainSentSuccessfullyScreen,
-        page: () => const MainSentSuccessfullyScreen()),
+        page: () => const MainSentSuccessfullyScreen(),
+        customTransition: RotateScaleTransition()),
 
     ///=========================Wallet section==============
     GetPage(name: createBudgetScreen, page: () => CreateBudgetScreen()),

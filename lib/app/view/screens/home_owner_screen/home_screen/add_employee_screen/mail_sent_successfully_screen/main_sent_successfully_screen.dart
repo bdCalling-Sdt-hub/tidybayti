@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/schedule_screen.dart';
 
 class MainSentSuccessfullyScreen extends StatelessWidget {
   const MainSentSuccessfullyScreen({super.key});
@@ -88,6 +88,7 @@ class MainSentSuccessfullyScreen extends StatelessWidget {
                       fillColor: Colors.white,
                       onTap: () {
                         // Get.toNamed(AppRoutes.)
+                        Get.to(const ScheduleScreen());
                       },
                       title: AppStrings.scheduleOverview.tr,
                     ),

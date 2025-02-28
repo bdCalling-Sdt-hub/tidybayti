@@ -15,7 +15,6 @@ import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
@@ -71,23 +70,22 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                 () => Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: AppColors.normal.withOpacity(0.9), // ✅ Opacity added
+                    color: AppColors.normal.withOpacity(0.5),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // ✅ Shadow with opacity
-                        blurRadius: 10, // ✅ Blur intensity
-                        offset: const Offset(0, 5), // ✅ Vertical shadow
-                        spreadRadius: 2, // ✅ Spread of the shadow
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                        spreadRadius: 2,
                       ),
                     ],
                   ),
-
                   padding:
-                      EdgeInsets.symmetric(vertical: 40.h, horizontal: 20.w),
+                      EdgeInsets.symmetric(vertical: 60.h, horizontal: 20.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,6 +103,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                               fontSize: 20,
                               color: AppColors.dark400,
                             ),
+
                             Icon(
                               homeController.isExpanded.value
                                   ? Icons.keyboard_arrow_up
