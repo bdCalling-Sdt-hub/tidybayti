@@ -55,7 +55,9 @@ import 'package:tidybayte/app/view/screens/onboard_screen/chose_onboard_screen/c
 import 'package:tidybayte/app/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose_auth.dart';
 import 'package:tidybayte/app/view/screens/onboard_screen/onBoard_screen/onboard_screen.dart';
 
+import '../../global/animation/blur_fade_sing_in.dart';
 import '../../global/animation/custom_slide_transition.dart';
+import '../../global/animation/fade_slider_sing_in.dart';
 import '../../global/animation/slide_scale.dart';
 
 class AppRoutes {
@@ -127,18 +129,50 @@ class AppRoutes {
   static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
-    GetPage(name: splashScreen, page: () => const SplashScreen()),
-    GetPage(name: signInScreen, page: () => SignInScreen()),
-    GetPage(name: onboardScreen, page: () => const OnboardScreen()),
     GetPage(
-        name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
-    GetPage(name: homeOwnerChoseAuth, page: () => HomeOwnerChoseAuth()),
-    GetPage(name: signUpScreen, page: () => SignUpScreen()),
-    GetPage(name: signUpOtp, page: () => SignUpOtp()),
-    GetPage(name: forgotPasswordScreen, page: () => ForgotPasswordScreen()),
-    GetPage(name: forgotPasswordOtp, page: () => ForgotPasswordOtp()),
-    GetPage(name: resetPasswordScreen, page: () => ResetPasswordScreen()),
-    GetPage(name: freeServiceScreen, page: () => FreeServiceScreen()),
+      name: splashScreen,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
+        name: signInScreen,
+        page: () => SignInScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: onboardScreen,
+        page: () => const OnboardScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: choseOnBoardingScreen,
+        page: () => const ChoseOnboardScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: homeOwnerChoseAuth,
+        page: () => HomeOwnerChoseAuth(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: signUpScreen,
+        page: () => SignUpScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: signUpOtp,
+        page: () => const SignUpOtp(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: forgotPasswordScreen,
+        page: () => ForgotPasswordScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: forgotPasswordOtp,
+        page: () => ForgotPasswordOtp(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: resetPasswordScreen,
+        page: () => ResetPasswordScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: freeServiceScreen,
+        page: () => FreeServiceScreen(),
+        customTransition: FadeSlideTransition()),
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
