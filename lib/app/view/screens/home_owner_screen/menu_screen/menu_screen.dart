@@ -102,7 +102,7 @@ class MenuScreen extends StatelessWidget {
                             AppConstants.profileID);
                         SharePrefsHelper.setBool(AppConstants.rememberMe, false);
                         SharePrefsHelper.setBool(AppConstants.isOwner, false);
-                       Get.toNamed(AppRoutes.choseOnBoardingScreen);
+                       Get.offAllNamed(AppRoutes.choseOnBoardingScreen);
                       },
                     ),
                   ],

@@ -240,7 +240,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                                       AppConstants.rememberMe, false);
                                   SharePrefsHelper.setBool(
                                       AppConstants.isOwner, false);
-                                  Get.toNamed(AppRoutes.choseOnBoardingScreen);
+                                  Get.offAllNamed(AppRoutes.choseOnBoardingScreen);
                                 },
                                 fillColor: AppColors.blue50,
                                 title: AppStrings.logOut.tr,
