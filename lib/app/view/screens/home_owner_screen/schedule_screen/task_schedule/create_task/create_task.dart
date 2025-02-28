@@ -57,260 +57,276 @@ class _CreateTaskState extends State<CreateTask> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
-              child: Obx(
-                () {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ///===========================Create Task Appbar================
-                      CustomMenuAppbar(
-                        title: AppStrings.createTask.tr,
-                        onBack: () {
-                          Get.back();
-                        },
-                      ),
+              child: Obx(() {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///===========================Create Task Appbar================
+                    CustomMenuAppbar(
+                      title: AppStrings.createTask.tr,
+                      onBack: () {
+                        Get.back();
+                      },
+                    ),
 
-                      ///=========================== Room id  =======================
-                      GestureDetector(
-                        onTap: _showRoomList,
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Assigned To',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.sp,
-                                ),
+                    ///=========================== Room id  =======================
+                    GestureDetector(
+                      onTap: _showRoomList,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Assigned To',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.sp,
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    selectRoom,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  selectRoom,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  const Icon(Icons.arrow_right),
-                                ],
+                                ),
+                                const Icon(Icons.arrow_right),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+
+                    ///=========================== Assign Employee =======================
+                    GestureDetector(
+                      onTap: _showEmployeeList,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Assigned To',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.sp,
                               ),
-                            ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  selectedEmployee,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const Icon(Icons.arrow_right),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    ///=========================== Task Title =======================
+                    SizedBox(height: 10.h),
+                    CustomTextField(
+                      hintText: AppStrings.taskTitle.tr,
+                      textEditingController: taskController.taskTitleController,
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            showPresetDialog(context);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            child: Text(
+                              "Use Preset",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.h),
+                    ),
 
-                      ///=========================== Assign Employee =======================
-                      GestureDetector(
-                        onTap: _showEmployeeList,
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
+                    SizedBox(height: 8.h),
+
+                    ///=========================== Recurrence =======================
+                    CustomText(
+                      text: AppStrings.recurrence.tr,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 24,
+                      color: AppColors.dark300,
+                    ),
+                    Row(
+                      children: [
+                        _buildRadioButton("one_time"),
+                        SizedBox(width: 20.w),
+                        _buildRadioButton("weekly"),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== Start Date =======================
+                    CustomTextField(
+                      hintText: "Start Date".tr,
+                      suffixIcon: const Icon(Icons.calendar_month),
+                      textEditingController: taskController.startDateController,
+                      readOnly: true,
+                      // Prevent manual input
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              DateFormat('MM/dd/yyyy').format(pickedDate);
+                          taskController.startDateController.text =
+                              formattedDate;
+                        }
+                      },
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== Start Time =======================
+                    CustomTextField(
+                      hintText: "Start Time".tr,
+                      suffixIcon: const Icon(Icons.watch_later_outlined),
+                      textEditingController: taskController.startTimeController,
+                      readOnly: true,
+                      // Prevent manual input
+                      onTap: () async {
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+
+                        if (pickedTime != null) {
+                          // ✅ Format time to HH:mm a (12-hour format with AM/PM)
+                          final now = DateTime.now();
+                          final selectedTime = DateTime(now.year, now.month,
+                              now.day, pickedTime.hour, pickedTime.minute);
+                          final formattedTime =
+                              DateFormat('hh:mm a').format(selectedTime);
+
+                          taskController.startTimeController.text =
+                              formattedTime;
+                        }
+                      },
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    ///=========================== End Date =======================
+
+                    CustomTextField(
+                      hintText: "End Date".tr,
+                      suffixIcon: const Icon(Icons.calendar_month),
+                      textEditingController: taskController.endDateController,
+                      readOnly: true,
+                      // Prevent manual input
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (pickedDate != null) {
+                          String formattedDate =
+                              DateFormat('MM/dd/yyyy').format(pickedDate);
+                          taskController.endDateController.text = formattedDate;
+                        }
+                      },
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== End Time =======================
+
+                    CustomTextField(
+                      hintText: "Start Time".tr,
+                      suffixIcon: const Icon(Icons.watch_later_outlined),
+                      textEditingController: taskController.endTimeController,
+                      readOnly: true,
+                      // Prevent manual input
+                      onTap: () async {
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+
+                        if (pickedTime != null) {
+                          final now = DateTime.now();
+                          final selectedTime = DateTime(now.year, now.month,
+                              now.day, pickedTime.hour, pickedTime.minute);
+                          final formattedTime =
+                              DateFormat('hh:mm a').format(selectedTime);
+
+                          taskController.endTimeController.text = formattedTime;
+                        }
+                      },
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== Task Details =======================
+                    CustomTextField(
+                      hintText: AppStrings.taskDetails.tr,
+                      textEditingController:
+                          taskController.taskDetailsController,
+                      maxLines: 8,
+                    ),
+                    SizedBox(height: 16.h),
+
+                    ///=========================== Additional Message =======================
+                    CustomTextField(
+                      hintText: AppStrings.additionalMessage.tr,
+                      textEditingController:
+                          taskController.additionalController,
+                      maxLines: 8,
+                    ),
+                    SizedBox(height: 16.h),
+                    taskController.isTaskLoading.value
+                        ? const CustomLoader()
+                        : CustomButton(
+                            onTap: () {
+                              taskController.addTask();
+                            },
+                            fillColor: AppColors.blue50,
+                            title: AppStrings.assignTo.tr,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Assigned To',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    selectedEmployee,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const Icon(Icons.arrow_right),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      ///=========================== Task Title =======================
-                      SizedBox(height: 10.h),
-                      CustomTextField(
-                        hintText: AppStrings.taskTitle.tr,
-                        textEditingController: taskController.taskTitleController,
-                      ),
-                      SizedBox(height: 8.h),
-
-                      ///=========================== Recurrence =======================
-                      CustomText(
-                        text: AppStrings.recurrence.tr,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 24,
-                        color: AppColors.dark300,
-                      ),
-                      Row(
-                        children: [
-                          _buildRadioButton("one_time"),
-                          SizedBox(width: 20.w),
-                          _buildRadioButton("weekly"),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ///=========================== Start Date =======================
-                      CustomTextField(
-                        hintText: "Start Date".tr,
-                        suffixIcon: const Icon(Icons.calendar_month),
-                        textEditingController: taskController.startDateController,
-                        readOnly: true,
-                        // Prevent manual input
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-
-                          if (pickedDate != null) {
-                            String formattedDate =
-                                DateFormat('MM/dd/yyyy').format(pickedDate);
-                            taskController.startDateController.text = formattedDate;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ///=========================== Start Time =======================
-                      CustomTextField(
-                        hintText: "Start Time".tr,
-                        suffixIcon: const Icon(Icons.watch_later_outlined),
-                        textEditingController: taskController.startTimeController,
-                        readOnly: true,
-                        // Prevent manual input
-                        onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          );
-
-                          if (pickedTime != null) {
-                            // ✅ Format time to HH:mm a (12-hour format with AM/PM)
-                            final now = DateTime.now();
-                            final selectedTime = DateTime(now.year, now.month,
-                                now.day, pickedTime.hour, pickedTime.minute);
-                            final formattedTime =
-                                DateFormat('hh:mm a').format(selectedTime);
-
-                            taskController.startTimeController.text = formattedTime;
-                          }
-                        },
-                      ),
-
-                      SizedBox(height: 16.h),
-
-                      ///=========================== End Date =======================
-
-                      CustomTextField(
-                        hintText: "End Date".tr,
-                        suffixIcon: const Icon(Icons.calendar_month),
-                        textEditingController: taskController.endDateController,
-                        readOnly: true,
-                        // Prevent manual input
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-
-                          if (pickedDate != null) {
-                            String formattedDate =
-                                DateFormat('MM/dd/yyyy').format(pickedDate);
-                            taskController.endDateController.text = formattedDate;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ///=========================== End Time =======================
-
-                      CustomTextField(
-                        hintText: "Start Time".tr,
-                        suffixIcon: const Icon(Icons.watch_later_outlined),
-                        textEditingController: taskController.endTimeController,
-                        readOnly: true,
-                        // Prevent manual input
-                        onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          );
-
-                          if (pickedTime != null) {
-                            final now = DateTime.now();
-                            final selectedTime = DateTime(now.year, now.month,
-                                now.day, pickedTime.hour, pickedTime.minute);
-                            final formattedTime =
-                                DateFormat('hh:mm a').format(selectedTime);
-
-                            taskController.endTimeController.text = formattedTime;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ///=========================== Task Details =======================
-                      CustomTextField(
-                        hintText: AppStrings.taskDetails.tr,
-                        textEditingController: taskController.taskDetailsController,
-                        maxLines: 8,
-                      ),
-                      SizedBox(height: 16.h),
-
-                      ///=========================== Additional Message =======================
-                      CustomTextField(
-                        hintText: AppStrings.additionalMessage.tr,
-                        textEditingController: taskController.additionalController,
-                        maxLines: 8,
-                      ),
-                      SizedBox(height: 16.h),
-                      taskController.isTaskLoading.value
-                          ? const CustomLoader()
-                          : CustomButton(
-                        onTap: () {
-                          taskController.addTask();
-                        },
-                        fillColor: AppColors.blue50,
-                        title: AppStrings.assignTo.tr,
-                      ),
-                    ],
-                  );
-                }
-              ),
+                  ],
+                );
+              }),
             ),
           ),
         ),
       ),
-
-      ///=========================== Assign Button =======================
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-      //   child:
-      // ),
     );
   }
 
@@ -494,6 +510,32 @@ class _CreateTaskState extends State<CreateTask> {
           ),
         ],
       ),
+    );
+  }
+
+  //
+  void showPresetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Choose a Preset Title"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: taskController.presetTitles.map((title) {
+                return ListTile(
+                  title: Text(title),
+                  onTap: () {
+                    taskController.taskTitleController.text = title;
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
