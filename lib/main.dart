@@ -12,10 +12,8 @@ import 'app/core/dependency/path.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  // HttpOverrides.global = MyHttpOverrides();
   DeviceUtils.lockDevicePortrait();
-  // DependencyInjection di = DependencyInjection();
-  // di.dependencies();
+
   await initDependencies();
   runApp(
     const MyApp(), // Wrap your app

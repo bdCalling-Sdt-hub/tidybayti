@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,12 +12,57 @@ import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_app
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 
-class SignUpOtp extends StatelessWidget {
-  SignUpOtp({super.key});
+class SignUpOtp extends StatefulWidget {
+  const SignUpOtp({super.key});
 
+  @override
+  State<SignUpOtp> createState() => _SignUpOtpState();
+}
+
+class _SignUpOtpState extends State<SignUpOtp> {
   final formKey = GlobalKey<FormState>();
-
   final AuthController authController = Get.find<AuthController>();
+
+  /// 🔹 `_secondsRemaining` কে RxInt এ নিয়েছি, যাতে `setState()` ছাড়াই আপডেট হয়।
+  final RxInt _secondsRemaining = 60.obs;
+  Timer? _timer;
+
+  /// ✅ Timer logic (Obx-এ কাজ করবে)
+  void startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsRemaining.value > 0) {
+        _secondsRemaining.value--;
+      } else {
+        _timer?.cancel();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _resendOtp() {
+    if (_secondsRemaining.value == 0) {
+      _secondsRemaining.value = 60;
+      startTimer();
+
+      authController.resendOtp().then((value) {
+        if (!value) {
+          _secondsRemaining.value = 0;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +71,7 @@ class SignUpOtp extends StatelessWidget {
         return SingleChildScrollView(
           child: Stack(
             children: [
-              // Background Image
+              // 🔹 Background Image
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -37,64 +83,63 @@ class SignUpOtp extends StatelessWidget {
 
               Positioned(
                   child: Padding(
-                padding:
+                    padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      const CustomMenuAppbar(title: ''),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 3,
-                      ),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          const CustomMenuAppbar(title: ''),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 3,
+                          ),
 
-                      ///=============================Enter 6 Degit code====================
-                      CustomTextField(
-                        hintText: AppStrings.enterSIxDegit.tr,
-                        textEditingController: authController.otpController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppStrings.fieldCantBeEmpty;
-                          }
-                          return null;
-                        },
-                      ),
+                          ///=============================Enter 6 Digit Code====================
+                          CustomTextField(
+                            hintText: AppStrings.enterSIxDegit.tr,
+                            textEditingController: authController.otpController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AppStrings.fieldCantBeEmpty;
+                              }
+                              return null;
+                            },
+                          ),
 
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                            onPressed: () {},
-                            child: CustomText(
-                              text: 'Resend'.tr,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.dark300,
-                            )),
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
+                          SizedBox(height: 16.h),
 
-                      ///============================Verify Code=============
-
-                      authController.isSignUpOtp.value
-                          ? const CustomLoader()
-                          : CustomButton(
-                              onTap: () {
-                                if (formKey.currentState!.validate()) {
-                                  authController.signUpOtp();
-                                }
-                              },
-                              fillColor: AppColors.employeeCardColor,
-                              title: AppStrings.verifyCode.tr,
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: _secondsRemaining.value == 0 ? _resendOtp : null,
+                              child: CustomText(
+                                text: _secondsRemaining.value == 0
+                                    ? "Resend OTP"
+                                    : "Resend OTP in ${_secondsRemaining.value} seconds",
+                                color: AppColors.dark300,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                    ],
-                  ),
-                ),
-              )),
+                          ),
+
+                          SizedBox(height: 16.h),
+
+                          ///============================Verify Code=============
+                          Obx(() => authController.isSignUpOtp.value
+                              ? const CustomLoader()
+                              : CustomButton(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                authController.signUpOtp();
+                              }
+                            },
+                            fillColor: AppColors.employeeCardColor,
+                            title: AppStrings.verifyCode.tr,
+                          )),
+                        ],
+                      ),
+                    ),
+                  )),
             ],
           ),
         );

@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tidybayte/app/core/app_routes/app_routes.dart';
+import 'package:intl/intl.dart';
+import 'package:tidybayte/app/controller/owner_controller/grocery_controller/grocery_controller.dart';
+import 'package:tidybayte/app/data/service/api_url.dart';
+import 'package:tidybayte/app/global/helper/global_alart/global_alart.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-import 'package:tidybayte/app/utils/app_const/app_const.dart';
-import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
-import 'package:tidybayte/app/utils/app_images/app_images.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-import 'package:tidybayte/app/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:tidybayte/app/view/components/custom_room_card/custom_room_card.dart';
-import 'package:tidybayte/app/view/components/custom_task_details_dialoge/custom_task_details_dialoge.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+import 'inner_widgets/add_grocery_button.dart';
+
 class GroceryTask extends StatefulWidget {
   const GroceryTask({super.key});
 
   @override
-  State<GroceryTask> createState() => _AllTaskScreenState();
+  State<GroceryTask> createState() => _GroceryTaskState();
 }
 
-class _AllTaskScreenState extends State<GroceryTask> {
-  final List<String> dayName = [
-    'Pending Tasks',
-    'Completed Tasks',
-  ];
+class _GroceryTaskState extends State<GroceryTask> {
+  final GroceryController controller = Get.find<GroceryController>();
 
-  // To track selected day index
-  int? selectedDayIndex;
+  @override
+  void initState() {
+    super.initState();
+    controller.fetchGroceryData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +35,7 @@ class _AllTaskScreenState extends State<GroceryTask> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xCCE8F3FA), // First color (with opacity)
+              Color(0xCCE8F3FA),
               Color(0xFFB5D8EE),
             ],
             begin: Alignment.topLeft,
@@ -48,95 +45,125 @@ class _AllTaskScreenState extends State<GroceryTask> {
         child: SafeArea(
           child: Column(
             children: [
-
-
-              ///=============================== Menu Title ========================
               CustomMenuAppbar(
-                title: AppStrings.grocery,
-                onBack: () {
-                  Get.back();
-                },
+                title: AppStrings.grocery.tr,
+                onBack: () => Get.back(),
               ),
-
-              ///=============================== Settings Items ========================
               Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.addGroceryTask);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.all(20),
-                        color: AppColors.blue50,
-                        child: const Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                child: Obx(
+                  () => controller.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListView(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           children: [
-                            CustomImage(imageSrc: AppIcons.add),
-                            CustomText(
-                              left: 10,
-                              text: AppStrings.addGrocery,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.dark400,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(dayName.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedDayIndex = index;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: selectedDayIndex == index
-                                  ? AppColors.blue900
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: selectedDayIndex == index
-                                    ? AppColors.blue900
-                                    : AppColors.blue50,
+                            const AddGroceryButton(),
+                            Obx(
+                              () => Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildTabButton(
+                                      "Pending", 0, ApiUrl.getMyGrocery),
+                                  _buildTabButton(
+                                      "Ongoing", 1, ApiUrl.getGroceryOngoing),
+                                  _buildTabButton(
+                                      "Completed", 2, ApiUrl.groceryComplete),
+                                ],
                               ),
                             ),
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.only(right: 10),
-                            child: CustomText(
-                              text: dayName[index],
-                              color: selectedDayIndex == index
-                                  ? Colors.white
-                                  : AppColors.blue900,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                            const SizedBox(height: 20),
+                            Obx(
+                              () => _buildGroceryList(
+                                  controller.selectedTabIndex.value),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 20),
-                    selectedDayIndex != null
-                        ? CustomRoomCard(
-                        taskName: 'Clean Car',
-                        assignedTo: 'Annette Black',
-                        time: '10 Aug,2024',
-                        onInfoPressed: () {},
-                        onDeletePressed: () {})
-                        : const SizedBox()
-                  ],
+                          ],
+                        ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTabButton(String title, int index, String apiUrl) {
+    return GestureDetector(
+      onTap: () async {
+        controller.selectedTabIndex.value = index;
+        controller.isLoading.value = true;
+        await controller.getMyGrocery(apiUrl: apiUrl);
+        controller.isLoading.value = false;
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: controller.selectedTabIndex.value == index
+              ? AppColors.blue900
+              : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: controller.selectedTabIndex.value == index
+                ? AppColors.blue900
+                : AppColors.blue50,
+          ),
+        ),
+        padding: const EdgeInsets.all(10),
+        child: CustomText(
+          text: title,
+          color: controller.selectedTabIndex.value == index
+              ? Colors.white
+              : AppColors.blue900,
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGroceryList(int selectedIndex) {
+    String apiUrl;
+    switch (selectedIndex) {
+      case 1:
+        apiUrl = ApiUrl.getGroceryOngoing;
+        break;
+      case 2:
+        apiUrl = ApiUrl.groceryComplete;
+        break;
+      default:
+        apiUrl = ApiUrl.getMyGrocery;
+    }
+
+    final groceryData = controller.groceryData.value.result;
+    if (groceryData == null || groceryData.isEmpty) {
+      return const Center(
+        child: CustomText(
+          text: "No Data Found",
+          color: AppColors.blue900,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
+    return Column(
+      children: List.generate(
+        groceryData.length,
+        (index) {
+          final data = groceryData[index];
+          return CustomRoomCard(
+            taskName: data.groceryName ?? "",
+            assignedTo:
+                "${data.assignedTo?.firstName ?? ""} ${data.assignedTo?.lastName ?? ""}",
+            time:
+                "${DateConverter.estimatedDate(DateFormat("MM/dd/yyyy").parse(data.startDateStr ?? DateTime.now().toString()))} To ${DateConverter.estimatedDate(DateFormat("MM/dd/yyyy").parse(data.endDateStr ?? DateTime.now().toString()))}",
+            onInfoPressed: () {},
+            onDeletePressed: () {
+              GlobalAlert.showDeleteDialog(context, () {
+                controller.removeGrocery(groceryId: data.id ?? "");
+              }, "Are You Sure you want to remove");
+            },
+          );
+        },
       ),
     );
   }

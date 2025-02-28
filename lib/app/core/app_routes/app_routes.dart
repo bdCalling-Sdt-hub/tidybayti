@@ -1,6 +1,7 @@
-
-
 import 'package:get/get.dart';
+import 'package:tidybayte/app/global/animation/bounce_transition.dart';
+import 'package:tidybayte/app/global/animation/rotete_scale.dart';
+import 'package:tidybayte/app/global/animation/slide_blur_transition.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_notification_screen/employee_notification_screen.dart';
@@ -43,7 +44,6 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/tas
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/completed_task/completed_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/create_task/create_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/add_grocery_task/add_grocery_task.dart';
-import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/employee_list/employee_list.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/grocery_task/grocery_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/ongoing_task/ongoing_task.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/pending_task/pending_task.dart';
@@ -55,11 +55,16 @@ import 'package:tidybayte/app/view/screens/onboard_screen/chose_onboard_screen/c
 import 'package:tidybayte/app/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose_auth.dart';
 import 'package:tidybayte/app/view/screens/onboard_screen/onBoard_screen/onboard_screen.dart';
 
-class AppRoutes {
+import '../../global/animation/blur_fade_sing_in.dart';
+import '../../global/animation/custom_slide_transition.dart';
+import '../../global/animation/fade_slider_sing_in.dart';
+import '../../global/animation/slide_scale.dart';
 
+class AppRoutes {
   static const String splashScreen = "/SplashScreen";
   static const String signInScreen = "/SignInScreen";
-  static const String employeeNotificationScreen = "/EmployeeNotificationScreen";
+  static const String employeeNotificationScreen =
+      "/EmployeeNotificationScreen";
   static const String onboardScreen = "/OnboardScreen";
   static const String choseOnBoardingScreen = "/ChoseOnBoardingScreen";
   static const String homeOwnerChoseAuth = "/HomeOwnerChoseAuth";
@@ -79,13 +84,13 @@ class AppRoutes {
   static const String addEmployeeScreen = "/AddEmployeeScreen";
   static const String roomDetailsScreen = "/RoomDetailsScreen";
   static const String editEmployeeDetails = "/EditEmployeeDetails";
-  static const String mainSentSuccessfullyScreen = "/MainSentSuccessfullyScreen";
+  static const String mainSentSuccessfullyScreen =
+      "/MainSentSuccessfullyScreen";
 
   ///===================Wallet Section===================
   static const String createBudgetScreen = "/CreateBudgetScreen";
   static const String budgetDetailsScreen = "/BudgetDetailsScreen";
   static const String addExpenseScreen = "/AddExpenseScreen";
-
 
   ///====================Recipe section===================
   static const String addRecipeScreen = "/AddRecipeScreen";
@@ -103,7 +108,6 @@ class AppRoutes {
   static const String pendingTask = "/PendingTask";
   static const String groceryTask = "/GroceryTask";
   static const String addGroceryTask = "/AddGroceryTask";
-  static const String employeeList = "/EmployeeList";
 
   ///================================Menu Screen =====================
   static const String personalInfoScreen = "/PersonalInfoScreen";
@@ -125,90 +129,195 @@ class AppRoutes {
   static const String createTask = "/CreateTask";
 
   static List<GetPage> routes = [
-    GetPage(name: splashScreen, page: () =>  const SplashScreen()),
-    GetPage(name: signInScreen, page: () =>  SignInScreen()),
-    GetPage(name: onboardScreen, page: () => const OnboardScreen()),
-    GetPage(name: choseOnBoardingScreen, page: () => const ChoseOnboardScreen()),
-    GetPage(name: homeOwnerChoseAuth, page: () =>  HomeOwnerChoseAuth()),
-    GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
-    GetPage(name: signUpOtp, page: () =>  SignUpOtp()),
-    GetPage(name: forgotPasswordScreen, page: () =>  ForgotPasswordScreen()),
-    GetPage(name: forgotPasswordOtp, page: () =>  ForgotPasswordOtp()),
-    GetPage(name: resetPasswordScreen, page: () =>  ResetPasswordScreen()),
-    GetPage(name: freeServiceScreen, page: () =>  FreeServiceScreen()),
+    GetPage(
+      name: splashScreen,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
+        name: signInScreen,
+        page: () => SignInScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: onboardScreen,
+        page: () => const OnboardScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: choseOnBoardingScreen,
+        page: () => const ChoseOnboardScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: homeOwnerChoseAuth,
+        page: () => HomeOwnerChoseAuth(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: signUpScreen,
+        page: () => SignUpScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: signUpOtp,
+        page: () => const SignUpOtp(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: forgotPasswordScreen,
+        page: () => ForgotPasswordScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: forgotPasswordOtp,
+        page: () => ForgotPasswordOtp(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: resetPasswordScreen,
+        page: () => ResetPasswordScreen(),
+        customTransition: FadeSlideTransition()),
+    GetPage(
+        name: freeServiceScreen,
+        page: () => FreeServiceScreen(),
+        customTransition: FadeSlideTransition()),
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: houseTypeScreen, page: () => const HouseTypeScreen()),
-    GetPage(name: houseInformationScreen, page: () =>  HouseInformationScreen()),
-    GetPage(name: allEmployeeShow, page: () =>  AllEmployeeShow()),
-    GetPage(name: employeeDetails, page: () =>  const EmployeeDetails()),
-    GetPage(name: addEmployeeScreen, page: () =>  const AddEmployeeScreen()),
-    GetPage(name: roomDetailsScreen, page: () =>  const RoomDetailsScreen()),
-    GetPage(name: mainSentSuccessfullyScreen, page: () => const MainSentSuccessfullyScreen()),
-
+    GetPage(name: houseInformationScreen, page: () => HouseInformationScreen()),
+    GetPage(name: allEmployeeShow, page: () => AllEmployeeShow()),
+    GetPage(name: employeeDetails, page: () => const EmployeeDetails()),
+    GetPage(name: addEmployeeScreen, page: () => const AddEmployeeScreen()),
+    GetPage(name: roomDetailsScreen, page: () => const RoomDetailsScreen()),
+    GetPage(
+        name: mainSentSuccessfullyScreen,
+        page: () => const MainSentSuccessfullyScreen()),
 
     ///=========================Wallet section==============
-    GetPage(name: createBudgetScreen, page: () =>   CreateBudgetScreen()),
-    GetPage(name: budgetDetailsScreen, page: () =>  BudgetDetailsScreen()),
-    GetPage(name: addExpenseScreen, page: () =>  AddExpenseScreen()),
-
+    GetPage(name: createBudgetScreen, page: () => CreateBudgetScreen()),
+    GetPage(
+        name: budgetDetailsScreen,
+        page: () => const BudgetDetailsScreen(),
+        customTransition: SlideScaleTransition()),
+    GetPage(name: addExpenseScreen, page: () => AddExpenseScreen()),
 
     ///======================Recipe Section====================
-    GetPage(name: addRecipeScreen, page: () => const AddRecipeScreen()),
-    GetPage(name: myRecipeScreen, page: () =>  MyRecipeScreen()),
-    GetPage(name: favoritesRecipeScreen, page: () =>  FavoritesRecipeScreen()),
-    GetPage(name: tagsScreen, page: () =>  TagsScreen()),
-    GetPage(name: addNewRecipe, page: () =>  const AddNewRecipe()),
-    GetPage(name: myRecipeDetails, page: () =>   const MyRecipeDetails()),
-    GetPage(name: mySingleTags, page: () =>    MySingleTags()),
-
+    GetPage(
+      name: addRecipeScreen,
+      page: () => const AddRecipeScreen(),
+    ),
+    GetPage(
+        name: myRecipeScreen,
+        page: () => MyRecipeScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: favoritesRecipeScreen,
+        page: () => FavoritesRecipeScreen(),
+        customTransition: RotateScaleTransition()),
+    GetPage(
+        name: tagsScreen,
+        page: () => TagsScreen(),
+        customTransition: SlideScaleTransition()),
+    GetPage(
+        name: addNewRecipe,
+        page: () => const AddNewRecipe(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: myRecipeDetails,
+        page: () => const MyRecipeDetails(),
+        customTransition: SlideScaleTransition()),
+    GetPage(name: mySingleTags, page: () => const MySingleTags()),
 
     ///===========================Schedule Screen=====================
-    GetPage(name: allTaskScreen, page: () =>  AllTaskScreen()),
-    GetPage(name: completedScreen, page: () => const CompletedScreen()),
-    GetPage(name: ongoingTask, page: () =>  const OngoingTask()),
-    GetPage(name: pendingTask, page: () =>  const PendingTask()),
-    GetPage(name: groceryTask, page: () => const GroceryTask()),
-    GetPage(name: addGroceryTask, page: () => const AddGroceryTask()),
-    GetPage(name: employeeList, page: () => const EmployeeList()),
-
+    GetPage(
+        name: allTaskScreen,
+        page: () => AllTaskScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: completedScreen,
+        page: () => const CompletedScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: ongoingTask,
+        page: () => const OngoingTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: pendingTask,
+        page: () => const PendingTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: groceryTask,
+        page: () => const GroceryTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: addGroceryTask,
+        page: () => const AddGroceryTask(),
+        customTransition: SlideBlurTransition()),
 
     ///================================Menu Screen =====================
-    GetPage(name: personalInfoScreen, page: () =>  PersonalInfoScreen()),
-    GetPage(name: upgradePackages, page: () =>  UpgradePackages()),
-    GetPage(name: myPlanScreen, page: () =>  MyPlanScreen()),
-    GetPage(name: settingScreen, page: () => const SettingScreen()),
-    GetPage(name: changePasswordScreen, page: () =>  ChangePasswordScreen()),
-    GetPage(name: termsAndServiceScreen, page: () => const TermsAndServiceScreen()),
-    GetPage(name: privacyPolicyScreen, page: () => const PrivacyPolicyScreen()),
-    GetPage(name: helpWhereScreen, page: () => const HelpWhereScreen()),
-    GetPage(name: editProfileScreen, page: () =>  const EditProfileScreen()),
-    GetPage(name: createTask, page: () =>  const CreateTask()),
-    GetPage(name: faqScreen, page: () =>  const FaqScreen()),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    GetPage(
+      name: personalInfoScreen,
+      page: () => PersonalInfoScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: upgradePackages,
+      page: () => UpgradePackages(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: myPlanScreen,
+      page: () => MyPlanScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: settingScreen,
+      page: () => const SettingScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: changePasswordScreen,
+      page: () => ChangePasswordScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: termsAndServiceScreen,
+      page: () => const TermsAndServiceScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: privacyPolicyScreen,
+      page: () => const PrivacyPolicyScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: helpWhereScreen,
+      page: () => const HelpWhereScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
+    GetPage(
+      name: editProfileScreen,
+      page: () => const EditProfileScreen(),
+      transition: Transition.fadeIn,
+      // ✅ Default transition
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+        name: createTask,
+        page: () => const CreateTask(),
+        customTransition: SlideScaleTransition()),
+    GetPage(
+      name: faqScreen,
+      page: () => const FaqScreen(),
+      customTransition: ScaleTransitionEffect(),
+    ),
 
     ///======================Employee section=========================
     GetPage(name: employeeEditProfile, page: () => const EmployeeEditProfile()),
-    GetPage(name: employeeProfileScreen, page: () =>  EmployeeProfileScreen()),
-    GetPage(name: employeeHomeScreen, page: () =>  EmployeeHomeScreen()),
-    GetPage(name: employeeNotificationScreen, page: () =>   EmployeeNotificationScreen()),
-    GetPage(name: employeeAdditionalScreen, page: () => const EmployeeAdditionalScreen()),
+    GetPage(name: employeeProfileScreen, page: () => EmployeeProfileScreen()),
+    GetPage(name: employeeHomeScreen, page: () => const EmployeeHomeScreen()),
+    GetPage(
+      name: employeeNotificationScreen,
+      page: () => EmployeeNotificationScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 500),
+    ),
+    GetPage(
+        name: employeeAdditionalScreen,
+        page: () => const EmployeeAdditionalScreen()),
     GetPage(name: editEmployeeDetails, page: () => const EditEmployeeDetails()),
   ];
 }

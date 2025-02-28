@@ -1,27 +1,27 @@
 import 'dart:convert';
 
-class UserTaskModel {
+class GroceryModel {
   int? statusCode;
   bool? success;
   String? message;
-  UserTaskData? data;
+  GroceryData? data;
 
-  UserTaskModel({
+  GroceryModel({
     this.statusCode,
     this.success,
     this.message,
     this.data,
   });
 
-  factory UserTaskModel.fromRawJson(String str) => UserTaskModel.fromJson(json.decode(str));
+  factory GroceryModel.fromRawJson(String str) => GroceryModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory UserTaskModel.fromJson(Map<String, dynamic> json) => UserTaskModel(
+  factory GroceryModel.fromJson(Map<String, dynamic> json) => GroceryModel(
     statusCode: json["statusCode"],
     success: json["success"],
     message: json["message"],
-    data: json["data"] == null ? null : UserTaskData.fromJson(json["data"]),
+    data: json["data"] == null ? null : GroceryData.fromJson(json["data"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,20 +32,20 @@ class UserTaskModel {
   };
 }
 
-class UserTaskData {
+class GroceryData {
   Meta? meta;
   List<Result>? result;
 
-  UserTaskData({
+  GroceryData({
     this.meta,
     this.result,
   });
 
-  factory UserTaskData.fromRawJson(String str) => UserTaskData.fromJson(json.decode(str));
+  factory GroceryData.fromRawJson(String str) => GroceryData.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory UserTaskData.fromJson(Map<String, dynamic> json) => UserTaskData(
+  factory GroceryData.fromJson(Map<String, dynamic> json) => GroceryData(
     meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
     result: json["result"] == null ? [] : List<Result>.from(json["result"]!.map((x) => Result.fromJson(x))),
   );
@@ -91,9 +91,8 @@ class Meta {
 class Result {
   String? id;
   String? user;
-  String? room;
   AssignedTo? assignedTo;
-  String? taskName;
+  String? groceryName;
   String? recurrence;
   String? startDateStr;
   String? startTimeStr;
@@ -102,7 +101,6 @@ class Result {
   String? endTimeStr;
   DateTime? endDateTime;
   String? dayOfWeek;
-  String? taskDetails;
   String? additionalMessage;
   String? status;
   DateTime? createdAt;
@@ -111,9 +109,8 @@ class Result {
   Result({
     this.id,
     this.user,
-    this.room,
     this.assignedTo,
-    this.taskName,
+    this.groceryName,
     this.recurrence,
     this.startDateStr,
     this.startTimeStr,
@@ -122,7 +119,6 @@ class Result {
     this.endTimeStr,
     this.endDateTime,
     this.dayOfWeek,
-    this.taskDetails,
     this.additionalMessage,
     this.status,
     this.createdAt,
@@ -136,9 +132,8 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     id: json["_id"],
     user: json["user"],
-    room: json["room"],
     assignedTo: json["assignedTo"] == null ? null : AssignedTo.fromJson(json["assignedTo"]),
-    taskName: json["taskName"],
+    groceryName: json["groceryName"],
     recurrence: json["recurrence"],
     startDateStr: json["startDateStr"],
     startTimeStr: json["startTimeStr"],
@@ -147,7 +142,6 @@ class Result {
     endTimeStr: json["endTimeStr"],
     endDateTime: json["endDateTime"] == null ? null : DateTime.parse(json["endDateTime"]),
     dayOfWeek: json["dayOfWeek"],
-    taskDetails: json["taskDetails"],
     additionalMessage: json["additionalMessage"],
     status: json["status"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
@@ -157,9 +151,8 @@ class Result {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "user": user,
-    "room": room,
     "assignedTo": assignedTo?.toJson(),
-    "taskName": taskName,
+    "groceryName": groceryName,
     "recurrence": recurrence,
     "startDateStr": startDateStr,
     "startTimeStr": startTimeStr,
@@ -168,7 +161,6 @@ class Result {
     "endTimeStr": endTimeStr,
     "endDateTime": endDateTime?.toIso8601String(),
     "dayOfWeek": dayOfWeek,
-    "taskDetails": taskDetails,
     "additionalMessage": additionalMessage,
     "status": status,
     "createdAt": createdAt?.toIso8601String(),

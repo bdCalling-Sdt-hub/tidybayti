@@ -10,6 +10,7 @@ class ApiUrl {
   static const forgotPassword = "$baseUrl/auth/forgot-password";
   static const forgetPasswordOtpVerify = "$baseUrl/auth/forget-pass-otp-verify";
   static const resetPassword = "$baseUrl/auth/reset-password";
+  static const resendOtp = "$baseUrl/auth/activation-code-resend";
 
   ///==================================✅✅Owner Profile✅✅=======================
   static const getOwnerProfile = "$baseUrl/user/profile";
@@ -96,4 +97,12 @@ class ApiUrl {
   static String tagFilter(String tagText) =>
       "$baseUrl/recipe/get-my-recipe?tags=$tagText";
 
+
+  ///==================================✅✅Grocery✅✅=======================
+  static const addGrocery = "$baseUrl/task/post-grocery";
+  static const groceryDelete = "$baseUrl/task/delete-grocery";
+  static const getMyGrocery = "$baseUrl/task/get-my-grocery";
+  static const getGroceryOngoing = "$baseUrl/task/get-my-grocery?status=ongoing";
+  static const groceryComplete = "$baseUrl/task/get-my-grocery?status=completed";
+  static const employeeGroceryPending = "$baseUrl/task/get-my-grocery?status=pending";
 }
