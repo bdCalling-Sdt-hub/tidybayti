@@ -10,6 +10,7 @@ class ApiUrl {
   static const forgotPassword = "$baseUrl/auth/forgot-password";
   static const forgetPasswordOtpVerify = "$baseUrl/auth/forget-pass-otp-verify";
   static const resetPassword = "$baseUrl/auth/reset-password";
+  static const resendOtp = "$baseUrl/auth/activation-code-resend";
 
   ///==================================✅✅Owner Profile✅✅=======================
   static const getOwnerProfile = "$baseUrl/user/profile";

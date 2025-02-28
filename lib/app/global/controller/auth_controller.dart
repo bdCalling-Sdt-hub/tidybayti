@@ -196,6 +196,26 @@ class AuthController extends GetxController {
     isForgetLoading.refresh();
   }
 
+  ///==================================✅✅Resend Otp✅✅=======================
+
+  RxBool isResendOtp = false.obs;
+
+  resendOtp() async {
+    isResendOtp.value = true;
+    var body = {"email": emailController.text};
+
+    var response = await apiClient.post(body: body, url: ApiUrl.resendOtp);
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+    } else if (response.statusCode == 400) {
+      toastMessage(message: response.body["message"]);
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isResendOtp.value = false;
+    isResendOtp.refresh();
+  }
+
   ///==================================✅✅Forget Otp Method✅✅=======================
 
   RxBool isForgetOtp = false.obs;
