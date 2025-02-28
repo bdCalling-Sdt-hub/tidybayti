@@ -25,8 +25,8 @@ class SeeAll extends StatelessWidget {
           onTap: () {
             Get.toNamed(AppRoutes.allEmployeeShow);
           },
-          child: const CustomText(
-            text: AppStrings.seeAll,
+          child:  CustomText(
+            text: AppStrings.seeAll.tr,
             fontSize: 14,
             fontWeight: FontWeight.w400,
             color: AppColors.dark300,

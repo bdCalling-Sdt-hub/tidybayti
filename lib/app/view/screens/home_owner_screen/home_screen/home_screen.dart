@@ -67,7 +67,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
           RefreshIndicator(
             onRefresh: () async {
               // Refresh employee and house data.
-              // await employeeController.getEmployee();
+              await employeeController.getEmployee();
               await homeController.myAllHouse();
 
               // If a house is selected, refresh its room data.
@@ -179,7 +179,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                             );
 
                                             homeController.isExpanded.value =
-                                                false; // ✅ Close Dropdown
+                                                false;
                                           },
                                           child: CustomText(
                                             decoration:
@@ -201,7 +201,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
 
                                          print(data?.name);
                                         },
-                                        child: CustomText(
+                                        child: const CustomText(
                                           text: "No Houses Found",
                                           color: Colors.red,
                                         ),
