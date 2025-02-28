@@ -109,7 +109,7 @@ class HomeController extends GetxController {
     refresh();
     try {
       final response =
-          await apiClient.get(url: ApiUrl.myAllHouse, showResult: true,isBasic: false);
+          await apiClient.get(url: ApiUrl.myAllHouse, showResult: true,);
       print('Before 200==================${response.statusCode}');
 
       if (response.statusCode == 200) {

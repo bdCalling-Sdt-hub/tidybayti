@@ -58,7 +58,7 @@ class MyHouseData {
 
 class House {
   String? id;
-  User? user;
+  String? user;
   String? name;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -79,7 +79,7 @@ class House {
 
   factory House.fromJson(Map<String, dynamic> json) => House(
     id: json["_id"],
-    user: userValues.map[json["user"]]!,
+    user: json["user"],
     name: json["name"],
     createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
     updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
@@ -88,30 +88,10 @@ class House {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "user": userValues.reverse[user],
+    "user": user,
     "name": name,
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
   };
-}
-
-enum User {
-  THE_67_B41_A10_BD56_CD791080_ADDB
-}
-
-final userValues = EnumValues({
-  "67b41a10bd56cd791080addb": User.THE_67_B41_A10_BD56_CD791080_ADDB
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

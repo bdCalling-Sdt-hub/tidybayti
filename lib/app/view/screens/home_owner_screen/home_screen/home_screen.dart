@@ -135,7 +135,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                     title: GestureDetector(
                                       onTap: () {
                                         Get.toNamed(AppRoutes
-                                            .houseInformationScreen); // ✅ Navigate to Add House Screen
+                                            .houseInformationScreen);
                                       },
                                       child: const Row(
                                         crossAxisAlignment:
