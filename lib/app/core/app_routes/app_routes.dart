@@ -154,7 +154,10 @@ class AppRoutes {
 
     ///=========================Wallet section==============
     GetPage(name: createBudgetScreen, page: () => CreateBudgetScreen()),
-    GetPage(name: budgetDetailsScreen, page: () => BudgetDetailsScreen()),
+    GetPage(
+        name: budgetDetailsScreen,
+        page: () => const BudgetDetailsScreen(),
+        customTransition: SlideScaleTransition()),
     GetPage(name: addExpenseScreen, page: () => AddExpenseScreen()),
 
     ///======================Recipe Section====================
@@ -185,12 +188,30 @@ class AppRoutes {
     GetPage(name: mySingleTags, page: () => const MySingleTags()),
 
     ///===========================Schedule Screen=====================
-    GetPage(name: allTaskScreen, page: () => AllTaskScreen()),
-    GetPage(name: completedScreen, page: () => const CompletedScreen()),
-    GetPage(name: ongoingTask, page: () => const OngoingTask()),
-    GetPage(name: pendingTask, page: () => const PendingTask()),
-    GetPage(name: groceryTask, page: () => const GroceryTask()),
-    GetPage(name: addGroceryTask, page: () => const AddGroceryTask()),
+    GetPage(
+        name: allTaskScreen,
+        page: () => AllTaskScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: completedScreen,
+        page: () => const CompletedScreen(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: ongoingTask,
+        page: () => const OngoingTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: pendingTask,
+        page: () => const PendingTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: groceryTask,
+        page: () => const GroceryTask(),
+        customTransition: SlideBlurTransition()),
+    GetPage(
+        name: addGroceryTask,
+        page: () => const AddGroceryTask(),
+        customTransition: SlideBlurTransition()),
 
     ///================================Menu Screen =====================
     GetPage(
@@ -240,7 +261,10 @@ class AppRoutes {
       // ✅ Default transition
       transitionDuration: const Duration(milliseconds: 500),
     ),
-    GetPage(name: createTask, page: () => const CreateTask()),
+    GetPage(
+        name: createTask,
+        page: () => const CreateTask(),
+        customTransition: SlideScaleTransition()),
     GetPage(
       name: faqScreen,
       page: () => const FaqScreen(),
