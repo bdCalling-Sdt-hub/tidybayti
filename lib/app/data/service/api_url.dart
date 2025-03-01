@@ -69,8 +69,11 @@ class ApiUrl {
   static const deleteBudget = "$baseUrl/wallet/delete-budget";
   static const deleteExpense = "$baseUrl/wallet/delete-expense";
   static const expenseCreate = "$baseUrl/wallet/post-expense";
+
   static String getSingleBudget(String budgetId) =>
       "$baseUrl/wallet/get-budget?budgetId=$budgetId";
+  static String overview(String month,String year) =>
+      "$baseUrl/wallet/get-my-budget?budgetMonth=$month&budgetYear=$year";
 
 
   ///==================================✅✅Manage✅✅=======================

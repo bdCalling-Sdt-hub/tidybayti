@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tidybayte/app/controller/notification_controller/notification_controller.dart';
 import 'package:tidybayte/app/global/helper/GenerelError/general_error.dart';
+import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
@@ -14,7 +15,7 @@ class EmployeeNotificationScreen extends StatelessWidget {
   EmployeeNotificationScreen({super.key});
 
   final NotificationController notificationController =
-  Get.find<NotificationController>();
+      Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,8 @@ class EmployeeNotificationScreen extends StatelessWidget {
                   child: Obx(() {
                     switch (notificationController.rxRequestStatus.value) {
                       case Status.loading:
-                        return const Center(child: CustomLoader()); // ✅ Loader Centered
+                        return const Center(
+                            child: CustomLoader()); // ✅ Loader Centered
 
                       case Status.internetError:
                         return NoInternetScreen(
@@ -81,19 +83,24 @@ class EmployeeNotificationScreen extends StatelessWidget {
 
                         return RefreshIndicator(
                           onRefresh: () async {
-                            notificationController.getNotification(); // ✅ Refresh Indicator Added
+                            notificationController
+                                .getNotification(); // ✅ Refresh Indicator Added
                           },
                           child: ListView.builder(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            itemCount: notificationController.notificationList.length,
+                            itemCount:
+                                notificationController.notificationList.length,
                             itemBuilder: (context, index) {
-                              final data = notificationController.notificationList[index];
+                              final data = notificationController
+                                  .notificationList[index];
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: NotificationCard(
                                   icon: Icons.notifications_none_outlined,
                                   title: data.message ?? "",
-                                  timeAgo: '1 day ago',
+                                  timeAgo: data.message ?? "",
+                                  date: DateConverter.estimatedDate(
+                                      data.createdAt!.toLocal()),
                                 ),
                               );
                             },

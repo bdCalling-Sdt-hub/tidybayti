@@ -5,12 +5,13 @@ class NotificationCard extends StatelessWidget {
   final IconData icon;
   final String title;
   final String timeAgo;
+  final String date;
 
   const NotificationCard({
     super.key,
     required this.icon,
     required this.title,
-    required this.timeAgo,
+    required this.timeAgo, required this.date,
   });
 
   @override
@@ -48,6 +49,14 @@ class NotificationCard extends StatelessWidget {
                 SizedBox(height: 5.h),
                 Text(
                   timeAgo,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  date,
                   style: TextStyle(
                     fontSize: 12.sp,
                     color: Colors.grey,

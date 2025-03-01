@@ -7,7 +7,6 @@ import 'package:tidybayte/app/controller/owner_controller/add_employee_controlle
 import 'package:tidybayte/app/controller/owner_controller/home_controller/home_controller.dart';
 import 'package:tidybayte/app/controller/owner_controller/home_controller/house_add.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
-import 'package:tidybayte/app/data/service/api_url.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_const/app_const.dart';
 import 'package:tidybayte/app/utils/app_icons/app_icons.dart';
@@ -134,8 +133,9 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                 ListTile(
                                   title: GestureDetector(
                                     onTap: () {
-                                      Get.toNamed(
-                                          AppRoutes.houseInformationScreen);
+                                      Get.toNamed(AppRoutes.houseTypeScreen);
+                                      // Get.toNamed(
+                                      //     AppRoutes.houseInformationScreen);
                                     },
                                     child: const Row(
                                       crossAxisAlignment:
