@@ -94,11 +94,10 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                     itemBuilder: (BuildContext context, index) {
                       return GestureDetector(
                         onTap: () {
-                          // Get.toNamed(AppRoutes.houseInformationScreen,
-                          //     arguments: index == 0
-                          //         ? ""
-                          //         : categoryType[index]);
-                          Get.toNamed(AppRoutes.houseInformationScreen);
+                          Get.toNamed(AppRoutes.houseInformationScreen,
+                              arguments: index == 0
+                                  ? ""
+                                  : categoryType[index]);
                         },
                         child: Container(
                           decoration: BoxDecoration(

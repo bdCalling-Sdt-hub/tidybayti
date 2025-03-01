@@ -20,9 +20,10 @@ class HouseInformationScreen extends StatelessWidget {
   HouseInformationScreen({super.key});
 
   final HomeController homeController = Get.find<HomeController>();
-
+ final String houseType = Get.arguments ?? "Unknown";
   @override
   Widget build(BuildContext context) {
+    print(houseType);
     return Scaffold(
       body: const HouseInformationBody(),
       floatingActionButton: Obx(() {
@@ -187,7 +188,13 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
     );
   }
 
-  /// ✅ **This is the missing `build` method**
+  @override
+  void initState() {
+    super.initState();
+
+    String houseType = Get.arguments ?? "";
+    homeController.houseNameController.text = houseType;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
