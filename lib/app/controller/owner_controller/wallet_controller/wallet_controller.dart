@@ -4,6 +4,7 @@ import 'package:tidybayte/app/core/dependency/path.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_category.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_details.dart';
 import 'package:tidybayte/app/data/model/owner_model/budget_model.dart';
+import 'package:tidybayte/app/data/model/owner_model/over_view_model.dart';
 import 'package:tidybayte/app/data/service/api_check.dart';
 import 'package:tidybayte/app/data/service/api_client.dart';
 import 'package:tidybayte/app/data/service/api_url.dart';
@@ -231,6 +232,39 @@ class WalletController extends GetxController {
     isRemoveBudget.value = false;
     isRemoveBudget.refresh();
   }
+
+
+  ///==================================✅✅OverView✅✅=======================
+
+  Rx<OverviewData> overViewData = OverviewData().obs;
+
+  getOverView({required String month, required String year}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+
+    try {
+      final response =
+      await apiClient.get(url: ApiUrl.overview(month, year), showResult: true);
+
+      if (response.statusCode == 200) {
+        overViewData.value = OverviewData.fromJson(response.body["data"]);
+
+        print('StatusCode==================${response.statusCode}');
+        print(
+            'overViewData Result==================${overViewData.value.result?.length}');
+
+        setRxRequestStatus(Status.completed);
+        refresh();
+      } else {
+        setRxRequestStatus(Status.error);
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      setRxRequestStatus(Status.error);
+      print('Error fetching data: $e');
+    }
+  }
+
 
   @override
   void onInit() {
