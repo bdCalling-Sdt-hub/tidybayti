@@ -179,6 +179,8 @@ Map<String, String> english = {
   "Add item": "Add item",
   "Employee list": "Employee list",
   "Select employee": "Select employee",
+  "Add House": "Add House",
+  "Add Room": "Add Room",
 
   ///============================== Wallet =============================
   "Wallet": "Wallet",

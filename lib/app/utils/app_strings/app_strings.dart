@@ -198,6 +198,8 @@ class AppStrings {
   static const String addItem       ='Add item';
   static const String employeeList        ='Employee list';
   static const String selectEmployee        ='Select employee';
+  static const String addHouse        ='Add House';
+  static const String addRoom        ='Add Room';
 
 
   ///==============================wallet=============================

@@ -88,6 +88,9 @@ Map<String, String> arabic = {
   "Total rooms": "إجمالي الغرف",
   "See all": "عرض الكل",
   "Employees": "الموظفون",
+  "Add House": "إضافة منزل",
+  "Add Room": "إضافة غرفة",
+
   "Assign work": "تعيين العمل",
   "Add employee": "إضافة موظف",
   "Employee details": "تفاصيل الموظف",
