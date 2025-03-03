@@ -30,7 +30,7 @@ class EmployeeProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const EmployeeNavbar(currentIndex: 2),
+      bottomNavigationBar: const EmployeeNavbar(currentIndex: 3),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
