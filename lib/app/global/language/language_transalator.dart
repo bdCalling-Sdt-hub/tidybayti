@@ -1,12 +1,11 @@
-
 import 'package:get/get.dart';
+import 'package:tidybayte/app/global/language/arabic.dart';
 import 'package:tidybayte/app/global/language/english.dart';
-import 'package:tidybayte/app/global/language/german.dart';
 
 class Language extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     "en_US": english,
-    "de_DE": german,
+    "ar_SA": arabic, // Changed from "de_DE" to "ar_SA"
   };
 }

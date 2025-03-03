@@ -12,7 +12,7 @@ class LanguageScreen extends StatelessWidget {
   LanguageScreen({super.key});
 
   final LanguageController languageController = Get.find<LanguageController>();
-  final List<String> languageList = ["English", "German"];
+  final List<String> languageList = ["English", "Arabic"];
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class LanguageScreen extends StatelessWidget {
                                 final selectedLocale =
                                 index == 0
                                     ? const Locale("en", "US")
-                                    : const Locale("de", "DE"); // Changed to German
+                                    :  const Locale("ar", "SA"); // Changed to German
                                 Get.updateLocale(selectedLocale);
 
                                 languageController.selectedCategory.value = index;
