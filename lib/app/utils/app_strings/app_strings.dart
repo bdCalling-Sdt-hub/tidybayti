@@ -22,6 +22,7 @@ class AppStrings {
   static const String id = "Id:";
   static const String bhd120 = "BHD 3.99 /month/year";
   static const String sixMonth = "6 Months package";
+  static const String selectYourLanguage = "Select Your Language";
   static const String profile = "Profile";
   static const String name = "Name:";
   static const String note = "Note";
@@ -63,6 +64,7 @@ class AppStrings {
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
   static const String createAccount = "Create Account";
+  static const String account = "Account";
   static const String sendYourVerificationOnYour = "Send your verification on your Contact number";
   static const String sendVerificationCode = "Send Verification Code";
   static const String resendConfirmationCode = "Resend Confirmation Code";

@@ -35,13 +35,13 @@ class MenuScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///=============================== Menu Title ========================
-              const Column(
+               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomText(
                     top: 20,
                     textAlign: TextAlign.center,
-                    text: "Account",
+                    text: AppStrings.account.tr,
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
                     color: AppColors.dark500,
@@ -57,7 +57,7 @@ class MenuScreen extends StatelessWidget {
                     ///================================Personal Information=================
                     CustomMenuItem(
                       image: AppIcons.person,
-                      text: AppStrings.personalInformation,
+                      text: AppStrings.personalInformation.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.personalInfoScreen);
                       },
@@ -66,7 +66,7 @@ class MenuScreen extends StatelessWidget {
                     ///===============================upgradePackages=================
                     CustomMenuItem(
                       image: AppIcons.pacages,
-                      text: AppStrings.upgradePackages,
+                      text: AppStrings.upgradePackages.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.upgradePackages);
                       },
@@ -75,7 +75,7 @@ class MenuScreen extends StatelessWidget {
                     ///================================myPlan=================
                     CustomMenuItem(
                       image: AppIcons.pacages,
-                      text: AppStrings.myPlan,
+                      text: AppStrings.myPlan.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.myPlanScreen);
                       },
@@ -84,7 +84,7 @@ class MenuScreen extends StatelessWidget {
                     ///================================Settings=================
                     CustomMenuItem(
                       image: AppIcons.setting,
-                      text: AppStrings.settings,
+                      text: AppStrings.settings.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.settingScreen);
                       },
@@ -93,16 +93,16 @@ class MenuScreen extends StatelessWidget {
                     ///================================Language=================
                     CustomMenuItem(
                       image: AppIcons.tLanguage,
-                      text: AppStrings.language,
+                      text: AppStrings.language.tr,
                       onTap: () {
-                        Get.toNamed(AppRoutes.settingScreen);
+                        Get.toNamed(AppRoutes.languageScreen);
                       },
                     ),
 
                     ///================================logOut=================
                     CustomMenuItem(
                       image: AppIcons.logOut,
-                      text: AppStrings.logOut,
+                      text: AppStrings.logOut.tr,
                       onTap: () async {
                         await SharePrefsHelper.remove(AppConstants.token);
                         await SharePrefsHelper.remove(AppConstants.profileID);

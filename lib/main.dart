@@ -8,6 +8,7 @@ import 'package:tidybayte/app/view/components/device_utils/device_utils.dart';
 
 import 'app/core/app_routes/app_routes.dart';
 import 'app/core/dependency/path.dart';
+import 'app/global/language/language_transalator.dart';
 
 
 void main()async {
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         transitionDuration: const Duration(milliseconds: 200),
         initialRoute: AppRoutes.splashScreen ,
         navigatorKey: Get.key,
-        getPages: AppRoutes.routes,
+        getPages: AppRoutes.routes,   locale: const Locale("en","US"),
+        translations: Language(),
       ),
     );
   }

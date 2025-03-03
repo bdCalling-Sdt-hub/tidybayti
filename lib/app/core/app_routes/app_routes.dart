@@ -23,6 +23,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/home_sc
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/house_information_screen/house_information_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/house_type_screen/house_type_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/home_screen/room_details_screen/room_details_screen.dart';
+import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/language_screen/language_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/my_plan_screen/my_plan_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/menu_screen/personal_info_screen/personal_info_screen.dart';
@@ -127,6 +128,8 @@ class AppRoutes {
   static const String employeeHomeScreen = "/EmployeeHomeScreen";
   static const String employeeAdditionalScreen = "/EmployeeAdditionalScreen";
   static const String createTask = "/CreateTask";
+  static const String languageScreen = "/LanguageScreen";
+
   ///====================GetPage===================
   static List<GetPage> routes = [
     GetPage(
@@ -326,5 +329,6 @@ class AppRoutes {
         name: employeeAdditionalScreen,
         page: () => const EmployeeAdditionalScreen()),
     GetPage(name: editEmployeeDetails, page: () => const EditEmployeeDetails()),
+    GetPage(name: languageScreen, page: () =>  LanguageScreen()),
   ];
 }
