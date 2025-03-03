@@ -11,7 +11,6 @@ import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
 import '../../../../components/recipe_button/recipe_button.dart';
 
 class AddRecipeScreen extends StatelessWidget {
@@ -47,7 +46,7 @@ class AddRecipeScreen extends StatelessWidget {
                     // Space between title and menu items
 
                     RecipeButton(
-                      text: 'New blank recipe',
+                      text: AppStrings.newBlackRecipe.tr,
                       onPressed: () {
                         Get.toNamed(
                           AppRoutes.addNewRecipe,
@@ -58,13 +57,13 @@ class AddRecipeScreen extends StatelessWidget {
                       },
                     ),
                     RecipeButton(
-                      text: 'Import From Website',
+                      text: AppStrings.importFromWebsite.tr,
                       onPressed: () {
                         importDialog(context);
                       },
                     ),
                     RecipeButton(
-                      text: 'Upload File',
+                      text: AppStrings.uploadFile.tr,
                       onPressed: () {
                         uploadFileDialog(context);
                       },

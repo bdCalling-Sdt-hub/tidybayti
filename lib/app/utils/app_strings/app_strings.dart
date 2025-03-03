@@ -230,7 +230,7 @@ class AppStrings {
   static const String addIngredients    ='Add ingredients';
   static const String describeSteps    ='Describe steps';
   static const String myRecipes    ='My recipe';
-  static const String search     ='Search ';
+  static const String search     ='Search';
   static const String editRecipe      ='Edit recipe';
 
   ///==================================Menu Section======================

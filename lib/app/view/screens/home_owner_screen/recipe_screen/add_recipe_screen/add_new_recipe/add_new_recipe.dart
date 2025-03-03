@@ -201,7 +201,7 @@ class _AddNewRecipeState extends State<AddNewRecipe> {
                                     Expanded(
                                         flex: 3,
                                         child: CustomTextField(
-                                          hintText: AppStrings.addIngredients,
+                                          hintText: AppStrings.addIngredients.tr,
                                           textEditingController:
                                               recipeController
                                                   .ingredientsController,
