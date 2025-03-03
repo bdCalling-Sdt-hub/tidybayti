@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class HelpWhereScreen extends StatefulWidget {
@@ -41,7 +43,7 @@ class _HelpWhereScreenState extends State<HelpWhereScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Help Video")),
+      appBar: AppBar(title:  Text(AppStrings.helpWhere.tr)),
       body: Column(
         children: [
           YoutubePlayer(

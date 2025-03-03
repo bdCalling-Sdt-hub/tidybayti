@@ -72,7 +72,7 @@ class SettingScreen extends StatelessWidget {
                     ///================================faqScreen=================
                     CustomMenuItem(
                       image: AppIcons.about,
-                      text: "FAQ".tr,
+                      text: AppStrings.faq.tr,
                       onTap: () {
                         Get.toNamed(AppRoutes.faqScreen);
                       },
