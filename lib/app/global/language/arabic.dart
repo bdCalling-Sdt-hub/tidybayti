@@ -5,7 +5,7 @@ Map<String, String> arabic = {
   "id": "المعرف:",
   "bhd120": "دينار بحريني 3.99 /شهر/سنة",
   "sixMonth": "حزمة 6 أشهر",
-  "selectYourLanguage": "اختر لغتك",
+  "Select Your Language": "اختر لغتك",
   "profile": "الملف الشخصي",
   "name": "الاسم:",
   "note": "ملاحظة",

@@ -5,7 +5,7 @@ Map<String, String> english = {
   "id": "Id:",
   "bhd120": "BHD 3.99 /month/year",
   "sixMonth": "6 Months package",
-  "selectYourLanguage": "Select Your Language",
+  "Select Your Language": "Select Your Language",
   "profile": "Profile",
   "name": "Name:",
   "note": "Note",
