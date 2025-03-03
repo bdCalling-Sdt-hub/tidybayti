@@ -6,6 +6,6 @@ class Language extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     "en_US": english,
-    "ar_SA": arabic, // Changed from "de_DE" to "ar_SA"
+    "ar_SA": arabic,
   };
 }
