@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tidybayte/app/core/app_routes/app_routes.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/utils/app_images/app_images.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 
 import 'package:tidybayte/app/view/components/custom_image/custom_image.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
@@ -17,12 +18,12 @@ class HouseTypeScreen extends StatefulWidget {
 
 class _HouseTypeScreenState extends State<HouseTypeScreen> {
   List categoryType = [
-    'Custom',
-    'Bungalow',
-    'Villa',
-    'In. Home',
-    'Apartment',
-    'Mansion'
+    AppStrings.custom.tr,
+    AppStrings.bungalow.tr,
+    AppStrings.villa.tr,
+    AppStrings.inHome.tr,
+    AppStrings.apartment.tr,
+    AppStrings.mansion.tr
   ];
   List houseTextColor = [
     AppColors.dark500,
@@ -65,7 +66,7 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: CustomText(
-                    text: 'Choose your House Type',
+                    text: AppStrings.chooseYourHouseType.tr,
                     color: AppColors.employeeCardColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 18.h,
@@ -95,9 +96,7 @@ class _HouseTypeScreenState extends State<HouseTypeScreen> {
                       return GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoutes.houseInformationScreen,
-                              arguments: index == 0
-                                  ? ""
-                                  : categoryType[index]);
+                              arguments: index == 0 ? "" : categoryType[index]);
                         },
                         child: Container(
                           decoration: BoxDecoration(

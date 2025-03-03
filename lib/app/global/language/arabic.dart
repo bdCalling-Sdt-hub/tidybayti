@@ -79,6 +79,7 @@ Map<String, String> arabic = {
   "Mansion": "قصر",
   "Bungalow": "بنغل",
   "Villa": "فيلا",
+  "In. Home": "في المنزل",
   "House": "منزل",
   "Apartment": "شقة",
   "House Information": "معلومات المنزل",

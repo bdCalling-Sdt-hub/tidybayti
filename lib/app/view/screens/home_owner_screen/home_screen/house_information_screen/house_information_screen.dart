@@ -243,7 +243,7 @@ class _HouseInformationBodyState extends State<HouseInformationBody> {
                                 const CustomImage(imageSrc: AppIcons.addRoom),
                                 CustomText(
                                   left: 10,
-                                  text: "Add Room".tr,
+                                  text: AppStrings.addRoom.tr,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 20,
                                   color: AppColors.dark500,

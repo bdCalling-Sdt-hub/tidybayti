@@ -99,6 +99,7 @@ class AppStrings {
   static const String custom  = 'Custom';
   static const String mansion  = 'Mansion';
   static const String bungalow  = 'Bungalow';
+  static const String inHome  = 'In. Home';
   static const String villa  = 'Villa';
   static const String house  = 'House';
   static const String apartment  = 'Apartment';

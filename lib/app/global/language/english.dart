@@ -78,6 +78,7 @@ Map<String, String> english = {
   "Mansion": "Mansion",
   "Bungalow": "Bungalow",
   "Villa": "Villa",
+  "In. Home": "In. Home",
   "House": "House",
   "Apartment": "Apartment",
   "House Information": "House Information",
