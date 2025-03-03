@@ -54,7 +54,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                               Get.toNamed(AppRoutes.signInScreen,arguments: role);
                             },
                             fillColor: AppColors.employeeCardColor,
-                            title: AppStrings.signIn,
+                            title: AppStrings.signIn.tr,
                           ),
 
                           ///============================signUp Button=============
@@ -69,7 +69,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                               Get.toNamed(AppRoutes.signUpScreen,);
                             },
                             fillColor: AppColors.employeeCardColor,
-                            title: AppStrings.signUp,
+                            title: AppStrings.signUp.tr,
                           ),
                           role== "Employee"?const SizedBox():
                           SizedBox(
@@ -83,9 +83,9 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                             // Center the text in the widget
                             text: TextSpan(
                               children: <TextSpan>[
-                                const TextSpan(
-                                  text: AppStrings.bySigningUp,
-                                  style: TextStyle(
+                                 TextSpan(
+                                  text: AppStrings.bySigningUp.tr,
+                                  style: const TextStyle(
                                     color: AppColors.dark300,
                                     fontWeight: FontWeight.w300,
                                     fontSize: 16,
@@ -95,7 +95,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                                 ///==========================Terms of use=======================
                                 TextSpan(
                                   text:
-                                      " ${AppStrings.termsOfUse}  ",
+                                      " ${AppStrings.termsOfUse.tr}  ",
                                   style: const TextStyle(
                                     color: AppColors.dark400,
                                     fontSize: 16,
@@ -108,9 +108,9 @@ class HomeOwnerChoseAuth extends StatelessWidget {
                                           AppRoutes.termsAndServiceScreen);
                                     },
                                 ),
-                                const TextSpan(
-                                  text: "${AppStrings.and}  ",
-                                  style: TextStyle(
+                                 TextSpan(
+                                  text: "${AppStrings.and.tr}  ",
+                                  style: const TextStyle(
                                     color: AppColors.dark300,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
@@ -119,7 +119,7 @@ class HomeOwnerChoseAuth extends StatelessWidget {
 
                                 ///==============================Privacy policy====================
                                 TextSpan(
-                                  text: AppStrings.privacyPolicy,
+                                  text: AppStrings.privacyPolicy.tr,
                                   style: const TextStyle(
                                     color: AppColors.dark400,
                                     fontSize: 16,

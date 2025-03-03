@@ -48,6 +48,7 @@ class AppStrings {
   static const String bySigningUp = "By Signing up, you agree to ";
   static const String termsOfUse = "Terms of use";
   static const String and = "and";
+  static const String remember = "Remember";
   static const String privacyPolicy = "Privacy policy";
   static const String createAnAccountAndAccess = "Create an account and access our awesome services";
 

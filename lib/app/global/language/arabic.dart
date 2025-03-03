@@ -30,7 +30,8 @@ Map<String, String> arabic = {
   "Sing Up": "تسجيل حساب",
   "By Signing up, you agree to ": "بالتسجيل، فإنك توافق على ",
   "Terms of use": "شروط الاستخدام",
-  "and": "و",
+  "and": "و",  "Remember": "تذكر",
+
   "Privacy policy": "سياسة الخصوصية",
   "Create an account and access our awesome services":
   "أنشئ حسابًا للوصول إلى خدماتنا الرائعة",

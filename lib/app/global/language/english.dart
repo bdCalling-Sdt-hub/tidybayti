@@ -31,6 +31,7 @@ Map<String, String> english = {
   "By Signing up, you agree to ": "By Signing up, you agree to ",
   "Terms of use": "Terms of use",
   "and": "and",
+  "Remember": "Remember",
   "Privacy policy": "Privacy policy",
   "Create an account and access our awesome services":
   "Create an account and access our awesome services",

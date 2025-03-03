@@ -51,7 +51,7 @@ class SignInScreen extends StatelessWidget {
 
                         ///=============================Email=====================
                         CustomTextField(
-                          hintText: AppStrings.email,
+                          hintText: AppStrings.email.tr,
                           textEditingController: authController.emailController,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -70,7 +70,7 @@ class SignInScreen extends StatelessWidget {
 
                         ///===========================Enter Password======================
                         CustomTextField(
-                          hintText: AppStrings.enterPassword,
+                          hintText: AppStrings.enterPassword.tr,
                           isPassword: true,
                           textEditingController: authController.passwordController,
                           validator: (value) {
@@ -99,7 +99,7 @@ class SignInScreen extends StatelessWidget {
                             ),
 
                             CustomRichTextLink(
-                              firstText: 'Remember'.tr,
+                              firstText: AppStrings.remember.tr,
                               linkText: '',
                               onTap: () {
                               },
@@ -111,11 +111,11 @@ class SignInScreen extends StatelessWidget {
                               onTap: () {
                                 Get.toNamed(AppRoutes.forgotPasswordScreen);
                               },
-                              child: const CustomText(
+                              child:  CustomText(
                                 decoration: TextDecoration.underline,
                                 textAlign: TextAlign.right,
                                 top: 24,
-                                text: AppStrings.forgetPassword,
+                                text: AppStrings.forgetPassword.tr,
                                 fontSize: 14,
                                 color: AppColors.dark300,
                                 fontWeight: FontWeight.w400,
@@ -138,7 +138,7 @@ class SignInScreen extends StatelessWidget {
                                   }
                                 },
                                 fillColor: AppColors.employeeCardColor,
-                                title: AppStrings.signIn,
+                                title: AppStrings.signIn.tr,
                               ),
                         SizedBox(
                           height: 48.h,
