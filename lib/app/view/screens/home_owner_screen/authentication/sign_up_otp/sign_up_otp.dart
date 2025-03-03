@@ -23,11 +23,9 @@ class _SignUpOtpState extends State<SignUpOtp> {
   final formKey = GlobalKey<FormState>();
   final AuthController authController = Get.find<AuthController>();
 
-  /// 🔹 `_secondsRemaining` কে RxInt এ নিয়েছি, যাতে `setState()` ছাড়াই আপডেট হয়।
   final RxInt _secondsRemaining = 60.obs;
   Timer? _timer;
 
-  /// ✅ Timer logic (Obx-এ কাজ করবে)
   void startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
