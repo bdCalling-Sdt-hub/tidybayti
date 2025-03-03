@@ -70,6 +70,8 @@ class AppStrings {
   static const String resendConfirmationCode = "Resend Confirmation Code";
   static const String confirm = "Confirm";
   static const String confirmTask = "Confirm task";
+  static const String cost = "Cost";
+  static const String left = "Left";
   static const String youHaveFiveDays = "You have  5 days free service.";
   static const String ourSubscriptionPackages = "Our Subscription packages";
 
@@ -198,6 +200,7 @@ class AppStrings {
   static const String wallet  ='Wallet';
   static const String budget  ='Budget';
   static const String overview  ='Overview';
+  static const String ok  ='OK';
   static const String createBudgets  ='Create budgets';
   static const String keepYourBudgetsOnTrack  ='Keep your budgets on track and under control with budgets ';
   static const String selectCategory  ='Select category';
@@ -252,6 +255,7 @@ class AppStrings {
   static const String newPassword      ='New Password';
   //
   static const String recipe      ='Recipe';
+  static const String selectYearAndMonth      ='Select Year and Month';
 
 
 

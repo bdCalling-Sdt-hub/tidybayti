@@ -147,6 +147,11 @@ Map<String, String> arabic = {
   ///============================== Wallet =============================
   "Wallet": "المحفظة",
   "Budget": "الميزانية",
+  "OK": "حسناً",
+  "Cost": "التكلفة",
+  "Left": "يسار",
+  "Select Year and Month": "اختر السنة والشهر",
+  "Select date": "اختر التاريخ",
   "Overview": "نظرة عامة",
   "Create budgets": "إنشاء الميزانيات",
   "Keep your budgets on track and under control with budgets": "حافظ على ميزانيتك تحت السيطرة وإدارتها بشكل جيد",

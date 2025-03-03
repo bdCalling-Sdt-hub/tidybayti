@@ -27,7 +27,7 @@ class _WalletScreenState extends State<WalletScreen> {
     const WalletOverviewScreen()
   ];
 
-  final List<String> schedule = ["Budget", "Overview"];
+  final List<String> schedule = [AppStrings.budget.tr, AppStrings.overview.tr];
 
   @override
   Widget build(BuildContext context) {
