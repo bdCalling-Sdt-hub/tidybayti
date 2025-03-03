@@ -10,6 +10,7 @@ import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_menu_item/custom_menu_item.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/nav_bar/nav_bar.dart';
+
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 
@@ -19,7 +20,6 @@ class MenuScreen extends StatelessWidget {
       bottomNavigationBar: const NavBar(currentIndex: 4),
       body: Container(
         height: MediaQuery.of(context).size.height,
-
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -35,74 +35,81 @@ class MenuScreen extends StatelessWidget {
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///=============================== Menu Title ========================
-             const Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
-               children: [
-                 CustomText(
-                   top: 20,
-                   textAlign: TextAlign.center,
-                   text: "Account",
-                   fontWeight: FontWeight.w500,
-                   fontSize: 24,
-                   color: AppColors.dark500,
-                 ),
-               ],
-             ),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomText(
+                    top: 20,
+                    textAlign: TextAlign.center,
+                    text: "Account",
+                    fontWeight: FontWeight.w500,
+                    fontSize: 24,
+                    color: AppColors.dark500,
+                  ),
+                ],
+              ),
 
               ///=============================== Menu Items ========================
               Expanded(
                 child: ListView(
-
                   padding: const EdgeInsets.all(16.0),
                   children: [
                     ///================================Personal Information=================
                     CustomMenuItem(
-                      image:AppIcons.person,
+                      image: AppIcons.person,
                       text: AppStrings.personalInformation,
                       onTap: () {
                         Get.toNamed(AppRoutes.personalInfoScreen);
                       },
                     ),
+
                     ///===============================upgradePackages=================
                     CustomMenuItem(
-                      image:AppIcons.pacages,
+                      image: AppIcons.pacages,
                       text: AppStrings.upgradePackages,
                       onTap: () {
                         Get.toNamed(AppRoutes.upgradePackages);
-
                       },
                     ),
+
                     ///================================myPlan=================
                     CustomMenuItem(
-                      image:AppIcons.pacages,
+                      image: AppIcons.pacages,
                       text: AppStrings.myPlan,
                       onTap: () {
                         Get.toNamed(AppRoutes.myPlanScreen);
-
                       },
                     ),
+
                     ///================================Settings=================
                     CustomMenuItem(
-                      image:AppIcons.setting,
+                      image: AppIcons.setting,
                       text: AppStrings.settings,
                       onTap: () {
                         Get.toNamed(AppRoutes.settingScreen);
+                      },
+                    ),
 
+                    ///================================Language=================
+                    CustomMenuItem(
+                      image: AppIcons.tLanguage,
+                      text: AppStrings.language,
+                      onTap: () {
+                        Get.toNamed(AppRoutes.settingScreen);
                       },
                     ),
 
                     ///================================logOut=================
                     CustomMenuItem(
                       image: AppIcons.logOut,
-                      text:AppStrings.logOut,
-                      onTap: () async{
-                        await SharePrefsHelper.remove(
-                            AppConstants.token);
-                        await SharePrefsHelper.remove(
-                            AppConstants.profileID);
-                        SharePrefsHelper.setBool(AppConstants.rememberMe, false);
+                      text: AppStrings.logOut,
+                      onTap: () async {
+                        await SharePrefsHelper.remove(AppConstants.token);
+                        await SharePrefsHelper.remove(AppConstants.profileID);
+                        SharePrefsHelper.setBool(
+                            AppConstants.rememberMe, false);
                         SharePrefsHelper.setBool(AppConstants.isOwner, false);
-                       Get.offAllNamed(AppRoutes.choseOnBoardingScreen);
+                        Get.offAllNamed(AppRoutes.choseOnBoardingScreen);
                       },
                     ),
                   ],
@@ -115,9 +122,3 @@ class MenuScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

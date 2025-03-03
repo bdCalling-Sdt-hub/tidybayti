@@ -55,6 +55,7 @@ class AppIcons {
   static const String rightUp = "$basePath/right_up.svg";
   static const String search = "$basePath/search.svg";
   static const String setting = "$basePath/settings.svg";
+  static const String tLanguage = "$basePath/tlang.svg";
   static const String tags = "$basePath/tags.svg";
   static const String terms = "$basePath/terms.svg";
   static const String watch = "$basePath/watch.svg";

@@ -58,6 +58,7 @@ class AppStrings {
   static const String dontHaveAnyAccount = "Don’t have any account?";
   static const String firstName = "First name";
   static const String lastName = "Last name";
+  static const String language = "Language";
   static const String contactNumber = "Contact number";
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
