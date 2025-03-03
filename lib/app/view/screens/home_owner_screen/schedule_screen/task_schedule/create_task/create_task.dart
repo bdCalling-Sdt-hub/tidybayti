@@ -82,7 +82,7 @@ class _CreateTaskState extends State<CreateTask> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Assigned To',
+                              AppStrings.assignTask.tr,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16.sp,
@@ -120,7 +120,7 @@ class _CreateTaskState extends State<CreateTask> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Assigned To',
+                              AppStrings.assignedTo.tr,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16.sp,
@@ -155,11 +155,11 @@ class _CreateTaskState extends State<CreateTask> {
                           onTap: () {
                             showPresetDialog(context);
                           },
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20),
+                          child:  Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Text(
-                              "Use Preset",
-                              style: TextStyle(
+                              AppStrings.usePreset.tr,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blue,
@@ -190,7 +190,7 @@ class _CreateTaskState extends State<CreateTask> {
 
                     ///=========================== Start Date =======================
                     CustomTextField(
-                      hintText: "Start Date".tr,
+                      hintText: AppStrings.startDate.tr,
                       suffixIcon: const Icon(Icons.calendar_month),
                       textEditingController: taskController.startDateController,
                       readOnly: true,
@@ -215,7 +215,7 @@ class _CreateTaskState extends State<CreateTask> {
 
                     ///=========================== Start Time =======================
                     CustomTextField(
-                      hintText: "Start Time".tr,
+                      hintText: AppStrings.startTime.tr,
                       suffixIcon: const Icon(Icons.watch_later_outlined),
                       textEditingController: taskController.startTimeController,
                       readOnly: true,
@@ -245,7 +245,7 @@ class _CreateTaskState extends State<CreateTask> {
                     ///=========================== End Date =======================
 
                     CustomTextField(
-                      hintText: "End Date".tr,
+                      hintText: AppStrings.endDate.tr,
                       suffixIcon: const Icon(Icons.calendar_month),
                       textEditingController: taskController.endDateController,
                       readOnly: true,
@@ -270,7 +270,7 @@ class _CreateTaskState extends State<CreateTask> {
                     ///=========================== End Time =======================
 
                     CustomTextField(
-                      hintText: "Start Time".tr,
+                      hintText: AppStrings.endTime.tr,
                       suffixIcon: const Icon(Icons.watch_later_outlined),
                       textEditingController: taskController.endTimeController,
                       readOnly: true,
@@ -344,7 +344,7 @@ class _CreateTaskState extends State<CreateTask> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Select Employee',
+                AppStrings.selectEmployee.tr,
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
               ),
               const Divider(),

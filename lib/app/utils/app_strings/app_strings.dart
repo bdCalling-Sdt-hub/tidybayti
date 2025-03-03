@@ -84,11 +84,13 @@ class AppStrings {
   static const String outSubscriptionPackages = 'Our Subscription packages';
   static const String premium = 'Premium';
   static const String assignTask = 'AssignTask';
+  static const String assignedTo = 'Assigned To';
   static const String premiumPro = 'Premium-Pro';
   static const String twelveMonthPackage = '12 Months package';
   static const String oneMonthsPackage = '1 Months package';
   static const String bhd3 = 'BHD 3.99/Month';
   static const String bhd4 = 'BHD 4.99/Month';
+  static const String usePreset = 'Use Preset';
   static const String continues  = 'Continue';
   static const String congratulations  = 'Congratulations, You are given 7 days free trail. During this trail period, you are gettingthis facilities !';
 
@@ -157,6 +159,8 @@ class AppStrings {
   static const String taskTitle     = 'Task title';
   static const String usePresets     = 'Use presets';
   static const String startTime     = 'Start time';
+  static const String endDate     = 'End Date';
+  static const String startDate     = 'Start Date';
   static const String endTime     = 'End time';
   static const String details     = 'Details';
   static const String addTask     = 'Add task';
