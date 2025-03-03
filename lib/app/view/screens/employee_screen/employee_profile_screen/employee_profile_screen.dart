@@ -229,6 +229,19 @@ class EmployeeProfileScreen extends StatelessWidget {
                                 height: 20.h,
                               ),
 
+
+                              ///==============================Language =============
+                              CustomButton(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.languageScreen);
+                                },
+                                fillColor: AppColors.blue50,
+                                title: AppStrings.language.tr,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+
                               ///==============================Log Out=============
                               CustomButton(
                                 onTap: () async {
