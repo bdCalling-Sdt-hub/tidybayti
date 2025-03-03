@@ -12,7 +12,10 @@ class LanguageScreen extends StatelessWidget {
   LanguageScreen({super.key});
 
   final LanguageController languageController = Get.find<LanguageController>();
-  final List<String> languageList = ["English", "Arabic"];
+  final List<String> languageList = [
+    "English".tr, // Will translate to Arabic when Arabic is selected
+    "العربية".tr, // Will translate to English when English is selected
+  ];
 
   @override
   Widget build(BuildContext context) {
