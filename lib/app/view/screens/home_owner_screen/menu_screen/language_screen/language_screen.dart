@@ -17,8 +17,9 @@ class LanguageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:AppColors.blue500,
       appBar: CustomAppBar(
+
         appBarContent: AppStrings.language.tr,
         iconData: Icons.arrow_back,
       ),
@@ -46,6 +47,7 @@ class LanguageScreen extends StatelessWidget {
                     SizedBox(
                       height: 44,
                       child: CustomTextField(
+
                         inputTextStyle: const TextStyle(color: Colors.black),
                         onTap: () {
                           languageController.isLanguage.value =
