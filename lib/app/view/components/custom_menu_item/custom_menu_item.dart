@@ -39,7 +39,7 @@ class CustomMenuItem extends StatelessWidget {
         child: Row(
           children: [
             // Leading Icon
-            CustomImage(imageSrc: image, imageType: ImageType.svg,),
+            CustomImage(imageSrc: image, imageType: ImageType.svg,imageColor: Colors.black,),
 
             // Spacer between icon and text
             const SizedBox(width: 16),

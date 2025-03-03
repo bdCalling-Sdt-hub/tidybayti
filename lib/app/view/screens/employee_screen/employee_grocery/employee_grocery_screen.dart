@@ -28,7 +28,11 @@ class _WalletScreenState extends State<EmployeeGroceryScreen> {
     const GroceryCompleteScreen()
   ];
 
-  final List<String> schedule = ["pending", "Ongoing", "Completed"];
+  final List<String> schedule = [
+    AppStrings.pending.tr,
+    AppStrings.ongoing.tr,
+    AppStrings.complete.tr
+  ];
 
   @override
   Widget build(BuildContext context) {

@@ -118,7 +118,7 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                           ),
                           //TODO:Recipe Title
                           RecipeInfoRow(
-                              label: "${AppStrings.recipeName}:".tr,
+                              label: "${AppStrings.recipeName.tr}:",
                               value: "${data.recipeName ?? " "} "),
                           const SizedBox(height: 8),
                           //TODO:Cooking time
@@ -142,7 +142,7 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                                 textAlign: TextAlign.start,
                                 maxLines: 10,
                                 text: "${index + 1}. ${tags ?? " "}",
-                                // ✅ প্রতিটি স্টেপের আগে সিরিয়াল নম্বর দেখাবে
+
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
                                 color: AppColors.dark300,
@@ -153,7 +153,7 @@ class _MyRecipeDetailsState extends State<MyRecipeDetails> {
                           const SizedBox(height: 32),
                           //TODo:Description
                           RecipeSectionTitle(
-                              title: "${AppStrings.description}:".tr),
+                              title: "${AppStrings.description.tr}:"),
                           const SizedBox(height: 8),
                           RecipeDescription(
                             description: data.description ?? "",

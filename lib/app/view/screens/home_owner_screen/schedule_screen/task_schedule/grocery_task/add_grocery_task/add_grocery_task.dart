@@ -71,7 +71,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Assigned To',
+                                  AppStrings.assignedTo.tr,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16.sp,
@@ -108,7 +108,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
 
                         ///=========================== Start Date =======================
                         CustomTextField(
-                          hintText: "Start Date".tr,
+                          hintText: AppStrings.startDate.tr,
                           suffixIcon: const Icon(Icons.calendar_month),
                           textEditingController: controller.startDateController,
                           readOnly: true,
@@ -132,7 +132,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
 
                         ///=========================== Start Time =======================
                         CustomTextField(
-                          hintText: "Start Time".tr,
+                          hintText: AppStrings.startTime.tr,
                           suffixIcon: const Icon(Icons.watch_later_outlined),
                           textEditingController: controller.startTimeController,
                           readOnly: true,
@@ -161,7 +161,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
                         ///=========================== End Date =======================
 
                         CustomTextField(
-                          hintText: "End Date".tr,
+                          hintText: AppStrings.endDate.tr,
                           suffixIcon: const Icon(Icons.calendar_month),
                           textEditingController: controller.endDateController,
                           readOnly: true,
@@ -186,7 +186,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
                         ///=========================== End Time =======================
 
                         CustomTextField(
-                          hintText: "Start Time".tr,
+                          hintText: AppStrings.endTime.tr,
                           suffixIcon: const Icon(Icons.watch_later_outlined),
                           textEditingController: controller.endTimeController,
                           readOnly: true,
@@ -217,7 +217,7 @@ class _AllTaskScreenState extends State<AddGroceryTask> {
                                   controller.addGrocery();
                                 },
                                 fillColor: Colors.white,
-                                title: AppStrings.confirm,
+                                title: AppStrings.confirm.tr,
                               ),
                       ],
                     ),

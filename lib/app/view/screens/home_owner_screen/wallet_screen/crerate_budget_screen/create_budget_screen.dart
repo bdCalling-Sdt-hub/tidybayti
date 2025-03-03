@@ -224,7 +224,7 @@ class CreateBudgetScreen extends StatelessWidget {
                                     textEditingController:
                                         controller.amountController,
                                     keyboardType: TextInputType.number,
-                                    hintText: AppStrings.enterAmount,
+                                    hintText: AppStrings.enterAmount.tr,
                                     fieldBorderRadius: 8,
                                     fillColor: Colors.white,
                                   ),

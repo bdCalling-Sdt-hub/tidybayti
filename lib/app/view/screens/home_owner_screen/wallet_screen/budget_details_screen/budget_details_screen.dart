@@ -152,7 +152,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                               children: [
                                 CustomText(
                                   text:
-                                      "Cost: \$${currentExpense.toStringAsFixed(2)}",
+                                      "${AppStrings.cost.tr}: \$${currentExpense.toStringAsFixed(2)}",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.red,
@@ -160,7 +160,7 @@ class _BudgetDetailsScreenState extends State<BudgetDetailsScreen> {
                                 const Spacer(),
                                 CustomText(
                                   text:
-                                      "Left: \$${(amount - currentExpense).toStringAsFixed(2)}",
+                                      "${AppStrings.left.tr}: \$${(amount - currentExpense).toStringAsFixed(2)}",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: AppColors.green,

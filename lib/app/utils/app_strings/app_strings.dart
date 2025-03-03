@@ -22,6 +22,7 @@ class AppStrings {
   static const String id = "Id:";
   static const String bhd120 = "BHD 3.99 /month/year";
   static const String sixMonth = "6 Months package";
+  static const String selectYourLanguage = "Select Your Language";
   static const String profile = "Profile";
   static const String name = "Name:";
   static const String note = "Note";
@@ -47,6 +48,7 @@ class AppStrings {
   static const String bySigningUp = "By Signing up, you agree to ";
   static const String termsOfUse = "Terms of use";
   static const String and = "and";
+  static const String remember = "Remember";
   static const String privacyPolicy = "Privacy policy";
   static const String createAnAccountAndAccess = "Create an account and access our awesome services";
 
@@ -58,15 +60,19 @@ class AppStrings {
   static const String dontHaveAnyAccount = "Don’t have any account?";
   static const String firstName = "First name";
   static const String lastName = "Last name";
+  static const String language = "Language";
   static const String contactNumber = "Contact number";
   static const String password = "Password";
   static const String confirmPassword = "Confirm Password";
   static const String createAccount = "Create Account";
+  static const String account = "Account";
   static const String sendYourVerificationOnYour = "Send your verification on your Contact number";
   static const String sendVerificationCode = "Send Verification Code";
   static const String resendConfirmationCode = "Resend Confirmation Code";
   static const String confirm = "Confirm";
   static const String confirmTask = "Confirm task";
+  static const String cost = "Cost";
+  static const String left = "Left";
   static const String youHaveFiveDays = "You have  5 days free service.";
   static const String ourSubscriptionPackages = "Our Subscription packages";
 
@@ -79,11 +85,13 @@ class AppStrings {
   static const String outSubscriptionPackages = 'Our Subscription packages';
   static const String premium = 'Premium';
   static const String assignTask = 'AssignTask';
+  static const String assignedTo = 'Assigned To';
   static const String premiumPro = 'Premium-Pro';
   static const String twelveMonthPackage = '12 Months package';
   static const String oneMonthsPackage = '1 Months package';
   static const String bhd3 = 'BHD 3.99/Month';
   static const String bhd4 = 'BHD 4.99/Month';
+  static const String usePreset = 'Use Preset';
   static const String continues  = 'Continue';
   static const String congratulations  = 'Congratulations, You are given 7 days free trail. During this trail period, you are gettingthis facilities !';
 
@@ -92,6 +100,7 @@ class AppStrings {
   static const String custom  = 'Custom';
   static const String mansion  = 'Mansion';
   static const String bungalow  = 'Bungalow';
+  static const String inHome  = 'In. Home';
   static const String villa  = 'Villa';
   static const String house  = 'House';
   static const String apartment  = 'Apartment';
@@ -152,6 +161,8 @@ class AppStrings {
   static const String taskTitle     = 'Task title';
   static const String usePresets     = 'Use presets';
   static const String startTime     = 'Start time';
+  static const String endDate     = 'End Date';
+  static const String startDate     = 'Start Date';
   static const String endTime     = 'End time';
   static const String details     = 'Details';
   static const String addTask     = 'Add task';
@@ -168,6 +179,9 @@ class AppStrings {
   static const String completedTasks      ='Completed tasks';
   static const String ongoingTask      ='Ongoing task';
   static const String pendingTask      ='Pending tasks';
+  static const String pending      ='Pending';
+  static const String ongoing      ='Ongoing';
+  static const String complete      ='Completed';
   static const String groceryList       ='Grocery list';
   static const String createTask       ='Create Task';
   static const String assignTo       ='Assign to';
@@ -189,12 +203,15 @@ class AppStrings {
   static const String addItem       ='Add item';
   static const String employeeList        ='Employee list';
   static const String selectEmployee        ='Select employee';
+  static const String addHouse        ='Add House';
+  static const String addRoom        ='Add Room';
 
 
   ///==============================wallet=============================
   static const String wallet  ='Wallet';
   static const String budget  ='Budget';
   static const String overview  ='Overview';
+  static const String ok  ='OK';
   static const String createBudgets  ='Create budgets';
   static const String keepYourBudgetsOnTrack  ='Keep your budgets on track and under control with budgets ';
   static const String selectCategory  ='Select category';
@@ -227,7 +244,7 @@ class AppStrings {
   static const String addIngredients    ='Add ingredients';
   static const String describeSteps    ='Describe steps';
   static const String myRecipes    ='My recipe';
-  static const String search     ='Search ';
+  static const String search     ='Search';
   static const String editRecipe      ='Edit recipe';
 
   ///==================================Menu Section======================
@@ -247,6 +264,9 @@ class AppStrings {
   static const String helpWhere      ='Help';
   static const String presentPassword      ='Present Password';
   static const String newPassword      ='New Password';
+  //
+  static const String recipe      ='Recipe';
+  static const String selectYearAndMonth      ='Select Year and Month';
 
 
 

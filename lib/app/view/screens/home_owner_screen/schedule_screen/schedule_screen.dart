@@ -13,6 +13,7 @@ import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/tas
 
 import 'work_schedule/pdf_download_page.dart';
 import 'work_schedule/work_schedule.dart';
+
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
 
@@ -23,11 +24,15 @@ class ScheduleScreen extends StatefulWidget {
 class _WalletScreenState extends State<ScheduleScreen> {
   int selectedTabIndex = 0;
 
-  final List<Widget> screens = [ const WorkSchedule(), const TaskSchedule()];
+  final List<Widget> screens = [const WorkSchedule(), const TaskSchedule()];
 
-  final List<String> schedule = ["Work Schedule", "Task Schedule"];
+  final List<String> schedule = [
+    AppStrings.workSchedule.tr,
+    AppStrings.taskSchedule.tr
+  ];
 
   final WorkScheduleController controller = Get.find<WorkScheduleController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +55,14 @@ class _WalletScreenState extends State<ScheduleScreen> {
               children: [
                 ///=============================== Schedule Appbar ========================
                 CustomMenuAppbar(
-                  onDownload: (){
+                  onDownload: () {
                     Get.to(WorkScheduleDownloadScreen());
                   },
-
                   title: AppStrings.scheduleOverview.tr,
                   onBack: () {
                     Get.back();
                   },
-                     download:selectedTabIndex == 0,
+                  download: selectedTabIndex == 0,
                 ),
                 SizedBox(height: 20.h),
 
@@ -66,7 +70,7 @@ class _WalletScreenState extends State<ScheduleScreen> {
                 Row(
                   children: List.generate(
                     schedule.length,
-                        (index) => Expanded(
+                    (index) => Expanded(
                       child: InkWell(
                         onTap: () {
                           setState(() {
@@ -83,11 +87,9 @@ class _WalletScreenState extends State<ScheduleScreen> {
                               border: Border(
                                 bottom: selectedTabIndex == index
                                     ? const BorderSide(
-                                    color: AppColors.blue900,
-                                    width: 4)
+                                        color: AppColors.blue900, width: 4)
                                     : const BorderSide(
-                                    color: AppColors.blue50,
-                                    width: 4),
+                                        color: AppColors.blue50, width: 4),
                               )),
                           child: CustomText(
                             text: schedule[index],

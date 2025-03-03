@@ -14,8 +14,8 @@ class SeeAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const CustomText(
-          text: AppStrings.employees,
+         CustomText(
+          text: AppStrings.employees.tr,
           fontSize: 24,
           fontWeight: FontWeight.w400,
           color: AppColors.blue900,

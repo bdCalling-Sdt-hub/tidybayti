@@ -30,7 +30,7 @@ class EmployeeProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const EmployeeNavbar(currentIndex: 2),
+      bottomNavigationBar: const EmployeeNavbar(currentIndex: 3),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
@@ -63,7 +63,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                     print("Profile Image URL:========== ${profile.profileImage}");
                   },
                   isEdit: true,
-                  title: AppStrings.profile,
+                  title: AppStrings.profile.tr,
                   onBack: () {
                     Get.back();
                   },
@@ -223,7 +223,20 @@ class EmployeeProfileScreen extends StatelessWidget {
                                   Get.toNamed(AppRoutes.changePasswordScreen);
                                 },
                                 fillColor: AppColors.blue50,
-                                title: AppStrings.changePassword,
+                                title: AppStrings.changePassword.tr,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+
+
+                              ///==============================Language =============
+                              CustomButton(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.languageScreen);
+                                },
+                                fillColor: AppColors.blue50,
+                                title: AppStrings.language.tr,
                               ),
                               SizedBox(
                                 height: 20.h,

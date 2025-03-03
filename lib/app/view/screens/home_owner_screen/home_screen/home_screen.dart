@@ -137,15 +137,15 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                       // Get.toNamed(
                                       //     AppRoutes.houseInformationScreen);
                                     },
-                                    child: const Row(
+                                    child:  Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Icon(Icons.add, color: Colors.blue),
-                                        SizedBox(width: 8),
+                                        const Icon(Icons.add, color: Colors.blue),
+                                        const SizedBox(width: 8),
                                         CustomText(
                                           textAlign: TextAlign.start,
-                                          text: "Add House",
+                                          text: AppStrings.addHouse.tr,
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.blue,
@@ -323,8 +323,8 @@ class _HouseTypeScreenState extends State<HomeScreen> {
                                                 imageType: ImageType.svg,
                                               ),
                                               SizedBox(height: 8.h),
-                                              const CustomText(
-                                                text: "Add Room",
+                                               CustomText(
+                                                text: AppStrings.addRoom.tr,
                                                 color: AppColors.dark400,
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 16,
@@ -389,7 +389,7 @@ class _HouseTypeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Room'),
+          title:  Text(AppStrings.addRoom.tr),
           content: StatefulBuilder(
             builder: (context, setStateDialog) {
               return Column(

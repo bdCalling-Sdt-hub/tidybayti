@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart'; // Import for date formatting
 import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wallet_controller.dart';
-import 'package:tidybayte/app/global/helper/time_converter/time_converter.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
+import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
 import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 
 class WalletOverviewScreen extends StatefulWidget {
@@ -39,7 +39,7 @@ class _WalletOverviewState extends State<WalletOverviewScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Select Year and Month'),
+          title:  Text(AppStrings.selectYearAndMonth.tr),
           content: SizedBox(
             height: 200,
             child: CupertinoDatePicker(
@@ -55,13 +55,13 @@ class _WalletOverviewState extends State<WalletOverviewScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child:  Text(AppStrings.cancel.tr),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(dateTime);
               },
-              child: const Text('OK'),
+              child:  Text(AppStrings.ok.tr),
             ),
           ],
         );

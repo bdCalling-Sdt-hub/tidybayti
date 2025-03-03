@@ -37,7 +37,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           if (widget.iconData != null)
             IconButton(
               icon: Icon(widget.iconData),
-              color: AppColors.blue300,
+              color: Colors.black,
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -32,7 +32,7 @@ class HouseAdd {
 
     /// ✅ Retrieve token
     String? savedToken = await SharePrefsHelper.getString(AppConstants.token);
-    if (savedToken == null || savedToken.isEmpty) {
+    if (savedToken.isEmpty) {
       toastMessage(message: "❌ Authentication failed. Please log in again.");
       homeController.setLoading(false);
       return;
