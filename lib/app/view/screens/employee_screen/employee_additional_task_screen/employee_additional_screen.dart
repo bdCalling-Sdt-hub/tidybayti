@@ -27,7 +27,11 @@ class _WalletScreenState extends State<EmployeeAdditionalScreen> {
     const AdditionalCompletedTask()
   ];
 
-  final List<String> schedule = ["pending", "Ongoing" ,"Completed"];
+  final List<String> schedule = [
+    AppStrings.pending.tr,
+    AppStrings.ongoing.tr,
+    AppStrings.complete.tr
+  ];
 
   @override
   Widget build(BuildContext context) {

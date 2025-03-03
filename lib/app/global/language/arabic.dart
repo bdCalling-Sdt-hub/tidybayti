@@ -7,8 +7,12 @@ Map<String, String> arabic = {
   "BHD 3.99 /month/year": "3.99 دينار بحريني / شهري / سنوي",
   "6 Months package": "حزمة 6 أشهر",
   "Profile": "الملف الشخصي",
-  "Name:": "الاسم:",
-  "Note": "ملاحظة",
+  "Name:": "الاسم:", "Pending": "معلق",
+  "Ongoing": "جارٍ",
+  "Completed": "مكتمل",
+
+  "Note": "ملاحظة", "Additional Task": "مهمة إضافية",
+
   "CPR Number": "رقم CPR",
   "Expire Date": "تاريخ الانتهاء",
   "Temporary Password": "كلمة المرور المؤقتة",
@@ -30,11 +34,11 @@ Map<String, String> arabic = {
   "Sing Up": "تسجيل حساب",
   "By Signing up, you agree to ": "بالتسجيل، فإنك توافق على ",
   "Terms of use": "شروط الاستخدام",
-  "and": "و",  "Remember": "تذكر",
-
+  "and": "و",
   "Privacy policy": "سياسة الخصوصية",
   "Create an account and access our awesome services":
-  "أنشئ حسابًا للوصول إلى خدماتنا الرائعة",
+      "أنشئ حسابًا للوصول إلى خدماتنا الرائعة",
+
   ///============================Authentication in Home Owner===================
   "Email": "البريد الإلكتروني",
   "Enter Password": "أدخل كلمة المرور",
@@ -48,7 +52,7 @@ Map<String, String> arabic = {
   "Create Account": "إنشاء حساب",
   "Account": "الحساب",
   "Send your verification on your Contact number":
-  "إرسال رمز التحقق إلى رقم الاتصال الخاص بك",
+      "إرسال رمز التحقق إلى رقم الاتصال الخاص بك",
   "Send Verification Code": "إرسال رمز التحقق",
   "Resend Confirmation Code": "إعادة إرسال رمز التأكيد",
   "Confirm": "تأكيد",
@@ -58,7 +62,7 @@ Map<String, String> arabic = {
 
   ///=====================================Premium Package===============
   "Congratulations, You are given 7 days free trail. During this trail period, you are getting this facilities !":
-  "تهانينا، لقد حصلت على 7 أيام تجربة مجانية. خلال هذه الفترة، ستحصل على هذه الميزات!",
+      "تهانينا، لقد حصلت على 7 أيام تجربة مجانية. خلال هذه الفترة، ستحصل على هذه الميزات!",
   "Invite unlimited home members ": "دعوة عدد غير محدود من أعضاء المنزل",
   "Assign tasks to multiple people": "تعيين المهام لعدة أشخاص",
   "Master your cleaning schedule": "إدارة جدول التنظيف الخاص بك",
@@ -72,7 +76,7 @@ Map<String, String> arabic = {
   "BHD 4.99/Month": "4.99 دينار بحريني / شهر",
   "Continue": "متابعة",
   "Congratulations, You are given 7 days free trail. During this trail period, you are gettingthis facilities !":
-  "تهانينا، لقد حصلت على 7 أيام تجربة مجانية. خلال هذه الفترة، ستحصل على هذه الميزات!",
+      "تهانينا، لقد حصلت على 7 أيام تجربة مجانية. خلال هذه الفترة، ستحصل على هذه الميزات!",
 
   ///===============================Home Section=======================
   "Choose your house type": "اختر نوع منزلك",
@@ -121,7 +125,8 @@ Map<String, String> arabic = {
   "Passport": "جواز السفر",
   "Passport Number": "رقم الجواز",
   "Employee Added Successfully": "تمت إضافة الموظف بنجاح",
-  "Employees accounts details is sending to employee email :": "تفاصيل حسابات الموظفين يتم إرسالها إلى بريد الموظف الإلكتروني:",
+  "Employees accounts details is sending to employee email :":
+      "تفاصيل حسابات الموظفين يتم إرسالها إلى بريد الموظف الإلكتروني:",
   "Driving license": "رخصة القيادة",
   "Address": "العنوان",
   "Confirm Delete": "تأكيد الحذف",
@@ -130,7 +135,8 @@ Map<String, String> arabic = {
   "Duty Time:": "وقت العمل:",
   "Working Day:": "أيام العمل:",
   "Off day": "يوم الإجازة",
-  "Are you sure you want to delete this employee?": "هل أنت متأكد أنك تريد حذف هذا الموظف؟",
+  "Are you sure you want to delete this employee?":
+      "هل أنت متأكد أنك تريد حذف هذا الموظف؟",
   "Select working days": "اختر أيام العمل",
   "Select off days": "اختر أيام الإجازة",
   "Upgrade profile": "ترقية الملف الشخصي",
@@ -157,6 +163,7 @@ Map<String, String> arabic = {
   "Recipe Details": "تفاصيل الوصفة",
   "Add break": "إضافة راحة",
   "Assign task succesfully": "تم تعيين المهمة بنجاح",
+
   ///============================== Wallet =============================
   "Wallet": "المحفظة",
   "Budget": "الميزانية",
@@ -167,7 +174,8 @@ Map<String, String> arabic = {
   "Select date": "اختر التاريخ",
   "Overview": "نظرة عامة",
   "Create budgets": "إنشاء الميزانيات",
-  "Keep your budgets on track and under control with budgets": "حافظ على ميزانيتك تحت السيطرة وإدارتها بشكل جيد",
+  "Keep your budgets on track and under control with budgets":
+      "حافظ على ميزانيتك تحت السيطرة وإدارتها بشكل جيد",
   "Select category": "اختر الفئة",
   "Enter amount": "أدخل المبلغ",
   "Budget details": "تفاصيل الميزانية",

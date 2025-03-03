@@ -170,6 +170,9 @@ Map<String, String> english = {
   "OK": "OK",
   "Cost": "Cost",
   "Left": "Left",
+  "Pending": "Pending",
+  "Ongoing": "Ongoing",
+  "Completed": "Completed",
   "Select Year and Month": "Select Year and Month",
   "Additional message": "Additional message",
   "Download PDF": "Download PDF",
@@ -182,7 +185,7 @@ Map<String, String> english = {
   "Employee list": "Employee list",
   "Select employee": "Select employee",
   "Add House": "Add House",
-  "Add Room": "Add Room",
+  "Add Room": "Add Room","Pending": "Pending",
 
   ///============================== Wallet =============================
   "Wallet": "Wallet",

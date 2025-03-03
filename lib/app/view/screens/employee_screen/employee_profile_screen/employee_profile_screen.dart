@@ -63,7 +63,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                     print("Profile Image URL:========== ${profile.profileImage}");
                   },
                   isEdit: true,
-                  title: AppStrings.profile,
+                  title: AppStrings.profile.tr,
                   onBack: () {
                     Get.back();
                   },
@@ -223,7 +223,7 @@ class EmployeeProfileScreen extends StatelessWidget {
                                   Get.toNamed(AppRoutes.changePasswordScreen);
                                 },
                                 fillColor: AppColors.blue50,
-                                title: AppStrings.changePassword,
+                                title: AppStrings.changePassword.tr,
                               ),
                               SizedBox(
                                 height: 20.h,

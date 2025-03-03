@@ -179,6 +179,9 @@ class AppStrings {
   static const String completedTasks      ='Completed tasks';
   static const String ongoingTask      ='Ongoing task';
   static const String pendingTask      ='Pending tasks';
+  static const String pending      ='Pending';
+  static const String ongoing      ='Ongoing';
+  static const String complete      ='Completed';
   static const String groceryList       ='Grocery list';
   static const String createTask       ='Create Task';
   static const String assignTo       ='Assign to';
