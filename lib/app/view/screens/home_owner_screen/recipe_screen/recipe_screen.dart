@@ -36,8 +36,8 @@ class RecipeScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 50.h,),
                   /// Menu Title
-                  const CustomText(
-                    text: 'Recipe',
+                   CustomText(
+                    text: AppStrings.recipe.tr,
                     textAlign: TextAlign.center,
                     fontWeight: FontWeight.w500,
                     fontSize: 24,
@@ -54,7 +54,7 @@ class RecipeScreen extends StatelessWidget {
                         /// Add Recipe
                         CustomMenuItem(
                           image: AppIcons.add,
-                          text: AppStrings.addRecipe,
+                          text: AppStrings.addRecipe.tr,
                           onTap: () {
                             Get.toNamed(AppRoutes.addRecipeScreen);
                           },
@@ -62,7 +62,7 @@ class RecipeScreen extends StatelessWidget {
                         /// My Recipe
                         CustomMenuItem(
                           image: AppIcons.myRecipe,
-                          text: AppStrings.myRecipe,
+                          text: AppStrings.myRecipe.tr,
                           onTap: () {
                             Get.toNamed(AppRoutes.myRecipeScreen);
                           },
@@ -71,7 +71,7 @@ class RecipeScreen extends StatelessWidget {
                         /// Favorite Recipes
                         CustomMenuItem(
                           image: AppIcons.favorite,
-                          text: AppStrings.favoriteRecipes,
+                          text: AppStrings.favoriteRecipes.tr,
                           onTap: () {
                             Get.toNamed(AppRoutes.favoritesRecipeScreen);
                           },
@@ -79,7 +79,7 @@ class RecipeScreen extends StatelessWidget {
                         /// Tags
                         CustomMenuItem(
                           image: AppIcons.tags,
-                          text: AppStrings.tags,
+                          text: AppStrings.tags.tr,
                           onTap: () {
                             Get.toNamed(AppRoutes.tagsScreen);
                           },

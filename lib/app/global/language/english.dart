@@ -226,4 +226,6 @@ Map<String, String> english = {
   "Help": "Help",
   "Present Password": "Present Password",
   "New Password": "New Password",
+  "Recipe": "Recipe",
+
 };

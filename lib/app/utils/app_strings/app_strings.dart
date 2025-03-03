@@ -250,6 +250,8 @@ class AppStrings {
   static const String helpWhere      ='Help';
   static const String presentPassword      ='Present Password';
   static const String newPassword      ='New Password';
+  //
+  static const String recipe      ='Recipe';
 
 
 

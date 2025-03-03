@@ -198,4 +198,10 @@ Map<String, String> arabic = {
   "Help": "المساعدة",
   "Present Password": "كلمة المرور الحالية",
   "New Password": "كلمة المرور الجديدة",
+  "All tasks": "كل المهام",
+  "Completed tasks": "المهام المكتملة",
+  "Pending tasks": "المهام المعلقة",
+  "Grocery list": "قائمة البقالة",
+  "Create Task": "إنشاء مهمة",
+  "Recipe": "وصفة",
 };
