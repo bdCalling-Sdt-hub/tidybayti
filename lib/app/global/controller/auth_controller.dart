@@ -35,7 +35,7 @@ class AuthController extends GetxController {
       TextEditingController(text: kDebugMode ? "lisina7524@lxheir.com" : "");
   final phoneNumberController = TextEditingController();
   final passwordController =
-      TextEditingController(text: kDebugMode ? "Masum017" : "");
+      TextEditingController(text: kDebugMode ? "Masum012" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
