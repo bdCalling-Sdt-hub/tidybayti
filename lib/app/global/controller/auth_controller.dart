@@ -32,10 +32,10 @@ class AuthController extends GetxController {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final emailController =
-      TextEditingController(text: kDebugMode ? "lisina7524@lxheir.com" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   final phoneNumberController = TextEditingController();
   final passwordController =
-      TextEditingController(text: kDebugMode ? "Masum012" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();

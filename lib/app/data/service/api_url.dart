@@ -2,7 +2,7 @@ class ApiUrl {
 
   // static const baseUrl = "http://10.0.60.26:8002";
   static const baseUrl = "http://143.110.241.146:8001";
-  static const networkUrl = "http://143.110.241.146:8001";
+  static const networkUrl = "http://143.110.241.146:8001/";
   // static const networkUrl = "http://10.0.60.26:8002/";
 
   ///<======================= For Auth part ====================>
