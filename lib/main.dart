@@ -12,6 +12,7 @@ import 'app/global/language/language_transalator.dart';
 
 
 void main()async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   DeviceUtils.lockDevicePortrait();
 
