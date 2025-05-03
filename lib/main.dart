@@ -18,18 +18,22 @@ void main()async {
 
   await initDependencies();
   runApp(
-    const MyApp(), // Wrap your app
+    const MyApp(),
   );
-  // const MyApp());
+
+
 }
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    debugPrint("height====================${MediaQuery.of(context).size.height}");
+    debugPrint("width====================${MediaQuery.of(context).size.width}");
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
-      designSize: const Size(375, 812),
+      designSize: const Size(411, 840),
       child: GetMaterialApp(
         initialBinding: DependencyInjection(),
         debugShowCheckedModeBanner: false,
