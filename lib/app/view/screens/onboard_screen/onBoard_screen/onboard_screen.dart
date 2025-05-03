@@ -68,30 +68,30 @@ class OnboardScreen extends StatelessWidget {
                       SizedBox(
                         height: 36.h,
                       ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        radius: 6,
-                        backgroundColor: AppColors.red,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const CircleAvatar(
-                        radius: 5,
-                        backgroundColor: AppColors.customRedColor,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const CircleAvatar(
-                        radius: 5,
-                        backgroundColor: AppColors.customRedColor,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     const CircleAvatar(
+                  //       radius: 6,
+                  //       backgroundColor: AppColors.red,
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     const CircleAvatar(
+                  //       radius: 5,
+                  //       backgroundColor: AppColors.customRedColor,
+                  //     ),
+                  //     SizedBox(
+                  //       width: 10.w,
+                  //     ),
+                  //     const CircleAvatar(
+                  //       radius: 5,
+                  //       backgroundColor: AppColors.customRedColor,
+                  //     ),
+                  //   ],
+                  // ),
 
                 ],
               ),
