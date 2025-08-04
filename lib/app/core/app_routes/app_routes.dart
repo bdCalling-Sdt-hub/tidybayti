@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tidybayte/app/global/animation/bounce_transition.dart';
 import 'package:tidybayte/app/global/animation/rotete_scale.dart';
 import 'package:tidybayte/app/global/animation/slide_blur_transition.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
@@ -139,43 +138,60 @@ class AppRoutes {
     GetPage(
         name: signInScreen,
         page: () => SignInScreen(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+    ),
     GetPage(
         name: onboardScreen,
         page: () => const OnboardScreen(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+    ),
     GetPage(
         name: choseOnBoardingScreen,
         page: () => const ChoseOnboardScreen(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+    ),
     GetPage(
         name: homeOwnerChoseAuth,
         page: () => HomeOwnerChoseAuth(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: signUpScreen,
         page: () => SignUpScreen(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
     GetPage(
         name: signUpOtp,
         page: () => const SignUpOtp(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
     GetPage(
         name: forgotPasswordScreen,
         page: () => ForgotPasswordScreen(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
     GetPage(
         name: forgotPasswordOtp,
         page: () => ForgotPasswordOtp(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
     GetPage(
         name: resetPasswordScreen,
         page: () => ResetPasswordScreen(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
     GetPage(
         name: freeServiceScreen,
         page: () => FreeServiceScreen(),
-        customTransition: FadeSlideTransition()),
+        // customTransition: FadeSlideTransition()
+
+    ),
 
     ///===========================Home Section=======================
     GetPage(name: homeScreen, page: () => const HomeScreen()),
@@ -184,24 +200,32 @@ class AppRoutes {
     GetPage(
         name: allEmployeeShow,
         page: () => AllEmployeeShow(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: employeeDetails,
         page: () => const EmployeeDetails(),
-        customTransition: SlideScaleTransition()),
+        // customTransition: SlideScaleTransition()
+
+    ),
     GetPage(name: addEmployeeScreen, page: () => const AddEmployeeScreen()),
     GetPage(name: roomDetailsScreen, page: () => const RoomDetailsScreen()),
     GetPage(
         name: mainSentSuccessfullyScreen,
         page: () => const MainSentSuccessfullyScreen(),
-        customTransition: RotateScaleTransition()),
+        // customTransition: RotateScaleTransition()
+
+    ),
 
     ///=========================Wallet section==============
     GetPage(name: createBudgetScreen, page: () => CreateBudgetScreen()),
     GetPage(
         name: budgetDetailsScreen,
         page: () => const BudgetDetailsScreen(),
-        customTransition: SlideScaleTransition()),
+        // customTransition: SlideScaleTransition()
+
+    ),
     GetPage(name: addExpenseScreen, page: () => AddExpenseScreen()),
 
     ///======================Recipe Section====================
@@ -212,91 +236,112 @@ class AppRoutes {
     GetPage(
         name: myRecipeScreen,
         page: () => MyRecipeScreen(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: favoritesRecipeScreen,
         page: () => FavoritesRecipeScreen(),
-        customTransition: RotateScaleTransition()),
+        // customTransition: RotateScaleTransition()
+
+    ),
     GetPage(
         name: tagsScreen,
         page: () => TagsScreen(),
-        customTransition: SlideScaleTransition()),
+        // customTransition: SlideScaleTransition()
+
+    ),
     GetPage(
         name: addNewRecipe,
         page: () => const AddNewRecipe(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: myRecipeDetails,
         page: () => const MyRecipeDetails(),
-        customTransition: SlideScaleTransition()),
+        // customTransition: SlideScaleTransition()
+    ),
     GetPage(name: mySingleTags, page: () => const MySingleTags()),
 
     ///===========================Schedule Screen=====================
     GetPage(
         name: allTaskScreen,
         page: () => AllTaskScreen(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: completedScreen,
         page: () => const CompletedScreen(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: ongoingTask,
         page: () => const OngoingTask(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: pendingTask,
         page: () => const PendingTask(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: groceryTask,
         page: () => const GroceryTask(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
     GetPage(
         name: addGroceryTask,
         page: () => const AddGroceryTask(),
-        customTransition: SlideBlurTransition()),
+        // customTransition: SlideBlurTransition()
+
+    ),
 
     ///================================Menu Screen =====================
     GetPage(
       name: personalInfoScreen,
       page: () => PersonalInfoScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: upgradePackages,
       page: () => UpgradePackages(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: myPlanScreen,
       page: () => MyPlanScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: settingScreen,
       page: () => const SettingScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: changePasswordScreen,
       page: () => ChangePasswordScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: termsAndServiceScreen,
       page: () => const TermsAndServiceScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: privacyPolicyScreen,
       page: () => const PrivacyPolicyScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: helpWhereScreen,
       page: () => const HelpWhereScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
     GetPage(
       name: editProfileScreen,
@@ -308,11 +353,13 @@ class AppRoutes {
     GetPage(
         name: createTask,
         page: () => const CreateTask(),
-        customTransition: SlideScaleTransition()),
+        // customTransition: SlideScaleTransition()
+
+    ),
     GetPage(
       name: faqScreen,
       page: () => const FaqScreen(),
-      customTransition: ScaleTransitionEffect(),
+      // customTransition: ScaleTransitionEffect(),
     ),
 
     ///======================Employee section=========================
@@ -323,7 +370,7 @@ class AppRoutes {
       name: employeeNotificationScreen,
       page: () => EmployeeNotificationScreen(),
       transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 500),
+      // transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
         name: employeeAdditionalScreen,
