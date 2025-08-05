@@ -245,9 +245,9 @@ class CreateTask extends StatelessWidget {
                   // Custom button
                   CustomButton(
                     onTap: () {
-                      Navigator.pop(context); // প্রথম ডায়ালগ বন্ধ করে
+                      Navigator.pop(context);
                       _showCustomRecurrencePicker(
-                          context, controller); // নতুন ডায়ালগ ওপেন করে
+                          context, controller);
                     },
                     title: "Custom",
                     fillColor: AppColors.news,
@@ -262,11 +262,18 @@ class CreateTask extends StatelessWidget {
   }
 
   void _showCustomRecurrencePicker(
-    BuildContext context,
-    TextEditingController controller,
-  ) {
+      BuildContext context,
+      TextEditingController controller,
+      ) {
     int selectedNumber = 1;
     String selectedUnit = "Days";
+    List<String> selectedDays = [];   // ✅ for Weeks
+    List<String> selectedMonths = []; // ✅ for Months
+    final List<String> weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    final List<String> monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
     showDialog(
       context: context,
@@ -274,121 +281,188 @@ class CreateTask extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              title: Column(
+              title: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text("Days"),
+                children: [
+                  Text("Select Recurrence"),
                   Divider(color: Colors.black),
                 ],
               ),
               content: SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxHeight: 400),
+                  constraints: const BoxConstraints(maxHeight: 600),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: [Row(
-                      children: [
-                        // Number Selector (1 to 30)
-                        SizedBox(
-                          height: 250, // ✅ Must: give height for ListView inside Row
-                          width: 80,   // Optional: control width
-                          child: ListView.builder(
-                            itemCount: 30,
-                            itemBuilder: (context, index) {
-                              int value = index + 1;
-                              bool isSelected = selectedNumber == value;
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    selectedNumber = value;
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 4),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? AppColors.addedColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "$value",
-                                      style: TextStyle(
-                                        fontWeight: isSelected
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                    children: [
+                      Row(
+                        children: [
+                          /// Number Selector
+                          SizedBox(
+                            height: 250,
+                            width: 80,
+                            child: ListView.builder(
+                              itemCount: 30,
+                              itemBuilder: (context, index) {
+                                int value = index + 1;
+                                bool isSelected = selectedNumber == value;
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedNumber = value;
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 25),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? AppColors.addedColor
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "$value",
+                                        style: TextStyle(
+                                          fontWeight: isSelected
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
 
-                        const SizedBox(width: 16),
+                          const SizedBox(width: 16),
 
-                        // Unit Selector (Days, Weeks, Months)
-                        SizedBox(
-                          height: 250, // ✅ Same height
-                          width: 120,
-                          child: ListView(
-                            children: ["Days", "Weeks", "Months"].map((unit) {
-                              bool isSelected = selectedUnit == unit;
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    selectedUnit = unit;
-                                  });
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 4),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? AppColors.addedColor
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      unit,
-                                      style: TextStyle(
-                                        fontWeight: isSelected
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                          /// Unit Selector
+                          SizedBox(
+                            height: 250,
+                            width: 120,
+                            child: ListView(
+                              children: ["Days", "Weeks", "Months"].map((unit) {
+                                bool isSelected = selectedUnit == unit;
+                                return InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedUnit = unit;
+                                      selectedDays.clear();
+                                      selectedMonths.clear();
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 25),
+                                    decoration: BoxDecoration(
+                                      color: isSelected
+                                          ? AppColors.addedColor
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        unit,
+                                        style: TextStyle(
+                                          fontWeight: isSelected
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
+                                );
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-
-
-                      const Divider(),
-                      const SizedBox(height: 10),
-
-                      /// Confirm Button
-                      CustomButton(
-                        onTap: () {
-                          controller.text = "$selectedNumber $selectedUnit";
-                          Navigator.pop(context);
-                        },
-                        title: "Confirm",
+                        ],
                       ),
 
+                      const SizedBox(height: 16),
 
+                      /// ✅ Week Days Selection (if Weeks)
+                      if (selectedUnit == "Weeks") ...[
+                        const Divider(),
+                        const Text("Select Days", style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: weekDays.map((day) {
+                            final isSelected = selectedDays.contains(day);
+                            return ChoiceChip(
+                              backgroundColor: Colors.white,
+                              label: Text(day),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                setState(() {
+                                  isSelected
+                                      ? selectedDays.remove(day)
+                                      : selectedDays.add(day);
+                                });
+                              },
+                              selectedColor: AppColors.addedColor,
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+
+                      /// ✅ Month Selection (if Months)
+                      if (selectedUnit == "Months") ...[
+                        const Divider(),
+                        const Text("Select Months", style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: monthNames.map((month) {
+                            final isSelected = selectedMonths.contains(month);
+                            return ChoiceChip(
+                              backgroundColor: Colors.white,
+                              label: Text(month),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                setState(() {
+                                  isSelected
+                                      ? selectedMonths.remove(month)
+                                      : selectedMonths.add(month);
+                                });
+                              },
+                              selectedColor: AppColors.addedColor,
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+
+                      const Divider(),
+
+                      /// Confirm Button
+                      Expanded(
+                        child: CustomButton(
+                          onTap: () {
+                            String text = "$selectedNumber $selectedUnit";
+                            if (selectedUnit == "Weeks" && selectedDays.isNotEmpty) {
+                              text += " (${selectedDays.join(", ")})";
+                            } else if (selectedUnit == "Months" &&
+                                selectedMonths.isNotEmpty) {
+                              text += " (${selectedMonths.join(", ")})";
+                            }
+
+                            controller.text = text;
+                            Navigator.pop(context);
+                          },
+                          title: "Confirm",
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -399,4 +473,6 @@ class CreateTask extends StatelessWidget {
       },
     );
   }
+
+
 }
