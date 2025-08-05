@@ -4,4 +4,6 @@ import 'package:get/get.dart';
 class CreateTaskController extends GetxController{
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
+  final TextEditingController recurrenceController = TextEditingController();
+
 }

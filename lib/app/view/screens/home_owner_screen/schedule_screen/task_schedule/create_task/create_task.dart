@@ -1088,6 +1088,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
 import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
+import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
 import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
 import 'package:tidybayte/app/view/screens/home_owner_screen/schedule_screen/task_schedule/create_task/controller/create_task_controller.dart';
 
@@ -1095,9 +1096,10 @@ import '../../../../../../utils/app_strings/app_strings.dart';
 import '../../../../../components/custom_menu_appbar/custom_menu_appbar.dart';
 
 class CreateTask extends StatelessWidget {
-   CreateTask({super.key});
+  CreateTask({super.key});
 
   final CreateTaskController controller = Get.find<CreateTaskController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1166,7 +1168,8 @@ class CreateTask extends StatelessWidget {
                             );
 
                             if (pickedDate != null) {
-                              String formattedDate = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                              String formattedDate =
+                                  "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                               controller.dateController.text = formattedDate;
                             }
                           },
@@ -1189,20 +1192,29 @@ class CreateTask extends StatelessWidget {
 
                             if (pickedTime != null) {
                               final now = DateTime.now();
-                              final dt = DateTime(now.year, now.month, now.day, pickedTime.hour, pickedTime.minute);
-                              String formattedTime = TimeOfDay.fromDateTime(dt).format(context);
+                              final dt = DateTime(now.year, now.month, now.day,
+                                  pickedTime.hour, pickedTime.minute);
+                              String formattedTime =
+                                  TimeOfDay.fromDateTime(dt).format(context);
                               controller.timeController.text = formattedTime;
                             }
                           },
                         ),
                         SizedBox(height: 12.h),
-                        const CustomTextField(
+                        CustomTextField(
                           fieldBorderColor: AppColors.news,
                           fillColor: AppColors.news,
                           hintText: "Recurrence",
                           readOnly: true,
-                          suffixIcon: Icon(Icons.keyboard_arrow_down),
+                          textEditingController:
+                              controller.recurrenceController,
+                          suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                          onTap: () {
+                            _showRecurrenceDialog(
+                                context, controller.recurrenceController);
+                          },
                         ),
+
                         SizedBox(
                           height: 12.h,
                         ),
@@ -1238,6 +1250,95 @@ class CreateTask extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showRecurrenceDialog(
+      BuildContext context, TextEditingController controller) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        String? selectedOption = controller.text; // Optional, to preselect
+        List<String> options = [
+          "Never",
+          "Daily",
+          "Every week",
+          "Every 2 weeks",
+          "Every month",
+          "Every 3 months",
+          "Every 6 months",
+          "Every 1 Year",
+        ];
+
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          contentPadding: const EdgeInsets.all(0),
+          content: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ...options.map((option) {
+                    return InkWell(
+                      onTap: () {
+                        controller.text = option;
+                        Navigator.pop(context);
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            color: Colors.blue.shade50,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 14, horizontal: 16),
+                            child: Row(
+                              children: [
+                                Radio<String>(
+                                  value: option,
+                                  groupValue: selectedOption,
+                                  onChanged: (value) {
+                                    controller.text = value!;
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                const SizedBox(width: 8),
+                                CustomText(
+                                  text: option,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    );
+                  }),
+
+                  const Divider(height: 1),
+                  const SizedBox(height: 8),
+                  // Custom button
+                  InkWell(
+                      onTap: () {
+                        controller.text = "Custom";
+                        Navigator.pop(context);
+                      },
+                      child: CustomButton(
+                        onTap: () {},
+                        title: "Custom",
+                        fillColor: AppColors.news,
+                      )),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tidybayte/app/global/animation/rotete_scale.dart';
-import 'package:tidybayte/app/global/animation/slide_blur_transition.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_additional_task_screen/employee_additional_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_home_screen/employee_home_screen.dart';
 import 'package:tidybayte/app/view/screens/employee_screen/employee_notification_screen/employee_notification_screen.dart';
@@ -55,10 +53,6 @@ import 'package:tidybayte/app/view/screens/onboard_screen/chose_onboard_screen/c
 import 'package:tidybayte/app/view/screens/onboard_screen/home_owner_chose_auth/home_owner_chose_auth.dart';
 import 'package:tidybayte/app/view/screens/onboard_screen/onBoard_screen/onboard_screen.dart';
 
-import '../../global/animation/blur_fade_sing_in.dart';
-import '../../global/animation/custom_slide_transition.dart';
-import '../../global/animation/fade_slider_sing_in.dart';
-import '../../global/animation/slide_scale.dart';
 
 class AppRoutes {
   static const String splashScreen = "/SplashScreen";
