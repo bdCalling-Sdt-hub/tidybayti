@@ -1,1087 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
-// import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
-// import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
-// import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-// import 'package:tidybayte/app/utils/app_const/app_const.dart';
-// import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-// import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-// import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
-// import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-// import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-// import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-//
-// class CreateTask extends StatefulWidget {
-//   const CreateTask({super.key});
-//
-//   @override
-//   State<CreateTask> createState() => _CreateTaskState();
-// }
-//
-// class _CreateTaskState extends State<CreateTask> {
-//   final TaskController taskController = Get.find<TaskController>();
-//   final AddEmployeeController employeeController =
-//       Get.find<AddEmployeeController>();
-//
-//   String selectedEmployee = 'Select Employee';
-//   String selectRoom = 'Select Room';
-//   String selectedOption = 'weekly';
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       employeeController.getEmployee();
-//       // taskController.getAllRoom();
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFB5D8EE),
-//       body: Container(
-//         decoration: const BoxDecoration(
-//           gradient: LinearGradient(
-//             colors: [
-//               Color(0xCCE8F3FA), // First color (with opacity)
-//               Color(0xFFB5D8EE),
-//             ],
-//             begin: Alignment.topLeft,
-//             end: Alignment.bottomRight,
-//           ),
-//         ),
-//         child: SafeArea(
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20),
-//             child: SingleChildScrollView(
-//               child: Obx(() {
-//                 return Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     ///===========================Create Task Appbar================
-//                     CustomMenuAppbar(
-//                       title: AppStrings.createTask.tr,
-//                       onBack: () {
-//                         Get.back();
-//                       },
-//                     ),
-//
-//                     ///=========================== Room id  =======================
-//                     GestureDetector(
-//                       onTap: _showRoomList,
-//                       child: Container(
-//                         padding: const EdgeInsets.all(16),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           children: [
-//                             Text(
-//                               AppStrings.assignTask.tr,
-//                               style: TextStyle(
-//                                 color: Colors.black,
-//                                 fontSize: 16.sp,
-//                               ),
-//                             ),
-//                             Row(
-//                               children: [
-//                                 Text(
-//                                   selectRoom,
-//                                   style: TextStyle(
-//                                     color: Colors.black,
-//                                     fontSize: 16.sp,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                                 ),
-//                                 const Icon(Icons.arrow_right),
-//                               ],
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(height: 10.h),
-//
-//                     ///=========================== Assign Employee =======================
-//                     GestureDetector(
-//                       onTap: _showEmployeeList,
-//                       child: Container(
-//                         padding: const EdgeInsets.all(16),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           children: [
-//                             Text(
-//                               AppStrings.assignedTo.tr,
-//                               style: TextStyle(
-//                                 color: Colors.black,
-//                                 fontSize: 16.sp,
-//                               ),
-//                             ),
-//                             Row(
-//                               children: [
-//                                 Text(
-//                                   selectedEmployee,
-//                                   style: TextStyle(
-//                                     color: Colors.black,
-//                                     fontSize: 16.sp,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                                 ),
-//                                 const Icon(Icons.arrow_right),
-//                               ],
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//
-//                     ///=========================== Task Title =======================
-//                     SizedBox(height: 10.h),
-//                     CustomTextField(
-//                       hintText: AppStrings.taskTitle.tr,
-//                       textEditingController: taskController.taskTitleController,
-//                       suffixIcon: Padding(
-//                         padding: const EdgeInsets.only(right: 10),
-//                         child: GestureDetector(
-//                           onTap: () {
-//                             showPresetDialog(context);
-//                           },
-//                           child:  Padding(
-//                             padding: const EdgeInsets.symmetric(vertical: 20),
-//                             child: Text(
-//                               AppStrings.usePreset.tr,
-//                               style: const TextStyle(
-//                                 fontSize: 14,
-//                                 fontWeight: FontWeight.bold,
-//                                 color: Colors.blue,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//
-//                     SizedBox(height: 8.h),
-//
-//                     ///=========================== Recurrence =======================
-//                     CustomText(
-//                       text: AppStrings.recurrence.tr,
-//                       fontWeight: FontWeight.w300,
-//                       fontSize: 24,
-//                       color: AppColors.dark300,
-//                     ),
-//                     Row(
-//                       children: [
-//                         _buildRadioButton("one_time"),
-//                         SizedBox(width: 20.w),
-//                         _buildRadioButton("weekly"),
-//                       ],
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Start Date =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.startDate.tr,
-//                       suffixIcon: const Icon(Icons.calendar_month),
-//                       textEditingController: taskController.startDateController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         DateTime? pickedDate = await showDatePicker(
-//                           context: context,
-//                           initialDate: DateTime.now(),
-//                           firstDate: DateTime(2000),
-//                           lastDate: DateTime(2100),
-//                         );
-//
-//                         if (pickedDate != null) {
-//                           String formattedDate =
-//                               DateFormat('MM/dd/yyyy').format(pickedDate);
-//                           taskController.startDateController.text =
-//                               formattedDate;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Start Time =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.startTime.tr,
-//                       suffixIcon: const Icon(Icons.watch_later_outlined),
-//                       textEditingController: taskController.startTimeController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         TimeOfDay? pickedTime = await showTimePicker(
-//                           context: context,
-//                           initialTime: TimeOfDay.now(),
-//                         );
-//
-//                         if (pickedTime != null) {
-//                           // ✅ Format time to HH:mm a (12-hour format with AM/PM)
-//                           final now = DateTime.now();
-//                           final selectedTime = DateTime(now.year, now.month,
-//                               now.day, pickedTime.hour, pickedTime.minute);
-//                           final formattedTime =
-//                               DateFormat('hh:mm a').format(selectedTime);
-//
-//                           taskController.startTimeController.text =
-//                               formattedTime;
-//                         }
-//                       },
-//                     ),
-//
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== End Date =======================
-//
-//                     CustomTextField(
-//                       hintText: AppStrings.endDate.tr,
-//                       suffixIcon: const Icon(Icons.calendar_month),
-//                       textEditingController: taskController.endDateController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         DateTime? pickedDate = await showDatePicker(
-//                           context: context,
-//                           initialDate: DateTime.now(),
-//                           firstDate: DateTime(2000),
-//                           lastDate: DateTime(2100),
-//                         );
-//
-//                         if (pickedDate != null) {
-//                           String formattedDate =
-//                               DateFormat('MM/dd/yyyy').format(pickedDate);
-//                           taskController.endDateController.text = formattedDate;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== End Time =======================
-//
-//                     CustomTextField(
-//                       hintText: AppStrings.endTime.tr,
-//                       suffixIcon: const Icon(Icons.watch_later_outlined),
-//                       textEditingController: taskController.endTimeController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         TimeOfDay? pickedTime = await showTimePicker(
-//                           context: context,
-//                           initialTime: TimeOfDay.now(),
-//                         );
-//
-//                         if (pickedTime != null) {
-//                           final now = DateTime.now();
-//                           final selectedTime = DateTime(now.year, now.month,
-//                               now.day, pickedTime.hour, pickedTime.minute);
-//                           final formattedTime =
-//                               DateFormat('hh:mm a').format(selectedTime);
-//
-//                           taskController.endTimeController.text = formattedTime;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Task Details =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.taskDetails.tr,
-//                       textEditingController:
-//                           taskController.taskDetailsController,
-//                       maxLines: 8,
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Additional Message =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.additionalMessage.tr,
-//                       textEditingController:
-//                           taskController.additionalController,
-//                       maxLines: 8,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     taskController.isTaskLoading.value
-//                         ? const CustomLoader()
-//                         : CustomButton(
-//                             onTap: () {
-//                               taskController.addTask();
-//                             },
-//                             fillColor: AppColors.blue50,
-//                             title: AppStrings.assignTo.tr,
-//                           ),
-//                   ],
-//                 );
-//               }),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   ///=========================== Show Employee List Modal =======================
-//   void _showEmployeeList() {
-//     showModalBottomSheet(
-//       context: context,
-//       shape: const RoundedRectangleBorder(
-//         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-//       ),
-//       builder: (context) {
-//         return Container(
-//           padding: const EdgeInsets.all(16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Text(
-//                 AppStrings.selectEmployee.tr,
-//                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-//               ),
-//               const Divider(),
-//               Expanded(
-//                 child: Obx(() {
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.loading) {
-//                     return const Center(
-//                         child: CustomLoader()); // ✅ Show loading indicator
-//                   }
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.internetError) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Internet Connection", fontSize: 16.sp));
-//                   }
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.error) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "Something went wrong", fontSize: 16.sp));
-//                   }
-//                   if (employeeController.employeeData.value.result == null ||
-//                       employeeController.employeeData.value.result!.isEmpty) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Employees Found", fontSize: 16.sp));
-//                   }
-//
-//                   return ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount:
-//                         employeeController.employeeData.value.result!.length,
-//                     itemBuilder: (context, index) {
-//                       final data =
-//                           employeeController.employeeData.value.result![index];
-//
-//                       return ListTile(
-//                         title: Text(
-//                           "${data.firstName ?? " "} ${data.lastName}",
-//                           style:
-//                               TextStyle(fontSize: 16.sp, color: Colors.black),
-//                         ),
-//                         onTap: () {
-//                           setState(() {
-//                             selectedEmployee =
-//                                 "${data.firstName ?? " "} ${data.lastName}";
-//                             print('EmployeeId===================${data.id}');
-//                             taskController.assignedId = data.id ?? "";
-//                           });
-//                           Navigator.pop(context);
-//                         },
-//                       );
-//                     },
-//                   );
-//                 }),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-//
-//   ///=========================== Show Room  =======================
-//   void _showRoomList() {
-//     showModalBottomSheet(
-//       context: context,
-//       shape: const RoundedRectangleBorder(
-//         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-//       ),
-//       builder: (context) {
-//         return Container(
-//           padding: const EdgeInsets.all(16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Text(
-//                 'Select Room',
-//                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-//               ),
-//               const Divider(),
-//               Expanded(
-//                 child: Obx(() {
-//                   if (taskController.rxRequestStatus.value == Status.loading) {
-//                     return const Center(
-//                         child: CustomLoader()); // ✅ Show loading indicator
-//                   }
-//                   if (taskController.rxRequestStatus.value ==
-//                       Status.internetError) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Internet Connection", fontSize: 16.sp));
-//                   }
-//                   if (taskController.rxRequestStatus.value == Status.error) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "Something went wrong", fontSize: 16.sp));
-//                   }
-//                   if (taskController.roomModel.value.rooms == null ||
-//                       taskController.roomModel.value.rooms!.isEmpty) {
-//                     return Center(
-//                         child:
-//                             CustomText(text: "No Room Found", fontSize: 16.sp));
-//                   }
-//
-//                   return ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount: taskController.roomModel.value.rooms!.length,
-//                     itemBuilder: (context, index) {
-//                       final data = taskController.roomModel.value.rooms![index];
-//
-//                       return ListTile(
-//                         title: Text(
-//                           data.name ?? "",
-//                           style:
-//                               TextStyle(fontSize: 16.sp, color: Colors.black),
-//                         ),
-//                         onTap: () {
-//                           setState(() {
-//                             selectRoom = data.name ?? "";
-//                             print('RoomId===================${data.id}');
-//                             taskController.roomId = data.id ?? "";
-//                           });
-//                           Navigator.pop(context);
-//                         },
-//                       );
-//                     },
-//                   );
-//                 }),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-//
-//   Widget _buildRadioButton(String label) {
-//     return GestureDetector(
-//       onTap: () {
-//         setState(() {
-//           selectedOption = label; // ✅ Update selected option
-//           taskController.recurrenceController.text =
-//               label; // ✅ Store in controller
-//         });
-//       },
-//       child: Row(
-//         children: [
-//           Radio<String>(
-//             value: label,
-//             groupValue: selectedOption,
-//             onChanged: (value) {
-//               setState(() {
-//                 selectedOption = value!;
-//                 taskController.recurrenceController.text = value;
-//               });
-//             },
-//           ),
-//           Text(
-//             label,
-//             style: TextStyle(fontSize: 16.sp, color: Colors.black),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   //
-//   void showPresetDialog(BuildContext context) {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: const Text("Choose a Preset Title"),
-//           content: SingleChildScrollView(
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: taskController.presetTitles.map((title) {
-//                 return ListTile(
-//                   title: Text(title),
-//                   onTap: () {
-//                     taskController.taskTitleController.text = title;
-//                     Navigator.pop(context);
-//                   },
-//                 );
-//               }).toList(),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
-// import 'package:tidybayte/app/controller/owner_controller/add_employee_controller/add_employee_controller.dart';
-// import 'package:tidybayte/app/controller/owner_controller/task_controller/task_controller.dart';
-// import 'package:tidybayte/app/utils/app_colors/app_colors.dart';
-// import 'package:tidybayte/app/utils/app_const/app_const.dart';
-// import 'package:tidybayte/app/utils/app_strings/app_strings.dart';
-// import 'package:tidybayte/app/view/components/custom_button/custom_button.dart';
-// import 'package:tidybayte/app/view/components/custom_loader/custom_loader.dart';
-// import 'package:tidybayte/app/view/components/custom_menu_appbar/custom_menu_appbar.dart';
-// import 'package:tidybayte/app/view/components/custom_text/custom_text.dart';
-// import 'package:tidybayte/app/view/components/custom_text_field/custom_text_field.dart';
-//
-// class CreateTask extends StatefulWidget {
-//   const CreateTask({super.key});
-//
-//   @override
-//   State<CreateTask> createState() => _CreateTaskState();
-// }
-//
-// class _CreateTaskState extends State<CreateTask> {
-//   final TaskController taskController = Get.find<TaskController>();
-//   final AddEmployeeController employeeController =
-//       Get.find<AddEmployeeController>();
-//
-//   String selectedEmployee = 'Select Employee';
-//   String selectRoom = 'Select Room';
-//   String selectedOption = 'weekly';
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       employeeController.getEmployee();
-//       // taskController.getAllRoom();
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFFB5D8EE),
-//       body:
-//       Container(
-//         decoration: const BoxDecoration(
-//           gradient: LinearGradient(
-//             colors: [
-//               Color(0xCCE8F3FA), // First color (with opacity)
-//               Color(0xFFB5D8EE),
-//             ],
-//             begin: Alignment.topLeft,
-//             end: Alignment.bottomRight,
-//           ),
-//         ),
-//         child: SafeArea(
-//           child: Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 20),
-//             child: SingleChildScrollView(
-//               child: Obx(() {
-//                 return Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     ///===========================Create Task Appbar================
-//                     CustomMenuAppbar(
-//                       title: AppStrings.createTask.tr,
-//                       onBack: () {
-//                         Get.back();
-//                       },
-//                     ),
-//
-//                     ///=========================== Room id  =======================
-//                     GestureDetector(
-//                       onTap: _showRoomList,
-//                       child: Container(
-//                         padding: const EdgeInsets.all(16),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           children: [
-//                             Text(
-//                               AppStrings.assignTask.tr,
-//                               style: TextStyle(
-//                                 color: Colors.black,
-//                                 fontSize: 16.sp,
-//                               ),
-//                             ),
-//                             Row(
-//                               children: [
-//                                 Text(
-//                                   selectRoom,
-//                                   style: TextStyle(
-//                                     color: Colors.black,
-//                                     fontSize: 16.sp,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                                 ),
-//                                 const Icon(Icons.arrow_right),
-//                               ],
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(height: 10.h),
-//
-//                     ///=========================== Assign Employee =======================
-//                     GestureDetector(
-//                       onTap: _showEmployeeList,
-//                       child: Container(
-//                         padding: const EdgeInsets.all(16),
-//                         decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.circular(8),
-//                         ),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           children: [
-//                             Text(
-//                               AppStrings.assignedTo.tr,
-//                               style: TextStyle(
-//                                 color: Colors.black,
-//                                 fontSize: 16.sp,
-//                               ),
-//                             ),
-//                             Row(
-//                               children: [
-//                                 Text(
-//                                   selectedEmployee,
-//                                   style: TextStyle(
-//                                     color: Colors.black,
-//                                     fontSize: 16.sp,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                                 ),
-//                                 const Icon(Icons.arrow_right),
-//                               ],
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//
-//                     ///=========================== Task Title =======================
-//                     SizedBox(height: 10.h),
-//                     CustomTextField(
-//                       hintText: AppStrings.taskTitle.tr,
-//                       textEditingController: taskController.taskTitleController,
-//                       suffixIcon: Padding(
-//                         padding: const EdgeInsets.only(right: 10),
-//                         child: GestureDetector(
-//                           onTap: () {
-//                             showPresetDialog(context);
-//                           },
-//                           child:  Padding(
-//                             padding: const EdgeInsets.symmetric(vertical: 20),
-//                             child: Text(
-//                               AppStrings.usePreset.tr,
-//                               style: const TextStyle(
-//                                 fontSize: 14,
-//                                 fontWeight: FontWeight.bold,
-//                                 color: Colors.blue,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//
-//                     SizedBox(height: 8.h),
-//
-//                     ///=========================== Recurrence =======================
-//                     CustomText(
-//                       text: AppStrings.recurrence.tr,
-//                       fontWeight: FontWeight.w300,
-//                       fontSize: 24,
-//                       color: AppColors.dark300,
-//                     ),
-//                     Row(
-//                       children: [
-//                         _buildRadioButton("one_time"),
-//                         SizedBox(width: 20.w),
-//                         _buildRadioButton("weekly"),
-//                       ],
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Start Date =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.startDate.tr,
-//                       suffixIcon: const Icon(Icons.calendar_month),
-//                       textEditingController: taskController.startDateController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         DateTime? pickedDate = await showDatePicker(
-//                           context: context,
-//                           initialDate: DateTime.now(),
-//                           firstDate: DateTime(2000),
-//                           lastDate: DateTime(2100),
-//                         );
-//
-//                         if (pickedDate != null) {
-//                           String formattedDate =
-//                               DateFormat('MM/dd/yyyy').format(pickedDate);
-//                           taskController.startDateController.text =
-//                               formattedDate;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Start Time =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.startTime.tr,
-//                       suffixIcon: const Icon(Icons.watch_later_outlined),
-//                       textEditingController: taskController.startTimeController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         TimeOfDay? pickedTime = await showTimePicker(
-//                           context: context,
-//                           initialTime: TimeOfDay.now(),
-//                         );
-//
-//                         if (pickedTime != null) {
-//                           // ✅ Format time to HH:mm a (12-hour format with AM/PM)
-//                           final now = DateTime.now();
-//                           final selectedTime = DateTime(now.year, now.month,
-//                               now.day, pickedTime.hour, pickedTime.minute);
-//                           final formattedTime =
-//                               DateFormat('hh:mm a').format(selectedTime);
-//
-//                           taskController.startTimeController.text =
-//                               formattedTime;
-//                         }
-//                       },
-//                     ),
-//
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== End Date =======================
-//
-//                     CustomTextField(
-//                       hintText: AppStrings.endDate.tr,
-//                       suffixIcon: const Icon(Icons.calendar_month),
-//                       textEditingController: taskController.endDateController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         DateTime? pickedDate = await showDatePicker(
-//                           context: context,
-//                           initialDate: DateTime.now(),
-//                           firstDate: DateTime(2000),
-//                           lastDate: DateTime(2100),
-//                         );
-//
-//                         if (pickedDate != null) {
-//                           String formattedDate =
-//                               DateFormat('MM/dd/yyyy').format(pickedDate);
-//                           taskController.endDateController.text = formattedDate;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== End Time =======================
-//
-//                     CustomTextField(
-//                       hintText: AppStrings.endTime.tr,
-//                       suffixIcon: const Icon(Icons.watch_later_outlined),
-//                       textEditingController: taskController.endTimeController,
-//                       readOnly: true,
-//                       // Prevent manual input
-//                       onTap: () async {
-//                         TimeOfDay? pickedTime = await showTimePicker(
-//                           context: context,
-//                           initialTime: TimeOfDay.now(),
-//                         );
-//
-//                         if (pickedTime != null) {
-//                           final now = DateTime.now();
-//                           final selectedTime = DateTime(now.year, now.month,
-//                               now.day, pickedTime.hour, pickedTime.minute);
-//                           final formattedTime =
-//                               DateFormat('hh:mm a').format(selectedTime);
-//
-//                           taskController.endTimeController.text = formattedTime;
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Task Details =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.taskDetails.tr,
-//                       textEditingController:
-//                           taskController.taskDetailsController,
-//                       maxLines: 8,
-//                     ),
-//                     SizedBox(height: 16.h),
-//
-//                     ///=========================== Additional Message =======================
-//                     CustomTextField(
-//                       hintText: AppStrings.additionalMessage.tr,
-//                       textEditingController:
-//                           taskController.additionalController,
-//                       maxLines: 8,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     taskController.isTaskLoading.value
-//                         ? const CustomLoader()
-//                         : CustomButton(
-//                             onTap: () {
-//                               taskController.addTask();
-//                             },
-//                             fillColor: AppColors.blue50,
-//                             title: AppStrings.assignTo.tr,
-//                           ),
-//                   ],
-//                 );
-//               }),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   ///=========================== Show Employee List Modal =======================
-//   void _showEmployeeList() {
-//     showModalBottomSheet(
-//       context: context,
-//       shape: const RoundedRectangleBorder(
-//         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-//       ),
-//       builder: (context) {
-//         return Container(
-//           padding: const EdgeInsets.all(16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Text(
-//                 AppStrings.selectEmployee.tr,
-//                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-//               ),
-//               const Divider(),
-//               Expanded(
-//                 child: Obx(() {
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.loading) {
-//                     return const Center(
-//                         child: CustomLoader()); // ✅ Show loading indicator
-//                   }
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.internetError) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Internet Connection", fontSize: 16.sp));
-//                   }
-//                   if (employeeController.rxRequestStatus.value ==
-//                       Status.error) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "Something went wrong", fontSize: 16.sp));
-//                   }
-//                   if (employeeController.employeeData.value.result == null ||
-//                       employeeController.employeeData.value.result!.isEmpty) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Employees Found", fontSize: 16.sp));
-//                   }
-//
-//                   return ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount:
-//                         employeeController.employeeData.value.result!.length,
-//                     itemBuilder: (context, index) {
-//                       final data =
-//                           employeeController.employeeData.value.result![index];
-//
-//                       return ListTile(
-//                         title: Text(
-//                           "${data.firstName ?? " "} ${data.lastName}",
-//                           style:
-//                               TextStyle(fontSize: 16.sp, color: Colors.black),
-//                         ),
-//                         onTap: () {
-//                           setState(() {
-//                             selectedEmployee =
-//                                 "${data.firstName ?? " "} ${data.lastName}";
-//                             print('EmployeeId===================${data.id}');
-//                             taskController.assignedId = data.id ?? "";
-//                           });
-//                           Navigator.pop(context);
-//                         },
-//                       );
-//                     },
-//                   );
-//                 }),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-//
-//   ///=========================== Show Room  =======================
-//   void _showRoomList() {
-//     showModalBottomSheet(
-//       context: context,
-//       shape: const RoundedRectangleBorder(
-//         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-//       ),
-//       builder: (context) {
-//         return Container(
-//           padding: const EdgeInsets.all(16),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Text(
-//                 'Select Room',
-//                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-//               ),
-//               const Divider(),
-//               Expanded(
-//                 child: Obx(() {
-//                   if (taskController.rxRequestStatus.value == Status.loading) {
-//                     return const Center(
-//                         child: CustomLoader()); // ✅ Show loading indicator
-//                   }
-//                   if (taskController.rxRequestStatus.value ==
-//                       Status.internetError) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "No Internet Connection", fontSize: 16.sp));
-//                   }
-//                   if (taskController.rxRequestStatus.value == Status.error) {
-//                     return Center(
-//                         child: CustomText(
-//                             text: "Something went wrong", fontSize: 16.sp));
-//                   }
-//                   if (taskController.roomModel.value.rooms == null ||
-//                       taskController.roomModel.value.rooms!.isEmpty) {
-//                     return Center(
-//                         child:
-//                             CustomText(text: "No Room Found", fontSize: 16.sp));
-//                   }
-//
-//                   return ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount: taskController.roomModel.value.rooms!.length,
-//                     itemBuilder: (context, index) {
-//                       final data = taskController.roomModel.value.rooms![index];
-//
-//                       return ListTile(
-//                         title: Text(
-//                           data.name ?? "",
-//                           style:
-//                               TextStyle(fontSize: 16.sp, color: Colors.black),
-//                         ),
-//                         onTap: () {
-//                           setState(() {
-//                             selectRoom = data.name ?? "";
-//                             print('RoomId===================${data.id}');
-//                             taskController.roomId = data.id ?? "";
-//                           });
-//                           Navigator.pop(context);
-//                         },
-//                       );
-//                     },
-//                   );
-//                 }),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-//
-//   Widget _buildRadioButton(String label) {
-//     return GestureDetector(
-//       onTap: () {
-//         setState(() {
-//           selectedOption = label; // ✅ Update selected option
-//           taskController.recurrenceController.text =
-//               label; // ✅ Store in controller
-//         });
-//       },
-//       child: Row(
-//         children: [
-//           Radio<String>(
-//             value: label,
-//             groupValue: selectedOption,
-//             onChanged: (value) {
-//               setState(() {
-//                 selectedOption = value!;
-//                 taskController.recurrenceController.text = value;
-//               });
-//             },
-//           ),
-//           Text(
-//             label,
-//             style: TextStyle(fontSize: 16.sp, color: Colors.black),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   //
-//   void showPresetDialog(BuildContext context) {
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: const Text("Choose a Preset Title"),
-//           content: SingleChildScrollView(
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: taskController.presetTitles.map((title) {
-//                 return ListTile(
-//                   title: Text(title),
-//                   onTap: () {
-//                     taskController.taskTitleController.text = title;
-//                     Navigator.pop(context);
-//                   },
-//                 );
-//               }).toList(),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -1211,7 +127,9 @@ class CreateTask extends StatelessWidget {
                           suffixIcon: const Icon(Icons.keyboard_arrow_down),
                           onTap: () {
                             _showRecurrenceDialog(
-                                context, controller.recurrenceController);
+                              context,
+                              controller.recurrenceController,
+                            );
                           },
                         ),
 
@@ -1254,7 +172,9 @@ class CreateTask extends StatelessWidget {
   }
 
   void _showRecurrenceDialog(
-      BuildContext context, TextEditingController controller) {
+    BuildContext context,
+    TextEditingController controller,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -1323,20 +243,158 @@ class CreateTask extends StatelessWidget {
                   const Divider(height: 1),
                   const SizedBox(height: 8),
                   // Custom button
-                  InkWell(
-                      onTap: () {
-                        controller.text = "Custom";
-                        Navigator.pop(context);
-                      },
-                      child: CustomButton(
-                        onTap: () {},
-                        title: "Custom",
-                        fillColor: AppColors.news,
-                      )),
+                  CustomButton(
+                    onTap: () {
+                      Navigator.pop(context); // প্রথম ডায়ালগ বন্ধ করে
+                      _showCustomRecurrencePicker(
+                          context, controller); // নতুন ডায়ালগ ওপেন করে
+                    },
+                    title: "Custom",
+                    fillColor: AppColors.news,
+                  ),
                 ],
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  void _showCustomRecurrencePicker(
+    BuildContext context,
+    TextEditingController controller,
+  ) {
+    int selectedNumber = 1;
+    String selectedUnit = "Days";
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text("Days"),
+                  Divider(color: Colors.black),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 400),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [Row(
+                      children: [
+                        // Number Selector (1 to 30)
+                        SizedBox(
+                          height: 250, // ✅ Must: give height for ListView inside Row
+                          width: 80,   // Optional: control width
+                          child: ListView.builder(
+                            itemCount: 30,
+                            itemBuilder: (context, index) {
+                              int value = index + 1;
+                              bool isSelected = selectedNumber == value;
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectedNumber = value;
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 25),
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? AppColors.addedColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "$value",
+                                      style: TextStyle(
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+
+                        const SizedBox(width: 16),
+
+                        // Unit Selector (Days, Weeks, Months)
+                        SizedBox(
+                          height: 250, // ✅ Same height
+                          width: 120,
+                          child: ListView(
+                            children: ["Days", "Weeks", "Months"].map((unit) {
+                              bool isSelected = selectedUnit == unit;
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    selectedUnit = unit;
+                                  });
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(vertical: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 25),
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? AppColors.addedColor
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      unit,
+                                      style: TextStyle(
+                                        fontWeight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                      const Divider(),
+                      const SizedBox(height: 10),
+
+                      /// Confirm Button
+                      CustomButton(
+                        onTap: () {
+                          controller.text = "$selectedNumber $selectedUnit";
+                          Navigator.pop(context);
+                        },
+                        title: "Confirm",
+                      ),
+
+
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         );
       },
     );
