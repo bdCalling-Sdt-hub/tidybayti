@@ -352,7 +352,7 @@ class AppRoutes {
     ),
     GetPage(
         name: createTask,
-        page: () => const CreateTask(),
+        page: () =>  CreateTask(),
         // customTransition: SlideScaleTransition()
 
     ),

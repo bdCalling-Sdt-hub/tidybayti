@@ -35,6 +35,8 @@ class AppColors {
   static const Color addedColor = Color(0xffB5D8EE);
   static const Color normal = Color(0xCCE8F3FA);
   static const Color successFullyColor = Color(0xCC111827);
+  static const Color news = Color(0xCCE4F1F9);
+  static const Color taskColor = Color(0xCCF4F9FC);
 
 
 

@@ -31,11 +31,9 @@ class AuthController extends GetxController {
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
-  final emailController =
-      TextEditingController(text: kDebugMode ? "" : "");
+  final emailController = TextEditingController(text: kDebugMode ? "" : "");
   final phoneNumberController = TextEditingController();
-  final passwordController =
-      TextEditingController(text: kDebugMode ? "" : "");
+  final passwordController = TextEditingController(text: kDebugMode ? "" : "");
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final otpController = TextEditingController();
@@ -85,14 +83,12 @@ class AuthController extends GetxController {
   ///==================================✅✅SignUp OTp✅✅=======================
 
   RxBool isSignUpOtp = false.obs;
-
   signUpOtp() async {
     isSignUpOtp.value = true;
     var body = {
       "email": emailController.text,
       "activationCode": otpController.text
     };
-
     var response =
         await apiClient.post(body: body, url: ApiUrl.activateAccount);
     if (response.statusCode == 201) {
@@ -108,6 +104,8 @@ class AuthController extends GetxController {
     isSignUpOtp.value = false;
     isSignUpOtp.refresh();
   }
+
+
 
   ///==================================✅✅Sign In Method✅✅=======================
 
@@ -125,7 +123,7 @@ class AuthController extends GetxController {
       emailController.clear();
       passwordController.clear();
       Map<String, dynamic> decodedToken =
-      JwtDecoder.decode(response.body["data"]['accessToken']);
+          JwtDecoder.decode(response.body["data"]['accessToken']);
       print("Decoded Token:========================== $decodedToken");
       String role = decodedToken['role'];
 
@@ -219,11 +217,9 @@ class AuthController extends GetxController {
   ///==================================✅✅Forget Otp Method✅✅=======================
 
   RxBool isForgetOtp = false.obs;
-
-  forgetOtpVerify() async {
+  Future<void> forgetOtpVerify() async {
     isForgetOtp.value = true;
     var body = {"email": emailController.text, "code": otpController.text};
-
     var response =
         await apiClient.post(body: body, url: ApiUrl.forgetPasswordOtpVerify);
     if (response.statusCode == 200) {
@@ -238,11 +234,13 @@ class AuthController extends GetxController {
     isForgetOtp.refresh();
   }
 
+
+
   ///==================================✅✅Reset password Method✅✅=======================
 
   RxBool isResetLoading = false.obs;
 
-  resetPassword() async {
+  Future<void> resetPassword() async {
     isResetLoading.value = true;
     var body = {
       "email": emailController.text,
@@ -270,4 +268,10 @@ class AuthController extends GetxController {
     newPasswordController.clear();
     confirmPasswordController.clear();
   }
+
+
+
+
+
+
 }

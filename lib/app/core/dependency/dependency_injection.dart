@@ -17,6 +17,8 @@ import 'package:tidybayte/app/controller/owner_controller/wallet_controller/wall
 import 'package:tidybayte/app/controller/owner_controller/work_schedule_controller/work_schedule_controller.dart';
 import 'package:tidybayte/app/global/controller/auth_controller.dart';
 
+import '../../view/screens/home_owner_screen/schedule_screen/task_schedule/create_task/controller/create_task_controller.dart';
+
 
 
 class DependencyInjection extends Bindings {
@@ -40,6 +42,7 @@ class DependencyInjection extends Bindings {
    ///==========================Employee Section==================
    Get.lazyPut(() => EmployeeHomeController(), fenix: true);
    Get.lazyPut(() => LanguageController(), fenix: true);
+   Get.lazyPut(() => CreateTaskController(), fenix: true);
 
 
 
