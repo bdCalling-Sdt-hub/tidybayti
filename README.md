@@ -6,4 +6,4 @@ A new Flutter project.
 
 nobeha5943@shouxs.com
 
-https://github.com/Masumraj1/final_bayti.git == dev mas um
+https://github.com/sparktechagency/tidybayti.git == dev mas um
